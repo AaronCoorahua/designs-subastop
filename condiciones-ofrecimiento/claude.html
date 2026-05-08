@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auction Conditions — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — token surface  ·  DESIGN.md §2 Color · §4 Type · §6 Radius
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:             oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-mid:         oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-vault-dark:        oklch(0.26 0.19 285);   /* #2E0F70 */
+  --voyager-color-live:              oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-color-live-strong:       oklch(0.62 0.18 45);
+
+  --voyager-color-surface-page:      oklch(0.98 0.004 160);  /* #F8FAF9 */
+  --voyager-color-surface-section:   oklch(0.96 0.004 160);  /* #F2F4F3 */
+  --voyager-color-surface-card:      oklch(1 0 0);           /* #FFFFFF */
+
+  --voyager-color-text-on-surface:   oklch(0.15 0.008 200);  /* #1A2122 */
+  --voyager-color-text-body:         oklch(0.32 0.05 280);   /* near-vault dark */
+  --voyager-color-text-muted:        color-mix(in oklch, oklch(0.38 0.04 280) 55%, transparent);
+  --voyager-color-text-link:         oklch(0.30 0.20 285);   /* vault-mid = links */
+
+  --voyager-color-skeleton:          oklch(0.85 0.008 220);  /* #D5D8DD */
+  --voyager-color-status-success:    oklch(0.70 0.20 145);   /* green — quality-easy dot */
+
+  /* Arrow icon: very translucent vault */
+  --voyager-color-arrow-icon:        color-mix(in oklch, var(--voyager-color-vault) 30%, white);
+  /* Bracket corners: live/coral */
+  --voyager-color-bracket:           var(--voyager-color-live, #ED8936);
+
+  /* Tints */
+  --voyager-tint-vault-soft:         color-mix(in oklch, var(--voyager-color-vault) 5%, transparent);
+  --voyager-tint-vault-medium:       color-mix(in oklch, var(--voyager-color-vault) 10%, transparent);
+
+  /* Radius — DESIGN.md §6 */
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+
+  /* Shadows — DESIGN.md §7 */
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 12%);
+
+  /* Typography */
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  /* Motion */
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─── Canvas ─────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.preview-frame {
+  width: 437px;
+  /* height is content-driven, ~2995px — no fixed height to keep full render */
+}
+
+/* ─── Legacy class overrides → Voyager tokens ────────────────────────────── */
+
+/* Container */
+.preview-frame .w-full  { width: 100%; }
+.preview-frame .mt-3    { margin-top: 12px; }
+
+.preview-frame .bg-gray-100 {
+  background-color: var(--voyager-color-surface-section, #F2F4F3);
+}
+.preview-frame .rounded {
+  border-radius: var(--voyager-radius-sm, 4px);
+}
+.preview-frame .shadow {
+  box-shadow: var(--voyager-shadow-card, 0 8px 16px rgba(34,0,92,0.06));
+}
+
+/* Header row */
+.preview-frame .relative         { position: relative; }
+.preview-frame .flex             { display: flex; }
+.preview-frame .inline-block     { display: inline-block; }
+.preview-frame .items-center     { align-items: center; }
+.preview-frame .justify-center   { justify-content: center; }
+.preview-frame .justify-end      { justify-content: flex-end; }
+.preview-frame .p-8              { padding: 32px; }
+.preview-frame .px-6             { padding-left: 24px; padding-right: 24px; }
+.preview-frame .py-2             { padding-top: 8px; padding-bottom: 8px; }
+.preview-frame .px-8             { padding-left: 32px; padding-right: 32px; }
+.preview-frame .pb-8             { padding-bottom: 32px; }
+.preview-frame .ml-2             { margin-left: 8px; }
+.preview-frame .mr-8             { margin-right: 32px; }
+.preview-frame .cursor-pointer   { cursor: pointer; }
+
+/* Absolute positioning — bracket corners + expand arrow */
+.preview-frame .absolute        { position: absolute; }
+.preview-frame .top-0           { top: 0; }
+.preview-frame .left-0          { left: 0; }
+.preview-frame .bottom-0        { bottom: 0; }
+.preview-frame .right-0         { right: 0; }
+.preview-frame .w-3             { width: 12px; }
+.preview-frame .h-3             { height: 12px; }
+.preview-frame .w-6             { width: 24px; }
+.preview-frame .h-6             { height: 24px; }
+
+/* Header title */
+.preview-frame .font-display    { font-family: var(--voyager-font-display); }
+.preview-frame .text-sm         { font-size: 13px; }
+.preview-frame .font-bold       { font-weight: 700; }
+.preview-frame .leading-tight   { line-height: 1.15; }
+.preview-frame .uppercase       { text-transform: uppercase; }
+.preview-frame .font-light      { font-weight: 300; }
+.preview-frame .text-xs         { font-size: 11px; letter-spacing: 0.06em; }
+
+/* Color overrides — every legacy class → token with HEX fallback */
+.preview-frame .text-purple-800 {
+  color: var(--voyager-color-vault, #22005C);
+}
+.preview-frame .text-coral-500 {
+  color: var(--voyager-color-live, #ED8936);
+}
+.preview-frame .text-purple-200 {
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 25%, white);
+}
+.preview-frame .text-purple-500 {
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 65%, white);
+}
+.preview-frame .fill-current     { fill: currentColor; }
+
+/* Complexity dots */
+.preview-frame .space-x-1 > * + * { margin-left: 4px; }
+.preview-frame .block    { display: block; }
+.preview-frame .rounded-full { border-radius: 9999px; }
+
+.preview-frame .bg-quality-200 {
+  background-color: var(--voyager-color-status-success, #66BB6A);
+}
+.preview-frame .bg-gray-400 {
+  background-color: var(--voyager-color-skeleton, #D5D8DD);
+}
+
+/* Expand arrow — transition + transform */
+.preview-frame .transition-transform  {
+  transition: transform var(--voyager-duration-standard) var(--voyager-ease-default);
+}
+.preview-frame .transition-colors     {
+  transition: color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.preview-frame .transform  { /* identity — no initial transform applied */ }
+.preview-frame .duration-200  { /* absorbed into --voyager-duration-micro */ }
+.preview-frame .relative.items-center.inline-block.px-6.py-2 {
+  width: min(314px, calc(100% - 72px));
+  min-width: 0;
+  text-align: center;
+}
+.preview-frame .relative.items-center.inline-block.px-6.py-2 > svg {
+  color: var(--voyager-color-live, #ED8936);
+}
+.preview-frame .relative.items-center.inline-block.px-6.py-2 > svg:first-child path,
+.preview-frame .relative.items-center.inline-block.px-6.py-2 > svg:first-child polyline,
+.preview-frame .relative.items-center.inline-block.px-6.py-2 > svg:last-child path,
+.preview-frame .relative.items-center.inline-block.px-6.py-2 > svg:last-child polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.preview-frame .relative.flex.items-center.justify-center.p-8.cursor-pointer > span.absolute {
+  color: var(--voyager-color-live, #ED8936);
+  right: 20px;
+  top: 50%;
+  margin-right: 0;
+  transform: translateY(-50%) rotate(180deg);
+}
+.preview-frame .relative.flex.items-center.justify-center.p-8.cursor-pointer > span.absolute svg {
+  color: var(--voyager-color-live, #ED8936);
+}
+.preview-frame .relative.flex.items-center.justify-center.p-8.cursor-pointer > span.absolute svg path,
+.preview-frame .relative.flex.items-center.justify-center.p-8.cursor-pointer > span.absolute svg polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.preview-frame .w-full.mt-3.bg-gray-100.rounded.shadow.is-collapsed > .px-8.pb-8 {
+  display: none;
+}
+.preview-frame .w-full.mt-3.bg-gray-100.rounded.shadow.is-collapsed > .relative.flex.items-center.justify-center.p-8.cursor-pointer > span.absolute {
+  transform: translateY(-50%) rotate(0deg);
+}
+@media (max-width: 420px) {
+  .preview-frame {
+    width: min(100%, 437px);
+  }
+  .preview-stage {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .preview-frame .p-8 {
+    padding-left: 18px;
+    padding-right: 52px;
+  }
+  .preview-frame .relative.items-center.inline-block.px-6.py-2 {
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .preview-frame .relative.flex.items-center.justify-center.p-8.cursor-pointer > span.absolute {
+    right: 18px;
+  }
+}
+
+/* Content area spacing */
+.preview-frame .space-y-8 > * + * { margin-top: 32px; }
+.preview-frame .flex      { display: flex; }
+
+/* sr-only (hidden dot labels) */
+.preview-frame .sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Conditions typography — DESIGN.md §4 type scale applied ────────────── */
+.preview-frame .conditions-typography {
+  font-family: var(--voyager-font-body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--voyager-color-text-on-surface, #1A2122);
+}
+
+/* H3 — numbered section headings (1., 2., 3.) */
+.preview-frame .conditions-typography h3 {
+  font-family: var(--voyager-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-vault, #22005C);
+  margin: 28px 0 8px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid color-mix(in oklch, var(--voyager-color-vault, #22005C) 8%, transparent);
+}
+.preview-frame .conditions-typography h3:first-child {
+  margin-top: 0;
+}
+
+/* H4 — lettered sub-section headings (A., B., C., D., E.) */
+.preview-frame .conditions-typography h4 {
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 70%, white);
+  margin: 20px 0 8px 0;
+  display: flex;
+  align-items: center;
+}
+.preview-frame .conditions-typography h4::before {
+  content: none;
+}
+
+/* Paragraphs */
+.preview-frame .conditions-typography p {
+  position: relative;
+  margin: 0 0 12px 0;
+  padding-left: 12px;
+  color: var(--voyager-color-text-on-surface, #1A2122);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.preview-frame .conditions-typography p::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 1px;
+  background: var(--voyager-color-vault-mid, #3B1782);
+  opacity: 0;
+  transform: scaleY(0.6);
+  transform-origin: center;
+  transition: opacity var(--voyager-duration-micro) var(--voyager-ease-default),
+              transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.preview-frame .conditions-typography p:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Lead bold paragraph under headings */
+.preview-frame .conditions-typography p strong:only-child,
+.preview-frame .conditions-typography p > strong:first-child:last-child {
+  font-size: 13px;
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 80%, white);
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Strong inline */
+.preview-frame .conditions-typography strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+/* Lists */
+.preview-frame .conditions-typography ul {
+  margin: 0 0 16px 0;
+  padding-left: 0;
+  list-style: none;
+}
+.preview-frame .conditions-typography ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--voyager-color-text-on-surface, #1A2122);
+}
+.preview-frame .conditions-typography ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--voyager-color-live, #ED8936);
+  flex-shrink: 0;
+}
+.preview-frame .conditions-typography ul li::after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 1px;
+  background: var(--voyager-color-live, #ED8936);
+  opacity: 0;
+  transform: scaleY(0.6);
+  transform-origin: center;
+  transition: opacity var(--voyager-duration-micro) var(--voyager-ease-default),
+              transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.preview-frame .conditions-typography ul li:hover::before {
+  opacity: 0;
+  transform: scale(0);
+}
+.preview-frame .conditions-typography ul li:hover::after {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Nested lists */
+.preview-frame .conditions-typography ul ul {
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding-left: 12px;
+}
+.preview-frame .conditions-typography ul ul li::before {
+  background: color-mix(in oklch, var(--voyager-color-vault, #22005C) 30%, white);
+  width: 4px;
+  height: 4px;
+  top: 10px;
+}
+.preview-frame .conditions-typography ul ul li::after {
+  left: 0.5px;
+  background: color-mix(in oklch, var(--voyager-color-vault, #22005C) 30%, white);
+}
+
+/* Links */
+.preview-frame .conditions-typography a {
+  color: var(--voyager-color-vault-mid, #3B1782);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--voyager-color-vault-mid, #3B1782) 40%, transparent);
+  text-underline-offset: 2px;
+  transition: color var(--voyager-duration-micro) var(--voyager-ease-default),
+              text-decoration-color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.preview-frame .conditions-typography a:hover {
+  color: var(--voyager-color-live, #ED8936);
+  text-decoration-color: var(--voyager-color-live, #ED8936);
+}
+.preview-frame .conditions-typography a:focus-visible {
+  outline: 2px solid var(--voyager-color-vault-mid, #3B1782);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── SVG sprite icons — correct colors applied, shapes invisible in standalone ── */
+.preview-frame svg { display: inline-block; vertical-align: middle; overflow: visible; }
+.preview-frame .absolute svg { display: block; }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Auction Conditions — Voyager upgrade">
+    <div class="preview-frame">
+      <!-- ── Frozen outerHTML — DO NOT modify ─────────────────────────────── -->
+      <div class="w-full mt-3 bg-gray-100 rounded shadow is-open"><div class="relative flex items-center justify-center p-8 cursor-pointer" role="button" tabindex="0" aria-expanded="true"><div class="relative items-center inline-block px-6 py-2"><svg viewBox="0 0 12 12" width="12" height="12" role="" class="absolute top-0 left-0 w-3 h-3 transition-colors duration-200 fill-current text-coral-500" aria-hidden="true"><path d="M11 1H1v10"/></svg> <h2 class="text-sm font-bold leading-tight text-purple-800 font-display">Condiciones del ofrecimiento</h2> <svg viewBox="0 0 12 12" width="12" height="12" role="" class="absolute bottom-0 right-0 w-3 h-3 transition-colors duration-200 fill-current text-coral-500" aria-hidden="true"><path d="M1 11h10V1"/></svg></div> <span class="absolute right-0 w-6 h-6 mr-8 transition-transform duration-200 transform"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-6 h-6 fill-current text-purple-200" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div> <div class="px-8 pb-8"><div class="space-y-8"><div class="flex justify-center w-full"><span class="flex items-center text-xs font-light text-purple-500 uppercase font-display">Complejidad del ofrecimiento
+      <span class="flex items-center ml-2 space-x-1"><span class="block w-3 h-3 rounded-full bg-quality-200"><span class="sr-only">Fácil</span></span> <span class="block w-3 h-3 rounded-full bg-gray-400"><span class="sr-only">Regular</span></span> <span class="block w-3 h-3 rounded-full bg-gray-400"><span class="sr-only">Experto</span></span></span></span></div> <div class="conditions-typography"><h3 id="1-responsabilidades-de-los-participantes">1. Responsabilidades de los Participantes</h3>
+<p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
+<ul>
+<li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso al consignar para participar en esta oferta.</li>
+<li>Al hacer una consignación, todo usuario conoce y acepta que es su responsabilidad disponer de una conexión estable a internet con un ancho de banda de mínimo 5Mbps y contar con los equipos necesarios para asegurar el correcto funcionamiento de los servicios.</li>
+<li>Es responsabilidad de cada participante acceder oportunamente a la sala y realizar por lo menos un bid válido.</li>
+<li>El incumplimiento de las responsabilidades como participante resulta en:<ul>
+<li>La retención del monto consignado hasta las 23:59:59 horas del día del proceso "En Vivo".</li>
+<li>La devolución de la consignación en SubasCoins.</li>
+<li>La pérdida de 15 puntos VMC y correspondiente afectación al Riesgo Usuario.</li>
+</ul>
+</li>
+<li>El Precio Reserva de la oferta podrá ser retirado durante el proceso "En Vivo".</li>
+<li>Si el Precio Reserva es retirado en el proceso "En Vivo", el participante que envíe la mejor propuesta válida será declarado ganador directo.</li>
+<li>Si el Precio Reserva nunca se retira y el proceso "En Vivo" cierra con Precio Reserva, el participante que envíe la mejor propuesta válida  será declarado Mejor Postor. En su condición de Mejor Postor, su bid pasará a consulta y el vendedor tendrá hasta 10 días hábiles para aceptar, rechazar o hacer una contrapropuesta cuando sea el caso. Durante este plazo, su consignación permanecerá retenida.</li>
+</ul>
+<h3 id="2-condiciones-de-compra">2. Condiciones de Compra</h3>
+<p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR (Ganador Directo o el Mejor Postor) al ser habilitado.</strong></p>
+<h4 id="a-responsabilidades-del-vendedor">A. Responsabilidades del Vendedor</h4>
+<ul>
+<li>El vendedor tendrá 10 días hábiles para habilitar al ganador, pudiendo ocurrir la habilitación incluso el mismo día del proceso.</li>
+<li>El vendedor se reserva el derecho de habilitación del ganador a libre discreción.</li>
+</ul>
+<h4 id="b-habilitación-del-ganador">B. Habilitación del Ganador</h4>
+<ul>
+<li>El ganador deberá ser habilitado para poder iniciar el proceso de compra.</li>
+<li>Es responsabilidad del ganador estar atento a su correo y, de ser necesario, verificar su bandeja de SPAM en busca del correo de confirmación u otra comunicación. De igual manera, es responsable de ingresar al módulo "Tu Actividad" de la plataforma para saber si ha sido habilitado.</li>
+<li>De ser habilitado, el ganador deberá pagar US$ 200 por concepto de Fee de habilitación previo a la validación de documentos.</li>
+</ul>
+<h4 id="c-responsabilidades-del-ganador-habilitado">C. Responsabilidades del Ganador Habilitado</h4>
+<ul>
+<li>El ganador habilitado deberá realizar el pago de la comisión y la carga de documentos solicitados por el vendedor en un plazo de 2 días hábiles.</li>
+<li>El ganador habilitado deberá adjuntar los siguientes documentos: DNI.  En caso de persona jurídica: Ficha RUC, Vigencia de poderes (Con máximo 3 meses de expedición), DNI Representante Legal.</li>
+<li>En cualquier caso, cuando el ganador habilitado haya incumplido con alguna de sus responsabilidades:<ul>
+<li>Será sancionado con la pérdida de 75 Puntos y aumentará el Riesgo Usuario.</li>
+<li>Su cuenta será inhabilitada durante siete (7) días calendario.</li>
+<li>Deberá cumplir con el pago de la comisión por el uso del servicio, pues es un deber intrínseco de todo ganador habilitado, inclusive cuando el perfeccionamiento de la venta se vea truncado por el incumplimiento en alguna de sus responsabilidades durante el proceso de compra-venta, de acuerdo a las instrucciones y en los plazos indicados por el vendedor.</li>
+</ul>
+</li>
+</ul>
+<h4 id="d-forma-de-pago">D. Forma de pago</h4>
+<ul>
+<li>El ganador habilitado tendrá 2 días hábiles desde la habilitación para cumplir sus obligaciones de pago.</li>
+<li>Las instrucciones de pago le serán enviadas al ganador habilitado al cumplir con el pago de la comisión y la carga de documentos solicitados por el vendedor.</li>
+<li>El pago del valor de compra debe ser bancarizado, utilizando los canales bancarios indicados y siempre se deberá efectuar en una sola operación.</li>
+<li>Forma de pago: El ganador habilitado deberá pagar directamente al vendedor según las instrucciones que podrá descargar desde el módulo "Tu Actividad".</li>
+<li>El vendedor vende Sin Factura.</li>
+</ul>
+<h4 id="e-trámites-y-recojo">E. Trámites y recojo</h4>
+<ul>
+<li>El ganador habilitado es responsable de los gastos relacionados a la transferencia y cualquier otro trámite inherente a esta.</li>
+<li>Una vez validado el pago total de la oferta, el vendedor gestionará directamente con el comprador el proceso de firmas y entrega.</li>
+<li>El plazo de entrega es de 2 días hábiles una vez validado el pago.</li>
+<li>El comprador se compromete a recoger de acuerdo con el cronograma que indique el vendedor. En caso de exceder el plazo de recojo, el ganador habilitado deberá pagar un monto de 1 US$ por cada día de retraso, por concepto de mora.</li>
+</ul>
+<h3 id="3-condiciones-generales">3. Condiciones generales</h3>
+<p><strong>Contemplan las condiciones aplicables a todos los ofrecimientos de la plataforma.</strong></p>
+<ul>
+<li>El vendedor ofrece el o los bienes como están y donde están. VMC Subastas bajo ningún motivo se responsabiliza por la exactitud de la información presentada.</li>
+<li>Todas las imágenes y características publicadas han sido remitidas por el vendedor, por lo que son consideradas referenciales.</li>
+<li>El o los bienes ofrecidos pueden presentar daños y/o faltantes.</li>
+<li>VMC Subastas nunca interviene en el proceso de compraventa ni en el de entrega de las ofertas.</li>
+<li>VMC Subastas queda exento de toda responsabilidad sobre cualquier tipo de relación generada entre los usuarios y los vendedores en el Marketplace Digital. Esto incluye, sin carácter restrictivo, el pago y la entrega de bienes y cualquier otro término, condición, garantía o manifestación relacionada con dichas negociaciones. Estas negociaciones sólo son entre los usuarios y dichos vendedores.</li>
+<li>En caso de existir un conflicto entre los participantes, entre los usuarios y un tercero, el Usuario entiende y conviene en que VMC Subastas queda sin responsabilidad de involucrarse en la cuestión.</li>
+</ul>
+</div></div></div></div>
+      <!-- ── End frozen outerHTML ──────────────────────────────────────────── -->
+    </div>
+  </main>
+  <script>
+    const accordion = document.querySelector('.preview-frame .w-full.mt-3.bg-gray-100.rounded.shadow');
+    const trigger = accordion?.querySelector('.cursor-pointer');
+
+    function setAccordionOpen(isOpen) {
+      accordion.classList.toggle('is-open', isOpen);
+      accordion.classList.toggle('is-collapsed', !isOpen);
+      trigger?.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    trigger?.addEventListener('click', () => {
+      setAccordionOpen(accordion.classList.contains('is-collapsed'));
+    });
+
+    trigger?.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      setAccordionOpen(accordion.classList.contains('is-collapsed'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aaron Designs — Voyager Upgrade Preview · Tu Actividad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — local token surface.  DESIGN.md §2 Color · §6 Radius · §7
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);
+  --voyager-color-vault-dark:   oklch(0.26 0.19 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-skeleton:        oklch(0.85 0.008 220);
+  --voyager-color-border-ghost:    color-mix(in oklch, var(--voyager-color-vault) 8%, transparent);
+  --voyager-color-divider-section: color-mix(in oklch, var(--voyager-color-vault) 5%, transparent);
+  --voyager-tint-vault-soft:       color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 14%);
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ── Preview canvas ─────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse at top left,   color-mix(in oklch, var(--voyager-color-vault) 4%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, color-mix(in oklch, var(--voyager-color-live) 4%, transparent) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 40px;
+  align-items: start;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 16px 0;
+}
+
+.preview-frame {
+  width: 310.02px;
+  height: 144.84px;
+  overflow: hidden;
+}
+
+/* ── Layout primitives ──────────────────────────────────────────────────── */
+.preview-frame .p-4          { padding: 12px; }
+.preview-frame .px-3         { padding-left: 10px; padding-right: 10px; }
+.preview-frame .py-2         { padding-top: 0; padding-bottom: 0; }
+.preview-frame .my-4         { margin-top: 9px; margin-bottom: 9px; }
+.preview-frame .flex         { display: flex; }
+.preview-frame .items-center { align-items: center; }
+.preview-frame .flex-1       { flex: 1 1 0%; }
+.preview-frame .flex-shrink-0 { flex-shrink: 0; }
+.preview-frame .relative     { position: relative; }
+.preview-frame .inline-block { display: inline-block; }
+.preview-frame .absolute     { position: absolute; }
+.preview-frame .top-0        { top: 0; }
+.preview-frame .left-0       { left: 0; }
+.preview-frame .bottom-0     { bottom: 0; }
+.preview-frame .right-0      { right: 0; }
+.preview-frame .space-y-4 > * + * { margin-top: 10px; }
+.preview-frame .space-y-3 > * + * { margin-top: 9px; }
+
+/* Sizing */
+.preview-frame .w-2  { width: 6px; }
+.preview-frame .h-2  { height: 6px; }
+
+/* Skeleton bar widths */
+.preview-frame .w-8\/12 { width: 66.666%; }
+.preview-frame .w-6\/12 { width: 50%; }
+.preview-frame .w-4\/12 { width: 33.333%; }
+
+/* Skeleton bar height (arbitrary value) */
+.preview-frame [class*="h-[8px]"] { height: 8px; }
+
+/* Typography */
+.preview-frame .font-display { font-family: var(--voyager-font-display); }
+.preview-frame .text-base    { font-size: 15px; line-height: 18px; }
+.preview-frame .font-bold    { font-weight: 700; }
+.preview-frame .leading-none { line-height: 1; }
+.preview-frame .uppercase    { text-transform: uppercase; }
+
+/* Icons */
+.preview-frame svg           { display: inline-block; vertical-align: middle; }
+.preview-frame .fill-current { fill: currentColor; }
+
+/* ── Voyager color mapping ──────────────────────────────────────────────── */
+
+/* Card surface */
+.preview-frame .bg-coral-100 {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+}
+
+/* Corner bracket SVGs */
+.preview-frame .text-coral-400 {
+  color: var(--voyager-color-live, #ED8936);
+}
+
+/* "Tu Actividad" heading */
+.preview-frame .text-purple-400 {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+/* Skeleton bars — arbitrary bg-[#D3D6DF] → skeleton token */
+.preview-frame [class*="D3D6DF"] {
+  background-color: var(--voyager-color-skeleton, #D5D8DD);
+}
+
+/* Skeleton bar shape */
+.preview-frame .rounded-lg {
+  border-radius: var(--voyager-radius-md, 8px);
+}
+
+/* HR */
+.preview-frame hr.border-t {
+  border: none;
+  border-top: 1px solid var(--voyager-color-divider-section);
+}
+
+/* ── Card container — signature finish ─────────────────────────────────── */
+.preview-frame .rounded:not(.rounded-lg) {
+  border-radius: var(--voyager-radius-lg, 16px);
+  height: 144.84px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-frame .shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+  border-bottom: 0;
+  background-image:
+    linear-gradient(145deg,
+      color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%,
+      transparent 55%);
+  transition:
+    box-shadow var(--voyager-duration-standard) var(--voyager-ease-default),
+    transform  var(--voyager-duration-micro)    var(--voyager-ease-default);
+}
+
+.preview-frame .shadow-lg::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8px;
+  border-radius: 0 0 var(--voyager-radius-lg, 16px) var(--voyager-radius-lg, 16px);
+  background: var(--voyager-color-live, #ED8936);
+  pointer-events: none;
+}
+
+/* v-portal stays invisible */
+.preview-frame .v-portal { display: none !important; }
+
+/* ── Frozen states ──────────────────────────────────────────────────────── */
+.frame--hover .shadow-lg {
+  box-shadow: var(--voyager-shadow-floating);
+  transform: translateY(-2px);
+}
+
+.frame--active .shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+  transform: scale(0.985);
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager UI upgrade preview — Tu Actividad">
+    <div class="preview-grid">
+
+      <!-- ── DEFAULT ─────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Default</p>
+        <div class="preview-frame">
+          <div class="p-4 rounded shadow-lg bg-coral-100"><div class="flex items-center"><div class="flex-1"><div class="relative inline-block px-3 py-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400"><path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path></svg> <h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Tu Actividad</h4> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400"><path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path></svg></div></div></div> <hr class="my-4 border-t border-gray-200"> <div class="space-y-4"><div class="space-y-3"><div class="bg-[#D3D6DF] rounded-lg w-8/12 h-[8px]"></div> <div class="bg-[#D3D6DF] rounded-lg w-6/12 h-[8px]"></div> <div class="bg-[#D3D6DF] rounded-lg w-4/12 h-[8px]"></div></div></div> <div class="v-portal" style="display: none;"></div></div>
+        </div>
+      </div>
+
+      <!-- ── HOVER (frozen) ──────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Hover</p>
+        <div class="preview-frame frame--hover">
+          <div class="p-4 rounded shadow-lg bg-coral-100"><div class="flex items-center"><div class="flex-1"><div class="relative inline-block px-3 py-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400"><path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path></svg> <h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Tu Actividad</h4> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400"><path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path></svg></div></div></div> <hr class="my-4 border-t border-gray-200"> <div class="space-y-4"><div class="space-y-3"><div class="bg-[#D3D6DF] rounded-lg w-8/12 h-[8px]"></div> <div class="bg-[#D3D6DF] rounded-lg w-6/12 h-[8px]"></div> <div class="bg-[#D3D6DF] rounded-lg w-4/12 h-[8px]"></div></div></div> <div class="v-portal" style="display: none;"></div></div>
+        </div>
+      </div>
+
+      <!-- ── PRESSED (frozen) ────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Pressed</p>
+        <div class="preview-frame frame--active">
+          <div class="p-4 rounded shadow-lg bg-coral-100"><div class="flex items-center"><div class="flex-1"><div class="relative inline-block px-3 py-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400"><path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path></svg> <h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Tu Actividad</h4> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400"><path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path></svg></div></div></div> <hr class="my-4 border-t border-gray-200"> <div class="space-y-4"><div class="space-y-3"><div class="bg-[#D3D6DF] rounded-lg w-8/12 h-[8px]"></div> <div class="bg-[#D3D6DF] rounded-lg w-6/12 h-[8px]"></div> <div class="bg-[#D3D6DF] rounded-lg w-4/12 h-[8px]"></div></div></div> <div class="v-portal" style="display: none;"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

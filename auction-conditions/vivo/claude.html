@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auction Conditions · Vivo Chips — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — token surface  ·  DESIGN.md §2 Color · §6 Radius · §7 Shadow
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);  /* #22005C */
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);  /* #3B1782 */
+  --voyager-color-vault-light:     oklch(0.44 0.18 285);  /* mid-step */
+  --voyager-color-live:            oklch(0.72 0.16 55);   /* #ED8936 */
+  --voyager-color-surface-card:    oklch(1 0 0);          /* #FFFFFF */
+  --voyager-color-surface-section: oklch(0.96 0.004 160); /* #F2F4F3 */
+  --voyager-color-surface-page:    oklch(0.98 0.004 160); /* #F8FAF9 */
+  --voyager-color-skeleton:        oklch(0.85 0.008 220); /* #D5D8DD */
+  --voyager-color-text-on-dark:    oklch(1 0 0);          /* white */
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.22 0.18 285) 50%, white);
+
+  /* Gradients */
+  --voyager-gradient-vault:        linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
+  --voyager-gradient-vault-vivid:  linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.44 0.18 285) 100%);
+
+  /* Radius */
+  --voyager-radius-sm:  4px;
+  --voyager-radius-md:  8px;
+  --voyager-radius-lg:  16px;
+
+  /* Shadow — DESIGN.md §7 */
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 12%);
+
+  /* Typography */
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  /* Motion */
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─── Canvas ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-display);
+  color: oklch(0.15 0.008 200);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.variants-col {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  text-align: center;
+}
+
+/* Locked dimensions per spec */
+.preview-frame {
+  width: 317px;
+  height: 189.88px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Shared layout utilities — frozen class names from outerHTML
+   ──────────────────────────────────────────────────────────────────────── */
+.preview-frame .flex         { display: flex; }
+.preview-frame .flex-wrap    { flex-wrap: wrap; }
+.preview-frame .justify-center { justify-content: center; }
+.preview-frame .items-center { align-items: center; }
+.preview-frame .p-2          { padding: 8px; }
+.preview-frame .px-2         { padding-left: 8px; padding-right: 8px; }
+.preview-frame .py-2         { padding-top: 8px; padding-bottom: 8px; }
+.preview-frame .mx-1         { margin-left: 4px; margin-right: 4px; }
+.preview-frame .my-2         { margin-top: 8px; margin-bottom: 8px; }
+.preview-frame .text-xs      { font-size: 11px; }
+.preview-frame .leading-tight{ line-height: 1.2; }
+.preview-frame .text-center  { text-align: center; }
+.preview-frame .font-display { font-family: var(--voyager-font-display); font-weight: 600; }
+
+/* Chip width: exactly 50% minus gap */
+.preview-frame .w-\[calc\(50\%-\.5rem\)\] { width: calc(50% - .5rem); }
+.preview-frame .h-\[42px\]  { height: 42px; }
+
+.preview-frame .rounded-md  { border-radius: var(--voyager-radius-sm, 4px); }
+.preview-frame .rounded-b-lg {
+  border-bottom-left-radius:  var(--voyager-radius-md, 8px);
+  border-bottom-right-radius: var(--voyager-radius-md, 8px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT 1 — Base (Solid vault / muted inactive)
+   ──────────────────────────────────────────────────────────────────────── */
+.v1 .bg-white {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+  box-shadow: var(--voyager-shadow-card);
+}
+
+/* Active chips */
+.v1 .bg-purple-300 {
+  background-color: var(--voyager-color-vault, #22005C);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+}
+
+/* Inactive chips — skeleton bg, vault text boosted for WCAG ~3.8:1 */
+.v1 .bg-gray-400 {
+  background-color: var(--voyager-color-surface-section, #F2F4F3);
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 65%, white);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT 2 — Gradient active chips (requested)
+   ──────────────────────────────────────────────────────────────────────── */
+.v2 .bg-white {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+  box-shadow: var(--voyager-shadow-card);
+}
+
+.v2 .bg-purple-300 {
+  background: var(--voyager-gradient-vault);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+  box-shadow: 0 4px 12px oklch(0.22 0.18 285 / 30%);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle shine overlay on gradient chips */
+.v2 .bg-purple-300::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    oklch(1 0 0 / 10%) 0%,
+    transparent 55%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.v2 .bg-gray-400 {
+  background-color: var(--voyager-color-surface-section, #F2F4F3);
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 65%, white);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT 3 — Modern: vivid gradient active + ghost inactive
+   Active = vault gradient + glow + shine
+   Inactive = ghost (surface + vault border 10% + muted text)
+   ──────────────────────────────────────────────────────────────────────── */
+.v3 .bg-white {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+  box-shadow: var(--voyager-shadow-card);
+}
+
+.v3 .bg-purple-300 {
+  background: var(--voyager-gradient-vault-vivid);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+  box-shadow:
+    0 4px 16px oklch(0.22 0.18 285 / 35%),
+    inset 0 1px 0 oklch(1 0 0 / 15%);  /* top edge highlight */
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+.v3 .bg-purple-300::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 12%) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Ghost inactive — no fill, vault border at 15%, boosted text ~4.3:1 */
+.v3 .bg-gray-400 {
+  background-color: transparent;
+  border: 1.5px solid color-mix(in oklch, var(--voyager-color-vault, #22005C) 15%, transparent);
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 70%, white);
+}
+
+/* text-white on all variants — overridden per chip by bg-* rules above */
+.preview-frame .text-white { color: var(--voyager-color-text-on-dark, #FFFFFF); }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Auction Conditions · Vivo chip grid — Voyager upgrade variants">
+    <div class="variants-col">
+
+      <!-- ── VARIANT 1 — Base ────────────────────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Base · Solid Vault</p>
+        <div class="preview-frame v1">
+          <div class="flex flex-wrap justify-center p-2 bg-white rounded-b-lg shadow"><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Con Fee de Habilitacion</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Con Precio Reserva</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Opción a Visitas</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Comisión</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Cuota mínima de participantes: 2</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Opción a Financiamiento</div></div>
+        </div>
+      </div>
+
+      <!-- ── VARIANT 2 — Gradient active (requested) ────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Gradient · Vault linear + shine</p>
+        <div class="preview-frame v2">
+          <div class="flex flex-wrap justify-center p-2 bg-white rounded-b-lg shadow"><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Con Fee de Habilitacion</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Con Precio Reserva</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Opción a Visitas</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Comisión</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Cuota mínima de participantes: 2</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Opción a Financiamiento</div></div>
+        </div>
+      </div>
+
+      <!-- ── VARIANT 3 — Modern: vivid gradient + ghost inactive ──────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Modern · Vivid gradient + Ghost inactive</p>
+        <div class="preview-frame v3">
+          <div class="flex flex-wrap justify-center p-2 bg-white rounded-b-lg shadow"><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Con Fee de Habilitacion</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Con Precio Reserva</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Opción a Visitas</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Comisión</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-purple-300">Cuota mínima de participantes: 2</div><div class="px-2 py-2 mx-1 my-2 w-[calc(50%-.5rem)] text-xs leading-tight text-center h-[42px] flex items-center justify-center text-white rounded-md font-display bg-gray-400">Sin Opción a Financiamiento</div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

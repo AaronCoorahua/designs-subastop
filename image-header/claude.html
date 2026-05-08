@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Image Header — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — token surface  ·  DESIGN.md §2 Color · §6 Radius · §7 Shadow
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-live:            oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-color-live-dark:       oklch(0.60 0.18 45);    /* deeper amber */
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);  /* #F8FAF9 */
+  --voyager-color-text-on-dark:    oklch(1 0 0);           /* #FFFFFF */
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.22 0.18 285) 50%, white);
+
+  /* Gradients — stacked backgrounds (no z-index issues) */
+  --voyager-gradient-live-v2:
+    linear-gradient(180deg, oklch(1 0 0 / 10%) 0%, oklch(1 0 0 / 0%) 55%),
+    linear-gradient(135deg, oklch(0.72 0.16 55) 0%, oklch(0.60 0.18 45) 100%);
+  --voyager-gradient-live-v3:
+    linear-gradient(180deg, oklch(1 0 0 / 14%) 0%, oklch(1 0 0 / 0%) 45%),
+    linear-gradient(135deg, oklch(0.76 0.19 58) 0%, oklch(0.55 0.21 38) 100%);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─── Canvas ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,    oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+.variants-col {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  text-align: center;
+}
+
+/* Locked dimensions per spec */
+.preview-frame { width: 448.99px; }
+
+/* ─── Frozen Tailwind class map ────────────────────────────────────────── */
+.preview-frame header { display: block; }
+.preview-frame h1,
+.preview-frame p { margin: 0; padding: 0; }
+
+.preview-frame .relative           { position: relative; }
+.preview-frame .h-\[60px\]         { height: 60px; }
+.preview-frame .pl-12              { padding-left: 48px; }
+.preview-frame .pr-5               { padding-right: 20px; }
+.preview-frame .py-3               { padding-top: 12px; padding-bottom: 12px; }
+.preview-frame .font-display       { font-family: var(--voyager-font-display); }
+.preview-frame .text-white         { color: var(--voyager-color-text-on-dark, #FFFFFF); }
+
+/* Back arrow — absolute centered vertically */
+.preview-frame .absolute           { position: absolute; }
+.preview-frame .left-0             { left: 0; }
+.preview-frame .px-4               { padding-left: 16px; padding-right: 16px; }
+.preview-frame .top-1\/2           { top: 50%; }
+.preview-frame .-translate-y-1\/2  { transform: translateY(-50%); }
+
+/* SVG icon */
+.preview-frame .w-8                { width: 32px; }
+.preview-frame .h-8                { height: 32px; }
+.preview-frame .-ml-2              { margin-left: -8px; }
+.preview-frame .fill-current       { fill: currentColor; }
+
+/* Typography */
+.preview-frame .text-lg            { font-size: 15px; }
+.preview-frame .font-bold          { font-weight: 700; }
+.preview-frame .leading-tight      { line-height: 1.2; }
+.preview-frame .truncate           { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.preview-frame .text-sm            { font-size: 12px; }
+.preview-frame .leading-normal     { line-height: 1.45; }
+
+/* Arrow SVG fallback when sprite doesn't load — show a text chevron */
+.preview-frame .absolute svg { display: block; }
+.preview-frame .absolute svg:not([width]) { opacity: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VARIANT 1 — Base · Solid Live
+   ═══════════════════════════════════════════════════════════════════════ */
+.v1 .bg-yellow-500 {
+  background-color: var(--voyager-color-live, #ED8936);
+  color: var(--voyager-color-vault, #22005C);
+}
+.v1 .bg-yellow-500 .text-white { color: var(--voyager-color-vault, #22005C); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VARIANT 2 — Gradient · Warm amber linear + top shine
+   Uses stacked backgrounds — no pseudo-element z-index concerns
+   ═══════════════════════════════════════════════════════════════════════ */
+.v2 .bg-yellow-500 {
+  background: var(--voyager-gradient-live-v2);
+  color: var(--voyager-color-vault, #22005C);
+}
+.v2 .bg-yellow-500 .text-white { color: var(--voyager-color-vault, #22005C); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VARIANT 3 — Modern · Vivid warm gradient + bottom glow
+   ═══════════════════════════════════════════════════════════════════════ */
+.v3 .bg-yellow-500 {
+  background: var(--voyager-gradient-live-v3);
+  box-shadow: 0 4px 20px oklch(0.72 0.16 55 / 28%);
+  color: var(--voyager-color-vault, #22005C);
+}
+.v3 .bg-yellow-500 .text-white { color: var(--voyager-color-vault, #22005C); }
+.v3 .text-lg {
+  letter-spacing: -0.01em;
+}
+/* Shared: vendor subtitle — vault at 72% for visual hierarchy */
+.v1 .bg-yellow-500 .text-sm,
+.v2 .bg-yellow-500 .text-sm,
+.v3 .bg-yellow-500 .text-sm {
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 72%, white);
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Image Header — Voyager upgrade variants">
+    <div class="variants-col">
+
+      <!-- ── VARIANT 1 — Base ──────────────────────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Base · Solid Live</p>
+        <div class="preview-frame v1">
+          <header fragment="19446fa5063" class="relative h-[60px] pl-12 pr-5 py-3 font-display text-white bg-yellow-500"><a href="/subascars" role="button" aria-pressed="true" class="absolute left-0 px-4 transform -translate-y-1/2 top-1/2"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-8 h-8 -ml-2 text-white fill-current"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/4app/assets/images/frontend/glyphs/svg-sprite.svg#glyphs-arrow-left" href="/4app/assets/images/frontend/glyphs/svg-sprite.svg#glyphs-arrow-left"></use></svg></a> <h1 class="text-lg font-bold leading-tight truncate">Volkswagen Gol 2015</h1> <p class="text-sm leading-normal truncate">Vendedor: SubasCars</p></header>
+        </div>
+      </div>
+
+      <!-- ── VARIANT 2 — Gradient ──────────────────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Gradient · Warm amber + shine</p>
+        <div class="preview-frame v2">
+          <header fragment="19446fa5063" class="relative h-[60px] pl-12 pr-5 py-3 font-display text-white bg-yellow-500"><a href="/subascars" role="button" aria-pressed="true" class="absolute left-0 px-4 transform -translate-y-1/2 top-1/2"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-8 h-8 -ml-2 text-white fill-current"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/4app/assets/images/frontend/glyphs/svg-sprite.svg#glyphs-arrow-left" href="/4app/assets/images/frontend/glyphs/svg-sprite.svg#glyphs-arrow-left"></use></svg></a> <h1 class="text-lg font-bold leading-tight truncate">Volkswagen Gol 2015</h1> <p class="text-sm leading-normal truncate">Vendedor: SubasCars</p></header>
+        </div>
+      </div>
+
+      <!-- ── VARIANT 3 — Modern ────────────────────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Modern · Vivid + Glow</p>
+        <div class="preview-frame v3">
+          <header fragment="19446fa5063" class="relative h-[60px] pl-12 pr-5 py-3 font-display text-white bg-yellow-500"><a href="/subascars" role="button" aria-pressed="true" class="absolute left-0 px-4 transform -translate-y-1/2 top-1/2"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-8 h-8 -ml-2 text-white fill-current"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/4app/assets/images/frontend/glyphs/svg-sprite.svg#glyphs-arrow-left" href="/4app/assets/images/frontend/glyphs/svg-sprite.svg#glyphs-arrow-left"></use></svg></a> <h1 class="text-lg font-bold leading-tight truncate">Volkswagen Gol 2015</h1> <p class="text-sm leading-normal truncate">Vendedor: SubasCars</p></header>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

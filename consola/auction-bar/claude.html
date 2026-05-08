@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auction Bar - Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault: #22005C;
+  --voyager-color-vault-mid: #3B1782;
+  --voyager-color-vault-dark: #2E0F70;
+  --voyager-color-live: #ED8936;
+  --voyager-color-live-mid: #F47A20;
+  --voyager-color-live-dark: #C65C14;
+  --voyager-surface-page: #F8FAF9;
+  --voyager-surface-card: #FFFFFF;
+  --voyager-surface-section: #F2F4F3;
+  --voyager-surface-transparent: #FFFFFF00;
+  --voyager-text-primary: #191C1C;
+  --voyager-text-secondary: #494550;
+  --voyager-text-on-dark: #FFFFFF;
+  --voyager-text-on-dark-muted: #FFFFFF99;
+  --voyager-border-ghost: #22005C1A;
+  --voyager-divider-section: #22005C0D;
+  --voyager-vault-tint: #927DB2;
+  --voyager-live-tint: #F3B071;
+  --voyager-gradient-vault: linear-gradient(135deg, var(--voyager-color-vault-dark, #2E0F70) 0%, var(--voyager-color-vault, #22005C) 100%);
+  --voyager-gradient-live: linear-gradient(135deg, var(--voyager-color-live, #ED8936) 0%, var(--voyager-color-live-mid, #F47A20) 100%);
+  --voyager-font-ui: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --voyager-font-number: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, var(--voyager-border-ghost, #22005C1A) 0%, var(--voyager-surface-transparent, #FFFFFF00) 60%),
+    var(--voyager-surface-page, #F8FAF9);
+  color: var(--voyager-text-primary, #191C1C);
+  font-family: var(--voyager-font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 336.99px);
+  gap: 32px;
+  align-items: start;
+  justify-content: center;
+}
+
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.variant-label {
+  margin: 0;
+  color: color-mix(in srgb, var(--voyager-color-vault, #22005C) 62%, var(--voyager-surface-card, #FFFFFF));
+  font-family: var(--voyager-font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.preview-frame {
+  width: 336.99px;
+  height: 375.99px;
+  overflow: hidden;
+}
+
+.preview-frame .auction-content-events {
+  width: 336.99px;
+  height: 375.99px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--voyager-text-primary, #191C1C);
+  background: var(--voyager-surface-card, #FFFFFF);
+  font-family: var(--voyager-font-ui);
+}
+
+.preview-frame .room-offer {
+  width: 336.99px;
+  height: 88px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  background: var(--voyager-gradient-vault, linear-gradient(135deg, var(--voyager-color-vault-dark, #2E0F70) 0%, var(--voyager-color-vault, #22005C) 100%));
+}
+
+.preview-frame .offer-update {
+  width: 100%;
+  height: 88px;
+}
+
+.preview-frame .offer-update p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 88px;
+  margin: 0;
+  padding: 0 18px;
+}
+
+.preview-frame .offer-update p > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: 12px;
+}
+
+.preview-frame .title-oferta {
+  display: block;
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.preview-frame .offer-update strong {
+  display: block;
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  font-family: var(--voyager-font-number);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 36px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.preview-frame .icon {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}
+
+.preview-frame .offer-update .icon-i10 {
+  width: 48px;
+  height: 48px;
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.preview-frame .offer-update .icon-i10::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 9px;
+  width: 26px;
+  height: 30px;
+  border: 3px solid currentColor;
+  border-radius: 7px;
+}
+
+.preview-frame .offer-update .icon-i10::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 6px;
+  width: 24px;
+  height: 24px;
+  border: 3px solid currentColor;
+  border-radius: 9999px;
+  background: var(--voyager-color-vault, #22005C);
+}
+
+.preview-frame .auction-room {
+  width: 336.99px;
+  height: 287.99px;
+  overflow: hidden;
+  background: var(--voyager-surface-card, #FFFFFF);
+}
+
+.preview-frame .auction-content {
+  position: relative;
+  width: 336.99px;
+  height: 287.99px;
+  overflow: hidden;
+  padding: 14px 16px 16px;
+  background: var(--voyager-surface-card, #FFFFFF);
+}
+
+.preview-frame .message-events {
+  width: 100%;
+  height: 257.99px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+}
+
+.preview-frame .message-events li {
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.preview-frame .mensajeBox {
+  display: inline-block;
+  min-height: 39px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 16px;
+  border-radius: 14px;
+  color: var(--voyager-color-vault, #22005C);
+  background: var(--voyager-surface-section, #F2F4F3);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 39px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.preview-frame .mensajeBox strong {
+  color: var(--voyager-color-vault, #22005C);
+  font-weight: 700;
+}
+
+.preview-frame .ofertUser {
+  margin-left: 0;
+  color: var(--voyager-color-vault, #22005C);
+  background: color-mix(in srgb, var(--voyager-surface-card, #FFFFFF) 86%, var(--voyager-color-vault, #22005C));
+}
+
+.preview-frame .ofertUser strong:first-child {
+  color: var(--voyager-color-live, #ED8936);
+}
+
+.preview-frame .robotMsg {
+  color: var(--voyager-color-vault, #22005C);
+  background: var(--voyager-surface-section, #F2F4F3);
+}
+
+.preview-frame .robotCount1 {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  background: var(--voyager-color-vault, #22005C);
+}
+
+.preview-frame .robotCount1 strong {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.preview-frame .auction-message,
+.preview-frame .event-auction-end {
+  width: 336.99px;
+  height: 287.99px;
+}
+
+.preview-frame .message-auction-counter,
+.preview-frame .message-auction-flex,
+.preview-frame .message-auction-process,
+.preview-frame .message-auction-pause,
+.preview-frame .message-end {
+  width: 100%;
+  height: 100%;
+}
+
+.preview-frame .info-auction-text,
+.preview-frame .info-auction-loader,
+.preview-frame .info-auction-label,
+.preview-frame .info-auction-counter,
+.preview-frame .message-end-text,
+.preview-frame .message-end-price,
+.preview-frame .message-end-info {
+  margin: 0;
+}
+
+.preview-frame .spinner {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 6px;
+}
+
+.preview-frame .bounce1,
+.preview-frame .bounce2,
+.preview-frame .bounce3 {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--voyager-color-live, #ED8936);
+}
+
+.v-live .auction-content-events {
+  background: var(--voyager-surface-card, #FFFFFF);
+}
+
+.v-live .room-offer {
+  background: var(--voyager-gradient-live, linear-gradient(135deg, var(--voyager-color-live, #ED8936) 0%, var(--voyager-color-live-mid, #F47A20) 100%));
+}
+
+.v-live .offer-update .icon-i10::after {
+  background: var(--voyager-color-live-dark, #C65C14);
+}
+
+.v-live .mensajeBox {
+  color: var(--voyager-color-vault, #22005C);
+  background: var(--voyager-surface-section, #F2F4F3);
+}
+
+.v-live .mensajeBox strong {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+.v-live .ofertUser strong:first-child {
+  color: var(--voyager-color-live-dark, #C65C14);
+}
+
+.v-live .ofertUser {
+  background: color-mix(in srgb, var(--voyager-surface-card, #FFFFFF) 86%, var(--voyager-color-live, #ED8936));
+}
+
+.v-live .robotCount1 {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  background: var(--voyager-color-live-dark, #C65C14);
+}
+
+.v-live .robotCount1 strong {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.v-spotlight .auction-content-events {
+  background: var(--voyager-surface-section, #F2F4F3);
+}
+
+.v-spotlight .room-offer {
+  background: var(--voyager-gradient-vault, linear-gradient(135deg, var(--voyager-color-vault, #22005C) 0%, var(--voyager-color-vault-mid, #3B1782) 100%));
+}
+
+.v-spotlight .auction-room,
+.v-spotlight .auction-content {
+  background: var(--voyager-surface-section, #F2F4F3);
+}
+
+.v-spotlight .auction-content {
+  padding: 14px 20px 16px;
+}
+
+.v-spotlight .message-events li {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 11px;
+}
+
+.v-spotlight .mensajeBox {
+  min-height: 30px;
+  padding: 0 16px;
+  border: 1px solid var(--voyager-divider-section, #22005C0D);
+  border-radius: 9999px;
+  color: var(--voyager-text-secondary, #494550);
+  background: var(--voyager-surface-card, #FFFFFF);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.v-spotlight .mensajeBox strong {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+.v-spotlight .ofertUser {
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  background: var(--voyager-gradient-live, linear-gradient(135deg, var(--voyager-color-live, #ED8936) 0%, var(--voyager-color-live-mid, #F47A20) 100%));
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--voyager-color-live, #ED8936) 34%, var(--voyager-surface-transparent, #FFFFFF00));
+  font-size: 12px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.v-spotlight .ofertUser strong,
+.v-spotlight .ofertUser strong:first-child {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.v-spotlight .robotCount1 {
+  min-height: 38px;
+  padding: 0 28px;
+  border: 1px solid color-mix(in srgb, var(--voyager-color-vault, #22005C) 12%, var(--voyager-color-vault-mid, #3B1782));
+  color: var(--voyager-text-on-dark, #FFFFFF);
+  background: var(--voyager-gradient-vault, linear-gradient(135deg, var(--voyager-color-vault, #22005C) 0%, var(--voyager-color-vault-mid, #3B1782) 100%));
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--voyager-color-vault, #22005C) 20%, var(--voyager-surface-transparent, #FFFFFF00));
+  font-size: 14px;
+  line-height: 38px;
+}
+
+.v-spotlight .robotCount1 strong {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.v-spotlight .robotMsg {
+  color: var(--voyager-text-secondary, #494550);
+  background: var(--voyager-surface-card, #FFFFFF);
+}
+
+.v-spotlight .robotMsg strong {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+@media (max-width: 1120px) {
+  .preview-grid {
+    grid-template-columns: repeat(2, 336.99px);
+  }
+}
+
+@media (max-width: 780px) {
+  .preview-grid {
+    grid-template-columns: 336.99px;
+  }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Auction Bar - Voyager upgrade variants">
+    <div class="preview-grid">
+      <section class="variant-block">
+        <p class="variant-label">Variante morada</p>
+        <div class="preview-frame v-vault">
+<div class="auction-content-events">
+                            <div class="room-offer">
+                                <div class="offer-update">
+                                    <p><i class="icon icon-i10"></i><span><span class="title-oferta">Propuesta/Bid Actual</span><strong>US$  5,079</strong></span>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="auction-room">
+                                <div class="auction-content" id="auctionContent">
+                                    <ul class="message-events" id="messageAuctionList" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+
+                                    <li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">¡Ya puedes enviar tus bids!</div></li><li><div class="mensajeBox ofertUser" style="transform-origin: left center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1; margin-left: 0px;"><strong>KAHTH4</strong> ha propuesto <strong> US$ 5,079</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li><li><div class="mensajeBox robotCount1" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">A la <strong>una</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li></ul>
+
+                                    <div class="auction-message" style="display: none;">
+                                        <div class="message-auction-counter">
+                                            <div class="message-auction-flex">
+                                                <div>
+                                                    <p class="info-auction-text" id="textWelcome">¡Bienvenido al proceso en vivo!</p>
+                                                    <div class="info-auction-loader" id="mainTitle">Recibiendo <br>participantes
+                                                        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+                                                    </div>
+                                                    <div class="info-auction-label" id="textExtended" style="display:none">Inicio EXTENDIDO</div>
+                                                    <p class="info-auction-text">Inicia en:</p>
+                                                    <p class="info-auction-counter" id="timetoini"><i class="icon icon-n3"></i> <span>00</span>:<span>00</span>:<span>00</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     
+                                        <div style="display:none;" class="message-auction-process">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">Procesando<br><strong>un momento por favor</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                        
+                                        <div class="message-auction-pause" style="display:none">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">El proceso ha sido<br><strong>pausado</strong><br><strong>¡Espera por favor!</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-auction-end" style="display:none">
+                                
+                                <div class="message-end end-auction-outoffer" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n9"></i></p>
+                                    <p class="message-end-text">El proceso ha terminado<br><span class="inner-text">sin bids</span></p>
+                                </div>
+                                
+                                <div class="message-end end-auction-win" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 9,800</span></p>
+                                    <p class="message-end-info">Comisión: US$ 212.00</p>
+                                </div>
+                                
+                                <div class="message-end end-auction-major" style="display: none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 3,800</span></p>
+                                    <p class="message-end-info">Precio Reserva: <strong>no alcanzado</strong></p>
+                                </div>
+                                
+                                <div class="message-end end-auction-connectivity" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n10"></i></p>
+                                    <p class="message-end-text">Te informamos que debido<br>problemas de<br><span class="inner-text">conectividad</span><br>este proceso se ha detenido.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+        </div>
+      </section>
+
+      <section class="variant-block">
+        <p class="variant-label">Variante naranja</p>
+        <div class="preview-frame v-live">
+<div class="auction-content-events">
+                            <div class="room-offer">
+                                <div class="offer-update">
+                                    <p><i class="icon icon-i10"></i><span><span class="title-oferta">Propuesta/Bid Actual</span><strong>US$  5,079</strong></span>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="auction-room">
+                                <div class="auction-content" id="auctionContent">
+                                    <ul class="message-events" id="messageAuctionList" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+
+                                    <li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">¡Ya puedes enviar tus bids!</div></li><li><div class="mensajeBox ofertUser" style="transform-origin: left center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1; margin-left: 0px;"><strong>KAHTH4</strong> ha propuesto <strong> US$ 5,079</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li><li><div class="mensajeBox robotCount1" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">A la <strong>una</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li></ul>
+
+                                    <div class="auction-message" style="display: none;">
+                                        <div class="message-auction-counter">
+                                            <div class="message-auction-flex">
+                                                <div>
+                                                    <p class="info-auction-text" id="textWelcome">¡Bienvenido al proceso en vivo!</p>
+                                                    <div class="info-auction-loader" id="mainTitle">Recibiendo <br>participantes
+                                                        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+                                                    </div>
+                                                    <div class="info-auction-label" id="textExtended" style="display:none">Inicio EXTENDIDO</div>
+                                                    <p class="info-auction-text">Inicia en:</p>
+                                                    <p class="info-auction-counter" id="timetoini"><i class="icon icon-n3"></i> <span>00</span>:<span>00</span>:<span>00</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     
+                                        <div style="display:none;" class="message-auction-process">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">Procesando<br><strong>un momento por favor</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                        
+                                        <div class="message-auction-pause" style="display:none">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">El proceso ha sido<br><strong>pausado</strong><br><strong>¡Espera por favor!</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-auction-end" style="display:none">
+                                
+                                <div class="message-end end-auction-outoffer" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n9"></i></p>
+                                    <p class="message-end-text">El proceso ha terminado<br><span class="inner-text">sin bids</span></p>
+                                </div>
+                                
+                                <div class="message-end end-auction-win" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 9,800</span></p>
+                                    <p class="message-end-info">Comisión: US$ 212.00</p>
+                                </div>
+                                
+                                <div class="message-end end-auction-major" style="display: none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 3,800</span></p>
+                                    <p class="message-end-info">Precio Reserva: <strong>no alcanzado</strong></p>
+                                </div>
+                                
+                                <div class="message-end end-auction-connectivity" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n10"></i></p>
+                                    <p class="message-end-text">Te informamos que debido<br>problemas de<br><span class="inner-text">conectividad</span><br>este proceso se ha detenido.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+        </div>
+      </section>
+
+      <section class="variant-block">
+        <p class="variant-label">Variante moderna</p>
+        <div class="preview-frame v-spotlight">
+<div class="auction-content-events">
+                            <div class="room-offer">
+                                <div class="offer-update">
+                                    <p><i class="icon icon-i10"></i><span><span class="title-oferta">Propuesta/Bid Actual</span><strong>US$  5,079</strong></span>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="auction-room">
+                                <div class="auction-content" id="auctionContent">
+                                    <ul class="message-events" id="messageAuctionList" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+
+                                    <li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">¡Ya puedes enviar tus bids!</div></li><li><div class="mensajeBox ofertUser" style="transform-origin: left center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1; margin-left: 0px;"><strong>KAHTH4</strong> ha propuesto <strong> US$ 5,079</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li><li><div class="mensajeBox robotCount1" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">A la <strong>una</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li></ul>
+
+                                    <div class="auction-message" style="display: none;">
+                                        <div class="message-auction-counter">
+                                            <div class="message-auction-flex">
+                                                <div>
+                                                    <p class="info-auction-text" id="textWelcome">¡Bienvenido al proceso en vivo!</p>
+                                                    <div class="info-auction-loader" id="mainTitle">Recibiendo <br>participantes
+                                                        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+                                                    </div>
+                                                    <div class="info-auction-label" id="textExtended" style="display:none">Inicio EXTENDIDO</div>
+                                                    <p class="info-auction-text">Inicia en:</p>
+                                                    <p class="info-auction-counter" id="timetoini"><i class="icon icon-n3"></i> <span>00</span>:<span>00</span>:<span>00</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     
+                                        <div style="display:none;" class="message-auction-process">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">Procesando<br><strong>un momento por favor</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                        
+                                        <div class="message-auction-pause" style="display:none">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">El proceso ha sido<br><strong>pausado</strong><br><strong>¡Espera por favor!</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-auction-end" style="display:none">
+                                
+                                <div class="message-end end-auction-outoffer" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n9"></i></p>
+                                    <p class="message-end-text">El proceso ha terminado<br><span class="inner-text">sin bids</span></p>
+                                </div>
+                                
+                                <div class="message-end end-auction-win" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 9,800</span></p>
+                                    <p class="message-end-info">Comisión: US$ 212.00</p>
+                                </div>
+                                
+                                <div class="message-end end-auction-major" style="display: none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 3,800</span></p>
+                                    <p class="message-end-info">Precio Reserva: <strong>no alcanzado</strong></p>
+                                </div>
+                                
+                                <div class="message-end end-auction-connectivity" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n10"></i></p>
+                                    <p class="message-end-text">Te informamos que debido<br>problemas de<br><span class="inner-text">conectividad</span><br>este proceso se ha detenido.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

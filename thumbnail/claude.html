@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Thumbnail Strip — Acento Inferior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:       oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-live:        oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-surface-page:      oklch(0.98 0.004 160);  /* #F8FAF9 */
+  --voyager-radius-sm:         4px;
+  --voyager-text-muted:        oklch(0.38 0.04 280 / 55%);
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+  --voyager-font-display:      "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-surface-page);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-text-muted);
+  text-align: center;
+}
+
+.preview-frame {
+  width: 437px;
+}
+
+.preview-frame #product-slider-thumbs {
+  overflow: hidden;
+  width: 437px;
+}
+
+.preview-frame .swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.preview-frame .swiper-slide {
+  flex-shrink: 0;
+  width: 105.5px;
+  margin-right: 5px;
+}
+
+.preview-frame img.object-cover { object-fit: cover; }
+.preview-frame img.object-center { object-position: center; }
+.preview-frame img.rounded { border-radius: var(--voyager-radius-sm, 4px); }
+.preview-frame img.cursor-pointer { cursor: pointer; }
+.preview-frame img {
+  display: block;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition:
+    opacity 150ms var(--voyager-ease-default),
+    box-shadow 150ms var(--voyager-ease-default);
+}
+
+/* Acento · Inferior */
+.thumbnail-accent .swiper-slide-thumb-active img {
+  box-shadow: inset 0 -5px 0 0 var(--voyager-color-vault, #22005C);
+  opacity: 1;
+}
+
+.thumbnail-accent .swiper-slide:not(.swiper-slide-thumb-active) img {
+  opacity: 0.55;
+}
+
+.thumbnail-accent .swiper-slide:not(.swiper-slide-thumb-active):hover img {
+  opacity: 1;
+  box-shadow: inset 0 -5px 0 0 color-mix(in oklch, var(--voyager-color-vault, #22005C) 50%, transparent);
+}
+</style>
+</head>
+<body>
+<main class="preview-stage" aria-label="Thumbnail Strip — Acento Inferior">
+  <div class="variant-block">
+    <p class="variant-label">Acento · Inferior</p>
+    <div class="preview-frame thumbnail-accent">
+      <div id="product-slider-thumbs" class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-thumbs">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide swiper-slide-visible" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ed48327.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide swiper-slide-visible swiper-slide-next" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ecd18d9.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0edccc99.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide swiper-slide-visible" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ecd2ad9.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ec7530b.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ed48714.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ed13703.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0edcd5b7.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ed13755.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0edca769.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0edcd22c.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0eb3788e.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0eb67356.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0eb96945.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ebc3aa1.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+          <div class="swiper-slide" style="width: 105.5px; margin-right: 5px;"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/60678/s_698cf0ec756ab.jpeg" width="106" height="98" class="object-cover object-center rounded cursor-pointer" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+document.querySelectorAll(".preview-frame").forEach(function (frame) {
+  frame.querySelectorAll(".swiper-slide").forEach(function (slide) {
+    slide.addEventListener("click", function () {
+      frame.querySelectorAll(".swiper-slide").forEach(function (s) {
+        s.classList.remove("swiper-slide-thumb-active", "swiper-slide-active");
+      });
+      slide.classList.add("swiper-slide-thumb-active", "swiper-slide-active");
+    });
+  });
+});
+</script>
+<script src="../variant-filter.js"></script>
+</body>
+</html>

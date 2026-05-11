@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs - Agrupados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, rgba(34, 0, 92, 0.05), transparent 60%),
+    radial-gradient(ellipse 55% 40% at bottom right, rgba(237, 137, 54, 0.06), transparent 55%),
+    #f8faf9;
+  color: #1a2122;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 56px 24px 72px;
+}
+
+header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.header-eyebrow {
+  margin: 0 0 10px;
+  color: oklch(0.64 0.15 50);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, oklch(0.22 0.18 285), oklch(0.31 0.18 248));
+  background-clip: text;
+  color: transparent;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.header-sub {
+  margin: 0;
+  color: rgba(79, 71, 99, 0.7);
+  font-size: 15px;
+}
+
+.top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.count-pill,
+.action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid rgba(34, 0, 92, 0.1);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 8px 18px oklch(0.22 0.18 285 / 5%);
+  color: oklch(0.22 0.18 285);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.count-pill span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: oklch(0.72 0.16 55);
+  color: white;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.action-link:hover {
+  background: rgba(34, 0, 92, 0.04);
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.preview-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(34, 0, 92, 0.08);
+  border-bottom: 4px solid oklch(0.22 0.18 285);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px oklch(0.22 0.18 285 / 6%);
+}
+
+.preview-header {
+  display: grid;
+  gap: 8px;
+  min-height: 64px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(34, 0, 92, 0.08);
+  background:
+    linear-gradient(135deg, rgba(34, 0, 92, 0.07), transparent 56%),
+    #ffffff;
+}
+
+.preview-title {
+  margin: 0 0 4px;
+  color: oklch(0.22 0.18 285);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.preview-path,
+.preview-variant {
+  margin: 0;
+  overflow: hidden;
+  color: rgba(79, 71, 99, 0.62);
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-variant {
+  color: rgba(34, 0, 92, 0.78);
+  font-weight: 800;
+}
+
+.preview-frame {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: 0;
+  background: #f2f4f3;
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+  border: 1px dashed rgba(34, 0, 92, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(79, 71, 99, 0.72);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 920px) {
+  .catalog {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 34px 14px 48px;
+  }
+
+  header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .top-actions {
+    justify-content: flex-start;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .preview-frame {
+    height: 560px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <p class="header-eyebrow">VMC Subastas - Selección agrupada</p>
+      <h1>Diseños agrupados</h1>
+      <p class="header-sub">Solo aparecen los diseños y variantes seleccionadas desde el catálogo.</p>
+    </div>
+    <div class="top-actions">
+      <div class="count-pill"><span id="selectedCount">0</span> items</div>
+      <a class="action-link" href="index.html">Editar selección</a>
+    </div>
+  </header>
+
+  <main class="catalog" id="catalog" aria-label="Previews agrupados"></main>
+</div>
+
+<script>
+const catalog = document.getElementById("catalog");
+const selectedCount = document.getElementById("selectedCount");
+
+function readSelection() {
+  const hashParams = new URLSearchParams(window.location.hash.slice(1));
+  const hashSelection = hashParams.get("selection");
+
+  if (hashSelection) {
+    try {
+      return JSON.parse(hashSelection);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  try {
+    return JSON.parse(window.localStorage.getItem("subastop-group-selection") || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function buildPreviewSrc(item) {
+  const variants = getSelectedVariants(item);
+  if (variants.length === 0) {
+    return item.path;
+  }
+
+  const params = new URLSearchParams();
+  params.set("variantIndices", variants.map(function (variant) {
+    return variant.index;
+  }).join(","));
+  params.set("variants", JSON.stringify(variants.map(function (variant) {
+    return variant.label;
+  })));
+  return `${item.path}?${params.toString()}`;
+}
+
+function getSelectedVariants(item) {
+  if (Array.isArray(item.variants)) {
+    return item.variants.filter(function (variant) {
+      return variant && Number.isInteger(Number(variant.index)) && variant.label;
+    }).map(function (variant) {
+      return {
+        index: Number(variant.index),
+        label: variant.label
+      };
+    });
+  }
+
+  if (item.variantIndex !== "" && item.variantIndex !== null && item.variantIndex !== undefined && item.variantLabel) {
+    return [{
+      index: Number(item.variantIndex),
+      label: item.variantLabel
+    }];
+  }
+
+  return [];
+}
+
+function createCard(item) {
+  const selectedVariants = getSelectedVariants(item);
+  const article = document.createElement("article");
+  article.className = "preview-card";
+
+  const header = document.createElement("div");
+  header.className = "preview-header";
+
+  const title = document.createElement("h2");
+  title.className = "preview-title";
+  title.textContent = item.title;
+
+  const path = document.createElement("p");
+  path.className = "preview-path";
+  path.textContent = item.path;
+
+  const variant = document.createElement("p");
+  variant.className = "preview-variant";
+  variant.textContent = selectedVariants.length > 0
+    ? `Variantes: ${selectedVariants.map(function (selected) { return selected.label; }).join(" + ")}`
+    : "Todas las variantes";
+
+  const iframe = document.createElement("iframe");
+  iframe.className = "preview-frame";
+  iframe.loading = "lazy";
+  iframe.title = selectedVariants.length > 0
+    ? `${item.title} - ${selectedVariants.map(function (selected) { return selected.label; }).join(" + ")}`
+    : item.title;
+  iframe.src = buildPreviewSrc(item);
+
+  header.append(title, path, variant);
+  article.append(header, iframe);
+  return article;
+}
+
+function render() {
+  const selection = readSelection().filter(function (item) {
+    return item && item.title && item.path;
+  });
+
+  selectedCount.textContent = String(selection.length);
+  catalog.textContent = "";
+
+  if (selection.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = "No hay diseños seleccionados. Vuelve al catálogo y elige los componentes que quieres agrupar.";
+    catalog.appendChild(empty);
+    return;
+  }
+
+  selection.forEach(function (item) {
+    catalog.appendChild(createCard(item));
+  });
+}
+
+window.addEventListener("message", function (event) {
+  if (!event.data || event.data.type !== "subastop:variant-height") return;
+
+  document.querySelectorAll("iframe").forEach(function (iframe) {
+    if (iframe.contentWindow === event.source) {
+      iframe.style.height = `${Math.max(event.data.height + 24, 240)}px`;
+    }
+  });
+});
+
+render();
+</script>
+</body>
+</html>

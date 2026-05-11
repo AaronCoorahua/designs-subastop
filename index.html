@@ -32,10 +32,6 @@ body {
 }
 
 header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 20px;
-  align-items: end;
   margin-bottom: 28px;
 }
 
@@ -64,18 +60,40 @@ h1 {
   font-size: 15px;
 }
 
-.count-pill {
-  display: inline-flex;
+.catalog-actions {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px 12px;
+  border: 1px solid rgba(34, 0, 92, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 28px oklch(0.22 0.18 285 / 10%), 0 2px 8px oklch(0.22 0.18 285 / 6%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  min-width: 140px;
+}
+
+.count-pill,
+.action-button {
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   min-height: 36px;
   padding: 7px 12px;
   border: 1px solid rgba(34, 0, 92, 0.1);
-  border-radius: 999px;
+  border-radius: 8px;
   background: #fff;
-  box-shadow: 0 8px 18px oklch(0.22 0.18 285 / 5%);
+  box-shadow: 0 2px 6px oklch(0.22 0.18 285 / 5%);
   color: oklch(0.22 0.18 285);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -95,6 +113,31 @@ h1 {
   line-height: 1;
 }
 
+.action-button {
+  border-color: rgba(34, 0, 92, 0.16);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.action-button:hover:not(:disabled) {
+  background: rgba(34, 0, 92, 0.04);
+}
+
+.action-button.primary {
+  border-color: oklch(0.22 0.18 285);
+  background: oklch(0.22 0.18 285);
+  color: #fff;
+}
+
+.action-button.primary:hover:not(:disabled) {
+  background: oklch(0.30 0.20 285);
+}
+
+.action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .catalog {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -111,9 +154,15 @@ h1 {
   box-shadow: 0 8px 20px oklch(0.22 0.18 285 / 6%);
 }
 
+.preview-card.is-selected {
+  border-color: rgba(34, 0, 92, 0.28);
+  box-shadow: 0 12px 28px oklch(0.22 0.18 285 / 12%);
+}
+
 .preview-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
   align-items: center;
   min-height: 64px;
   padding: 14px 16px;
@@ -141,6 +190,98 @@ h1 {
   white-space: nowrap;
 }
 
+.design-controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+}
+
+.design-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  color: oklch(0.22 0.18 285);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.design-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: oklch(0.22 0.18 285);
+}
+
+.variant-control {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.variant-control span,
+.no-variants {
+  color: rgba(79, 71, 99, 0.58);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.variant-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.variant-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid rgba(34, 0, 92, 0.14);
+  border-radius: 999px;
+  background: #fff;
+  color: rgba(34, 0, 92, 0.78);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.variant-option:hover {
+  background: rgba(34, 0, 92, 0.04);
+}
+
+.variant-option input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: oklch(0.22 0.18 285);
+  flex: 0 0 auto;
+}
+
+.variant-option span {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.no-variants {
+  align-self: center;
+  justify-self: end;
+}
+
 .preview-frame {
   display: block;
   width: 100%;
@@ -157,6 +298,12 @@ footer {
   font-size: 12px;
 }
 
+.catalog-actions-divider {
+  height: 1px;
+  background: rgba(34, 0, 92, 0.1);
+  margin: 2px 0;
+}
+
 @media (max-width: 920px) {
   .catalog {
     grid-template-columns: 1fr;
@@ -168,17 +315,26 @@ footer {
     padding: 34px 14px 48px;
   }
 
-  header {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-
   h1 {
     font-size: 34px;
   }
 
+  .catalog-actions {
+    right: 10px;
+    min-width: 120px;
+    padding: 10px 8px;
+  }
+
   .preview-header {
     grid-template-columns: 1fr;
+  }
+
+  .design-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .no-variants {
+    justify-self: start;
   }
 
   .preview-frame {
@@ -194,7 +350,13 @@ footer {
       <p class="header-eyebrow">VMC Subastas - Design System Refactor</p>
       <h1>Subastop Designs</h1>
     </div>
-    <div class="count-pill"><span>16</span> componentes</div>
+    <div class="catalog-actions">
+      <div class="count-pill"><span id="selectedCount">0</span> seleccionados</div>
+      <div class="catalog-actions-divider"></div>
+      <button class="action-button" type="button" id="selectAllButton">Sel. todo</button>
+      <button class="action-button" type="button" id="clearButton">Limpiar</button>
+      <button class="action-button primary" type="button" id="groupButton" disabled>Agrupar</button>
+    </div>
   </header>
 
   <main class="catalog" aria-label="Previews Claude">
@@ -311,6 +473,26 @@ footer {
     <article class="preview-card">
       <div class="preview-header">
         <div>
+          <h2 class="preview-title">Detail Card - Cerrada</h2>
+          <p class="preview-path">detail-card/cerrada/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="detail-card/cerrada/claude.html" loading="lazy" title="Detail Card Cerrada"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - En Vivo</h2>
+          <p class="preview-path">detail-card/en vivo/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="detail-card/en vivo/claude.html" loading="lazy" title="Detail Card En Vivo"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
           <h2 class="preview-title">Image Header</h2>
           <p class="preview-path">image-header/claude.html</p>
         </div>
@@ -358,11 +540,313 @@ footer {
       <iframe class="preview-frame" src="login-form/claude.html" loading="lazy" title="Login Form"></iframe>
     </article>
 
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Thumbnail Strip</h2>
+          <p class="preview-path">thumbnail/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="thumbnail/claude.html" loading="lazy" title="Thumbnail Strip"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Sidebar Nav</h2>
+          <p class="preview-path">sidebar/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="sidebar/claude.html" loading="lazy" title="Sidebar Nav"></iframe>
+    </article>
+
   </main>
 
   <footer>
     <p>Root: <code>designs-subastop/index.html</code></p>
   </footer>
 </div>
+<script>
+const DESIGN_VARIANTS = {
+  "user-profile-card/claude.html": [
+    "Default",
+    "Hover"
+  ],
+  "auction-conditions/vivo/claude.html": [
+    "Modern · Vivid gradient + Ghost inactive",
+    "Secondary gradient · vault-900→vault-800 · conditions only"
+  ],
+  "auction-conditions/negociable/claude.html": [
+    "Modern · Vivid gradient + Ghost inactive",
+    "Secondary gradient · vault-900→vault-800 · conditions only"
+  ],
+  "consola/info/claude.html": [
+    "Variante morada",
+    "Variante naranja"
+  ],
+  "consola/users/claude.html": [
+    "Variante morada",
+    "Variante naranja",
+    "Sin bids"
+  ],
+  "consola/bid-button/claude.html": [
+    "Activo",
+    "Disabled"
+  ],
+  "consola/header-auction-live/claude.html": [
+    "Vault live",
+    "Placa live"
+  ],
+  "consola/header/claude.html": [
+    "Vault status",
+    "Oferta live"
+  ],
+  "consola/auction-bar/claude.html": [
+    "Auction Bar moderna",
+    "Auction Content Events"
+  ],
+  "detail-card/negociable/claude.html": [
+    "Base · Solid",
+    "Gradient · Vault + Negotiable shine",
+    "Modern · Vivid + Bold glow"
+  ],
+  "detail-card/cerrada/claude.html": [
+    "Naranja Sólido",
+    "Glass Dark · Transparente",
+    "Vault Premium"
+  ],
+  "detail-card/en vivo/claude.html": [
+    "Gradient · Inicia fecha",
+    "Gradient · Hoy"
+  ],
+  "image-header/claude.html": [
+    "Base · Solid Live",
+    "Gradient · Warm amber + shine",
+    "Modern · Vivid + Glow"
+  ],
+  "login-form/claude.html": [
+    "Base · Desactivado",
+    "Gradient · Modern"
+  ],
+  "thumbnail/claude.html": [
+    "Acento · Inferior"
+  ],
+  "wallet/claude.html": [
+    "Default",
+    "Hover",
+    "Pressed"
+  ],
+  "activity/claude.html": [
+    "Default"
+  ],
+  "recommended/claude.html": [
+    "Default"
+  ],
+  "sidebar/claude.html": [
+    "Mañana",
+    "Próximamente",
+    "Stroke · Modern"
+  ]
+};
+
+const selectedCount = document.getElementById("selectedCount");
+const groupButton = document.getElementById("groupButton");
+const selectAllButton = document.getElementById("selectAllButton");
+const clearButton = document.getElementById("clearButton");
+const cards = Array.from(document.querySelectorAll(".preview-card"));
+
+function buildPreviewSrc(path, selectedVariants) {
+  if (!selectedVariants || selectedVariants.length === 0) return path;
+
+  const params = new URLSearchParams();
+  params.set("variantIndices", selectedVariants.map(function (variant) {
+    return variant.index;
+  }).join(","));
+  params.set("variants", JSON.stringify(selectedVariants.map(function (variant) {
+    return variant.label;
+  })));
+  return `${path}?${params.toString()}`;
+}
+
+function getCardState(card) {
+  const checkbox = card.querySelector(".design-checkbox");
+  const iframe = card.querySelector("iframe");
+  const path = card.dataset.path;
+  const title = card.dataset.title;
+  const selectedVariants = Array.from(card.querySelectorAll(".variant-checkbox:checked")).map(function (input) {
+    return {
+      index: Number(input.value),
+      label: input.dataset.label || ""
+    };
+  });
+
+  return {
+    checked: Boolean(checkbox && checkbox.checked),
+    iframe,
+    path,
+    title,
+    selectedVariants
+  };
+}
+
+function updateCardPreview(card) {
+  const state = getCardState(card);
+  card.classList.toggle("is-selected", state.checked);
+
+  if (state.iframe) {
+    state.iframe.src = buildPreviewSrc(state.path, state.selectedVariants);
+  }
+}
+
+function updateSelectionCount() {
+  const total = cards.filter(function (card) {
+    const checkbox = card.querySelector(".design-checkbox");
+    return checkbox && checkbox.checked;
+  }).length;
+
+  selectedCount.textContent = String(total);
+  groupButton.disabled = total === 0;
+}
+
+function setupCard(card) {
+  const title = card.querySelector(".preview-title")?.textContent.trim() || "";
+  const path = card.querySelector(".preview-path")?.textContent.trim() || "";
+  const header = card.querySelector(".preview-header");
+  const variants = DESIGN_VARIANTS[path] || [];
+
+  card.dataset.title = title;
+  card.dataset.path = path;
+
+  const controls = document.createElement("div");
+  controls.className = "design-controls";
+
+  const checkboxLabel = document.createElement("label");
+  checkboxLabel.className = "design-check";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className = "design-checkbox";
+  checkboxLabel.append(checkbox, document.createTextNode("Seleccionar"));
+  controls.appendChild(checkboxLabel);
+
+  if (variants.length > 0) {
+    const variantControl = document.createElement("div");
+    variantControl.className = "variant-control";
+
+    const span = document.createElement("span");
+    span.textContent = "Variantes";
+
+    const options = document.createElement("div");
+    options.className = "variant-options";
+
+    variants.forEach(function (variant, index) {
+      const optionLabel = document.createElement("label");
+      optionLabel.className = "variant-option";
+
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.className = "variant-checkbox";
+      input.value = String(index);
+      input.dataset.label = variant;
+
+      const optionText = document.createElement("span");
+      optionText.textContent = variant;
+
+      input.addEventListener("change", function () {
+        checkbox.checked = true;
+        updateCardPreview(card);
+        updateSelectionCount();
+      });
+
+      optionLabel.append(input, optionText);
+      options.appendChild(optionLabel);
+    });
+
+    variantControl.append(span, options);
+    controls.appendChild(variantControl);
+  } else {
+    const noVariants = document.createElement("span");
+    noVariants.className = "no-variants";
+    noVariants.textContent = "Sin variantes";
+    controls.appendChild(noVariants);
+  }
+
+  checkbox.addEventListener("change", function () {
+    if (!checkbox.checked) {
+      card.querySelectorAll(".variant-checkbox").forEach(function (input) {
+        input.checked = false;
+      });
+    }
+    updateCardPreview(card);
+    updateSelectionCount();
+  });
+
+  header.appendChild(controls);
+}
+
+function getSelectionPayload() {
+  return cards.map(getCardState)
+    .filter(function (state) {
+      return state.checked;
+    })
+    .map(function (state) {
+      return {
+        title: state.title,
+        path: state.path,
+        variants: state.selectedVariants
+      };
+    });
+}
+
+cards.forEach(setupCard);
+
+selectAllButton.addEventListener("click", function () {
+  cards.forEach(function (card) {
+    const checkbox = card.querySelector(".design-checkbox");
+    if (checkbox) checkbox.checked = true;
+    card.querySelectorAll(".variant-checkbox").forEach(function (input) {
+      input.checked = true;
+    });
+    updateCardPreview(card);
+  });
+  updateSelectionCount();
+});
+
+clearButton.addEventListener("click", function () {
+  cards.forEach(function (card) {
+    const checkbox = card.querySelector(".design-checkbox");
+    if (checkbox) checkbox.checked = false;
+    card.querySelectorAll(".variant-checkbox").forEach(function (input) {
+      input.checked = false;
+    });
+    updateCardPreview(card);
+  });
+  updateSelectionCount();
+});
+
+groupButton.addEventListener("click", function () {
+  const payload = getSelectionPayload();
+  if (payload.length === 0) return;
+
+  try {
+    window.localStorage.setItem("subastop-group-selection", JSON.stringify(payload));
+  } catch (error) {}
+
+  window.location.href = `grouped.html#selection=${encodeURIComponent(JSON.stringify(payload))}`;
+});
+
+window.addEventListener("message", function (event) {
+  if (!event.data || event.data.type !== "subastop:variant-height") return;
+
+  cards.forEach(function (card) {
+    const iframe = card.querySelector("iframe");
+    if (iframe && iframe.contentWindow === event.source) {
+      iframe.style.height = `${Math.max(event.data.height + 24, 240)}px`;
+    }
+  });
+});
+
+updateSelectionCount();
+</script>
 </body>
 </html>

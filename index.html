@@ -3,485 +3,366 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Aaron Designs — Voyager UI Upgrade Gallery</title>
+<title>Subastop Designs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
 <style>
-* { box-sizing: border-box; }
-html, body {
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
   margin: 0;
-  padding: 0;
+  min-height: 100%;
   background:
-    radial-gradient(ellipse 70% 50% at top left, rgba(34,0,92,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at bottom right, rgba(237,137,54,0.05) 0%, transparent 55%),
-    #F8FAF9;
+    radial-gradient(ellipse 70% 50% at top left, rgba(34, 0, 92, 0.05), transparent 60%),
+    radial-gradient(ellipse 55% 40% at bottom right, rgba(237, 137, 54, 0.06), transparent 55%),
+    #f8faf9;
+  color: #1a2122;
   font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  color: #1A2122;
   -webkit-font-smoothing: antialiased;
 }
 
 .container {
-  max-width: 1024px;
+  width: min(100%, 1440px);
   margin: 0 auto;
-  padding: 64px 24px 80px;
+  padding: 56px 24px 72px;
 }
 
-/* ── Header ────────────────────────────────────────────────────────────── */
 header {
-  margin-bottom: 56px;
-}
-.header-eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: oklch(0.72 0.16 55);
-  margin: 0 0 12px 0;
-}
-header h1 {
-  font-size: 48px;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  margin: 0 0 8px 0;
-  background: linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.header-sub {
-  font-size: 15px;
-  color: rgba(79,71,99,0.7);
-  margin: 0;
-  font-weight: 400;
-}
-
-/* ── Gallery grid ──────────────────────────────────────────────────────── */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
-}
-
-/* ── Component card ────────────────────────────────────────────────────── */
-.card {
-  background: #FFFFFF;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 16px oklch(0.22 0.18 285 / 6%);
-  border-bottom: 4px solid oklch(0.22 0.18 285);
-  transition: box-shadow 300ms cubic-bezier(0.3,0,0,1),
-              transform  300ms cubic-bezier(0.3,0,0,1);
-  display: flex;
-  flex-direction: column;
-}
-.card:hover {
-  box-shadow: 0 12px 28px oklch(0.22 0.18 285 / 12%);
-  transform: translateY(-2px);
-}
-
-.card-header {
-  padding: 20px 24px;
-  background: linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
-}
-.card-header h2 {
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0 0 3px 0;
-  color: white;
-  letter-spacing: -0.01em;
-}
-.card-header p {
-  font-size: 12px;
-  margin: 0;
-  color: rgba(255,255,255,0.65);
-  font-weight: 400;
-}
-
-.card-thumb {
-  flex: 1;
-  background: #F2F4F3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  min-height: 140px;
-}
-.card-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-}
-.card-thumb-placeholder {
-  font-size: 12px;
-  color: rgba(79,71,99,0.45);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.card-footer {
-  display: flex;
-  gap: 10px;
-  padding: 14px 16px;
-  border-top: 1px solid rgba(34,0,92,0.06);
-}
-.card-footer a {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 9px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: background-color 150ms cubic-bezier(0.3,0,0,1);
-}
-.btn-original {
-  color: oklch(0.22 0.18 285);
-  background: color-mix(in oklch, oklch(0.22 0.18 285) 7%, transparent);
-}
-.btn-original:hover {
-  background: color-mix(in oklch, oklch(0.22 0.18 285) 13%, transparent);
-}
-.btn-upgrade {
-  color: white;
-  background: linear-gradient(135deg, oklch(0.22 0.18 285), oklch(0.30 0.20 285));
-}
-.btn-upgrade:hover {
-  background: linear-gradient(135deg, oklch(0.26 0.19 285), oklch(0.34 0.20 285));
-}
-
-/* ── Footer ─────────────────────────────────────────────────────────────── */
-.gallery-footer {
-  margin-top: 64px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(34,0,92,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.gallery-footer p {
-  font-size: 13px;
-  color: rgba(79,71,99,0.5);
-  margin: 0;
-}
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  background: color-mix(in oklch, oklch(0.22 0.18 285) 6%, transparent);
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: oklch(0.22 0.18 285);
-  letter-spacing: 0.03em;
-}
-.count {
-  font-size: 11px;
-  font-weight: 700;
-  background: oklch(0.72 0.16 55);
-  color: white;
-  border-radius: 9999px;
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-.component-list {
-  display: block;
-  background: #FFFFFF;
-  border: 1px solid rgba(34,0,92,0.08);
-  border-radius: 8px;
-  box-shadow: 0 8px 16px oklch(0.22 0.18 285 / 5%);
-  overflow: hidden;
-}
-.component-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 20px;
-  align-items: center;
-  padding: 18px 20px;
-  border-bottom: 1px solid rgba(34,0,92,0.08);
+  align-items: end;
+  margin-bottom: 28px;
 }
-.component-row:last-child {
-  border-bottom: 0;
+
+.header-eyebrow {
+  margin: 0 0 10px;
+  color: oklch(0.64 0.15 50);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
-.component-row:hover {
-  background: color-mix(in oklch, oklch(0.22 0.18 285) 3%, white);
+
+h1 {
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, oklch(0.22 0.18 285), oklch(0.31 0.18 248));
+  background-clip: text;
+  color: transparent;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 0;
 }
-.component-info h2 {
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0 0 4px 0;
-  color: oklch(0.22 0.18 285);
-  letter-spacing: -0.01em;
-}
-.component-info p {
-  font-size: 12px;
+
+.header-sub {
   margin: 0;
-  color: rgba(79,71,99,0.65);
-  font-weight: 400;
+  color: rgba(79, 71, 99, 0.7);
+  font-size: 15px;
 }
-.component-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-.component-actions a {
-  display: flex;
+
+.count-pill {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 88px;
-  padding: 8px 12px;
-  border-radius: 4px;
+  gap: 8px;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid rgba(34, 0, 92, 0.1);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 8px 18px oklch(0.22 0.18 285 / 5%);
+  color: oklch(0.22 0.18 285);
   font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  transition: background-color 150ms cubic-bezier(0.3,0,0,1);
+  white-space: nowrap;
 }
-@media (max-width: 640px) {
-  .component-row {
+
+.count-pill span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: oklch(0.72 0.16 55);
+  color: white;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.preview-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(34, 0, 92, 0.08);
+  border-bottom: 4px solid oklch(0.22 0.18 285);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px oklch(0.22 0.18 285 / 6%);
+}
+
+.preview-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  min-height: 64px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(34, 0, 92, 0.08);
+  background:
+    linear-gradient(135deg, rgba(34, 0, 92, 0.07), transparent 56%),
+    #ffffff;
+}
+
+.preview-title {
+  margin: 0 0 4px;
+  color: oklch(0.22 0.18 285);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.preview-path {
+  margin: 0;
+  overflow: hidden;
+  color: rgba(79, 71, 99, 0.62);
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-frame {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: 0;
+  background: #f2f4f3;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+  color: rgba(79, 71, 99, 0.56);
+  font-size: 12px;
+}
+
+@media (max-width: 920px) {
+  .catalog {
     grid-template-columns: 1fr;
-    gap: 12px;
   }
-  .component-actions {
-    justify-content: flex-start;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 34px 14px 48px;
   }
-  .component-actions a {
-    flex: 1;
+
+  header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .preview-header {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-frame {
+    height: 560px;
   }
 }
 </style>
 </head>
 <body>
 <div class="container">
-
   <header>
-    <p class="header-eyebrow">VMC Subastas — Design System Refactor</p>
-    <h1>Aaron Designs</h1>
-    <p class="header-sub">Voyager UI Upgrade Preview Gallery · Original vs. Tokens</p>
+    <div>
+      <p class="header-eyebrow">VMC Subastas - Design System Refactor</p>
+      <h1>Subastop Designs</h1>
+    </div>
+    <div class="count-pill"><span>16</span> componentes</div>
   </header>
 
-  <main class="component-list" aria-label="Componentes disponibles">
+  <main class="catalog" aria-label="Previews Claude">
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">User Profile Card</h2>
+          <p class="preview-path">user-profile-card/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="user-profile-card/claude.html" loading="lazy" title="User Profile Card"></iframe>
+    </article>
 
-    <!-- ── User Profile Card ─────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>User Profile Card</h2>
-        <p>Risk level · VMC points · Profile &amp; history links</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Condiciones del Ofrecimiento</h2>
+          <p class="preview-path">condiciones-ofrecimiento/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="user-profile-card/original.png" class="btn-original">Original</a>
-        <a href="user-profile-card/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="condiciones-ofrecimiento/claude.html" loading="lazy" title="Condiciones del Ofrecimiento"></iframe>
+    </article>
 
-    <!-- ── Condiciones del Ofrecimiento ─────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Condiciones del Ofrecimiento</h2>
-        <p>Conditions accordion · Rich text · Complexity indicator</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Auction Conditions - Vivo</h2>
+          <p class="preview-path">auction-conditions/vivo/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="condiciones-ofrecimiento/original.png" class="btn-original">Original</a>
-        <a href="condiciones-ofrecimiento/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="auction-conditions/vivo/claude.html" loading="lazy" title="Auction Conditions Vivo"></iframe>
+    </article>
 
-    <!-- ── Auction Conditions / Vivo ─────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Auction Conditions · Vivo</h2>
-        <p>Chip grid · 3 active · 6 chips (2×3) · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Auction Conditions - Negociable</h2>
+          <p class="preview-path">auction-conditions/negociable/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="auction-conditions/vivo/original.png" class="btn-original">Original</a>
-        <a href="auction-conditions/vivo/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="auction-conditions/negociable/claude.html" loading="lazy" title="Auction Conditions Negociable"></iframe>
+    </article>
 
-    <!-- ── Auction Conditions / Negociable ───────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Auction Conditions · Negociable</h2>
-        <p>Chip grid · 1 active · 4 chips (2×2) · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Info</h2>
+          <p class="preview-path">consola/info/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="auction-conditions/negociable/original.png" class="btn-original">Original</a>
-        <a href="auction-conditions/negociable/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="consola/info/claude.html" loading="lazy" title="Consola Info"></iframe>
+    </article>
 
-    <!-- ── Consola Info ─────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Consola Info</h2>
-        <p>Counter room · Conectados + Bids · Precio base · Voyager gradient</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Users</h2>
+          <p class="preview-path">consola/users/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="consola/info/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="consola/users/claude.html" loading="lazy" title="Consola Users"></iframe>
+    </article>
 
-    <!-- ── Consola Users ────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Consola Users</h2>
-        <p>Ranking table · Puesto + C.U.U. + Bids · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Bid Button</h2>
+          <p class="preview-path">consola/bid-button/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="consola/users/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="consola/bid-button/claude.html" loading="lazy" title="Consola Bid Button"></iframe>
+    </article>
 
-    <!-- ── Consola Bid Button ───────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Consola Bid Button</h2>
-        <p>Bidear CTA · Active orange gradient · Disabled neutral</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Header Auction Live</h2>
+          <p class="preview-path">consola/header-auction-live/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="consola/bid-button/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="consola/header-auction-live/claude.html" loading="lazy" title="Header Auction Live"></iframe>
+    </article>
 
-    <!-- ── Header Auction Live ──────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Header Auction Live</h2>
-        <p>Vehicle metadata · Live timer · Plate chip · 2 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Header</h2>
+          <p class="preview-path">consola/header/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="consola/header-auction-live/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="consola/header/claude.html" loading="lazy" title="Consola Header"></iframe>
+    </article>
 
-    <!-- ── Consola Header ───────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Consola Header</h2>
-        <p>Mi C.U.U. · Mis Bids · Fondos · Oferta · Conectividad</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Auction Bar</h2>
+          <p class="preview-path">consola/auction-bar/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="consola/header/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="consola/auction-bar/claude.html" loading="lazy" title="Auction Bar"></iframe>
+    </article>
 
-    <!-- ── Auction Bar ──────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Auction Bar</h2>
-        <p>Bid actual · Eventos en vivo · Robot messages · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Negociable</h2>
+          <p class="preview-path">detail-card/negociable/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="consola/auction-bar/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="detail-card/negociable/claude.html" loading="lazy" title="Detail Card Negociable"></iframe>
+    </article>
 
-    <!-- ── Detail Card / Negociable ──────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Detail Card · Negociable</h2>
-        <p>Vault header · Negotiable teal CTA · Price + indicators · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Image Header</h2>
+          <p class="preview-path">image-header/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="detail-card/negociable/original.png" class="btn-original">Original</a>
-        <a href="detail-card/negociable/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="image-header/claude.html" loading="lazy" title="Image Header"></iframe>
+    </article>
 
-    <!-- ── Image Header ──────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Image Header</h2>
-        <p>Live-color bar · Back arrow · Vehicle title + vendor · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Wallet</h2>
+          <p class="preview-path">wallet/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="image-header/original.png" class="btn-original">Original</a>
-        <a href="image-header/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="wallet/claude.html" loading="lazy" title="Wallet"></iframe>
+    </article>
 
-    <!-- ── Wallet ────────────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Wallet</h2>
-        <p>Balance · SubasCoins · Transacciones · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Tu Actividad</h2>
+          <p class="preview-path">activity/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="wallet/original.png" class="btn-original">Original</a>
-        <a href="wallet/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="activity/claude.html" loading="lazy" title="Tu Actividad"></iframe>
+    </article>
 
-    <!-- ── Tu Actividad ──────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Tu Actividad</h2>
-        <p>Historial de pujas · Estado · Timestamps · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Recomendados</h2>
+          <p class="preview-path">recommended/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="activity/original.png" class="btn-original">Original</a>
-        <a href="activity/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="recommended/claude.html" loading="lazy" title="Recomendados"></iframe>
+    </article>
 
-    <!-- ── Recomendados ──────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Recomendados</h2>
-        <p>Auction cards curadas · Grid · 3 variantes</p>
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Login Form</h2>
+          <p class="preview-path">login-form/claude.html</p>
+        </div>
       </div>
-      <div class="component-actions">
-        <a href="recommended/original.png" class="btn-original">Original</a>
-        <a href="recommended/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
-
-    <!-- ── Login Form ────────────────────────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Login Form</h2>
-        <p>Botón desactivado · Botón activo · Gradiente moderno · 3 variantes</p>
-      </div>
-      <div class="component-actions">
-        <a href="login-form/original.png" class="btn-original">Original</a>
-        <a href="login-form/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
-
-    <!-- ── Consola Auction Content Events ─────────────────────────────────── -->
-    <section class="component-row">
-      <div class="component-info">
-        <h2>Consola Auction Content Events</h2>
-        <p>Feed de bids · Vault deep · Gradientes vault (purple) + live (orange) independientes</p>
-      </div>
-      <div class="component-actions">
-        <a href="consola/auction-content/claude.html" class="btn-upgrade">Upgrade</a>
-      </div>
-    </section>
+      <iframe class="preview-frame" src="login-form/claude.html" loading="lazy" title="Login Form"></iframe>
+    </article>
 
   </main>
 
-  <footer class="gallery-footer">
-    <p>Estructura: <code>aaron-designs/[component]/original.*</code> + <code>claude.html</code></p>
-    <span class="pill">Componentes <span class="count">17</span></span>
+  <footer>
+    <p>Root: <code>designs-subastop/index.html</code></p>
   </footer>
-
 </div>
 </body>
 </html>

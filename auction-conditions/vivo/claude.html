@@ -213,6 +213,12 @@ html, body {
 
 /* text-white on all variants — overridden per chip by bg-* rules above */
 .preview-frame .text-white { color: var(--voyager-color-text-on-dark, #FFFFFF); }
+
+.v1 .bg-gray-400.text-white,
+.v2 .bg-gray-400.text-white,
+.v3 .bg-gray-400.text-white {
+  color: color-mix(in oklch, var(--voyager-color-vault, #22005C) 78%, white);
+}
 </style>
 </head>
 <body>

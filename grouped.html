@@ -344,15 +344,6 @@ function render() {
   });
 }
 
-window.addEventListener("message", function (event) {
-  if (!event.data || event.data.type !== "subastop:variant-height") return;
-
-  document.querySelectorAll("iframe").forEach(function (iframe) {
-    if (iframe.contentWindow === event.source) {
-      iframe.style.height = `${Math.max(event.data.height + 24, 240)}px`;
-    }
-  });
-});
 
 render();
 </script>

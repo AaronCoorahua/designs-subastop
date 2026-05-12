@@ -88,7 +88,11 @@ html, body {
   color: var(--voyager-color-text-muted);
   text-align: center;
 }
-.preview-frame { width: 317px; min-height: 421.98px; }
+.preview-frame { width: 317px; height: 422px; overflow: hidden; }
+.preview-frame .detail-process-app,
+.preview-frame .wrap-process,
+.preview-frame [device="web"],
+.preview-frame .card-process { height: 100%; }
 
 /* ─── vmc-detail-* utility class map ─────────────────────────────────── */
 .preview-frame .vmc-detail-relative  { position: relative; }
@@ -170,10 +174,14 @@ html, body {
 
 /* ─── Shared component structure ─────────────────────────────────────── */
 .preview-frame .card-process {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: 0 0 var(--voyager-radius-md) var(--voyager-radius-md);
   box-shadow: var(--voyager-shadow-card);
 }
+.preview-frame .cp-content  { flex: 1; display: flex; flex-direction: column; }
+.preview-frame .cta-contains { flex: 1; }
 
 /* Header — vault bg, white text everywhere */
 .preview-frame .cp-header             { color: var(--voyager-color-text-on-dark); }

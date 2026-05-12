@@ -493,6 +493,36 @@ footer {
     <article class="preview-card">
       <div class="preview-header">
         <div>
+          <h2 class="preview-title">Detail Card - Oferta en Vivo</h2>
+          <p class="preview-path">detail-card/oferta-live/index.htm</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="detail-card/oferta-live/index.htm" loading="lazy" title="Detail Card Oferta en Vivo"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Desierta</h2>
+          <p class="preview-path">detail-card/desierta/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="detail-card/desierta/claude.html" loading="lazy" title="Detail Card Desierta"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Inicio Extendido</h2>
+          <p class="preview-path">detail-card/extended/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="detail-card/extended/claude.html" loading="lazy" title="Detail Card Inicio Extendido"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
           <h2 class="preview-title">Image Header</h2>
           <p class="preview-path">image-header/claude.html</p>
         </div>
@@ -618,6 +648,21 @@ const DESIGN_VARIANTS = {
   "detail-card/en vivo/claude.html": [
     "Gradient · Inicia fecha",
     "Gradient · Hoy"
+  ],
+  "detail-card/oferta-live/index.htm": [
+    "V2 · Naranja puro · Vault CTA",
+    "V3 · Premium Dark · Vivid CTA",
+    "V4 · Swap layout"
+  ],
+  "detail-card/desierta/claude.html": [
+    "Naranja Vivo",
+    "Vault Premium",
+    "Glass Dark · Transparente"
+  ],
+  "detail-card/extended/claude.html": [
+    "V1 · Vault · Live Banner · Live CTA",
+    "V2 · Vivid Vault · Amber Banner · Vault CTA",
+    "V3 · Dark Immersive · Teal Banner · Live CTA"
   ],
   "image-header/claude.html": [
     "Base · Solid Live",
@@ -835,16 +880,6 @@ groupButton.addEventListener("click", function () {
   window.location.href = `grouped.html#selection=${encodeURIComponent(JSON.stringify(payload))}`;
 });
 
-window.addEventListener("message", function (event) {
-  if (!event.data || event.data.type !== "subastop:variant-height") return;
-
-  cards.forEach(function (card) {
-    const iframe = card.querySelector("iframe");
-    if (iframe && iframe.contentWindow === event.source) {
-      iframe.style.height = `${Math.max(event.data.height + 24, 240)}px`;
-    }
-  });
-});
 
 updateSelectionCount();
 </script>

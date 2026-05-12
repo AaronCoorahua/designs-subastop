@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Previews — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault: #22005C;
+  --voyager-color-vault-mid: #3B1782;
+  --voyager-color-vault-dark: #2E0F70;
+  --voyager-color-live: #ED8936;
+  --voyager-color-live-mid: #F47A20;
+  --voyager-surface-page: #F8FAF9;
+  --voyager-surface-card: #FFFFFF;
+  --voyager-text-primary: #191C1C;
+  --voyager-text-secondary: #494550;
+  --voyager-text-on-dark: #FFFFFF;
+  --voyager-border-ghost: #22005C1A;
+  --voyager-gradient-vault: linear-gradient(135deg, var(--voyager-color-vault) 0%, var(--voyager-color-vault-mid) 100%);
+  --voyager-gradient-live: linear-gradient(135deg, var(--voyager-color-live) 0%, var(--voyager-color-live-mid) 100%);
+  --voyager-font-ui: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --voyager-font-number: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, var(--voyager-border-ghost) 0%, transparent 60%),
+    var(--voyager-surface-page);
+  color: var(--voyager-text-primary);
+  font-family: var(--voyager-font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.page {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+.page-eyebrow {
+  margin: 0 0 8px;
+  color: var(--voyager-color-live);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin: 0 0 12px;
+  color: var(--voyager-color-vault);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 48px;
+  letter-spacing: -1px;
+}
+
+.page-subtitle {
+  margin: 0 0 48px;
+  color: var(--voyager-text-secondary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  max-width: 560px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.preview-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  padding: 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--voyager-text-on-dark);
+  background: var(--voyager-gradient-vault);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--voyager-color-vault) 16%, transparent);
+  transition: transform 150ms cubic-bezier(0.3,0,0,1), box-shadow 150ms cubic-bezier(0.3,0,0,1);
+}
+
+.preview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--voyager-color-vault) 24%, transparent);
+}
+
+.preview-card:focus-visible {
+  outline: 2px solid var(--voyager-color-live);
+  outline-offset: 2px;
+}
+
+.card-label {
+  margin: 0 0 4px;
+  color: color-mix(in srgb, var(--voyager-text-on-dark) 64%, transparent);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.card-title {
+  margin: 0 0 12px;
+  color: var(--voyager-text-on-dark);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: -0.5px;
+}
+
+.card-description {
+  margin: 0;
+  flex: 1 1 auto;
+  color: color-mix(in srgb, var(--voyager-text-on-dark) 78%, transparent);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.card-meta {
+  margin: 24px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--voyager-color-live);
+  font-family: var(--voyager-font-number);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.card-arrow {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <p class="page-eyebrow">Voyager · VMC Subastas</p>
+    <h1 class="page-title">Previews</h1>
+    <p class="page-subtitle">Componentes en su contexto de canvas. Cada preview muestra el componente destacado dentro del lienzo completo, con todas sus variantes apiladas.</p>
+
+    <div class="card-grid">
+      <a class="preview-card" href="./consola/index.html">
+        <p class="card-label">Página</p>
+        <h2 class="card-title">Consola</h2>
+        <p class="card-description">Consola de subasta en vivo · 3 variantes que combinan los componentes existentes.</p>
+        <span class="card-meta">
+          <span>Abrir</span>
+          <span class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M5 2.5L9.5 7 5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

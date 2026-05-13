@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, rgba(34, 0, 92, 0.05), transparent 60%),
+    radial-gradient(ellipse 55% 40% at bottom right, rgba(237, 137, 54, 0.06), transparent 55%),
+    #f8faf9;
+  color: #1a2122;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 56px 24px 72px;
+}
+
+header {
+  margin-bottom: 28px;
+}
+
+.header-eyebrow {
+  margin: 0 0 10px;
+  color: oklch(0.64 0.15 50);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, oklch(0.22 0.18 285), oklch(0.31 0.18 248));
+  background-clip: text;
+  color: transparent;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.header-sub {
+  margin: 0;
+  color: rgba(79, 71, 99, 0.7);
+  font-size: 15px;
+}
+
+.catalog-actions {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px 12px;
+  border: 1px solid rgba(34, 0, 92, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 28px oklch(0.22 0.18 285 / 10%), 0 2px 8px oklch(0.22 0.18 285 / 6%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  min-width: 140px;
+}
+
+.count-pill,
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid rgba(34, 0, 92, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px oklch(0.22 0.18 285 / 5%);
+  color: oklch(0.22 0.18 285);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.count-pill span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: oklch(0.72 0.16 55);
+  color: white;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.action-button {
+  border-color: rgba(34, 0, 92, 0.16);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.action-button:hover:not(:disabled) {
+  background: rgba(34, 0, 92, 0.04);
+}
+
+.action-button.primary {
+  border-color: oklch(0.22 0.18 285);
+  background: oklch(0.22 0.18 285);
+  color: #fff;
+}
+
+.action-button.primary:hover:not(:disabled) {
+  background: oklch(0.30 0.20 285);
+}
+
+.action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.preview-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(34, 0, 92, 0.08);
+  border-bottom: 4px solid oklch(0.22 0.18 285);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px oklch(0.22 0.18 285 / 6%);
+}
+
+.preview-card.is-selected {
+  border-color: rgba(34, 0, 92, 0.28);
+  box-shadow: 0 12px 28px oklch(0.22 0.18 285 / 12%);
+}
+
+.preview-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 64px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(34, 0, 92, 0.08);
+  background:
+    linear-gradient(135deg, rgba(34, 0, 92, 0.07), transparent 56%),
+    #ffffff;
+}
+
+.preview-title {
+  margin: 0 0 4px;
+  color: oklch(0.22 0.18 285);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.preview-path {
+  margin: 0;
+  overflow: hidden;
+  color: rgba(79, 71, 99, 0.62);
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.design-controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+}
+
+.design-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  color: oklch(0.22 0.18 285);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.design-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: oklch(0.22 0.18 285);
+}
+
+.variant-control {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.variant-control span,
+.no-variants {
+  color: rgba(79, 71, 99, 0.58);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.variant-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.variant-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid rgba(34, 0, 92, 0.14);
+  border-radius: 999px;
+  background: #fff;
+  color: rgba(34, 0, 92, 0.78);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.variant-option:hover {
+  background: rgba(34, 0, 92, 0.04);
+}
+
+.variant-option input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: oklch(0.22 0.18 285);
+  flex: 0 0 auto;
+}
+
+.variant-option span {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.no-variants {
+  align-self: center;
+  justify-self: end;
+}
+
+.preview-frame {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: 0;
+  background: #f2f4f3;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+  color: rgba(79, 71, 99, 0.56);
+  font-size: 12px;
+}
+
+.catalog-actions-divider {
+  height: 1px;
+  background: rgba(34, 0, 92, 0.1);
+  margin: 2px 0;
+}
+
+@media (max-width: 920px) {
+  .catalog {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 34px 14px 48px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .catalog-actions {
+    right: 10px;
+    min-width: 120px;
+    padding: 10px 8px;
+  }
+
+  .preview-header {
+    grid-template-columns: 1fr;
+  }
+
+  .design-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .no-variants {
+    justify-self: start;
+  }
+
+  .preview-frame {
+    height: 560px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <a href="../../index.html" style="display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;color:rgba(79,71,99,0.6);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">← Inicio</a>
+      <p class="header-eyebrow">VMC Subastas - Design System Refactor</p>
+      <h1>Subastop Designs</h1>
+      <a href="../previews/index.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:6px 14px;background:oklch(0.22 0.18 285);color:white;border-radius:6px;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Previews →</a>
+    </div>
+    <div class="catalog-actions">
+      <div class="count-pill"><span id="selectedCount">0</span> seleccionados</div>
+      <div class="catalog-actions-divider"></div>
+      <button class="action-button" type="button" id="selectAllButton">Sel. todo</button>
+      <button class="action-button" type="button" id="clearButton">Limpiar</button>
+      <button class="action-button primary" type="button" id="groupButton" disabled>Agrupar</button>
+    </div>
+  </header>
+
+  <main class="catalog" aria-label="Previews Claude">
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">User Profile Card</h2>
+          <p class="preview-path">../../components/user-profile-card/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/user-profile-card/claude.html" loading="lazy" title="User Profile Card"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Condiciones del Ofrecimiento</h2>
+          <p class="preview-path">../../components/condiciones-ofrecimiento/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/condiciones-ofrecimiento/claude.html" loading="lazy" title="Condiciones del Ofrecimiento"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Auction Conditions - Vivo</h2>
+          <p class="preview-path">../../components/auction-conditions/vivo/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/auction-conditions/vivo/claude.html" loading="lazy" title="Auction Conditions Vivo"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Auction Conditions - Negociable</h2>
+          <p class="preview-path">../../components/auction-conditions/negociable/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/auction-conditions/negociable/claude.html" loading="lazy" title="Auction Conditions Negociable"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Info</h2>
+          <p class="preview-path">../../components/consola/info/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/consola/info/claude.html" loading="lazy" title="Consola Info"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Users</h2>
+          <p class="preview-path">../../components/consola/users/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/consola/users/claude.html" loading="lazy" title="Consola Users"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Bid Button</h2>
+          <p class="preview-path">../../components/consola/bid-button/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/consola/bid-button/claude.html" loading="lazy" title="Consola Bid Button"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Header Auction Live</h2>
+          <p class="preview-path">../../components/consola/header-auction-live/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/consola/header-auction-live/claude.html" loading="lazy" title="Header Auction Live"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Consola Header</h2>
+          <p class="preview-path">../../components/consola/header/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/consola/header/claude.html" loading="lazy" title="Consola Header"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Auction Bar</h2>
+          <p class="preview-path">../../components/consola/auction-bar/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/consola/auction-bar/claude.html" loading="lazy" title="Auction Bar"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Negociable</h2>
+          <p class="preview-path">../../components/detail-card/negociable/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/detail-card/negociable/claude.html" loading="lazy" title="Detail Card Negociable"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Cerrada</h2>
+          <p class="preview-path">../../components/detail-card/cerrada/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/detail-card/cerrada/claude.html" loading="lazy" title="Detail Card Cerrada"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - En Vivo</h2>
+          <p class="preview-path">../../components/detail-card/en vivo/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/detail-card/en vivo/claude.html" loading="lazy" title="Detail Card En Vivo"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Oferta en Vivo</h2>
+          <p class="preview-path">detail-card/oferta-live/index.htm</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/detail-card/oferta-live/claude.html" loading="lazy" title="Detail Card Oferta en Vivo"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Desierta</h2>
+          <p class="preview-path">../../components/detail-card/desierta/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/detail-card/desierta/claude.html" loading="lazy" title="Detail Card Desierta"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Detail Card - Inicio Extendido</h2>
+          <p class="preview-path">../../components/detail-card/extended/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/detail-card/extended/claude.html" loading="lazy" title="Detail Card Inicio Extendido"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Image Header</h2>
+          <p class="preview-path">../../components/image-header/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/image-header/claude.html" loading="lazy" title="Image Header"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Wallet</h2>
+          <p class="preview-path">../../components/wallet/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/wallet/claude.html" loading="lazy" title="Wallet"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Tu Actividad</h2>
+          <p class="preview-path">../../components/activity/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/activity/claude.html" loading="lazy" title="Tu Actividad"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Recomendados</h2>
+          <p class="preview-path">../../components/recommended/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/recommended/claude.html" loading="lazy" title="Recomendados"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Me Interesa</h2>
+          <p class="preview-path">../../components/interests/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/interests/claude.html" loading="lazy" title="Me Interesa"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Login Form</h2>
+          <p class="preview-path">../../components/login-form/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/login-form/claude.html" loading="lazy" title="Login Form"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Thumbnail Strip</h2>
+          <p class="preview-path">../../components/thumbnail/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/thumbnail/claude.html" loading="lazy" title="Thumbnail Strip"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Sidebar Nav</h2>
+          <p class="preview-path">../../components/sidebar/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/sidebar/claude.html" loading="lazy" title="Sidebar Nav"></iframe>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>Root: <code>designs-subastop/pages/catalog/index.html</code></p>
+  </footer>
+</div>
+<script>
+const DESIGN_VARIANTS = {
+  "../../components/user-profile-card/claude.html": [
+    "Default",
+    "Hover"
+  ],
+  "../../components/auction-conditions/vivo/claude.html": [
+    "Modern · Vivid gradient + Ghost inactive",
+    "Secondary gradient · vault-900→vault-800 · conditions only"
+  ],
+  "../../components/auction-conditions/negociable/claude.html": [
+    "Modern · Vivid gradient + Ghost inactive",
+    "Secondary gradient · vault-900→vault-800 · conditions only"
+  ],
+  "../../components/consola/info/claude.html": [
+    "Variante morada",
+    "Variante naranja"
+  ],
+  "../../components/consola/users/claude.html": [
+    "Variante morada",
+    "Variante naranja",
+    "Sin bids"
+  ],
+  "../../components/consola/bid-button/claude.html": [
+    "Activo",
+    "Disabled"
+  ],
+  "../../components/consola/header-auction-live/claude.html": [
+    "Vault live",
+    "Placa live"
+  ],
+  "../../components/consola/header/claude.html": [
+    "Vault status",
+    "Oferta live"
+  ],
+  "../../components/consola/auction-bar/claude.html": [
+    "Auction Bar moderna",
+    "Auction Content Events"
+  ],
+  "../../components/detail-card/negociable/claude.html": [
+    "Base · Solid",
+    "Gradient · Vault + Negotiable shine",
+    "Modern · Vivid + Bold glow"
+  ],
+  "../../components/detail-card/cerrada/claude.html": [
+    "Naranja Sólido",
+    "Glass Dark · Transparente",
+    "Vault Premium"
+  ],
+  "../../components/detail-card/en vivo/claude.html": [
+    "Gradient · Inicia fecha",
+    "Gradient · Hoy"
+  ],
+  "../../components/detail-card/oferta-live/claude.html": [
+    "V2 · Naranja puro · Vault CTA",
+    "V3 · Premium Dark · Vivid CTA",
+    "V4 · Swap layout"
+  ],
+  "../../components/detail-card/desierta/claude.html": [
+    "Naranja Vivo",
+    "Vault Premium",
+    "Glass Dark · Transparente"
+  ],
+  "../../components/detail-card/extended/claude.html": [
+    "V1 · Vault · Live Banner · Live CTA",
+    "V2 · Vivid Vault · Amber Banner · Vault CTA",
+    "V3 · Dark Immersive · Teal Banner · Live CTA"
+  ],
+  "../../components/image-header/claude.html": [
+    "Base · Solid Live",
+    "Gradient · Warm amber + shine",
+    "Modern · Vivid + Glow"
+  ],
+  "../../components/login-form/claude.html": [
+    "Base · Desactivado",
+    "Gradient · Modern"
+  ],
+  "../../components/thumbnail/claude.html": [
+    "Acento · Inferior"
+  ],
+  "../../components/wallet/claude.html": [
+    "Default",
+    "Hover",
+    "Pressed"
+  ],
+  "../../components/activity/claude.html": [
+    "Default"
+  ],
+  "../../components/recommended/claude.html": [
+    "Default",
+    "Hover"
+  ],
+  "../../components/interests/claude.html": [
+    "Default",
+    "Hover"
+  ],
+  "../../components/sidebar/claude.html": [
+    "Mañana",
+    "Próximamente",
+    "Stroke · Modern"
+  ]
+};
+
+const selectedCount = document.getElementById("selectedCount");
+const groupButton = document.getElementById("groupButton");
+const selectAllButton = document.getElementById("selectAllButton");
+const clearButton = document.getElementById("clearButton");
+const cards = Array.from(document.querySelectorAll(".preview-card"));
+
+function buildPreviewSrc(path, selectedVariants) {
+  if (!selectedVariants || selectedVariants.length === 0) return path;
+
+  const params = new URLSearchParams();
+  params.set("variantIndices", selectedVariants.map(function (variant) {
+    return variant.index;
+  }).join(","));
+  params.set("variants", JSON.stringify(selectedVariants.map(function (variant) {
+    return variant.label;
+  })));
+  return `${path}?${params.toString()}`;
+}
+
+function getCardState(card) {
+  const checkbox = card.querySelector(".design-checkbox");
+  const iframe = card.querySelector("iframe");
+  const path = card.dataset.path;
+  const title = card.dataset.title;
+  const selectedVariants = Array.from(card.querySelectorAll(".variant-checkbox:checked")).map(function (input) {
+    return {
+      index: Number(input.value),
+      label: input.dataset.label || ""
+    };
+  });
+
+  return {
+    checked: Boolean(checkbox && checkbox.checked),
+    iframe,
+    path,
+    title,
+    selectedVariants
+  };
+}
+
+function updateCardPreview(card) {
+  const state = getCardState(card);
+  card.classList.toggle("is-selected", state.checked);
+
+  if (state.iframe) {
+    state.iframe.src = buildPreviewSrc(state.path, state.selectedVariants);
+  }
+}
+
+function updateSelectionCount() {
+  const total = cards.filter(function (card) {
+    const checkbox = card.querySelector(".design-checkbox");
+    return checkbox && checkbox.checked;
+  }).length;
+
+  selectedCount.textContent = String(total);
+  groupButton.disabled = total === 0;
+}
+
+function setupCard(card) {
+  const title = card.querySelector(".preview-title")?.textContent.trim() || "";
+  const path = card.querySelector(".preview-path")?.textContent.trim() || "";
+  const header = card.querySelector(".preview-header");
+  const variants = DESIGN_VARIANTS[path] || [];
+
+  card.dataset.title = title;
+  card.dataset.path = path;
+
+  const controls = document.createElement("div");
+  controls.className = "design-controls";
+
+  const checkboxLabel = document.createElement("label");
+  checkboxLabel.className = "design-check";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className = "design-checkbox";
+  checkboxLabel.append(checkbox, document.createTextNode("Seleccionar"));
+  controls.appendChild(checkboxLabel);
+
+  if (variants.length > 0) {
+    const variantControl = document.createElement("div");
+    variantControl.className = "variant-control";
+
+    const span = document.createElement("span");
+    span.textContent = "Variantes";
+
+    const options = document.createElement("div");
+    options.className = "variant-options";
+
+    variants.forEach(function (variant, index) {
+      const optionLabel = document.createElement("label");
+      optionLabel.className = "variant-option";
+
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.className = "variant-checkbox";
+      input.value = String(index);
+      input.dataset.label = variant;
+
+      const optionText = document.createElement("span");
+      optionText.textContent = variant;
+
+      input.addEventListener("change", function () {
+        checkbox.checked = true;
+        updateCardPreview(card);
+        updateSelectionCount();
+      });
+
+      optionLabel.append(input, optionText);
+      options.appendChild(optionLabel);
+    });
+
+    variantControl.append(span, options);
+    controls.appendChild(variantControl);
+  } else {
+    const noVariants = document.createElement("span");
+    noVariants.className = "no-variants";
+    noVariants.textContent = "Sin variantes";
+    controls.appendChild(noVariants);
+  }
+
+  checkbox.addEventListener("change", function () {
+    if (!checkbox.checked) {
+      card.querySelectorAll(".variant-checkbox").forEach(function (input) {
+        input.checked = false;
+      });
+    }
+    updateCardPreview(card);
+    updateSelectionCount();
+  });
+
+  header.appendChild(controls);
+}
+
+function getSelectionPayload() {
+  return cards.map(getCardState)
+    .filter(function (state) {
+      return state.checked;
+    })
+    .map(function (state) {
+      return {
+        title: state.title,
+        path: state.path,
+        variants: state.selectedVariants
+      };
+    });
+}
+
+cards.forEach(setupCard);
+
+selectAllButton.addEventListener("click", function () {
+  cards.forEach(function (card) {
+    const checkbox = card.querySelector(".design-checkbox");
+    if (checkbox) checkbox.checked = true;
+    card.querySelectorAll(".variant-checkbox").forEach(function (input) {
+      input.checked = true;
+    });
+    updateCardPreview(card);
+  });
+  updateSelectionCount();
+});
+
+clearButton.addEventListener("click", function () {
+  cards.forEach(function (card) {
+    const checkbox = card.querySelector(".design-checkbox");
+    if (checkbox) checkbox.checked = false;
+    card.querySelectorAll(".variant-checkbox").forEach(function (input) {
+      input.checked = false;
+    });
+    updateCardPreview(card);
+  });
+  updateSelectionCount();
+});
+
+groupButton.addEventListener("click", function () {
+  const payload = getSelectionPayload();
+  if (payload.length === 0) return;
+
+  try {
+    window.localStorage.setItem("subastop-group-selection", JSON.stringify(payload));
+  } catch (error) {}
+
+  window.location.href = `grouped.html#selection=${encodeURIComponent(JSON.stringify(payload))}`;
+});
+
+
+updateSelectionCount();
+</script>
+</body>
+</html>

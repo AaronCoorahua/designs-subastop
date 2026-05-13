@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade Preview · Me Interesa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — local token surface.  DESIGN.md §2 Color · §6 Radius · §7
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);
+  --voyager-color-vault-dark:   oklch(0.26 0.19 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-skeleton:        oklch(0.85 0.008 220);
+  --voyager-color-border-ghost:    color-mix(in oklch, var(--voyager-color-vault) 8%, transparent);
+  --voyager-color-divider-section: color-mix(in oklch, var(--voyager-color-vault) 5%, transparent);
+  --voyager-tint-vault-soft:       color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 14%);
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ── Preview canvas ─────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse at top left,   color-mix(in oklch, var(--voyager-color-vault) 4%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, color-mix(in oklch, var(--voyager-color-live) 4%, transparent) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 16px 0;
+}
+
+.preview-frame {
+  width: 440px;
+  height: 279.71px;
+  overflow: hidden;
+}
+
+/* ── Layout primitives ──────────────────────────────────────────────────── */
+.preview-frame .px-4          { padding-left: 14px; padding-right: 14px; }
+.preview-frame .py-6          { padding-top: 20px; padding-bottom: 20px; }
+.preview-frame .px-3          { padding-left: 10px; padding-right: 10px; }
+.preview-frame .py-2          { padding-top: 0; padding-bottom: 0; }
+.preview-frame .flex          { display: flex; }
+.preview-frame .items-center  { align-items: center; }
+.preview-frame .justify-center { justify-content: center; }
+.preview-frame .flex-1        { flex: 1 1 0%; }
+.preview-frame .flex-shrink-0 { flex-shrink: 0; }
+.preview-frame .relative      { position: relative; }
+.preview-frame .absolute      { position: absolute; }
+.preview-frame .inline-block  { display: inline-block; }
+.preview-frame .top-0         { top: 0; }
+.preview-frame .left-0        { left: 0; }
+.preview-frame .bottom-0      { bottom: 0; }
+.preview-frame .right-0       { right: 0; }
+.preview-frame .hidden        { display: none; }
+
+/* Grid */
+.preview-frame .grid          { display: grid; }
+.preview-frame .grid-cols-3   { grid-template-columns: repeat(3, 1fr); }
+.preview-frame .gap-4         { gap: 14px; }
+.preview-frame .mt-4          { margin-top: 14px; }
+.preview-frame .w-full        { width: 100%; }
+
+/* Sizing */
+.preview-frame .w-2   { width: 6px; }
+.preview-frame .h-2   { height: 6px; }
+.preview-frame .w-5   { width: 18px; }
+.preview-frame .h-5   { height: 18px; }
+.preview-frame .w-8   { width: 28px; }
+.preview-frame .h-8   { height: 28px; }
+.preview-frame .h-28  { height: 90px; }
+.preview-frame .h-12  { height: 38px; }
+.preview-frame .ml-1  { margin-left: 4px; }
+.preview-frame .mr-3  { margin-right: 10px; }
+.preview-frame .mb-3  { margin-bottom: 10px; }
+
+/* Typography */
+.preview-frame .font-display { font-family: var(--voyager-font-display); }
+.preview-frame .text-base    { font-size: 15px; line-height: 18px; }
+.preview-frame .text-sm      { font-size: 12px; line-height: 18px; }
+.preview-frame .font-bold    { font-weight: 700; }
+.preview-frame .leading-none { line-height: 1; }
+.preview-frame .leading-6    { line-height: 1.5; }
+.preview-frame .uppercase    { text-transform: uppercase; }
+
+/* Icons */
+.preview-frame svg           { display: inline-block; vertical-align: middle; }
+.preview-frame .fill-current { fill: currentColor; }
+
+/* Border helpers */
+.preview-frame .border-b-8   { border-bottom-width: 8px; border-bottom-style: solid; }
+
+/* ── Rounded helpers ────────────────────────────────────────────────────── */
+.preview-frame .rounded-lg   { border-radius: var(--voyager-radius-md, 8px); }
+.preview-frame .rounded-full { border-radius: 9999px; }
+
+/* ── Voyager color mapping ──────────────────────────────────────────────── */
+
+/* Outer card surface */
+.preview-frame .bg-coral-100 {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+}
+
+/* Corner bracket SVGs */
+.preview-frame .text-coral-400 {
+  color: var(--voyager-color-live, #ED8936);
+}
+
+/* "Me Interesa" heading + "Ver Todas" link */
+.preview-frame .text-purple-400 {
+  color: var(--voyager-color-vault, #22005C);
+  text-decoration: none;
+}
+
+/* Heart icon (white on skeleton pill) */
+.preview-frame .text-white {
+  color: oklch(1 0 0);
+}
+
+/* ── Auction mini-card gradient — Vivid vault/cian gradient ─────────────── */
+.preview-frame .bg-gray-100 {
+  background: linear-gradient(
+    145deg,
+    oklch(0.91 0.022 285) 0%,
+    oklch(0.94 0.010 220) 60%,
+    oklch(0.96 0.005 160) 100%
+  );
+}
+
+/* Heart button background — skeleton token */
+.preview-frame .bg-gray-200 {
+  background-color: var(--voyager-color-skeleton, #D5D8DD);
+}
+
+/* Auction card bottom border — skeleton gray (cards en estado de carga) */
+.preview-frame .border-gray-200 {
+  border-color: var(--voyager-color-skeleton, #D5D8DD);
+}
+
+/* ── Inner shadow-lg (heart button) — subtle floating pill ─────────────── */
+.preview-frame .rounded-full.shadow-lg {
+  box-shadow: 0 4px 10px oklch(0.22 0.18 285 / 12%);
+}
+
+/* ── Outer card container — signature finish ────────────────────────────── */
+.preview-frame .rounded:not(.rounded-lg):not(.rounded-full) {
+  border-radius: var(--voyager-radius-lg, 16px);
+  height: 279.71px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-frame .rounded:not(.rounded-lg):not(.rounded-full).shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+  background-image:
+    linear-gradient(145deg,
+      color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%,
+      transparent 55%);
+  transition:
+    box-shadow var(--voyager-duration-standard) var(--voyager-ease-default),
+    transform  var(--voyager-duration-micro)    var(--voyager-ease-default);
+}
+
+.preview-frame .rounded:not(.rounded-lg):not(.rounded-full).shadow-lg::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  border-radius: 0 0 var(--voyager-radius-lg, 16px) var(--voyager-radius-lg, 16px);
+  background: var(--voyager-color-vault, #22005C);
+  pointer-events: none;
+}
+
+/* ── Hover variant — "Ver Todas" visible + card elevated ────────────────── */
+.frame--hover .rounded:not(.rounded-lg):not(.rounded-full).shadow-lg {
+  box-shadow: var(--voyager-shadow-floating);
+  transform: translateY(-2px);
+}
+
+.frame--hover .hidden {
+  display: flex;
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager UI upgrade preview — Me Interesa">
+    <div class="preview-grid">
+
+      <!-- ── DEFAULT ─────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Default</p>
+        <div class="preview-frame">
+          <div class="px-4 py-6 rounded shadow-lg bg-coral-100">
+            <div class="flex items-center">
+              <div class="flex-1">
+                <div class="relative inline-block px-3 py-2">
+                  <svg class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path>
+                  </svg>
+                  <h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Me interesa</h4>
+                  <svg class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex-shrink-0">
+                <a id="show-more-interested" href="/zona/me-interesa" class="items-center hidden text-sm font-bold leading-6 text-purple-400 font-display">
+                  Ver Todas
+                  <svg class="w-5 h-5 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"></path></svg>
+                </a>
+              </div>
+            </div>
+            <div id="interested-list"><div><div class="grid gap-4 mt-4 w-full grid-cols-3"> </div> <div class="grid gap-4 mt-4 w-full grid-cols-3"><div class="bg-gray-100 rounded-lg w-full relative border-b-8 border-gray-200"><div class="h-28"><div class="absolute bottom-0 right-0 mr-3 mb-3 shadow-lg rounded-full"><div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 shadow-lg focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current text-white w-5 h-5"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"></path></svg></div></div></div> <div class="h-12 relative"></div></div><div class="bg-gray-100 rounded-lg w-full relative border-b-8 border-gray-200"><div class="h-28"><div class="absolute bottom-0 right-0 mr-3 mb-3 shadow-lg rounded-full"><div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 shadow-lg focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current text-white w-5 h-5"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"></path></svg></div></div></div> <div class="h-12 relative"></div></div><div class="bg-gray-100 rounded-lg w-full relative border-b-8 border-gray-200"><div class="h-28"><div class="absolute bottom-0 right-0 mr-3 mb-3 shadow-lg rounded-full"><div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 shadow-lg focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current text-white w-5 h-5"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"></path></svg></div></div></div> <div class="h-12 relative"></div></div></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HOVER ──────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Hover</p>
+        <div class="preview-frame frame--hover">
+          <div class="px-4 py-6 rounded shadow-lg bg-coral-100">
+            <div class="flex items-center">
+              <div class="flex-1">
+                <div class="relative inline-block px-3 py-2">
+                  <svg class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path>
+                  </svg>
+                  <h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Me interesa</h4>
+                  <svg class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex-shrink-0">
+                <a href="/zona/me-interesa" class="items-center hidden text-sm font-bold leading-6 text-purple-400 font-display">
+                  Ver Todas
+                  <svg class="w-5 h-5 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"></path></svg>
+                </a>
+              </div>
+            </div>
+            <div><div><div class="grid gap-4 mt-4 w-full grid-cols-3"> </div> <div class="grid gap-4 mt-4 w-full grid-cols-3"><div class="bg-gray-100 rounded-lg w-full relative border-b-8 border-gray-200"><div class="h-28"><div class="absolute bottom-0 right-0 mr-3 mb-3 shadow-lg rounded-full"><div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 shadow-lg focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current text-white w-5 h-5"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"></path></svg></div></div></div> <div class="h-12 relative"></div></div><div class="bg-gray-100 rounded-lg w-full relative border-b-8 border-gray-200"><div class="h-28"><div class="absolute bottom-0 right-0 mr-3 mb-3 shadow-lg rounded-full"><div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 shadow-lg focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current text-white w-5 h-5"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"></path></svg></div></div></div> <div class="h-12 relative"></div></div><div class="bg-gray-100 rounded-lg w-full relative border-b-8 border-gray-200"><div class="h-28"><div class="absolute bottom-0 right-0 mr-3 mb-3 shadow-lg rounded-full"><div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 shadow-lg focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current text-white w-5 h-5"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"></path></svg></div></div></div> <div class="h-12 relative"></div></div></div></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../variant-filter.js"></script>
+</body>
+</html>

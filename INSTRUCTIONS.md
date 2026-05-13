@@ -135,3 +135,4 @@ Registrar la nueva página en `pages/previews/index.html`:
 | `variant-filter.js` siempre al final del `<body>` | Ruta relativa según profundidad (1 o 2 niveles) |
 | Rutas en pages: `../../../components/` | Desde `pages/previews/<sub>/index.html` |
 | Rutas en catalog: `../../components/` | Desde `pages/catalog/index.html` |
+| **Variantes apiladas en vertical** | Dentro de cada `claude.html`, las `.preview-cell` se renderizan en una sola columna (`.preview-grid { grid-template-columns: auto; }`). El catálogo embebe el iframe completo, por lo que cada variante aparece **debajo** de la anterior, nunca al costado. |

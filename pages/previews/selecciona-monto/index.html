@@ -120,27 +120,29 @@ html, body {
   justify-content: center;
 }
 
-/* ── Canvas 790 × 684 ────────────────────────────────────────────────────── */
+/* ── Canvas 790 × 683.44 — fondo gris claro ─────────────────────────────── */
 .canvas {
   position: relative;
   width: 790px;
-  height: 684px;
+  height: 683.44px;
   overflow: hidden;
   border-radius: 4px;
-  background: var(--voyager-surface-card);
+  background: var(--voyager-surface-section);
   box-shadow: 0 12px 32px color-mix(in srgb, var(--voyager-color-vault) 18%, transparent);
 }
 .canvas[hidden] { display: none; }
 
-/* ── Banner (HTML directo, no iframe) ────────────────────────────────────── */
+/* ── Banner (HTML directo) — 710 × 55.38, centrado horizontalmente ──────── */
 .zone-banner {
   position: absolute;
-  top: 0; left: 0;
-  width: 790px;
-  height: 80px;
+  top: 32px;
+  left: 40px;
+  width: 710px;
+  height: 55.38px;
   display: flex;
   align-items: center;
   padding: 0 24px;
+  border-radius: 4px;
 }
 .zone-banner--vault { background: var(--voyager-gradient-vault); }
 .zone-banner--live  { background: var(--voyager-gradient-live); }
@@ -156,15 +158,6 @@ html, body {
   color: oklch(0.18 0.16 285);
 }
 
-/* ── Divider between banner and body ─────────────────────────────────────── */
-.zone-divider {
-  position: absolute;
-  top: 80px; left: 0;
-  width: 790px;
-  height: 16px;
-  background: var(--voyager-surface-section);
-}
-
 /* ── Zones for iframes ───────────────────────────────────────────────────── */
 .zone {
   position: absolute;
@@ -177,18 +170,17 @@ html, body {
   background: transparent;
 }
 
-/* Layout: top 96 = banner 80 + divider 16
-   info zone:   left 0,   width 452, height 588
-   select zone: left 468, width 322, height 588
-   (452 + 16 gap + 322 = 790) */
-.zone-info   { top: 96px; left:   0; width: 452px; height: 588px; }
-.zone-select { top: 96px; left: 468px; width: 322px; height: 588px; }
+/* Layout per spec:
+   info   zone: 392.4  × 476.06 — left 40
+   select zone: 253.59 × 476.06 — left 496.41 (40 + 392.4 + 64 gap)
+   top: 119.38 = 32 (top pad) + 55.38 (banner) + 32 (gap) */
+.zone-info   { top: 119.38px; left:  40px;    width: 392.4px;  height: 476.06px; }
+.zone-select { top: 119.38px; left: 496.41px; width: 253.59px; height: 476.06px; }
 
-/* Offset: stage padding 56px + gap 12px = 68px base.
-   info:   -68px muestra el componente desde arriba sin corte
-   select: -52px empujado más hacia abajo (más espacio visible en la parte superior) */
-.zone-info   iframe { top: -68px; left: -40px; width: 532px; height: 700px; }
-.zone-select iframe { top: -52px; left: -40px; width: 402px; height: 700px; }
+/* embed=1 garantiza componente sin stage padding / label / fondo.
+   Iframes se anclan a (0,0) y rellenan la zona — zone clip vía overflow:hidden. */
+.zone-info   iframe { top: 0; left: 0; width: 100%; height: 100%; }
+.zone-select iframe { top: 0; left: 0; width: 100%; height: 100%; }
 </style>
 </head>
 <body>
@@ -200,7 +192,7 @@ html, body {
     <span>Selecciona Monto</span>
   </p>
   <h1 class="page-title">Selecciona Monto</h1>
-  <p class="page-meta">790 × 684 · 3 variantes</p>
+  <p class="page-meta">790 × 683.44 · 3 variantes</p>
 
   <div class="tabbar" role="tablist" aria-label="Variantes de selección de monto">
     <button type="button" class="tab" role="tab" id="tab-1" aria-selected="true"  data-target="canvas-1">Vault</button>
@@ -217,15 +209,13 @@ html, body {
 <p class="banner-text">¡Adquiere SubasCoins y disfruta de sus beneficios!</p>
       </div>
 
-      <div class="zone-divider"></div>
-
-      <div class="zone zone-info">
-        <iframe src="../../../components/subascoins-info/claude.html?variant=Con%20imagen"
+<div class="zone zone-info">
+        <iframe src="../../../components/subascoins-info/claude.html?embed=1&variant=Con%20imagen"
                 scrolling="no" loading="lazy" title="SubasCoins Info — Con imagen"></iframe>
       </div>
 
       <div class="zone zone-select">
-        <iframe src="../../../components/select-subascoins/claude.html?variant=Vault%20%C2%B7%20Seleccionado"
+        <iframe src="../../../components/select-subascoins/claude.html?embed=1&variant=Vault%20%C2%B7%20Seleccionado"
                 scrolling="no" loading="lazy" title="Selecciona monto — Vault Seleccionado"></iframe>
       </div>
 
@@ -238,15 +228,13 @@ html, body {
 <p class="banner-text">¡Adquiere SubasCoins y disfruta de sus beneficios!</p>
       </div>
 
-      <div class="zone-divider"></div>
-
-      <div class="zone zone-info">
-        <iframe src="../../../components/subascoins-info/claude.html?variant=Sin%20imagen"
+<div class="zone zone-info">
+        <iframe src="../../../components/subascoins-info/claude.html?embed=1&variant=Sin%20imagen"
                 scrolling="no" loading="lazy" title="SubasCoins Info — Sin imagen"></iframe>
       </div>
 
       <div class="zone zone-select">
-        <iframe src="../../../components/select-subascoins/claude.html?variant=Live%20%C2%B7%20Naranja"
+        <iframe src="../../../components/select-subascoins/claude.html?embed=1&variant=Live%20%C2%B7%20Naranja"
                 scrolling="no" loading="lazy" title="Selecciona monto — Live Naranja"></iframe>
       </div>
 
@@ -259,15 +247,13 @@ html, body {
 <p class="banner-text">¡Adquiere SubasCoins y disfruta de sus beneficios!</p>
       </div>
 
-      <div class="zone-divider"></div>
-
-      <div class="zone zone-info">
-        <iframe src="../../../components/subascoins-info/claude.html?variant=Promo%20card%20(propuesta)"
+<div class="zone zone-info">
+        <iframe src="../../../components/subascoins-info/claude.html?embed=1&variant=Promo%20card%20(propuesta)"
                 scrolling="no" loading="lazy" title="SubasCoins Info — Promo card"></iframe>
       </div>
 
       <div class="zone zone-select">
-        <iframe src="../../../components/select-subascoins/claude.html?variant=Modern%20%C2%B7%20Coin%20Selector"
+        <iframe src="../../../components/select-subascoins/claude.html?embed=1&variant=Modern%20%C2%B7%20Coin%20Selector"
                 scrolling="no" loading="lazy" title="Selecciona monto — Modern Coin Selector"></iframe>
       </div>
 

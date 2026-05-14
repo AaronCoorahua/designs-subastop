@@ -20,7 +20,6 @@
   --voyager-border-ghost: #22005C1A;
   --voyager-divider-section: #22005C0D;
   --voyager-font-ui: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --voyager-font-body: "Roboto", system-ui, -apple-system, sans-serif;
   --voyager-font-number: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 }
 
@@ -112,235 +111,36 @@ html, body {
 
 .viewer { display: flex; justify-content: center; }
 
-/* ===== Canvas ===== */
+/* ===== Canvas — composición de 3 componentes ===== */
 .canvas {
   position: relative;
-  width: 790px;
+  width: 830px;
+  height: 588px;
   overflow: hidden;
-  border-radius: 4px;
-  background: #ffffff;
-  box-shadow: 0 12px 32px color-mix(in srgb, var(--voyager-color-vault) 18%, transparent);
+  background: transparent;
 }
 .canvas[hidden] { display: none; }
 
-/* ===== Canvas content — Editar Perfil page ===== */
-.ep {
-  padding: 24px 32px 28px;
-  font-family: var(--voyager-font-ui);
+.zone {
+  position: absolute;
+  overflow: hidden;
 }
 
-/* — Profile section — */
-.ep-title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: var(--voyager-color-live);
-}
-
-.ep-info-row {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  align-items: center;
-  column-gap: 16px;
-  margin-top: 16px;
-}
-
-.ep-meta {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--voyager-color-vault);
-}
-.ep-meta strong { font-weight: 700; }
-
-.ep-points {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.ep-points .star {
-  width: 20px;
-  height: 20px;
-  fill: oklch(0.82 0.02 220);
-  flex-shrink: 0;
-}
-.ep-points .pts {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--voyager-color-vault);
-}
-
-.ep-btn-area { text-align: right; }
-
-.ep-btn-redeem {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-family: var(--voyager-font-ui);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  color: #ffffff;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 150ms cubic-bezier(0.3,0,0,1), box-shadow 150ms cubic-bezier(0.3,0,0,1), transform 150ms cubic-bezier(0.3,0,0,1);
-}
-.ep-btn-redeem svg { width: 24px; height: 24px; fill: currentColor; flex-shrink: 0; }
-
-.ep-btn-redeem--vault {
-  background: linear-gradient(135deg, #200068 0%, #4E38AF 100%);
-  box-shadow: 0 4px 16px oklch(0.22 0.18 285 / 36%);
-}
-.ep-btn-redeem--vault:hover {
-  background: linear-gradient(135deg, #22005C 0%, #3B1782 100%);
-  box-shadow: 0 6px 22px oklch(0.22 0.18 285 / 50%);
-  transform: translateY(-1px);
-}
-
-.ep-btn-redeem--live {
-  background: linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
-  box-shadow: 0 4px 16px oklch(0.72 0.16 55 / 36%);
-}
-.ep-btn-redeem--live:hover {
-  background: linear-gradient(135deg, #ED8936 0%, #D07128 50%, #B25614 100%);
-  box-shadow: 0 6px 22px oklch(0.72 0.16 55 / 50%);
-  transform: translateY(-1px);
-}
-
-.ep-personal {
-  padding-top: 16px;
-  margin-top: 16px;
-}
-
-.ep-sec-label {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.25;
-  color: var(--voyager-color-vault);
-  margin: 0 0 16px;
-}
-
-.ep-fields-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.ep-fields-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 16px;
-}
-
-.ep-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.ep-field-label { font-size: 14px; font-weight: 400; color: var(--voyager-color-vault); }
-
-.ep-field-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  color: var(--voyager-color-vault);
-}
-
-.ep-field-edit {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--voyager-color-vault);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  padding-right: 4px;
-  cursor: pointer;
-  transition: color 150ms cubic-bezier(0.3,0,0,1);
-}
-.ep-field-edit:hover { color: var(--voyager-color-live); }
-
-.ep-field-val {
-  height: 40px;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  font-family: var(--voyager-font-body);
-  font-size: 14px;
-  font-weight: 400;
-  color: oklch(0.15 0.008 200);
-  background: oklch(0.95 0.003 200);
-  border: 1px solid var(--voyager-border-ghost);
-  border-radius: 4px;
-}
-
-/* — Divider — */
-.ep-divider {
-  border: none;
-  border-top: 1px solid var(--voyager-divider-section);
-  margin: 20px -32px;
-}
-
-/* — Contact section — */
-.ep-contact { }
-
-/* — Logout section — */
-.ep-logout {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0 4px;
-}
-
-.ep-btn-logout {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 227px;
-  padding: 12px 24px;
-  border-radius: 4px;
+.zone iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
   background: transparent;
-  font-family: var(--voyager-font-ui);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 24px;
-  text-decoration: none;
-  cursor: pointer;
-  outline: none;
-  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1), box-shadow 150ms cubic-bezier(0.3,0,0,1);
 }
 
-.ep-btn-logout--live {
-  border: 2px solid var(--voyager-color-live);
-  color: var(--voyager-color-live);
-}
-.ep-btn-logout--live:hover {
-  background: var(--voyager-color-live);
-  color: #ffffff;
-  box-shadow: 0 0 16px rgba(0,0,0,0.14);
-}
-
-.ep-btn-logout--vault {
-  border: 2px solid var(--voyager-color-vault);
-  color: var(--voyager-color-vault);
-}
-.ep-btn-logout--vault:hover {
-  background: var(--voyager-color-vault);
-  color: #ffffff;
-  box-shadow: 0 0 16px rgba(0,0,0,0.14);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; transform: none !important; }
-}
+/* Card natural width = 766px → centrar horizontalmente en canvas 830px (offset 32px).
+   logout-button es solo el botón (~227w × ~50h) → centrado por embed-mode + padding del propio componente. */
+.zone-profile { top: 0;   left: 32px; width: 766px; height: 290px; }
+.zone-contact { top: 306px; left: 32px; width: 766px; height: 160px; }
+.zone-logout  { top: 482px; left: 0;    width: 830px; height: 100px; }
 </style>
 </head>
 <body>
@@ -362,151 +162,27 @@ html, body {
 
       <!-- ====================== VARIANTE 1 — VAULT ====================== -->
       <div class="canvas" id="canvas-1" role="tabpanel" aria-labelledby="tab-1">
-        <div class="ep">
-
-          <!-- Tu Perfil -->
-          <h1 class="ep-title">Tu Perfil</h1>
-
-          <div class="ep-info-row">
-            <div class="ep-meta">
-              <span>Riesgo: <strong>Regular</strong></span>
-              <span class="ep-points">
-                Puntos VMC:
-                <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <span class="pts">0</span>
-              </span>
-            </div>
-            <div class="ep-btn-area">
-              <a href="#" class="ep-btn-redeem ep-btn-redeem--vault" onclick="return false;">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <span>Canjea Puntos VMC</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="ep-personal">
-            <p class="ep-sec-label">Información Personal</p>
-            <div class="ep-fields-3">
-              <div class="ep-field">
-                <span class="ep-field-label">Nombres</span>
-                <div class="ep-field-val">Aaron</div>
-              </div>
-              <div class="ep-field">
-                <span class="ep-field-label">Apellidos</span>
-                <div class="ep-field-val">Coorahua</div>
-              </div>
-              <div class="ep-field">
-                <span class="ep-field-label">N° documento</span>
-                <div class="ep-field-val">60195079</div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="ep-divider" />
-
-          <!-- Información de contacto -->
-          <div class="ep-contact">
-            <p class="ep-sec-label" style="margin-bottom:0;">Información de contacto:</p>
-            <div class="ep-fields-2">
-              <div class="ep-field">
-                <div class="ep-field-header">
-                  <span class="ep-field-label">Teléfono</span>
-                  <span class="ep-field-edit">Editar</span>
-                </div>
-                <div class="ep-field-val">933077865</div>
-              </div>
-              <div class="ep-field">
-                <div class="ep-field-header">
-                  <span class="ep-field-label">Correo Electrónico</span>
-                  <span class="ep-field-edit">Editar</span>
-                </div>
-                <div class="ep-field-val">rubenacoorahua@gmail.com</div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="ep-divider" />
-
-          <!-- Cerrar sesión -->
-          <div class="ep-logout">
-            <a href="#" class="ep-btn-logout ep-btn-logout--vault" onclick="return false;">Cerrar sesión</a>
-          </div>
-
+        <div class="zone zone-profile">
+          <iframe src="../../../components/your-profile-info/claude.html?embed=1&variant=Vault" scrolling="no" loading="lazy" title="Your Profile Info"></iframe>
+        </div>
+        <div class="zone zone-contact">
+          <iframe src="../../../components/your-contact-info/claude.html?embed=1&variant=Default" scrolling="no" loading="lazy" title="Your Contact Info"></iframe>
+        </div>
+        <div class="zone zone-logout">
+          <iframe src="../../../components/logout-button/claude.html?embed=1&variant=Vault" scrolling="no" loading="lazy" title="Logout Button"></iframe>
         </div>
       </div>
 
       <!-- ====================== VARIANTE 2 — LIVE ======================= -->
       <div class="canvas" id="canvas-2" role="tabpanel" aria-labelledby="tab-2" hidden>
-        <div class="ep">
-
-          <!-- Tu Perfil -->
-          <h1 class="ep-title">Tu Perfil</h1>
-
-          <div class="ep-info-row">
-            <div class="ep-meta">
-              <span>Riesgo: <strong>Regular</strong></span>
-              <span class="ep-points">
-                Puntos VMC:
-                <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <span class="pts">0</span>
-              </span>
-            </div>
-            <div class="ep-btn-area">
-              <a href="#" class="ep-btn-redeem ep-btn-redeem--live" onclick="return false;">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <span>Canjea Puntos VMC</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="ep-personal">
-            <p class="ep-sec-label">Información Personal</p>
-            <div class="ep-fields-3">
-              <div class="ep-field">
-                <span class="ep-field-label">Nombres</span>
-                <div class="ep-field-val">Aaron</div>
-              </div>
-              <div class="ep-field">
-                <span class="ep-field-label">Apellidos</span>
-                <div class="ep-field-val">Coorahua</div>
-              </div>
-              <div class="ep-field">
-                <span class="ep-field-label">N° documento</span>
-                <div class="ep-field-val">60195079</div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="ep-divider" />
-
-          <!-- Información de contacto -->
-          <div class="ep-contact">
-            <p class="ep-sec-label" style="margin-bottom:0;">Información de contacto:</p>
-            <div class="ep-fields-2">
-              <div class="ep-field">
-                <div class="ep-field-header">
-                  <span class="ep-field-label">Teléfono</span>
-                  <span class="ep-field-edit">Editar</span>
-                </div>
-                <div class="ep-field-val">933077865</div>
-              </div>
-              <div class="ep-field">
-                <div class="ep-field-header">
-                  <span class="ep-field-label">Correo Electrónico</span>
-                  <span class="ep-field-edit">Editar</span>
-                </div>
-                <div class="ep-field-val">rubenacoorahua@gmail.com</div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="ep-divider" />
-
-          <!-- Cerrar sesión -->
-          <div class="ep-logout">
-            <a href="#" class="ep-btn-logout ep-btn-logout--live" onclick="return false;">Cerrar sesión</a>
-          </div>
-
+        <div class="zone zone-profile">
+          <iframe src="../../../components/your-profile-info/claude.html?embed=1&variant=Live" scrolling="no" loading="lazy" title="Your Profile Info"></iframe>
+        </div>
+        <div class="zone zone-contact">
+          <iframe src="../../../components/your-contact-info/claude.html?embed=1&variant=Default" scrolling="no" loading="lazy" title="Your Contact Info"></iframe>
+        </div>
+        <div class="zone zone-logout">
+          <iframe src="../../../components/logout-button/claude.html?embed=1&variant=Live" scrolling="no" loading="lazy" title="Logout Button"></iframe>
         </div>
       </div>
 

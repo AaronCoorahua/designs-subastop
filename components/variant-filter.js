@@ -3,6 +3,59 @@
     return String(value || "").replace(/\s+/g, " ").trim();
   }
 
+  // ── Embed mode ──────────────────────────────────────────────────────────
+  // Activado solo con ?embed=1 explícito. Despoja al componente de su chrome
+  // de showcase (stage padding, variant-label, body background, gaps) para que
+  // pueda iframeearse limpio en pages/previews/* sin offsets negativos.
+  function isEmbedMode() {
+    var params = new URLSearchParams(window.location.search);
+    return params.get("embed") === "1";
+  }
+
+  function injectEmbedModeStyles() {
+    if (document.getElementById("subastop-embed-mode-styles")) return;
+    var style = document.createElement("style");
+    style.id = "subastop-embed-mode-styles";
+    style.textContent = [
+      "html.is-embed-mode, html.is-embed-mode body {",
+      "  margin: 0 !important;",
+      "  padding: 0 !important;",
+      "  background: transparent !important;",
+      "  min-height: 0 !important;",
+      "  height: auto !important;",
+      "  overflow: visible !important;",
+      "}",
+      "html.is-embed-mode .preview-stage {",
+      "  display: block !important;",
+      "  padding: 0 !important;",
+      "  margin: 0 !important;",
+      "  gap: 0 !important;",
+      "  min-height: 0 !important;",
+      "  background: transparent !important;",
+      "}",
+      "html.is-embed-mode .variant-block,",
+      "html.is-embed-mode .preview-cell {",
+      "  gap: 0 !important;",
+      "  margin: 0 !important;",
+      "  padding: 0 !important;",
+      "}",
+      "html.is-embed-mode .variant-label,",
+      "html.is-embed-mode .preview-label {",
+      "  display: none !important;",
+      "}"
+    ].join("\n");
+    (document.head || document.documentElement).appendChild(style);
+  }
+
+  function applyEmbedMode() {
+    if (!isEmbedMode()) return;
+    document.documentElement.classList.add("is-embed-mode");
+    injectEmbedModeStyles();
+  }
+
+  // Aplicar embed-mode lo antes posible para minimizar flash.
+  applyEmbedMode();
+
   function getVariantBlocks() {
     return Array.from(document.querySelectorAll(".variant-label, .preview-label"))
       .map(function (label, index) {

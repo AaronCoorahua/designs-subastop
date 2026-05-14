@@ -144,20 +144,13 @@ html, body {
 .sii-info-card {
   display:       flex;
   align-items:   center;
-  padding:       0 16px;
+  padding:       16px;
   border-radius: var(--voyager-radius-md);
   border:        1px solid;
 }
 
-.sii-mascot {
-  align-self:  flex-end;
-  margin-top:  -24px;
-  flex-shrink: 0;
-}
-
 .sii-benefits-area {
-  flex:         1;
-  padding-left: 16px;
+  flex: 1;
 }
 
 .sii-benefits-list {
@@ -250,17 +243,6 @@ html, body {
   background:   var(--voyager-surface-card, #FFFFFF);
   border-color: oklch(0.72 0.16 55 / 30%);
   box-shadow:   var(--voyager-shadow-card);
-  padding:      16px;  /* override 0 16px — sin mascot el padding lateral ya alcanza */
-}
-
-/* Ocultar mascot — DOM intacto, solo visual hidden */
-.sii--no-img .sii-mascot {
-  display: none;
-}
-
-/* Sin imagen: benefits ocupan todo el ancho, se destacan más */
-.sii--no-img .sii-benefits-area {
-  padding-left: 0;
 }
 
 /* Benefits como feature cards en lugar de lista simple */
@@ -482,9 +464,6 @@ html, body {
 
       <!-- Info card -->
       <div class="sii-info-card">
-        <img class="sii-mascot"
-             src="https://www.vmcsubastas.com/4app/assets/images/frontend/subastin/subastin_activa_creditos.svg"
-             width="154" height="130" alt="">
         <div class="sii-benefits-area">
           <ul class="sii-benefits-list">
             <li class="sii-benefit-item">
@@ -529,11 +508,8 @@ html, body {
              alt="SubasCoins">
       </div>
 
-      <!-- Info card — mascot en DOM pero oculto por CSS -->
+      <!-- Info card -->
       <div class="sii-info-card">
-        <img class="sii-mascot"
-             src="https://www.vmcsubastas.com/4app/assets/images/frontend/subastin/subastin_activa_creditos.svg"
-             width="154" height="130" alt="">
         <div class="sii-benefits-area">
           <ul class="sii-benefits-list">
             <li class="sii-benefit-item">
@@ -645,11 +621,8 @@ html, body {
           <span class="sii-promo-rate-value">&gt;S&lt; 1 = US$ 1</span>
         </div>
 
-        <!-- Mascot strip -->
+        <!-- Disclaimer strip -->
         <div class="sii-promo-mascot-strip">
-          <img class="sii-promo-mascot"
-               src="https://www.vmcsubastas.com/4app/assets/images/frontend/subastin/subastin_activa_creditos.svg"
-               width="80" height="68" alt="">
           <p class="sii-promo-mascot-note">
             El valor de &gt;S&lt; 1 es equivalente a US$ 1 (un Dólar Americano).
           </p>

@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Previews · Editar Perfil — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault: oklch(0.22 0.18 285);
+  --voyager-color-vault-mid: oklch(0.30 0.20 285);
+  --voyager-color-live: oklch(0.72 0.16 55);
+  --voyager-surface-page: #F8FAF9;
+  --voyager-surface-card: #FFFFFF;
+  --voyager-text-primary: #191C1C;
+  --voyager-text-secondary: #494550;
+  --voyager-text-on-dark: #FFFFFF;
+  --voyager-border-ghost: #22005C1A;
+  --voyager-divider-section: #22005C0D;
+  --voyager-font-ui: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --voyager-font-body: "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-font-number: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, var(--voyager-border-ghost) 0%, transparent 60%),
+    var(--voyager-surface-page);
+  color: var(--voyager-text-primary);
+  font-family: var(--voyager-font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  color: var(--voyager-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.breadcrumb a { color: var(--voyager-color-vault); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb-sep { color: color-mix(in srgb, var(--voyager-color-vault) 32%, transparent); }
+
+.page-title {
+  margin: 0 0 4px;
+  color: var(--voyager-color-vault);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+}
+
+.page-meta {
+  margin: 0 0 32px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-number);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tabbar {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 32px;
+  border-radius: 4px;
+  background: oklch(0.96 0.004 160);
+  border: 1px solid var(--voyager-divider-section);
+  width: fit-content;
+}
+
+.tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
+}
+.tab:hover {
+  background: color-mix(in srgb, var(--voyager-color-vault) 6%, transparent);
+  color: var(--voyager-color-vault);
+}
+.tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
+.tab[aria-selected="true"] {
+  color: #ffffff;
+  background: var(--voyager-color-vault);
+  box-shadow: 0 4px 8px color-mix(in srgb, var(--voyager-color-vault) 24%, transparent);
+}
+
+.viewer { display: flex; justify-content: center; }
+
+/* ===== Canvas ===== */
+.canvas {
+  position: relative;
+  width: 790px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--voyager-color-vault) 18%, transparent);
+}
+.canvas[hidden] { display: none; }
+
+/* ===== Canvas content — Editar Perfil page ===== */
+.ep {
+  padding: 24px 32px 28px;
+  font-family: var(--voyager-font-ui);
+}
+
+/* — Profile section — */
+.ep-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-live);
+}
+
+.ep-info-row {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  align-items: center;
+  column-gap: 16px;
+  margin-top: 16px;
+}
+
+.ep-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--voyager-color-vault);
+}
+.ep-meta strong { font-weight: 700; }
+
+.ep-points {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ep-points .star {
+  width: 20px;
+  height: 20px;
+  fill: oklch(0.82 0.02 220);
+  flex-shrink: 0;
+}
+.ep-points .pts {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--voyager-color-vault);
+}
+
+.ep-btn-area { text-align: right; }
+
+.ep-btn-redeem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--voyager-font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), box-shadow 150ms cubic-bezier(0.3,0,0,1), transform 150ms cubic-bezier(0.3,0,0,1);
+}
+.ep-btn-redeem svg { width: 24px; height: 24px; fill: currentColor; flex-shrink: 0; }
+
+.ep-btn-redeem--vault {
+  background: linear-gradient(135deg, #200068 0%, #4E38AF 100%);
+  box-shadow: 0 4px 16px oklch(0.22 0.18 285 / 36%);
+}
+.ep-btn-redeem--vault:hover {
+  background: linear-gradient(135deg, #22005C 0%, #3B1782 100%);
+  box-shadow: 0 6px 22px oklch(0.22 0.18 285 / 50%);
+  transform: translateY(-1px);
+}
+
+.ep-btn-redeem--live {
+  background: linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
+  box-shadow: 0 4px 16px oklch(0.72 0.16 55 / 36%);
+}
+.ep-btn-redeem--live:hover {
+  background: linear-gradient(135deg, #ED8936 0%, #D07128 50%, #B25614 100%);
+  box-shadow: 0 6px 22px oklch(0.72 0.16 55 / 50%);
+  transform: translateY(-1px);
+}
+
+.ep-personal {
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.ep-sec-label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--voyager-color-vault);
+  margin: 0 0 16px;
+}
+
+.ep-fields-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ep-fields-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.ep-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ep-field-label { font-size: 14px; font-weight: 400; color: var(--voyager-color-vault); }
+
+.ep-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--voyager-color-vault);
+}
+
+.ep-field-edit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--voyager-color-vault);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding-right: 4px;
+  cursor: pointer;
+  transition: color 150ms cubic-bezier(0.3,0,0,1);
+}
+.ep-field-edit:hover { color: var(--voyager-color-live); }
+
+.ep-field-val {
+  height: 40px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  font-family: var(--voyager-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: oklch(0.15 0.008 200);
+  background: oklch(0.95 0.003 200);
+  border: 1px solid var(--voyager-border-ghost);
+  border-radius: 4px;
+}
+
+/* — Divider — */
+.ep-divider {
+  border: none;
+  border-top: 1px solid var(--voyager-divider-section);
+  margin: 20px -32px;
+}
+
+/* — Contact section — */
+.ep-contact { }
+
+/* — Logout section — */
+.ep-logout {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 4px;
+}
+
+.ep-btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 227px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  background: transparent;
+  font-family: var(--voyager-font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1), box-shadow 150ms cubic-bezier(0.3,0,0,1);
+}
+
+.ep-btn-logout--live {
+  border: 2px solid var(--voyager-color-live);
+  color: var(--voyager-color-live);
+}
+.ep-btn-logout--live:hover {
+  background: var(--voyager-color-live);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0,0,0,0.14);
+}
+
+.ep-btn-logout--vault {
+  border: 2px solid var(--voyager-color-vault);
+  color: var(--voyager-color-vault);
+}
+.ep-btn-logout--vault:hover {
+  background: var(--voyager-color-vault);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0,0,0,0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <p class="breadcrumb">
+      <a href="../index.html">Previews</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Editar Perfil</span>
+    </p>
+    <h1 class="page-title">Editar Perfil</h1>
+    <p class="page-meta">2 variantes</p>
+
+    <div class="tabbar" role="tablist" aria-label="Variantes de Editar Perfil">
+      <button type="button" class="tab" role="tab" id="tab-1" aria-selected="true"  data-target="canvas-1">Vault</button>
+      <button type="button" class="tab" role="tab" id="tab-2" aria-selected="false" data-target="canvas-2">Live</button>
+    </div>
+
+    <div class="viewer">
+
+      <!-- ====================== VARIANTE 1 — VAULT ====================== -->
+      <div class="canvas" id="canvas-1" role="tabpanel" aria-labelledby="tab-1">
+        <div class="ep">
+
+          <!-- Tu Perfil -->
+          <h1 class="ep-title">Tu Perfil</h1>
+
+          <div class="ep-info-row">
+            <div class="ep-meta">
+              <span>Riesgo: <strong>Regular</strong></span>
+              <span class="ep-points">
+                Puntos VMC:
+                <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span class="pts">0</span>
+              </span>
+            </div>
+            <div class="ep-btn-area">
+              <a href="#" class="ep-btn-redeem ep-btn-redeem--vault" onclick="return false;">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>Canjea Puntos VMC</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="ep-personal">
+            <p class="ep-sec-label">Información Personal</p>
+            <div class="ep-fields-3">
+              <div class="ep-field">
+                <span class="ep-field-label">Nombres</span>
+                <div class="ep-field-val">Aaron</div>
+              </div>
+              <div class="ep-field">
+                <span class="ep-field-label">Apellidos</span>
+                <div class="ep-field-val">Coorahua</div>
+              </div>
+              <div class="ep-field">
+                <span class="ep-field-label">N° documento</span>
+                <div class="ep-field-val">60195079</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="ep-divider" />
+
+          <!-- Información de contacto -->
+          <div class="ep-contact">
+            <p class="ep-sec-label" style="margin-bottom:0;">Información de contacto:</p>
+            <div class="ep-fields-2">
+              <div class="ep-field">
+                <div class="ep-field-header">
+                  <span class="ep-field-label">Teléfono</span>
+                  <span class="ep-field-edit">Editar</span>
+                </div>
+                <div class="ep-field-val">933077865</div>
+              </div>
+              <div class="ep-field">
+                <div class="ep-field-header">
+                  <span class="ep-field-label">Correo Electrónico</span>
+                  <span class="ep-field-edit">Editar</span>
+                </div>
+                <div class="ep-field-val">rubenacoorahua@gmail.com</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="ep-divider" />
+
+          <!-- Cerrar sesión -->
+          <div class="ep-logout">
+            <a href="#" class="ep-btn-logout ep-btn-logout--vault" onclick="return false;">Cerrar sesión</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ====================== VARIANTE 2 — LIVE ======================= -->
+      <div class="canvas" id="canvas-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+        <div class="ep">
+
+          <!-- Tu Perfil -->
+          <h1 class="ep-title">Tu Perfil</h1>
+
+          <div class="ep-info-row">
+            <div class="ep-meta">
+              <span>Riesgo: <strong>Regular</strong></span>
+              <span class="ep-points">
+                Puntos VMC:
+                <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span class="pts">0</span>
+              </span>
+            </div>
+            <div class="ep-btn-area">
+              <a href="#" class="ep-btn-redeem ep-btn-redeem--live" onclick="return false;">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>Canjea Puntos VMC</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="ep-personal">
+            <p class="ep-sec-label">Información Personal</p>
+            <div class="ep-fields-3">
+              <div class="ep-field">
+                <span class="ep-field-label">Nombres</span>
+                <div class="ep-field-val">Aaron</div>
+              </div>
+              <div class="ep-field">
+                <span class="ep-field-label">Apellidos</span>
+                <div class="ep-field-val">Coorahua</div>
+              </div>
+              <div class="ep-field">
+                <span class="ep-field-label">N° documento</span>
+                <div class="ep-field-val">60195079</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="ep-divider" />
+
+          <!-- Información de contacto -->
+          <div class="ep-contact">
+            <p class="ep-sec-label" style="margin-bottom:0;">Información de contacto:</p>
+            <div class="ep-fields-2">
+              <div class="ep-field">
+                <div class="ep-field-header">
+                  <span class="ep-field-label">Teléfono</span>
+                  <span class="ep-field-edit">Editar</span>
+                </div>
+                <div class="ep-field-val">933077865</div>
+              </div>
+              <div class="ep-field">
+                <div class="ep-field-header">
+                  <span class="ep-field-label">Correo Electrónico</span>
+                  <span class="ep-field-edit">Editar</span>
+                </div>
+                <div class="ep-field-val">rubenacoorahua@gmail.com</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="ep-divider" />
+
+          <!-- Cerrar sesión -->
+          <div class="ep-logout">
+            <a href="#" class="ep-btn-logout ep-btn-logout--live" onclick="return false;">Cerrar sesión</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+function handleTabClick(event) {
+  var clicked = event.currentTarget;
+  var tabs = document.querySelectorAll('.tab');
+  var canvases = document.querySelectorAll('.canvas');
+  var targetId = clicked.getAttribute('data-target');
+  var i = 0;
+  for (i = 0; i < tabs.length; i++) {
+    tabs[i].setAttribute('aria-selected', tabs[i] === clicked ? 'true' : 'false');
+  }
+  for (i = 0; i < canvases.length; i++) {
+    if (canvases[i].id === targetId) {
+      canvases[i].removeAttribute('hidden');
+    } else {
+      canvases[i].setAttribute('hidden', '');
+    }
+  }
+}
+
+(function bindTabs() {
+  var tabs = document.querySelectorAll('.tab');
+  var i = 0;
+  for (i = 0; i < tabs.length; i++) {
+    tabs[i].addEventListener('click', handleTabClick);
+  }
+})();
+</script>
+</body>
+</html>

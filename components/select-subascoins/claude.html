@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade · Select SubasCoins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — Select SubasCoins
+   DESIGN.md §2 §4 §5 §6 §7
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-live:            oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-orange-700:            #D07128;
+
+  --voyager-surface-card:          oklch(1 0 0);
+  --voyager-surface-section:       oklch(0.96 0.004 160);  /* #F2F4F3 */
+  --voyager-surface-page:          oklch(0.98 0.004 160);  /* #F8FAF9 */
+
+  --voyager-text-on-surface:       oklch(0.15 0.008 200);  /* #111827 */
+  --voyager-text-muted:            oklch(0.55 0.02 260);
+  --voyager-text-on-dark:          oklch(1 0 0);
+
+  --voyager-border-ghost:          oklch(0.22 0.18 285 / 10%);
+
+  --voyager-gradient-vault:        linear-gradient(135deg, #22005C 0%, #3B1782 100%);
+  --voyager-gradient-live-default: linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
+
+  --voyager-shadow-card:           0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating:       0 12px 28px oklch(0.22 0.18 285 / 14%);
+
+  --voyager-radius-sm:             4px;
+  --voyager-radius-md:             8px;
+  --voyager-radius-full:           9999px;
+
+  --voyager-font-display:          "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:             "Roboto Mono", monospace;
+  --voyager-duration-micro:        150ms;
+  --voyager-ease-default:          cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background:
+    radial-gradient(ellipse 70% 50% at top left,    oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-surface-page, #F8FAF9);
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  gap:             56px;
+  flex-wrap:       wrap;
+  min-height:      100vh;
+  padding:         56px 40px;
+}
+
+.variant-block {
+  display:        flex;
+  flex-direction: column;
+  gap:            12px;
+}
+
+.variant-label {
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:          var(--voyager-text-muted);
+  padding-left:   2px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SHARED: Utility classes del outerHTML (reimpl standalone)
+   ══════════════════════════════════════════════════════════════════════════ */
+.ssc-wrap .flex           { display: flex; }
+.ssc-wrap .items-center   { align-items: center; }
+.ssc-wrap .justify-end    { justify-content: flex-end; }
+.ssc-wrap .inline-flex    { display: inline-flex; }
+.ssc-wrap .flex-1         { flex: 1; }
+.ssc-wrap .flex-shrink-0  { flex-shrink: 0; }
+.ssc-wrap .relative       { position: relative; }
+.ssc-wrap .absolute       { position: absolute; }
+.ssc-wrap .inset-0        { top: 0; right: 0; bottom: 0; left: 0; }
+.ssc-wrap .block          { display: block; }
+.ssc-wrap .cursor-pointer { cursor: pointer; }
+.ssc-wrap .w-full         { width: 100%; }
+.ssc-wrap .w-5            { width: 20px; }
+.ssc-wrap .h-5            { height: 20px; }
+.ssc-wrap .px-6           { padding-left: 24px; padding-right: 24px; }
+.ssc-wrap .py-5           { padding-top: 20px; padding-bottom: 20px; }
+.ssc-wrap .px-12          { padding-left: 48px; padding-right: 48px; }
+.ssc-wrap .py-3           { padding-top: 12px; padding-bottom: 12px; }
+.ssc-wrap .px-1           { padding-left: 4px; padding-right: 4px; }
+.ssc-wrap .ml-5           { margin-left: 20px; }
+.ssc-wrap .text-sm        { font-size: 14px; }
+.ssc-wrap .font-bold      { font-weight: 700; }
+.ssc-wrap .leading-5      { line-height: 20px; }
+.ssc-wrap .leading-6      { line-height: 24px; }
+.ssc-wrap .leading-tight  { line-height: 1.25; }
+.ssc-wrap .uppercase      { text-transform: uppercase; }
+.ssc-wrap .font-display   { font-family: var(--voyager-font-display); }
+.ssc-wrap .rounded        { border-radius: var(--voyager-radius-sm); }
+.ssc-wrap .rounded-t      { border-radius: var(--voyager-radius-sm) var(--voyager-radius-sm) 0 0; }
+.ssc-wrap .shadow         { box-shadow: 0 2px 4px oklch(0.22 0.18 285 / 8%); }
+.ssc-wrap .shadow-lg      { box-shadow: var(--voyager-shadow-floating); }
+.ssc-wrap .border-none    { border: none; }
+.ssc-wrap .bg-transparent { background: transparent; }
+.ssc-wrap .border-2       { border-style: solid; border-width: 2px; }
+.ssc-wrap .border-b       { border-bottom-style: solid; border-bottom-width: 1px; }
+.ssc-wrap .z-1            { z-index: 1; }
+.ssc-wrap .z-2            { z-index: 2; }
+.ssc-wrap .-translate-y-px { transform: translateY(-1px); }
+.ssc-wrap .focus\:outline-none:focus { outline: none; }
+.ssc-wrap .space-y-5 > * + * { margin-top: 20px; }
+.ssc-wrap .space-y-3 > * + * { margin-top: 12px; }
+
+.ssc-wrap .col-start-4.col-end-6 { width: 240px; }
+
+/* ── Radio inputs del outerHTML ─────────────────────────────────────────── */
+.ssc-wrap input[type="radio"].checkbox {
+  appearance:              none;
+  -webkit-appearance:      none;
+  flex-shrink:             0;
+  background-size:         60%;
+  background-position:     center;
+  background-repeat:       no-repeat;
+  transition:
+    background      var(--voyager-duration-micro) var(--voyager-ease-default),
+    border-color    var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.ssc-wrap input[type="tel"].input { appearance: none; outline: none; }
+
+.ssc-wrap form label {
+  transition:
+    background  var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow  var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.ssc-wrap button.button {
+  border:       none;
+  cursor:       pointer;
+  font-family:  var(--voyager-font-display);
+  font-size:    14px;
+  letter-spacing: 0.06em;
+  transition:
+    filter      var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow  var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.ssc-wrap button.button:hover     { filter: brightness(1.08); box-shadow: var(--voyager-shadow-floating); }
+.ssc-wrap button.button:focus-visible { outline: 2px solid var(--voyager-color-vault-mid, #3B1782); outline-offset: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 1 — VAULT · Seleccionado (opción 80 checked)
+   ══════════════════════════════════════════════════════════════════════════ */
+.ssc--vault .bg-gray-100        { background: var(--voyager-surface-section, #F2F4F3); }
+.ssc--vault .text-purple-500    { color: var(--voyager-color-vault, #22005C); }
+.ssc--vault .text-purple-900    { color: var(--voyager-text-on-surface, #111827); }
+.ssc--vault .text-white         { color: var(--voyager-text-on-dark, #FFFFFF); }
+
+.ssc--vault input[type="radio"].checkbox {
+  border: 2px solid var(--voyager-color-vault, #22005C);
+}
+.ssc--vault input[type="radio"].checkbox:checked {
+  background-color: var(--voyager-color-vault, #22005C);
+  border-color:     var(--voyager-color-vault, #22005C);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 7L5.5 10L11.5 4' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.ssc--vault form label:has(input[type="radio"]:checked) {
+  background: oklch(0.22 0.18 285 / 8%) !important;
+  box-shadow: inset 3px 0 0 var(--voyager-color-vault, #22005C);
+}
+.ssc--vault .border-purple-500  { border-color: var(--voyager-color-vault, #22005C); }
+.ssc--vault .bg-purple-500      { background: var(--voyager-gradient-vault, linear-gradient(135deg, #22005C 0%, #3B1782 100%)); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 2 — LIVE · Naranja
+   ══════════════════════════════════════════════════════════════════════════ */
+.ssc--live .bg-gray-100         { background: var(--voyager-surface-section, #F2F4F3); }
+.ssc--live .text-purple-500     { color: var(--voyager-color-vault, #22005C); }
+.ssc--live .text-purple-900     { color: var(--voyager-text-on-surface, #111827); }
+.ssc--live .text-white          { color: var(--voyager-text-on-dark, #FFFFFF); }
+
+.ssc--live input[type="radio"].checkbox {
+  border: 2px solid var(--voyager-color-live, #ED8936);
+}
+.ssc--live input[type="radio"].checkbox:checked {
+  background-color: var(--voyager-color-live, #ED8936);
+  border-color:     var(--voyager-color-live, #ED8936);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 7L5.5 10L11.5 4' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.ssc--live form label:has(input[type="radio"]:checked) {
+  background: oklch(0.72 0.16 55 / 8%) !important;
+  box-shadow: inset 3px 0 0 var(--voyager-color-live, #ED8936);
+}
+.ssc--live .border-purple-500   { border-color: var(--voyager-color-live, #ED8936); }
+.ssc--live .bg-purple-500       { background: var(--voyager-gradient-live-default, linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%)); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 3 — MODERN COIN SELECTOR
+   Cards blancas · selected = vault gradient invertido · "Popular" badge
+   Dimensiones: 240px × natural
+   ══════════════════════════════════════════════════════════════════════════ */
+.scc-modern {
+  width: 240px;
+}
+
+.scc-form {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+}
+
+/* Radio nativo oculto — accesible, activa :has() */
+.scc-radio-input {
+  position:       absolute;
+  opacity:        0;
+  width:          0;
+  height:         0;
+  pointer-events: none;
+}
+
+/* ── Option card ────────────────────────────────────────────────────────── */
+.scc-card {
+  display:       flex;
+  align-items:   center;
+  justify-content: space-between;
+  padding:       14px 20px;
+  background:    var(--voyager-surface-card, #FFFFFF);
+  border:        1.5px solid var(--voyager-border-ghost, rgba(34, 0, 92, 0.10));
+  border-radius: var(--voyager-radius-md);
+  cursor:        pointer;
+  position:      relative;
+  transition:
+    background   var(--voyager-duration-micro) var(--voyager-ease-default),
+    border-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow   var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-card:hover {
+  border-color: oklch(0.22 0.18 285 / 25%);
+  box-shadow:   var(--voyager-shadow-card);
+}
+
+/* Seleccionado — vault gradient fill */
+.scc-card:has(.scc-radio-input:checked) {
+  background:   var(--voyager-gradient-vault, linear-gradient(135deg, #22005C 0%, #3B1782 100%));
+  border-color: transparent;
+  box-shadow:   var(--voyager-shadow-floating);
+}
+
+/* ── Amount label ───────────────────────────────────────────────────────── */
+.scc-amount {
+  font-family:   var(--voyager-font-mono, "Roboto Mono", monospace);
+  font-size:     15px;
+  font-weight:   700;
+  color:         var(--voyager-color-vault, #22005C);
+  font-variant-numeric: tabular-nums;
+  transition:    color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-card:has(.scc-radio-input:checked) .scc-amount {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+/* ── Radio visual (dot indicator) ──────────────────────────────────────── */
+.scc-dot {
+  width:         18px;
+  height:        18px;
+  border-radius: var(--voyager-radius-full, 9999px);
+  border:        2px solid var(--voyager-border-ghost, rgba(34, 0, 92, 0.18));
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  flex-shrink:   0;
+  transition:
+    border-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    background   var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-dot::after {
+  content:       '';
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background:    transparent;
+  transition:    background var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-card:has(.scc-radio-input:checked) .scc-dot {
+  border-color: oklch(1 0 0 / 50%);
+}
+
+.scc-card:has(.scc-radio-input:checked) .scc-dot::after {
+  background: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+/* ── "Popular" badge ────────────────────────────────────────────────────── */
+.scc-badge {
+  font-size:      9px;
+  font-weight:    800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color:          var(--voyager-color-live, #ED8936);
+  border:         1px solid oklch(0.72 0.16 55 / 35%);
+  border-radius:  var(--voyager-radius-full, 9999px);
+  padding:        2px 8px;
+  transition:
+    color        var(--voyager-duration-micro) var(--voyager-ease-default),
+    border-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    background   var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-card:has(.scc-radio-input:checked) .scc-badge {
+  color:        var(--voyager-text-on-dark, #FFFFFF);
+  border-color: oklch(1 0 0 / 25%);
+  background:   oklch(1 0 0 / 12%);
+}
+
+/* ── Custom amount section ──────────────────────────────────────────────── */
+.scc-custom-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+}
+
+.scc-custom-label-text {
+  font-size:   12px;
+  font-weight: 600;
+  color:       var(--voyager-text-muted);
+  padding-left: 2px;
+}
+
+.scc-card--custom {
+  gap: 10px;
+}
+
+.scc-custom-field {
+  flex:          1;
+  background:    transparent;
+  border:        none;
+  outline:       none;
+  font-family:   var(--voyager-font-mono, "Roboto Mono", monospace);
+  font-size:     15px;
+  font-weight:   700;
+  color:         var(--voyager-color-vault, #22005C);
+  font-variant-numeric: tabular-nums;
+  width:         100%;
+  transition:    color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-custom-field::placeholder {
+  color:       oklch(0.22 0.18 285 / 25%);
+  font-weight: 400;
+}
+
+.scc-card--custom:has(.scc-radio-input:checked) .scc-custom-field,
+.scc-card--custom:has(.scc-radio-input:checked) .scc-custom-field::placeholder {
+  color: oklch(1 0 0 / 70%);
+}
+
+.scc-card--custom:has(.scc-radio-input:checked) .scc-custom-field {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+/* ── Submit button ──────────────────────────────────────────────────────── */
+.scc-submit {
+  margin-top:     4px;
+  width:          100%;
+  padding:        14px;
+  background:     var(--voyager-gradient-vault, linear-gradient(135deg, #22005C 0%, #3B1782 100%));
+  color:          var(--voyager-text-on-dark, #FFFFFF);
+  border:         none;
+  border-radius:  var(--voyager-radius-sm, 4px);
+  font-family:    var(--voyager-font-display);
+  font-size:      13px;
+  font-weight:    800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  box-shadow:     var(--voyager-shadow-card);
+  transition:
+    filter      var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow  var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.scc-submit:hover {
+  filter:     brightness(1.1);
+  box-shadow: var(--voyager-shadow-floating);
+}
+
+.scc-submit:focus-visible {
+  outline:        2px solid var(--voyager-color-vault-mid, #3B1782);
+  outline-offset: 2px;
+}
+
+/* ─── prefers-reduced-motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<main class="preview-stage" aria-label="Voyager DS — Select SubasCoins">
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       VARIANT 1 — VAULT · Seleccionado (opción 80 pre-checked)
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="variant-block">
+    <span class="variant-label">Vault · Seleccionado</span>
+    <div class="ssc-wrap ssc--vault">
+      <div class="col-start-4 col-end-6">
+        <form action="/zona/comprar" method="GET" class="space-y-5">
+          <label for="v1-option30" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v1-option30" name="v1-coins" value="30" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 30</span>
+            </span>
+          </label>
+          <label for="v1-option50" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v1-option50" name="v1-coins" value="50" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 50</span>
+            </span>
+          </label>
+          <label for="v1-option80" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v1-option80" name="v1-coins" value="80" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none" checked>
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 80</span>
+            </span>
+          </label>
+          <label for="v1-option130" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v1-option130" name="v1-coins" value="130" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 130</span>
+            </span>
+          </label>
+          <div class="relative">
+            <label for="v1-custom-amount" class="absolute inset-0 block cursor-pointer z-2"></label>
+            <div class="relative space-y-3 z-1">
+              <div class="text-sm leading-tight text-purple-500 font-display">Ingresa un monto:</div>
+              <div class="relative flex items-center px-6 bg-gray-100 border-b border-purple-500 rounded-t">
+                <div class="flex items-center flex-shrink-0">
+                  <input type="radio" id="v1-custom-amount" name="v1-coins" value="custom" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+                  <span class="ml-5 text-sm font-bold leading-5 text-purple-500 transform -translate-y-px font-display">&gt;S&lt;</span>
+                </div>
+                <input type="tel" name="customAmount" class="flex-1 w-full px-1 py-5 text-sm font-bold leading-tight text-purple-900 bg-transparent border-none input">
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-end">
+            <div class="flex-shrink-0 rounded shadow">
+              <button class="inline-flex items-center justify-center px-12 py-3 text-sm font-bold leading-6 text-white uppercase bg-purple-500 rounded shadow-lg button font-display focus:outline-none">
+                Sigamos
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       VARIANT 2 — LIVE · Naranja
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="variant-block">
+    <span class="variant-label">Live · Naranja</span>
+    <div class="ssc-wrap ssc--live">
+      <div class="col-start-4 col-end-6">
+        <form action="/zona/comprar" method="GET" class="space-y-5">
+          <label for="v2-option30" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v2-option30" name="v2-coins" value="30" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 30</span>
+            </span>
+          </label>
+          <label for="v2-option50" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v2-option50" name="v2-coins" value="50" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 50</span>
+            </span>
+          </label>
+          <label for="v2-option80" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v2-option80" name="v2-coins" value="80" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 80</span>
+            </span>
+          </label>
+          <label for="v2-option130" class="flex items-center px-6 py-5 bg-gray-100 rounded cursor-pointer">
+            <span class="flex items-center flex-1">
+              <input type="radio" id="v2-option130" name="v2-coins" value="130" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+              <span class="ml-5 text-sm font-bold leading-5 text-purple-500 font-display">&gt;S&lt; 130</span>
+            </span>
+          </label>
+          <div class="relative">
+            <label for="v2-custom-amount" class="absolute inset-0 block cursor-pointer z-2"></label>
+            <div class="relative space-y-3 z-1">
+              <div class="text-sm leading-tight text-purple-500 font-display">Ingresa un monto:</div>
+              <div class="relative flex items-center px-6 bg-gray-100 border-b border-purple-500 rounded-t">
+                <div class="flex items-center flex-shrink-0">
+                  <input type="radio" id="v2-custom-amount" name="v2-coins" value="custom" class="w-5 h-5 text-purple-500 border-2 border-purple-500 rounded checkbox focus:outline-none">
+                  <span class="ml-5 text-sm font-bold leading-5 text-purple-500 transform -translate-y-px font-display">&gt;S&lt;</span>
+                </div>
+                <input type="tel" name="customAmount" class="flex-1 w-full px-1 py-5 text-sm font-bold leading-tight text-purple-900 bg-transparent border-none input">
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-end">
+            <div class="flex-shrink-0 rounded shadow">
+              <button class="inline-flex items-center justify-center px-12 py-3 text-sm font-bold leading-6 text-white uppercase bg-purple-500 rounded shadow-lg button font-display focus:outline-none">
+                Sigamos
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       VARIANT 3 — MODERN COIN SELECTOR
+       Cards blancas → selected: vault gradient invertido · dot indicator
+       Badge "Popular" en opción 80 · Roboto Mono en montos
+       Custom amount como card · botón full-width vault gradient
+       Dimensiones: 240px × natural (mismas que el form original)
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="variant-block">
+    <span class="variant-label">Modern · Coin Selector</span>
+
+    <div class="scc-modern">
+      <form action="/zona/comprar" method="GET" class="scc-form">
+
+        <!-- >S< 30 -->
+        <label class="scc-card" for="m-option30">
+          <input type="radio" id="m-option30" name="m-coins" value="30" class="scc-radio-input">
+          <div class="scc-dot"></div>
+          <span class="scc-amount">&gt;S&lt; 30</span>
+        </label>
+
+        <!-- >S< 50 -->
+        <label class="scc-card" for="m-option50">
+          <input type="radio" id="m-option50" name="m-coins" value="50" class="scc-radio-input">
+          <div class="scc-dot"></div>
+          <span class="scc-amount">&gt;S&lt; 50</span>
+        </label>
+
+        <!-- >S< 80 — Popular -->
+        <label class="scc-card" for="m-option80">
+          <input type="radio" id="m-option80" name="m-coins" value="80" class="scc-radio-input" checked>
+          <div class="scc-dot"></div>
+          <span class="scc-amount">&gt;S&lt; 80</span>
+          <span class="scc-badge">Popular</span>
+        </label>
+
+        <!-- >S< 130 -->
+        <label class="scc-card" for="m-option130">
+          <input type="radio" id="m-option130" name="m-coins" value="130" class="scc-radio-input">
+          <div class="scc-dot"></div>
+          <span class="scc-amount">&gt;S&lt; 130</span>
+        </label>
+
+        <!-- Custom amount -->
+        <div class="scc-custom-group">
+          <span class="scc-custom-label-text">Ingresa un monto:</span>
+          <label class="scc-card scc-card--custom" for="m-custom">
+            <input type="radio" id="m-custom" name="m-coins" value="custom" class="scc-radio-input">
+            <div class="scc-dot"></div>
+            <span class="scc-amount">&gt;S&lt;</span>
+            <input type="tel" id="m-custom-field" name="customAmount"
+                   class="scc-custom-field" placeholder="210" autocomplete="off">
+          </label>
+        </div>
+
+        <button type="submit" class="scc-submit">Sigamos</button>
+
+      </form>
+    </div>
+  </div>
+
+</main>
+<script>
+/* Modern variant: foco en campo custom cuando se selecciona esa opción */
+(function () {
+  var customRadio = document.getElementById('m-custom');
+  var customField = document.getElementById('m-custom-field');
+  if (!customRadio || !customField) return;
+
+  customField.addEventListener('focus', function () {
+    customRadio.checked = true;
+  });
+
+  customField.addEventListener('input', function () {
+    customRadio.checked = true;
+  });
+})();
+</script>
+<script src="../variant-filter.js"></script>
+</body>
+</html>

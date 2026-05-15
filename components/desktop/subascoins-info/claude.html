@@ -1,0 +1,638 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade · SubasCoins Info</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — SubasCoins Info
+   DESIGN.md §2 Color · §4 Tipografía · §5 Spacing · §6 Radius · §7 Shadow
+   Component dimensions: 392.4 × 476.06 px
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  /* ── Tier 1: Primitives ──────────────────────────────────────────────── */
+  --voyager-color-vault:           oklch(0.22 0.18 285);  /* #22005C */
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);  /* #3B1782 */
+  --voyager-color-vault-dark:      oklch(0.26 0.19 285);  /* #2E0F70 */
+  --voyager-color-live:            oklch(0.72 0.16 55);   /* #ED8936 */
+  --voyager-orange-500:            #F4AC59;
+  --voyager-orange-600:            #ED8936;
+  --voyager-orange-700:            #D07128;
+  --voyager-orange-800:            #B25614;
+  --voyager-orange-900:            #93420A;
+
+  /* ── Tier 2: Surfaces ────────────────────────────────────────────────── */
+  --voyager-surface-card:          oklch(1 0 0);          /* #FFFFFF */
+  --voyager-surface-section:       oklch(0.96 0.004 160); /* #F2F4F3 */
+  --voyager-surface-page:          oklch(0.98 0.004 160); /* #F8FAF9 */
+
+  /* ── Tier 2: Text ────────────────────────────────────────────────────── */
+  --voyager-text-on-surface:       oklch(0.15 0.008 200); /* #111827 */
+  --voyager-text-muted:            oklch(0.55 0.02 260);
+  --voyager-text-on-dark:          oklch(1 0 0);
+  --voyager-text-on-dark-muted:    oklch(1 0 0 / 65%);
+  --voyager-text-on-dark-subtle:   oklch(1 0 0 / 35%);
+
+  /* ── Tier 2: Status ──────────────────────────────────────────────────── */
+  --voyager-status-success:        oklch(0.70 0.20 145);  /* #22C55E */
+
+  /* ── Tier 2: Borders ─────────────────────────────────────────────────── */
+  --voyager-border-ghost:          oklch(0.22 0.18 285 / 10%);
+
+  /* ── Tier 3: Gradients ───────────────────────────────────────────────── */
+  --voyager-gradient-vault:        linear-gradient(135deg, #22005C 0%, #3B1782 100%);
+  --voyager-gradient-live-default: linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+  --voyager-shadow-card:           0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating:       0 12px 28px oklch(0.22 0.18 285 / 12%);
+
+  /* ── Radius ──────────────────────────────────────────────────────────── */
+  --voyager-radius-sm:             4px;
+  --voyager-radius-md:             8px;
+  --voyager-radius-lg:             16px;
+  --voyager-radius-full:           9999px;
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --voyager-font-display:          "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:             "Roboto Mono", monospace;
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  --voyager-duration-micro:        150ms;
+  --voyager-ease-default:          cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─── Canvas ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background:
+    radial-gradient(ellipse 70% 50% at top left,    oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-surface-page, #F8FAF9);
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface, #111827);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Preview stage ─────────────────────────────────────────────────────── */
+.preview-stage {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  gap:             56px;
+  flex-wrap:       wrap;
+  min-height:      100vh;
+  padding:         56px 40px;
+}
+
+/* ─── Variant block / label ─────────────────────────────────────────────── */
+.variant-block {
+  display:        flex;
+  flex-direction: column;
+  gap:            12px;
+}
+
+.variant-label {
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:          var(--voyager-text-muted);
+  padding-left:   2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SUBASCOINS INFO — Shared structure
+   Width: 392px  ·  outerHTML contract
+   ══════════════════════════════════════════════════════════════════════════ */
+.sii-root {
+  width:          392px;
+  display:        flex;
+  flex-direction: column;
+  gap:            24px;
+}
+
+/* ── Header panel ───────────────────────────────────────────────────────── */
+.sii-header-panel {
+  display:       flex;
+  align-items:   center;
+  padding:       24px 16px 24px 24px;
+  border-radius: var(--voyager-radius-md);
+  position:      relative;
+  overflow:      hidden;
+}
+
+.sii-header-text {
+  flex:         1;
+  padding-right: 8px;
+  font-size:    18px;
+  font-weight:  300;
+  line-height:  1.5;
+}
+
+.sii-header-img {
+  flex-shrink: 0;
+  width:       96px;
+  height:      auto;
+}
+
+/* ── Info card ──────────────────────────────────────────────────────────── */
+.sii-info-card {
+  display:       flex;
+  align-items:   center;
+  padding:       16px;
+  border-radius: var(--voyager-radius-md);
+  border:        1px solid;
+}
+
+.sii-benefits-area {
+  flex: 1;
+}
+
+.sii-benefits-list {
+  list-style: none;
+  display:    flex;
+  flex-direction: column;
+  gap:        12px;
+}
+
+.sii-benefit-item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         8px;
+  font-size:   14px;
+  font-weight: 400;
+  line-height: 1.625;
+}
+
+.sii-benefit-icon {
+  flex-shrink: 0;
+  width:  24px;
+  height: 24px;
+}
+
+/* ── Disclaimer ─────────────────────────────────────────────────────────── */
+.sii-disclaimer {
+  flex:        1;
+  font-size:   12px;
+  font-weight: 700;
+  line-height: 1.625;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 1 — CON IMAGEN (Vault header · mascot visible)
+   ══════════════════════════════════════════════════════════════════════════ */
+.sii--with-img .sii-header-panel {
+  background: var(--voyager-gradient-vault,
+              linear-gradient(135deg, #22005C 0%, #3B1782 100%));
+}
+
+/* Decorative subtle orb */
+.sii--with-img .sii-header-panel::after {
+  content:       '';
+  position:      absolute;
+  top:           -24px;
+  right:         80px;
+  width:         72px;
+  height:        72px;
+  border-radius: 50%;
+  background:    oklch(1 0 0 / 5%);
+  pointer-events: none;
+}
+
+.sii--with-img .sii-header-text {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.sii--with-img .sii-info-card {
+  background:   var(--voyager-surface-card, #FFFFFF);
+  border-color: var(--voyager-border-ghost, rgba(34, 0, 92, 0.10));
+  box-shadow:   var(--voyager-shadow-card);
+}
+
+.sii--with-img .sii-benefit-item {
+  color: var(--voyager-text-on-surface, #111827);
+}
+
+.sii--with-img .sii-benefit-icon {
+  color: var(--voyager-status-success, #22C55E);
+}
+
+.sii--with-img .sii-disclaimer {
+  color: var(--voyager-color-vault-mid, #3B1782);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 2 — SIN IMAGEN (Live header · mascot oculto · benefits full-width)
+   El <img> mascot permanece en el DOM (contrato outerHTML) — oculto via CSS
+   ══════════════════════════════════════════════════════════════════════════ */
+.sii--no-img .sii-header-panel {
+  background: var(--voyager-gradient-live-default,
+              linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%));
+}
+
+.sii--no-img .sii-header-text {
+  color: var(--voyager-text-on-dark, #FFFFFF);
+}
+
+.sii--no-img .sii-info-card {
+  background:   var(--voyager-surface-card, #FFFFFF);
+  border-color: oklch(0.72 0.16 55 / 30%);
+  box-shadow:   var(--voyager-shadow-card);
+}
+
+/* Benefits como feature cards en lugar de lista simple */
+.sii--no-img .sii-benefits-list {
+  gap: 8px;
+}
+
+.sii--no-img .sii-benefit-item {
+  align-items:   center;
+  padding:       10px 14px;
+  border-radius: var(--voyager-radius-sm);
+  background:    oklch(0.72 0.16 55 / 7%);
+  gap:           10px;
+  font-weight:   500;
+  color:         var(--voyager-text-on-surface, #111827);
+}
+
+.sii--no-img .sii-benefit-icon {
+  color: var(--voyager-status-success, #22C55E);
+}
+
+.sii--no-img .sii-disclaimer {
+  color: var(--voyager-color-live, #ED8936);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 3 — PROMO CARD (propuesta)
+   Card completa en vault dark · coins SVG inline · chips de beneficios
+   Estructura completamente nueva — propuesta visual premium
+   ══════════════════════════════════════════════════════════════════════════ */
+.sii-promo-card {
+  width:         392px;
+  border-radius: var(--voyager-radius-lg);
+  overflow:      hidden;
+  box-shadow:    var(--voyager-shadow-floating);
+}
+
+/* Hero area — vault gradient */
+.sii-promo-hero {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         24px 24px 20px;
+  background:      var(--voyager-gradient-vault,
+                   linear-gradient(135deg, #22005C 0%, #3B1782 100%));
+  position:        relative;
+  overflow:        hidden;
+}
+
+.sii-promo-hero::before {
+  content:       '';
+  position:      absolute;
+  bottom:        -40px;
+  left:          -20px;
+  width:         120px;
+  height:        120px;
+  border-radius: 50%;
+  background:    oklch(1 0 0 / 4%);
+  pointer-events: none;
+}
+
+.sii-promo-hero-text {
+  flex: 1;
+}
+
+.sii-promo-eyebrow {
+  display:        block;
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color:          var(--voyager-text-on-dark-muted);
+  margin-bottom:  6px;
+}
+
+.sii-promo-title {
+  font-size:      22px;
+  font-weight:    800;
+  color:          var(--voyager-text-on-dark, #FFFFFF);
+  line-height:    1.2;
+  margin-bottom:  4px;
+}
+
+.sii-promo-subtitle {
+  font-size:   14px;
+  font-weight: 300;
+  color:       var(--voyager-text-on-dark-muted);
+  line-height: 1.5;
+}
+
+.sii-promo-subtitle strong {
+  font-weight: 700;
+  color:       var(--voyager-text-on-dark, #FFFFFF);
+}
+
+/* Coins SVG */
+.sii-promo-coins {
+  flex-shrink: 0;
+  width:       96px;
+  height:      72px;
+}
+
+/* Body area — light surface */
+.sii-promo-body {
+  padding:    20px 24px 24px;
+  background: var(--voyager-surface-card, #FFFFFF);
+}
+
+.sii-promo-section-label {
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:          var(--voyager-text-muted);
+  margin-bottom:  12px;
+}
+
+/* Benefit chips */
+.sii-promo-chips {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       8px;
+  margin-bottom: 20px;
+}
+
+.sii-promo-chip {
+  display:       flex;
+  align-items:   center;
+  gap:           6px;
+  padding:       8px 14px;
+  border-radius: var(--voyager-radius-full, 9999px);
+  background:    oklch(0.22 0.18 285 / 6%);
+  border:        1px solid oklch(0.22 0.18 285 / 12%);
+  font-size:     13px;
+  font-weight:   600;
+  color:         var(--voyager-color-vault, #22005C);
+}
+
+.sii-promo-chip svg {
+  color: var(--voyager-status-success, #22C55E);
+  flex-shrink: 0;
+}
+
+/* Exchange rate highlight */
+.sii-promo-rate {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         14px 16px;
+  border-radius:   var(--voyager-radius-md);
+  background:      oklch(0.72 0.16 55 / 8%);
+  border:          1px solid oklch(0.72 0.16 55 / 20%);
+}
+
+.sii-promo-rate-label {
+  font-size:   12px;
+  font-weight: 700;
+  color:       var(--voyager-color-live, #ED8936);
+}
+
+.sii-promo-rate-value {
+  font-family:          var(--voyager-font-mono, "Roboto Mono", monospace);
+  font-variant-numeric: tabular-nums;
+  font-size:            13px;
+  font-weight:          700;
+  color:                var(--voyager-color-vault, #22005C);
+}
+
+/* Mascot strip — bottom of promo */
+.sii-promo-mascot-strip {
+  display:      flex;
+  align-items:  flex-end;
+  margin-top:   20px;
+  padding-top:  16px;
+  border-top:   1px solid var(--voyager-border-ghost, rgba(34, 0, 92, 0.08));
+  gap:          12px;
+}
+
+.sii-promo-mascot {
+  flex-shrink: 0;
+  margin-top:  -32px;
+}
+
+.sii-promo-mascot-note {
+  font-size:   12px;
+  font-weight: 400;
+  color:       var(--voyager-text-muted);
+  line-height: 1.5;
+  padding-bottom: 8px;
+}
+
+/* ─── prefers-reduced-motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<main class="preview-stage" aria-label="Voyager DS — SubasCoins Info">
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       VARIANT 1 — CON IMAGEN
+       Vault gradient header · Subastin mascot visible · benefits lista limpia
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="variant-block">
+    <span class="variant-label">Con imagen</span>
+
+    <div class="sii-root sii--with-img">
+
+      <!-- Header panel -->
+      <div class="sii-header-panel">
+        <span class="sii-header-text">
+          Selecciona los <span style="font-weight:700">SubasCoins</span> que deseas adquirir:
+        </span>
+        <img class="sii-header-img"
+             src="https://www.vmcsubastas.com/4app/assets/images/frontend/elements/group_subascoins.svg"
+             alt="SubasCoins">
+      </div>
+
+      <!-- Info card -->
+      <div class="sii-info-card">
+        <div class="sii-benefits-area">
+          <ul class="sii-benefits-list">
+            <li class="sii-benefit-item">
+              <svg class="sii-benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.7785 12.7609L8.73408 10.7093C8.34797 10.3249 7.68605 10.3249 7.29993 10.7093L6.50011 11.5057C6.114 11.8901 6.114 12.5492 6.50011 12.9336L10.0028 16.4485C10.2424 16.6871 10.5882 16.7776 10.9085 16.72C11.2105 16.7794 11.5356 16.6817 11.7613 16.427L17.5149 9.96363C17.881 9.55044 17.881 8.84213 17.5149 8.42895L16.7564 7.57307C16.3903 7.15989 15.7627 7.15989 15.3965 7.57307L10.7785 12.7609Z" fill="currentColor"/>
+              </svg>
+              <span>Consignaciones más bajas.</span>
+            </li>
+            <li class="sii-benefit-item">
+              <svg class="sii-benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.7785 12.7609L8.73408 10.7093C8.34797 10.3249 7.68605 10.3249 7.29993 10.7093L6.50011 11.5057C6.114 11.8901 6.114 12.5492 6.50011 12.9336L10.0028 16.4485C10.2424 16.6871 10.5882 16.7776 10.9085 16.72C11.2105 16.7794 11.5356 16.6817 11.7613 16.427L17.5149 9.96363C17.881 9.55044 17.881 8.84213 17.5149 8.42895L16.7564 7.57307C16.3903 7.15989 15.7627 7.15989 15.3965 7.57307L10.7785 12.7609Z" fill="currentColor"/>
+              </svg>
+              <span>Disponibilidad instantánea.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="sii-disclaimer">
+        El valor de &gt;S&lt; 1 es equivalente a US$ 1 (un Dólar Americano).
+      </p>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       VARIANT 2 — SIN IMAGEN
+       Live gradient header · mascot oculto · benefits como feature cards
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="variant-block">
+    <span class="variant-label">Sin imagen</span>
+
+    <div class="sii-root sii--no-img">
+
+      <!-- Header panel -->
+      <div class="sii-header-panel">
+        <span class="sii-header-text">
+          Selecciona los <span style="font-weight:700">SubasCoins</span> que deseas adquirir:
+        </span>
+        <img class="sii-header-img"
+             src="https://www.vmcsubastas.com/4app/assets/images/frontend/elements/group_subascoins.svg"
+             alt="SubasCoins">
+      </div>
+
+      <!-- Info card -->
+      <div class="sii-info-card">
+        <div class="sii-benefits-area">
+          <ul class="sii-benefits-list">
+            <li class="sii-benefit-item">
+              <svg class="sii-benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.7785 12.7609L8.73408 10.7093C8.34797 10.3249 7.68605 10.3249 7.29993 10.7093L6.50011 11.5057C6.114 11.8901 6.114 12.5492 6.50011 12.9336L10.0028 16.4485C10.2424 16.6871 10.5882 16.7776 10.9085 16.72C11.2105 16.7794 11.5356 16.6817 11.7613 16.427L17.5149 9.96363C17.881 9.55044 17.881 8.84213 17.5149 8.42895L16.7564 7.57307C16.3903 7.15989 15.7627 7.15989 15.3965 7.57307L10.7785 12.7609Z" fill="currentColor"/>
+              </svg>
+              <span>Consignaciones más bajas.</span>
+            </li>
+            <li class="sii-benefit-item">
+              <svg class="sii-benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.7785 12.7609L8.73408 10.7093C8.34797 10.3249 7.68605 10.3249 7.29993 10.7093L6.50011 11.5057C6.114 11.8901 6.114 12.5492 6.50011 12.9336L10.0028 16.4485C10.2424 16.6871 10.5882 16.7776 10.9085 16.72C11.2105 16.7794 11.5356 16.6817 11.7613 16.427L17.5149 9.96363C17.881 9.55044 17.881 8.84213 17.5149 8.42895L16.7564 7.57307C16.3903 7.15989 15.7627 7.15989 15.3965 7.57307L10.7785 12.7609Z" fill="currentColor"/>
+              </svg>
+              <span>Disponibilidad instantánea.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="sii-disclaimer">
+        El valor de &gt;S&lt; 1 es equivalente a US$ 1 (un Dólar Americano).
+      </p>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       VARIANT 3 — PROMO CARD (propuesta)
+       Card unificada vault-dark · hero con coins SVG inline · benefit chips
+       · tasa de cambio destacada · mascot en franja inferior
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="variant-block">
+    <span class="variant-label">Promo card (propuesta)</span>
+
+    <div class="sii-promo-card">
+
+      <!-- Hero vault gradient -->
+      <div class="sii-promo-hero">
+        <div class="sii-promo-hero-text">
+          <span class="sii-promo-eyebrow">Créditos de participación</span>
+          <p class="sii-promo-title">SubasCoins</p>
+          <p class="sii-promo-subtitle">
+            Participa en más subastas<br>
+            con <strong>beneficios exclusivos</strong>
+          </p>
+        </div>
+
+        <!-- Inline SVG coin stack (no external request) -->
+        <svg class="sii-promo-coins" viewBox="0 0 96 72" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="pg-back" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D07128"/>
+              <stop offset="100%" stop-color="#B25614"/>
+            </linearGradient>
+            <linearGradient id="pg-mid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ED8936"/>
+              <stop offset="100%" stop-color="#D07128"/>
+            </linearGradient>
+            <linearGradient id="pg-front" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F4AC59"/>
+              <stop offset="100%" stop-color="#ED8936"/>
+            </linearGradient>
+          </defs>
+          <!-- Coin 3 (back) -->
+          <ellipse cx="63" cy="58" rx="27" ry="8" fill="#7B3800" opacity="0.55"/>
+          <rect x="36" y="44" width="54" height="14" fill="#93420A" opacity="0.8"/>
+          <ellipse cx="63" cy="44" rx="27" ry="8" fill="url(#pg-back)"/>
+          <!-- Coin 2 (middle) -->
+          <ellipse cx="51" cy="48" rx="27" ry="8" fill="#7B3800" opacity="0.55"/>
+          <rect x="24" y="34" width="54" height="14" fill="#B25614"/>
+          <ellipse cx="51" cy="34" rx="27" ry="8" fill="url(#pg-mid)"/>
+          <ellipse cx="51" cy="34" rx="14" ry="4" fill="#F4AC59" opacity="0.35"/>
+          <!-- Coin 1 (front) -->
+          <ellipse cx="39" cy="38" rx="27" ry="8" fill="#7B3800" opacity="0.55"/>
+          <rect x="12" y="22" width="54" height="16" fill="#D07128"/>
+          <ellipse cx="39" cy="22" rx="27" ry="8" fill="url(#pg-front)"/>
+          <ellipse cx="39" cy="22" rx="14" ry="4" fill="white" opacity="0.22"/>
+          <text x="39" y="26" text-anchor="middle"
+                font-family="Plus Jakarta Sans, sans-serif"
+                font-size="9" font-weight="800"
+                fill="#7B3800" opacity="0.75">SC</text>
+        </svg>
+      </div>
+
+      <!-- Body surface -->
+      <div class="sii-promo-body">
+
+        <p class="sii-promo-section-label">Beneficios incluidos</p>
+
+        <!-- Benefit chips -->
+        <div class="sii-promo-chips">
+          <div class="sii-promo-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.7785 12.7609L8.73408 10.7093C8.34797 10.3249 7.68605 10.3249 7.29993 10.7093L6.50011 11.5057C6.114 11.8901 6.114 12.5492 6.50011 12.9336L10.0028 16.4485C10.2424 16.6871 10.5882 16.7776 10.9085 16.72C11.2105 16.7794 11.5356 16.6817 11.7613 16.427L17.5149 9.96363C17.881 9.55044 17.881 8.84213 17.5149 8.42895L16.7564 7.57307C16.3903 7.15989 15.7627 7.15989 15.3965 7.57307L10.7785 12.7609Z" fill="currentColor"/>
+            </svg>
+            Consignaciones más bajas.
+          </div>
+          <div class="sii-promo-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.7785 12.7609L8.73408 10.7093C8.34797 10.3249 7.68605 10.3249 7.29993 10.7093L6.50011 11.5057C6.114 11.8901 6.114 12.5492 6.50011 12.9336L10.0028 16.4485C10.2424 16.6871 10.5882 16.7776 10.9085 16.72C11.2105 16.7794 11.5356 16.6817 11.7613 16.427L17.5149 9.96363C17.881 9.55044 17.881 8.84213 17.5149 8.42895L16.7564 7.57307C16.3903 7.15989 15.7627 7.15989 15.3965 7.57307L10.7785 12.7609Z" fill="currentColor"/>
+            </svg>
+            Disponibilidad instantánea.
+          </div>
+        </div>
+
+        <!-- Exchange rate highlight -->
+        <div class="sii-promo-rate" role="note" aria-label="Tipo de cambio SubasCoins">
+          <span class="sii-promo-rate-label">Tipo de cambio</span>
+          <span class="sii-promo-rate-value">&gt;S&lt; 1 = US$ 1</span>
+        </div>
+
+        <!-- Disclaimer strip -->
+        <div class="sii-promo-mascot-strip">
+          <p class="sii-promo-mascot-note">
+            El valor de &gt;S&lt; 1 es equivalente a US$ 1 (un Dólar Americano).
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

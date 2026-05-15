@@ -1,0 +1,493 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade Preview · User Profile Card v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — local token surface.  DESIGN.md §2 Color · §6 Radius · §7
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand — The Vault */
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);
+  --voyager-color-vault-dark:   oklch(0.26 0.19 285);
+
+  /* Status / accent */
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-live-strong:  oklch(0.62 0.18 45);
+  --voyager-color-negotiable:   oklch(0.78 0.14 195);
+  --voyager-color-status-error: oklch(0.62 0.20 25);
+  --voyager-color-status-success: oklch(0.62 0.18 145);
+
+  /* Surfaces */
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+
+  /* Text */
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+
+  /* Utility */
+  --voyager-color-border-ghost:    color-mix(in oklch, var(--voyager-color-vault) 8%, transparent);
+  --voyager-color-divider-section: color-mix(in oklch, var(--voyager-color-vault) 7%, transparent);
+
+  /* Tints */
+  --voyager-tint-vault-soft:    color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+  --voyager-tint-vault-medium:  color-mix(in oklch, var(--voyager-color-vault) 12%, transparent);
+  --voyager-tint-live-soft:     color-mix(in oklch, var(--voyager-color-live) 14%, transparent);
+  --voyager-tint-negotiable-soft: color-mix(in oklch, var(--voyager-color-negotiable) 16%, transparent);
+  --voyager-tint-error-soft:    color-mix(in oklch, var(--voyager-color-status-error) 14%, transparent);
+
+  /* Typography */
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  /* Radius */
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-radius-pill: 9999px;
+
+  /* Shadows */
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 12%);
+
+  /* Motion */
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Preview canvas
+   ──────────────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: oklch(0.97 0 0);
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: max-content;        /* expande el stage al ancho del contenido — iframes angostos pueden scrollear horizontalmente sin cortar la izquierda */
+  padding: 56px 24px;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 16px 0;
+}
+
+.preview-frame {
+  width: 798px;
+  height: 200px;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Card root — surface + signature finish
+   ──────────────────────────────────────────────────────────────────────── */
+.preview-frame .card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 18px 24px 16px;
+  border-radius: var(--voyager-radius-lg);
+  background: var(--voyager-color-surface-card);
+  box-shadow: var(--voyager-shadow-card);
+  background-image:
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--voyager-color-vault) 3%, transparent) 0%,
+      transparent 60%);
+  overflow: hidden;
+  transition:
+    box-shadow var(--voyager-duration-standard) var(--voyager-ease-default),
+    transform  var(--voyager-duration-micro)    var(--voyager-ease-default);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Bottom signature stripe — vault */
+.preview-frame .card::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: var(--voyager-color-vault);
+  pointer-events: none;
+}
+
+/* ── Header row ─────────────────────────────────────────────────────────── */
+.preview-frame .card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.preview-frame .avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-live);
+  box-shadow: 0 4px 10px color-mix(in oklch, var(--voyager-color-live) 30%, transparent);
+  color: var(--voyager-color-surface-card);
+}
+
+.preview-frame .avatar svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.preview-frame .greeting {
+  flex: 1 1 auto;
+  font-family: var(--voyager-font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-vault);
+  line-height: 1.1;
+}
+
+.preview-frame .link-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--voyager-color-vault);
+  background: transparent;
+  border: 0;
+  border-radius: var(--voyager-radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    color            var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .link-action svg {
+  width: 12px;
+  height: 12px;
+  fill: var(--voyager-color-live);
+  transition: transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .link-action:hover {
+  background-color: var(--voyager-tint-live-soft);
+}
+.preview-frame .link-action:hover svg {
+  transform: translateX(2px);
+  fill: var(--voyager-color-live-strong);
+}
+
+/* ── Divider ────────────────────────────────────────────────────────────── */
+.preview-frame .divider {
+  border: 0;
+  border-top: 1px solid var(--voyager-color-divider-section);
+  margin: 0;
+}
+
+/* ── Stats row ──────────────────────────────────────────────────────────── */
+.preview-frame .stats-row {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.preview-frame .stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.preview-frame .stat-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  line-height: 1.2;
+}
+
+.preview-frame .stat-value {
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--voyager-color-vault);
+  line-height: 1.2;
+}
+
+.preview-frame .stat-value-live {
+  color: var(--voyager-color-live);
+}
+
+.preview-frame .stats-spacer { flex: 1 1 auto; }
+
+/* ── Chips row ──────────────────────────────────────────────────────────── */
+.preview-frame .chips-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.preview-frame .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 6px;
+  border-radius: var(--voyager-radius-pill);
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.preview-frame .chip-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-surface-card);
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.preview-frame .chip-negotiable {
+  background: var(--voyager-tint-negotiable-soft);
+  color: var(--voyager-color-vault);
+}
+.preview-frame .chip-negotiable .chip-num {
+  color: var(--voyager-color-negotiable);
+  box-shadow: 0 1px 3px color-mix(in oklch, var(--voyager-color-negotiable) 30%, transparent);
+}
+
+.preview-frame .chip-vault {
+  background: var(--voyager-tint-vault-soft);
+  color: var(--voyager-color-vault);
+}
+.preview-frame .chip-vault .chip-num {
+  color: var(--voyager-color-vault);
+  box-shadow: 0 1px 3px color-mix(in oklch, var(--voyager-color-vault) 30%, transparent);
+}
+
+.preview-frame .chip-live {
+  background: var(--voyager-tint-live-soft);
+  color: var(--voyager-color-vault);
+}
+.preview-frame .chip-live .chip-num {
+  color: var(--voyager-color-live);
+  box-shadow: 0 1px 3px color-mix(in oklch, var(--voyager-color-live) 30%, transparent);
+}
+
+.preview-frame .chip-error {
+  background: var(--voyager-tint-error-soft);
+  color: var(--voyager-color-vault);
+}
+.preview-frame .chip-error .chip-num {
+  color: var(--voyager-color-status-error);
+  box-shadow: 0 1px 3px color-mix(in oklch, var(--voyager-color-status-error) 30%, transparent);
+}
+
+/* ── Hover state — siempre frozen, no requiere mouse ────────────────────── */
+.frame--hover .card {
+  box-shadow: var(--voyager-shadow-floating);
+  transform: translateY(-2px);
+}
+
+/* Links — fondo + arrow shift visibles permanentemente */
+.frame--hover .link-action {
+  background-color: var(--voyager-tint-live-soft);
+}
+.frame--hover .link-action svg {
+  transform: translateX(2px);
+  fill: var(--voyager-color-live-strong);
+}
+
+/* Avatar — leve elevación adicional */
+.frame--hover .avatar {
+  box-shadow: 0 6px 14px color-mix(in oklch, var(--voyager-color-live) 36%, transparent);
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager UI upgrade preview — User Profile Card v2">
+    <div class="preview-grid">
+
+      <!-- ── DEFAULT ─────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Default</p>
+        <div class="preview-frame">
+          <div class="card">
+            <div class="card-header">
+              <span class="avatar" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="greeting">¡Hola, EME6DE!</span>
+              <a href="#" class="link-action">
+                Tu perfil
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+              </a>
+            </div>
+
+            <hr class="divider" />
+
+            <div class="stats-row">
+              <div class="stat-block">
+                <span class="stat-label">Riesgo del perfil</span>
+                <span class="stat-value stat-value-live">Muy bajo</span>
+              </div>
+              <div class="stat-block">
+                <span class="stat-label">Puntos VMC</span>
+                <span class="stat-value">500 pts</span>
+              </div>
+              <span class="stats-spacer"></span>
+              <a href="#" class="link-action">
+                Historial
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+              </a>
+            </div>
+
+            <div class="chips-row">
+              <span class="chip chip-negotiable">
+                <span class="chip-num">3</span>
+                Consignaciones
+              </span>
+              <span class="chip chip-vault">
+                <span class="chip-num">1</span>
+                Ganadas
+              </span>
+              <span class="chip chip-live">
+                <span class="chip-num">0</span>
+                Procesos de compra
+              </span>
+              <span class="chip chip-error">
+                <span class="chip-num">12</span>
+                Rechazadas
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HOVER (frozen) ──────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Hover</p>
+        <div class="preview-frame frame--hover">
+          <div class="card">
+            <div class="card-header">
+              <span class="avatar" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="greeting">¡Hola, EME6DE!</span>
+              <a href="#" class="link-action">
+                Tu perfil
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+              </a>
+            </div>
+
+            <hr class="divider" />
+
+            <div class="stats-row">
+              <div class="stat-block">
+                <span class="stat-label">Riesgo del perfil</span>
+                <span class="stat-value stat-value-live">Muy bajo</span>
+              </div>
+              <div class="stat-block">
+                <span class="stat-label">Puntos VMC</span>
+                <span class="stat-value">500 pts</span>
+              </div>
+              <span class="stats-spacer"></span>
+              <a href="#" class="link-action">
+                Historial
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+              </a>
+            </div>
+
+            <div class="chips-row">
+              <span class="chip chip-negotiable">
+                <span class="chip-num">3</span>
+                Consignaciones
+              </span>
+              <span class="chip chip-vault">
+                <span class="chip-num">1</span>
+                Ganadas
+              </span>
+              <span class="chip chip-live">
+                <span class="chip-num">0</span>
+                Procesos de compra
+              </span>
+              <span class="chip chip-error">
+                <span class="chip-num">12</span>
+                Rechazadas
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

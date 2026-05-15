@@ -1,0 +1,205 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Mobile · Offer Type</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-live-mid:     oklch(0.66 0.17 50);
+  --voyager-color-live-deep:    oklch(0.58 0.18 45);
+  --voyager-color-negotiable:       oklch(0.78 0.14 195);
+  --voyager-color-negotiable-mid:   oklch(0.70 0.14 195);
+  --voyager-color-negotiable-deep:  oklch(0.60 0.14 200);
+
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  --voyager-radius-md:   8px;
+
+  --voyager-duration-micro: 150ms;
+  --voyager-ease-default:   cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+
+.preview-frame {
+  width: 372px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Header — brackets hugging the title ─────────────────────────────────── */
+.preview-frame .head-info {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  padding: 8px 12px;
+  color: var(--voyager-color-live);
+}
+
+.preview-frame .head-info .bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  color: var(--voyager-color-live);
+  fill: var(--voyager-color-live);
+}
+
+.preview-frame .head-info .bracket-tl { top: 0; left: 0; }
+.preview-frame .head-info .bracket-br { bottom: 0; right: 0; }
+
+.preview-frame .head-title {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--voyager-color-vault);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── Cards row ───────────────────────────────────────────────────────────── */
+.preview-frame .row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.preview-frame .offer-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 92px;
+  border-radius: var(--voyager-radius-md);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.14);
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+}
+
+.preview-frame .offer-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 53px;
+}
+
+.preview-frame .offer-card[data-status="live"] .offer-tab {
+  background: linear-gradient(123.7deg,
+    var(--voyager-color-live)      0%,
+    var(--voyager-color-live-mid)  50%,
+    var(--voyager-color-live-deep) 100%);
+}
+
+.preview-frame .offer-card[data-status="negotiable"] .offer-tab {
+  background: linear-gradient(180deg,
+    var(--voyager-color-negotiable)      0%,
+    var(--voyager-color-negotiable-mid)  50%,
+    var(--voyager-color-negotiable-deep) 100%);
+}
+
+.preview-frame .offer-tab span {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--voyager-color-text-on-dark);
+  text-transform: uppercase;
+  text-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.25);
+}
+
+.preview-frame .offer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 39px;
+  background: var(--voyager-color-surface-card);
+}
+
+.preview-frame .offer-footer span {
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.preview-frame .offer-card[data-status="live"] .offer-footer span {
+  color: var(--voyager-color-live);
+}
+
+.preview-frame .offer-card[data-status="negotiable"] .offer-footer span {
+  color: var(--voyager-color-negotiable);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Offer Type">
+    <section class="preview-frame">
+
+      <div class="head-info">
+        <svg class="bracket bracket-tl" width="8" height="8" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+          <path d="M0 0H3.3V3.3H3.3V6.7H0V3.3H0V0ZM3.3 0H6.7 6.7 10V3.3H6.7 6.7 3.3V0ZM3.3 6.7H0V10H3.3V6.7Z" fill="currentColor"/>
+        </svg>
+        <h3 class="head-title">Tipo de oferta</h3>
+        <svg class="bracket bracket-br" width="8" height="8" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+          <path d="M10 10L6.7 10 6.7 6.7 6.7 3.3 10 3.3 10 6.7 10 10ZM6.7 10L3.3 10 0 10 0 6.7 3.3 6.7 6.7 6.7 6.7 10ZM6.7 3.3L10 3.3 10 0 6.7 0 6.7 3.3Z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="row">
+        <a href="#" class="offer-card" data-status="live">
+          <div class="offer-tab"><span>En Vivo</span></div>
+          <div class="offer-footer"><span>Ver todas</span></div>
+        </a>
+        <a href="#" class="offer-card" data-status="negotiable">
+          <div class="offer-tab"><span>Negociable</span></div>
+          <div class="offer-footer"><span>Ver todas</span></div>
+        </a>
+      </div>
+
+    </section>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

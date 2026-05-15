@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Mobile · Header</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-text-on-dark: oklch(1 0 0);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  /* Mapeo --vmc-* → tokens Voyager (sin HEX) */
+  --vmc-color-background-brand: var(--voyager-color-vault);
+  --vmc-color-orange-500: oklch(0.78 0.18 55);
+  --vmc-color-orange-600: var(--voyager-color-live);
+  --vmc-color-orange-700: oklch(0.62 0.18 45);
+  --vmc-color-text-inverse: var(--voyager-color-text-on-dark);
+  --font-display: var(--voyager-font-display);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.preview-frame {
+  width: 420px;
+  height: 56px;
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Header">
+    <div class="preview-frame">
+      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;padding:0 11px 0 20px">
+        <button type="button" style="display:flex;align-items:center;gap:8px;height:38px;border-radius:9999px;border:none;cursor:pointer;background:linear-gradient(132deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-orange-600) 50%, var(--vmc-color-orange-700) 100%);padding:0 14px 0 4px;flex-shrink:0">
+          <div style="width:30px;height:30px;border-radius:9999px;flex-shrink:0;background:color-mix(in oklch, var(--vmc-color-background-brand) 10%, transparent);display:flex;align-items:center;justify-content:center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"></path>
+            </svg>
+          </div>
+          <span style="font-family:var(--font-display, 'Plus Jakarta Sans', sans-serif);font-size:14px;font-weight:700;line-height:20px;color:var(--vmc-color-text-inverse);white-space:nowrap;text-shadow:0 1px 1.5px rgba(0,0,0,0.25)">Ingresa</span>
+        </button>
+      </header>
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

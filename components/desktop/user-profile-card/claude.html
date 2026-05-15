@@ -1,0 +1,379 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — local token surface (HEX fallbacks per axiom 0.OKLCH-only).
+   Tokens listed in DESIGN.md §2 Color · §6 Radius · §7 Shadows · §4 Type.
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand — The Vault */
+  --voyager-color-vault:        oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-vault-dark:   oklch(0.26 0.19 285);   /* #2E0F70 */
+
+  /* Status / accent */
+  --voyager-color-live:         oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-color-live-strong:  oklch(0.62 0.18 45);    /* deeper coral on press */
+
+  /* Surfaces */
+  --voyager-color-surface-page:    oklch(0.98 0.004 160); /* #F8FAF9 */
+  --voyager-color-surface-section: oklch(0.96 0.004 160); /* #F2F4F3 */
+  --voyager-color-surface-card:    oklch(1 0 0);          /* #FFFFFF */
+
+  /* Text */
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200); /* #1A2122 */
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+
+  /* Utility */
+  --voyager-color-skeleton:        oklch(0.85 0.008 220); /* #D5D8DD */
+  --voyager-color-border-ghost:    color-mix(in oklch, var(--voyager-color-vault) 8%, transparent);
+  --voyager-color-divider-section: color-mix(in oklch, var(--voyager-color-vault) 5%, transparent);
+
+  /* Interactive surface tints — derived per Manifiesto §4 */
+  --voyager-tint-vault-soft:    color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+  --voyager-tint-vault-medium:  color-mix(in oklch, var(--voyager-color-vault) 12%, transparent);
+  --voyager-tint-live-soft:     color-mix(in oklch, var(--voyager-color-live) 14%, transparent);
+
+  /* Typography */
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  /* Radius — DESIGN.md §6 */
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-radius-pill: 9999px;
+
+  /* Shadows — DESIGN.md §7 (only two allowed: card + floating) */
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 12%);
+
+  /* Motion — DESIGN.md §9 */
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Preview canvas
+   ──────────────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse at top left, color-mix(in oklch, var(--voyager-color-vault) 4%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, color-mix(in oklch, var(--voyager-color-live) 4%, transparent) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  align-items: start;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 16px 0;
+}
+
+.preview-frame {
+  /* Locked component box — exact spec dimensions */
+  width: 310.02px;
+  height: 147.19px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Tailwind utility overrides — map legacy classes used in outerHTML to
+   Voyager tokens. The DOM contract is frozen (no add / remove / rename),
+   so we re-skin via existing class names only.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* Layout primitives needed by the outerHTML */
+.preview-frame .p-4         { padding: 16px; }
+.preview-frame .mt-3        { margin-top: 12px; }
+.preview-frame .ml-1        { margin-left: 4px; }
+.preview-frame .flex        { display: flex; }
+.preview-frame .inline-flex { display: inline-flex; }
+.preview-frame .items-center{ align-items: center; }
+.preview-frame .justify-center { justify-content: center; }
+.preview-frame .flex-1      { flex: 1 1 0%; }
+.preview-frame .flex-grow   { flex-grow: 1; }
+.preview-frame .flex-shrink-0 { flex-shrink: 0; }
+.preview-frame .block       { display: block; }
+.preview-frame .space-x-1 > * + * { margin-left: 4px; }
+
+/* Sizing */
+.preview-frame .w-4 { width: 16px; }
+.preview-frame .h-4 { height: 16px; }
+.preview-frame .w-5 { width: 20px; }
+.preview-frame .h-5 { height: 20px; }
+
+/* Typography — Voyager type scale (DESIGN.md §4) */
+.preview-frame .font-display      { font-family: var(--voyager-font-display); }
+.preview-frame .text-base         { font-size: 16px; letter-spacing: 0.04em; }
+.preview-frame .text-xl           { font-size: 22px; letter-spacing: -0.01em; }
+.preview-frame .text-xs           { font-size: 11px; letter-spacing: 0.06em; }
+.preview-frame .text-sm           { font-size: 13px; letter-spacing: 0; }
+.preview-frame .font-light        { font-weight: 400; }
+.preview-frame .font-normal       { font-weight: 500; }
+.preview-frame .font-bold         { font-weight: 700; }
+.preview-frame .leading-tight     { line-height: 1.1; }
+.preview-frame .leading-6         { line-height: 24px; }
+.preview-frame .uppercase         { text-transform: uppercase; }
+
+/* Voyager color mapping — every legacy color class → token + HEX fallback */
+.preview-frame .bg-coral-100      { background-color: var(--voyager-color-surface-card, #FFFFFF); }
+.preview-frame .text-purple-500   { color: var(--voyager-color-vault, #22005C); }
+.preview-frame .text-purple-900   { color: var(--voyager-color-vault-mid, #3B1782); }
+.preview-frame .text-coral-500    { color: var(--voyager-color-live, #ED8936); }
+.preview-frame .text-gray-300     { color: var(--voyager-color-skeleton, #D5D8DD); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Modern surface — DESIGN.md §11 Signature Finish.
+   The frozen outerHTML root carries .rounded + .shadow-lg + .bg-coral-100;
+   we layer a vault-tinted shadow plus a 4px live signature bottom border
+   without altering structure (border applied on the same root element).
+   ──────────────────────────────────────────────────────────────────────── */
+.preview-frame .rounded {
+  border-radius: var(--voyager-radius-lg, 16px);
+}
+.preview-frame .shadow-lg {
+  box-shadow: var(--voyager-shadow-card, 0 8px 16px rgba(34,0,92,0.06));
+  border-bottom: 0;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--voyager-color-vault) 3%, transparent) 0%,
+      transparent 60%);
+  transition:
+    box-shadow var(--voyager-duration-standard) var(--voyager-ease-default),
+    transform  var(--voyager-duration-micro)    var(--voyager-ease-default);
+}
+.preview-frame .shadow-lg::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8px;
+  border-radius: 0 0 var(--voyager-radius-lg, 16px) var(--voyager-radius-lg, 16px);
+  background: var(--voyager-color-vault, #22005C);
+  pointer-events: none;
+}
+
+
+/* Icon defaults (svg) */
+.preview-frame svg                { display: inline-block; vertical-align: middle; }
+.preview-frame .fill-current      { fill: currentColor; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Interactive elements — Default · Hover · Active per Manifiesto §4.
+   "Tu perfil" anchor, "Historial" button, info-leyenda button.
+   ──────────────────────────────────────────────────────────────────────── */
+.preview-frame a,
+.preview-frame button.button {
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  cursor: pointer;
+  font: inherit;
+  border-radius: var(--voyager-radius-sm, 4px);
+  transition:
+    background-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    color            var(--voyager-duration-micro) var(--voyager-ease-default),
+    transform        var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame a svg,
+.preview-frame button.button svg {
+  transition: transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+/* "Tu perfil" link — has the live (orange) chevron */
+.preview-frame a:hover {
+  background-color: var(--voyager-tint-live-soft);
+  color: var(--voyager-color-vault-mid, #3B1782);
+}
+.preview-frame a:hover svg.text-coral-500 {
+  color: var(--voyager-color-live-strong);
+  transform: translateX(3px);
+}
+.preview-frame a:active,
+.preview-frame a.is-active {
+  background-color: color-mix(in oklch, var(--voyager-color-live) 22%, transparent);
+  transform: scale(0.97);
+}
+
+/* "Historial" button — purple chevron */
+.preview-frame button.button:not([aria-label="leyenda"]):hover {
+  background-color: var(--voyager-tint-vault-soft);
+  color: var(--voyager-color-vault-mid, #3B1782);
+}
+.preview-frame button.button:not([aria-label="leyenda"]):hover svg {
+  transform: translateX(3px);
+}
+.preview-frame button.button:not([aria-label="leyenda"]):active,
+.preview-frame button.button:not([aria-label="leyenda"]).is-active {
+  background-color: var(--voyager-tint-vault-medium);
+  transform: scale(0.97);
+}
+
+/* Info-leyenda button — small icon-only, circular hover */
+.preview-frame button[aria-label="leyenda"] {
+  border-radius: var(--voyager-radius-pill, 9999px);
+  padding: 0;
+  margin: 0;
+}
+.preview-frame button[aria-label="leyenda"]:hover {
+  background-color: var(--voyager-tint-vault-soft);
+}
+.preview-frame button[aria-label="leyenda"]:hover svg {
+  color: var(--voyager-color-vault, #22005C);
+  transform: scale(1.08);
+}
+.preview-frame button[aria-label="leyenda"]:active,
+.preview-frame button[aria-label="leyenda"].is-active {
+  background-color: var(--voyager-tint-vault-medium);
+  transform: scale(0.92);
+}
+
+/* Focus ring — outline only (DESIGN.md §10) */
+.preview-frame a:focus-visible,
+.preview-frame button.button:focus-visible {
+  outline: 2px solid var(--voyager-color-vault-mid, #3B1782);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Frozen-state previews — replicate :hover and :active for static viewing.
+   Triggered by .frame--hover / .frame--active on .preview-frame.
+   ──────────────────────────────────────────────────────────────────────── */
+.frame--hover .shadow-lg {
+  box-shadow: var(--voyager-shadow-floating);
+  transform: translateY(-1px);
+}
+.frame--hover a {
+  background-color: var(--voyager-tint-live-soft);
+  color: var(--voyager-color-vault-mid);
+}
+.frame--hover a svg.text-coral-500 {
+  color: var(--voyager-color-live-strong);
+  transform: translateX(3px);
+}
+.frame--hover button.button:not([aria-label="leyenda"]) {
+  background-color: var(--voyager-tint-vault-soft);
+  color: var(--voyager-color-vault-mid);
+}
+.frame--hover button.button:not([aria-label="leyenda"]) svg {
+  transform: translateX(3px);
+}
+
+.frame--active a {
+  background-color: color-mix(in oklch, var(--voyager-color-live) 22%, transparent);
+  transform: scale(0.97);
+}
+.frame--active button.button:not([aria-label="leyenda"]) {
+  background-color: var(--voyager-tint-vault-medium);
+  transform: scale(0.97);
+}
+.frame--active .shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager UI upgrade preview — User Quality Card">
+    <div class="preview-grid">
+
+      <!-- ── DEFAULT ─────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Default</p>
+        <div class="preview-frame">
+          <!-- Frozen outerHTML — DO NOT modify -->
+          <div class="p-4 rounded shadow-lg bg-coral-100">
+            <div class="flex items-center">
+              <div class="flex-1 text-purple-500 uppercase font-display">
+                <span class="block text-base font-light leading-tight">Hola,</span>
+                <span class="block text-xl font-bold leading-tight">COOT8R</span>
+              </div>
+              <div class="flex-shrink-0">
+                <a href="https://www.vmcsubastas.com/zona/editar-perfil" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 font-display">
+                  Tu perfil
+                  <svg class="w-4 h-4 ml-1 fill-current text-coral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"></path></svg>
+                </a>
+              </div>
+            </div>
+            <div id="quality-user" class="mt-3"><div><div class="flex items-center font-display"><div class="flex-grow text-sm font-light text-purple-500">
+              Riesgo: <span class="font-bold">Regular</span></div> <div class="flex-shrink-0"><div class="flex items-center"><span class="text-sm font-light text-purple-500">Puntos VMC:</span> <div class="flex items-center ml-1 space-x-1"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-5 h-5 fill-current text-gray-300"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.6L2 9.6l7.1-.7z"/></svg> <span class="text-sm font-bold leading-tight text-purple-500">0</span> <button type="button" aria-label="leyenda" title="Más información" class="flex items-center justify-center w-5 h-5 button focus:outline-none"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-4 h-4 text-purple-900 fill-current"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm.9 15h-1.8v-6h1.8v6zM12 8.2a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2z"/></svg></button></div></div></div></div>   <div class="v-portal" style="display: none;"></div></div></div>
+            <div id="your-history" class="mt-3"><div><button type="button" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 button font-display focus:outline-none"><span>Historial</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 ml-1 fill-current"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display: none;"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HOVER (frozen) ──────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Hover</p>
+        <div class="preview-frame frame--hover">
+          <div class="p-4 rounded shadow-lg bg-coral-100">
+            <div class="flex items-center">
+              <div class="flex-1 text-purple-500 uppercase font-display">
+                <span class="block text-base font-light leading-tight">Hola,</span>
+                <span class="block text-xl font-bold leading-tight">COOT8R</span>
+              </div>
+              <div class="flex-shrink-0">
+                <a href="https://www.vmcsubastas.com/zona/editar-perfil" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 font-display">
+                  Tu perfil
+                  <svg class="w-4 h-4 ml-1 fill-current text-coral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"></path></svg>
+                </a>
+              </div>
+            </div>
+            <div id="quality-user" class="mt-3"><div><div class="flex items-center font-display"><div class="flex-grow text-sm font-light text-purple-500">
+              Riesgo: <span class="font-bold">Regular</span></div> <div class="flex-shrink-0"><div class="flex items-center"><span class="text-sm font-light text-purple-500">Puntos VMC:</span> <div class="flex items-center ml-1 space-x-1"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-5 h-5 fill-current text-gray-300"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.6L2 9.6l7.1-.7z"/></svg> <span class="text-sm font-bold leading-tight text-purple-500">0</span> <button type="button" aria-label="leyenda" title="Más información" class="flex items-center justify-center w-5 h-5 button focus:outline-none"><svg viewBox="0 0 24 24" width="24" height="24" role="" class="w-4 h-4 text-purple-900 fill-current"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm.9 15h-1.8v-6h1.8v6zM12 8.2a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2z"/></svg></button></div></div></div></div>   <div class="v-portal" style="display: none;"></div></div></div>
+            <div id="your-history" class="mt-3"><div><button type="button" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 button font-display focus:outline-none"><span>Historial</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 ml-1 fill-current"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display: none;"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

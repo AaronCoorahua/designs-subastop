@@ -1,0 +1,462 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Detail Card · Inicio Extendido — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — token surface  ·  DESIGN.md §2 Color · §6 Radius · §7 Shadow
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --voyager-color-vault:           oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-vault-light:     oklch(0.44 0.18 285);
+
+  /* Live / Urgency */
+  --voyager-color-live:            oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-color-live-light:      oklch(0.82 0.14 70);    /* lighter amber */
+  --voyager-color-live-dark:       oklch(0.60 0.17 48);    /* deeper amber */
+
+  /* Negotiable */
+  --voyager-color-negotiable:      oklch(0.78 0.14 195);   /* #00CACE */
+
+  /* Surfaces */
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+
+  /* Text */
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.22 0.18 285) 45%, white);
+
+  /* Gradients */
+  --voyager-gradient-vault:
+    linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
+  --voyager-gradient-vault-vivid:
+    linear-gradient(160deg, oklch(0.22 0.18 285) 0%, oklch(0.44 0.18 285) 100%);
+  --voyager-gradient-live:
+    linear-gradient(180deg,
+      oklch(0.82 0.14 70) 0%,
+      oklch(0.72 0.16 55) 55%,
+      oklch(0.60 0.17 48) 100%
+    );
+  --voyager-gradient-live-warm:
+    linear-gradient(135deg, oklch(0.82 0.14 70) 0%, oklch(0.60 0.17 48) 100%);
+
+  /* Radius */
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-full: 9999px;
+
+  /* Shadows */
+  --voyager-shadow-card:      0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-like:      0 4px 16px oklch(0.22 0.18 285 / 20%);
+  --voyager-shadow-cta-live:  0 8px 24px oklch(0.72 0.16 55 / 32%),
+                               inset 0 1px 0 oklch(1 0 0 / 18%);
+  --voyager-shadow-cta-vault: 0 8px 24px oklch(0.22 0.18 285 / 28%),
+                               inset 0 1px 0 oklch(1 0 0 / 14%);
+
+  /* Typography */
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─── Canvas ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,    oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+.variants-row {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  text-align: center;
+}
+.preview-frame { width: 317px; height: 422px; overflow: hidden; }
+.preview-frame .detail-process-app,
+.preview-frame .wrap-process,
+.preview-frame [device="web"],
+.preview-frame .card-process { height: 100%; }
+
+/* ─── vmc-detail-* utility map ─────────────────────────────────────────── */
+.preview-frame .vmc-detail-relative  { position: relative; }
+.preview-frame .vmc-detail-absolute  { position: absolute; }
+.preview-frame .vmc-detail-flex      { display: flex; }
+.preview-frame .vmc-detail-flex-col  { flex-direction: column; }
+.preview-frame .vmc-detail-flex-1    { flex: 1 1 0%; }
+.preview-frame .vmc-detail-flex-shrink   { flex-shrink: 1; }
+.preview-frame .vmc-detail-items-center   { align-items: center; }
+.preview-frame .vmc-detail-justify-center { justify-content: center; }
+.preview-frame .vmc-detail-justify-end    { justify-content: flex-end; }
+.preview-frame .vmc-detail-justify-start  { justify-content: flex-start; }
+.preview-frame .vmc-detail-w-full   { width: 100%; }
+.preview-frame .vmc-detail-w-1\/2   { width: 50%; }
+.preview-frame .vmc-detail-h-5      { height: 20px; }
+.preview-frame .vmc-detail-h-6      { height: 24px; }
+.preview-frame .vmc-detail-w-6      { width: 24px; }
+.preview-frame .vmc-detail-w-auto   { width: auto; }
+.preview-frame .vmc-detail-inset-x-0 { left: 0; right: 0; }
+.preview-frame .vmc-detail-top-0     { top: 0; }
+.preview-frame .vmc-detail-select-none    { user-select: none; }
+.preview-frame .vmc-detail-cursor-pointer { cursor: pointer; }
+.preview-frame .vmc-detail-z-1  { z-index: 1; }
+.preview-frame .vmc-detail-z-2  { z-index: 2; }
+.preview-frame .vmc-detail-z-9  { z-index: 9; }
+.preview-frame .vmc-detail-z-10 { z-index: 10; }
+.preview-frame .vmc-detail-inline-flex   { display: inline-flex; }
+
+/* Spacing */
+.preview-frame .vmc-detail-px-5  { padding-left: 20px;  padding-right: 20px; }
+.preview-frame .vmc-detail-px-8  { padding-left: 32px;  padding-right: 32px; }
+.preview-frame .vmc-detail-py-3  { padding-top: 12px;   padding-bottom: 12px; }
+.preview-frame .vmc-detail-py-5  { padding-top: 20px;   padding-bottom: 20px; }
+.preview-frame .vmc-detail-pl-6  { padding-left: 24px; }
+.preview-frame .vmc-detail-mt-2  { margin-top: 8px; }
+.preview-frame .vmc-detail-mt-4  { margin-top: 16px; }
+.preview-frame .vmc-detail-mt-5  { margin-top: 20px; }
+.preview-frame .vmc-detail-mb-2  { margin-bottom: 8px; }
+.preview-frame .vmc-detail-ml-2  { margin-left: 8px; }
+.preview-frame .vmc-detail-ml-3  { margin-left: 12px; }
+.preview-frame .vmc-detail-mr-2  { margin-right: 8px; }
+.preview-frame .vmc-detail--mt-8 { margin-top: -32px; }
+.preview-frame .vmc-detail--mt-3 { margin-top: -12px; }
+.preview-frame .vmc-detail-mx-1  { margin-left: 4px; margin-right: 4px; }
+
+/* Typography */
+.preview-frame .vmc-detail-font-display  { font-family: var(--voyager-font-display); }
+.preview-frame .vmc-detail-font-bold     { font-weight: 700; }
+.preview-frame .vmc-detail-font-normal   { font-weight: 400; }
+.preview-frame .vmc-detail-font-light    { font-weight: 300; }
+.preview-frame .vmc-detail-font-semibold { font-weight: 600; }
+.preview-frame .vmc-detail-text-sm       { font-size: 13px; }
+.preview-frame .vmc-detail-text-lg       { font-size: 17px; }
+.preview-frame .vmc-detail-text-xl       { font-size: 20px; }
+.preview-frame .vmc-detail-text-2xl      { font-size: 24px; }
+.preview-frame .vmc-detail-text-xxs      { font-size: 10px; }
+.preview-frame .vmc-detail-uppercase     { text-transform: uppercase; }
+.preview-frame .vmc-detail-text-center   { text-align: center; }
+.preview-frame .vmc-detail-leading-none  { line-height: 1; }
+.preview-frame .vmc-detail-leading-tight { line-height: 1.2; }
+.preview-frame .vmc-detail-leading-thing { line-height: 1.15; }
+.preview-frame .leading-2                { line-height: 1.1; }
+
+/* Shapes */
+.preview-frame .vmc-detail-rounded-full { border-radius: var(--voyager-radius-full); }
+.preview-frame .vmc-detail-rounded      { border-radius: var(--voyager-radius-sm); }
+.preview-frame .vmc-detail-border       { border-width: 1.5px; border-style: solid; }
+.preview-frame .vmc-detail-border-none  { border: none; }
+.preview-frame .vmc-detail-fill-current { fill: currentColor; }
+.preview-frame .vmc-detail-transition-colors {
+  transition: color 150ms var(--voyager-ease-default),
+              background-color 150ms var(--voyager-ease-default);
+}
+.preview-frame .vmc-detail-duration-200  { transition-duration: 200ms; }
+.preview-frame .vmc-detail-shadow-lg     { box-shadow: var(--voyager-shadow-card); }
+.preview-frame .focus\:vmc-detail-outline-none:focus { outline: none; }
+.preview-frame .v-portal { display: none !important; }
+
+/* ─── Shared card structure ─────────────────────────────────────────────── */
+.preview-frame .card-process {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0 0 var(--voyager-radius-md) var(--voyager-radius-md);
+  box-shadow: var(--voyager-shadow-card);
+}
+.preview-frame .cp-content  { flex: 1; display: flex; flex-direction: column; }
+.preview-frame .cta-contains { flex: 1; }
+
+/* Header text always white — padding-top reserves space for the absolute 20px banner */
+.preview-frame .cp-header           { color: var(--voyager-color-text-on-dark); padding-top: 20px; }
+.preview-frame .cp-header *         { color: inherit; }
+.preview-frame .vmc-detail-border-b { border-bottom: 1px solid oklch(1 0 0 / 14%); }
+.preview-frame .vmc-detail-border-l { border-left:   1px solid oklch(1 0 0 / 14%); }
+
+/* Indicator icon circles */
+.preview-frame .cp-indicators-icon.vmc-detail-border {
+  width: 28px; height: 28px;
+  border: 1.5px solid oklch(1 0 0 / 28%) !important;
+  color: white;
+}
+
+/* Like button — glass on dark */
+.preview-frame .cta-like-button {
+  width: 44px; height: 44px;
+  background: oklch(1 0 0 / 12%);
+  border: 1.5px solid oklch(1 0 0 / 32%) !important;
+  color: oklch(1 0 0 / 70%);
+  transition: background 150ms var(--voyager-ease-default);
+}
+.preview-frame .cta-like-button.is-guest {
+  background: oklch(1 0 0 / 8%);
+  color: oklch(1 0 0 / 50%);
+}
+.preview-frame .content-like-button .vmc-detail-font-display { color: white; }
+
+/* White content area */
+.preview-frame .vmc-detail-bg-white {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+}
+
+/* Live/urgency promo text */
+.preview-frame .vmc-detail-text-damask {
+  color: var(--voyager-color-live, #ED8936);
+}
+
+/* Oracle / teal price text */
+.preview-frame .vmc-detail-text-oracle {
+  color: var(--voyager-color-negotiable, #00CACE);
+}
+
+/* CTA base */
+.preview-frame .vmc-detail-bg-casablanca {
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+  transition: filter 150ms var(--voyager-ease-default),
+              transform 100ms var(--voyager-ease-default);
+}
+.preview-frame .vmc-detail-bg-casablanca:hover  { filter: brightness(1.07); }
+.preview-frame .vmc-detail-bg-casablanca:active { transform: scale(0.98); }
+.preview-frame .vmc-detail-bg-casablanca .vmc-detail-text-white {
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+}
+
+/* ─── Countdown display (extended-specific) ─────────────────────────────── */
+.preview-frame .display-countdown-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.preview-frame .display-countdown-name {
+  opacity: 0.7;
+}
+
+/* ─── Extended banner (vmc-detail-bg-flower / vmc-detail-text-maria) ─────── */
+/* Base: mapped in each variant below */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 1 — Vault Gradient · Live Banner · Live CTA
+   Header: vault gradient deep-to-mid
+   Banner "INICIO EXTENDIDO": live orange bg, vault text
+   CTA "PARTICIPA": live gradient orange
+   ═══════════════════════════════════════════════════════════════════════════ */
+.v1 .cp-header {
+  background: var(--voyager-gradient-vault);
+}
+.v1 .vmc-detail-bg-flower {
+  background: var(--voyager-color-live, #ED8936);
+}
+.v1 .vmc-detail-text-maria {
+  color: var(--voyager-color-vault, #22005C);
+}
+.v1 .vmc-detail-bg-casablanca {
+  background: var(--voyager-gradient-live);
+  position: relative;
+  overflow: hidden;
+}
+.v1 .vmc-detail-bg-casablanca::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 14%) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.v1 .vmc-detail-shadow-lg {
+  box-shadow: var(--voyager-shadow-cta-live);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 2 — Vivid Vault · Amber Banner · Vault CTA (premium inversion)
+   Header: vivid vault gradient (lighter purple)
+   Banner "INICIO EXTENDIDO": amber-warm gradient, white text
+   CTA "PARTICIPA": vault gradient (inverted — urgency through contrast)
+   Like button: white solid (high-prominence on vivid bg)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.v2 .cp-header {
+  background: var(--voyager-gradient-vault-vivid);
+}
+.v2 .vmc-detail-bg-flower {
+  background: var(--voyager-gradient-live-warm);
+}
+.v2 .vmc-detail-text-maria {
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+  text-shadow: 0 1px 4px oklch(0.22 0.18 285 / 30%);
+}
+.v2 .cta-like-button {
+  background: white;
+  border: none !important;
+  color: var(--voyager-color-vault, #22005C);
+  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%);
+}
+.v2 .cta-like-button.is-guest {
+  background: oklch(1 0 0 / 88%);
+  color: color-mix(in oklch, var(--voyager-color-vault) 55%, white);
+}
+.v2 .content-like-button .vmc-detail-font-display { color: white; }
+.v2 .vmc-detail-bg-casablanca {
+  background: var(--voyager-gradient-vault);
+  position: relative;
+  overflow: hidden;
+}
+.v2 .vmc-detail-bg-casablanca::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 12%) 0%, transparent 100%);
+  pointer-events: none;
+}
+.v2 .vmc-detail-shadow-lg {
+  box-shadow: var(--voyager-shadow-cta-vault);
+}
+/* Faint vault warmth on content area */
+.v2 .vmc-detail-bg-white {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--voyager-color-vault) 3%, white) 0%,
+    white 28%
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIANT 3 — Dark Immersive · Negotiable Accent
+   Header: full vault deep (no gradient — maximum darkness)
+   Banner "INICIO EXTENDIDO": negotiable teal bg, vault text
+   Content area: dark vault surface (full dark card)
+   CTA "PARTICIPA": live gradient (pops against dark surface)
+   Price & accent text: negotiable teal remains
+   ═══════════════════════════════════════════════════════════════════════════ */
+.v3 .cp-header {
+  background: var(--voyager-color-vault, #22005C);
+}
+.v3 .vmc-detail-bg-flower {
+  background: var(--voyager-color-negotiable, #00CACE);
+}
+.v3 .vmc-detail-text-maria {
+  color: var(--voyager-color-vault, #22005C);
+}
+/* Dark content surface */
+.v3 .cp-content.vmc-detail-bg-white,
+.v3 .vmc-detail-bg-white {
+  background: color-mix(in oklch, var(--voyager-color-vault) 94%, white);
+}
+/* Promo text on dark — use live orange (stays readable) */
+.v3 .vmc-detail-text-damask {
+  color: var(--voyager-color-live, #ED8936);
+}
+/* Price label teal stays */
+.v3 .vmc-detail-text-oracle {
+  color: var(--voyager-color-negotiable, #00CACE);
+}
+/* CTA — live gradient pops on dark */
+.v3 .vmc-detail-bg-casablanca {
+  background: var(--voyager-gradient-live);
+  position: relative;
+  overflow: hidden;
+}
+.v3 .vmc-detail-bg-casablanca::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 16%) 0%, transparent 48%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.v3 .vmc-detail-shadow-lg {
+  box-shadow: var(--voyager-shadow-cta-live);
+}
+/* Like button: negotiable teal solid on dark bg */
+.v3 .cta-like-button {
+  background: color-mix(in oklch, var(--voyager-color-negotiable) 15%, transparent);
+  border: 1.5px solid color-mix(in oklch, var(--voyager-color-negotiable) 55%, transparent) !important;
+  color: var(--voyager-color-negotiable, #00CACE);
+}
+.v3 .cta-like-button.is-guest {
+  background: color-mix(in oklch, var(--voyager-color-negotiable) 10%, transparent);
+  color: color-mix(in oklch, var(--voyager-color-negotiable) 60%, white);
+}
+.v3 .content-like-button .vmc-detail-font-display {
+  color: oklch(1 0 0 / 80%);
+}
+/* Indicator text on dark */
+.v3 .cp-indicators .vmc-detail-font-display {
+  color: oklch(1 0 0 / 80%);
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Detail Card · Inicio Extendido — Voyager upgrade variants">
+    <div class="variants-row">
+
+      <!-- ── VARIANT 1 — Vault Gradient · Live Banner · Live CTA ──────────── -->
+      <div class="variant-block">
+        <p class="variant-label">V1 · Vault · Live Banner · Live CTA</p>
+        <div class="preview-frame v1">
+<div id="detail-card-app" class="detail-process-app"><div class="wrap-process is-web"><div class="vmc-detail-relative" device="web"><div class="card-process vmc-detail-relative vmc-detail-select-none is-live is-web"><div class="cp-header vmc-detail-relative vmc-detail-z-2 vmc-detail-px-5 vmc-detail-w-full" current-server-datetime="2026-05-12 13:00:29" datetime="2026-05-12 13:00:00"><div class="vmc-detail-absolute vmc-detail-top-0 vmc-detail-inset-x-0 vmc-detail-h-5 vmc-detail-bg-flower vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-z-10"><span class="vmc-detail-font-display vmc-detail-text-xxs vmc-detail-uppercase vmc-detail-font-semibold vmc-detail-text-maria vmc-detail-relative vmc-detail-z-2">Inicio Extendido</span></div> <div class="cp-header-date vmc-detail-flex vmc-detail-py-3 vmc-detail-border-b"><div class="cp-header-top-left vmc-detail-w-1/2 vmc-detail-flex vmc-detail-items-center"><div class="vmc-detail-relative vmc-detail-z-9"><div class="header-state-up-coming vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-font-display vmc-detail-leading-none vmc-detail-font-light vmc-detail-text-xl">Inicia en:</span></div></div></div> <div class="cp-header-top-right vmc-detail-w-1/2 vmc-detail-border-l vmc-detail-pl-6 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"> <div class="header-state-up-coming vmc-detail-relative vmc-detail-z-9 vmc-detail-w-full"><div class="vmc-detail-flex vmc-detail-justify-center vmc-detail-w-full"><div class="display-countdown vmc-detail-flex vmc-detail-items-center"><div class="vmc-detail-relative vmc-detail-inline-flex vmc-detail-justify-center"><span class="display-countdown-name vmc-detail-font-display vmc-detail-font-normal vmc-detail-text-xxs vmc-detail-absolute vmc-detail-top-0 vmc-detail--mt-3">Min</span> <span class="display-countdown-number vmc-detail-font-display vmc-detail-font-bold vmc-detail-leading-none vmc-detail-text-2xl">00</span></div> <span class="display-countdown-separate vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-2xl vmc-detail-leading-none vmc-detail-mx-1">:</span> <div class="vmc-detail-relative vmc-detail-inline-flex vmc-detail-justify-center"><span class="display-countdown-name vmc-detail-font-display vmc-detail-font-normal vmc-detail-text-xxs vmc-detail-absolute vmc-detail-top-0 vmc-detail--mt-3">Seg</span> <span class="display-countdown-number vmc-detail-font-display vmc-detail-font-bold vmc-detail-leading-none vmc-detail-text-2xl">08</span></div></div></div></div> </div></div> <div class="vmc-detail-flex"><div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-mr-2 vmc-detail-font-display vmc-detail-text-sm">100</span> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none" class="vmc-detail-fill-current"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"></path></svg></div> </div></div></div></div> <div class="vmc-detail-flex-shrink"><div class="wrap-like-button vmc-detail-py-3 vmc-detail--mt-8"><div class="wrap-like-button vmc-detail-px-5 vmc-detail-mb-2"><div class="vmc-detail-rounded-full"><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><button disabled="disabled" class="cta-like-button vmc-detail-relative vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-border focus:vmc-detail-outline-none vmc-detail-transition-colors vmc-detail-duration-200 is-guest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vmc-detail-absolute vmc-detail-fill-current vmc-detail-h-6 vmc-detail-w-6"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg> </button> </div></div></div> <div class="content-like-button vmc-detail-text-center vmc-detail-leading-none"><span class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-font-bold vmc-detail-leading-none">1</span></div></div></div> <div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-start"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none" class="vmc-detail-fill-current"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z" fill="currentColor"></path><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z" fill="currentColor"></path><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"></path><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"></path><path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z" fill="currentColor"></path><path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z" fill="currentColor"></path></svg></div> </div></div> <span class="vmc-detail-ml-2 vmc-detail-font-display vmc-detail-text-sm">0</span> </div></div></div></div> <div class="cp-content vmc-detail-relative vmc-detail-z-1 vmc-detail-bg-white"><div class="cta-contains has-button-gy vmc-detail-px-5 vmc-detail-flex vmc-detail-flex-col vmc-detail-justify-center"> <div class="vmc-detail-w-full"><div>  <p class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-text-damask vmc-detail-leading-thing vmc-detail-text-center vmc-detail-mb-2 vmc-detail-mt-5">¡Oportunidad para el que sabe!</p> <div class="vmc-detail-rounded vmc-detail-shadow-lg vmc-detail-relative vmc-detail-z-1"><button class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-w-full vmc-detail-border-none vmc-detail-bg-casablanca vmc-detail-text-white vmc-detail-px-8 vmc-detail-py-5 vmc-detail-rounded leading-2 focus:vmc-detail-outline-none"><span class="vmc-detail-font-display vmc-detail-text-white vmc-detail-text-lg vmc-detail-uppercase vmc-detail-font-bold vmc-detail-leading-none">Participa</span></button></div>  <div class="vmc-detail-mt-4"><div class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><span><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 23" fill="none" class="vmc-detail-w-auto"><path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"></path><path d="M12 23C11.7 23 11.3 22.9 11 22.8L1.5 18.6C0.6 18.2 0 17.4 0 16.4 0 15.4 0.6 14.5 1.5 14.2L11 10C11.7 9.7 12.4 9.7 13 10L22.6 14.2C23.4 14.5 24 15.4 24 16.4 24 17.4 23.4 18.2 22.6 18.6L13 22.8C12.7 22.9 12.3 23 12 23ZM12 11C11.8 11 11.7 11 11.5 11.1L1.9 15.3C1.5 15.5 1.2 15.9 1.2 16.4 1.2 16.9 1.5 17.3 1.9 17.5L11.5 21.7C11.8 21.8 12.2 21.8 12.5 21.7L22.1 17.5C22.5 17.3 22.8 16.9 22.8 16.4 22.8 15.9 22.5 15.5 22.1 15.3L12.5 11.1C12.3 11 12.2 11 12 11Z" fill="#367976"></path><path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"></path><path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3L12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8 11.7 9.8 11.7 9.8 11.8 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6ZM11 7.2C11 6.8 11.3 6.5 11.8 6.5V8.1C11.3 7.9 11 7.7 11 7.2ZM12.5 11.5V10C12.9 10.2 13.2 10.4 13.2 10.8 13.2 11.2 12.9 11.5 12.5 11.5Z" fill="white"></path></svg></span> <span class="vmc-detail-font-display vmc-detail-text-lg vmc-detail-ml-3 vmc-detail-leading-none vmc-detail-text-oracle"><span class="vmc-detail-font-light">Precio Base:</span> <span class="vmc-detail-font-bold">US$ 12,499</span></span></div> <div class="cp-base-price-info vmc-detail-text-center vmc-detail-font-display vmc-detail-text-oracle vmc-detail-font-normal vmc-detail-leading-tight vmc-detail-text-xxs vmc-detail-mt-2">
+										Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50
+									 </div></div></div></div></div></div></div>  <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div></div>  <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div>  </div> <div class="vue-portal-target"></div></div>
+        </div>
+      </div>
+
+      <!-- ── VARIANT 2 — Vivid Vault · Amber Banner · Vault CTA ───────────── -->
+      <div class="variant-block">
+        <p class="variant-label">V2 · Vivid Vault · Amber Banner · Vault CTA</p>
+        <div class="preview-frame v2">
+<div id="detail-card-app" class="detail-process-app"><div class="wrap-process is-web"><div class="vmc-detail-relative" device="web"><div class="card-process vmc-detail-relative vmc-detail-select-none is-live is-web"><div class="cp-header vmc-detail-relative vmc-detail-z-2 vmc-detail-px-5 vmc-detail-w-full" current-server-datetime="2026-05-12 13:00:29" datetime="2026-05-12 13:00:00"><div class="vmc-detail-absolute vmc-detail-top-0 vmc-detail-inset-x-0 vmc-detail-h-5 vmc-detail-bg-flower vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-z-10"><span class="vmc-detail-font-display vmc-detail-text-xxs vmc-detail-uppercase vmc-detail-font-semibold vmc-detail-text-maria vmc-detail-relative vmc-detail-z-2">Inicio Extendido</span></div> <div class="cp-header-date vmc-detail-flex vmc-detail-py-3 vmc-detail-border-b"><div class="cp-header-top-left vmc-detail-w-1/2 vmc-detail-flex vmc-detail-items-center"><div class="vmc-detail-relative vmc-detail-z-9"><div class="header-state-up-coming vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-font-display vmc-detail-leading-none vmc-detail-font-light vmc-detail-text-xl">Inicia en:</span></div></div></div> <div class="cp-header-top-right vmc-detail-w-1/2 vmc-detail-border-l vmc-detail-pl-6 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"> <div class="header-state-up-coming vmc-detail-relative vmc-detail-z-9 vmc-detail-w-full"><div class="vmc-detail-flex vmc-detail-justify-center vmc-detail-w-full"><div class="display-countdown vmc-detail-flex vmc-detail-items-center"><div class="vmc-detail-relative vmc-detail-inline-flex vmc-detail-justify-center"><span class="display-countdown-name vmc-detail-font-display vmc-detail-font-normal vmc-detail-text-xxs vmc-detail-absolute vmc-detail-top-0 vmc-detail--mt-3">Min</span> <span class="display-countdown-number vmc-detail-font-display vmc-detail-font-bold vmc-detail-leading-none vmc-detail-text-2xl">00</span></div> <span class="display-countdown-separate vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-2xl vmc-detail-leading-none vmc-detail-mx-1">:</span> <div class="vmc-detail-relative vmc-detail-inline-flex vmc-detail-justify-center"><span class="display-countdown-name vmc-detail-font-display vmc-detail-font-normal vmc-detail-text-xxs vmc-detail-absolute vmc-detail-top-0 vmc-detail--mt-3">Seg</span> <span class="display-countdown-number vmc-detail-font-display vmc-detail-font-bold vmc-detail-leading-none vmc-detail-text-2xl">08</span></div></div></div></div> </div></div> <div class="vmc-detail-flex"><div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-mr-2 vmc-detail-font-display vmc-detail-text-sm">100</span> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none" class="vmc-detail-fill-current"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"></path></svg></div> </div></div></div></div> <div class="vmc-detail-flex-shrink"><div class="wrap-like-button vmc-detail-py-3 vmc-detail--mt-8"><div class="wrap-like-button vmc-detail-px-5 vmc-detail-mb-2"><div class="vmc-detail-rounded-full"><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><button disabled="disabled" class="cta-like-button vmc-detail-relative vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-border focus:vmc-detail-outline-none vmc-detail-transition-colors vmc-detail-duration-200 is-guest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vmc-detail-absolute vmc-detail-fill-current vmc-detail-h-6 vmc-detail-w-6"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg> </button> </div></div></div> <div class="content-like-button vmc-detail-text-center vmc-detail-leading-none"><span class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-font-bold vmc-detail-leading-none">1</span></div></div></div> <div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-start"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none" class="vmc-detail-fill-current"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z" fill="currentColor"></path><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z" fill="currentColor"></path><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"></path><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"></path><path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z" fill="currentColor"></path><path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z" fill="currentColor"></path></svg></div> </div></div> <span class="vmc-detail-ml-2 vmc-detail-font-display vmc-detail-text-sm">0</span> </div></div></div></div> <div class="cp-content vmc-detail-relative vmc-detail-z-1 vmc-detail-bg-white"><div class="cta-contains has-button-gy vmc-detail-px-5 vmc-detail-flex vmc-detail-flex-col vmc-detail-justify-center"> <div class="vmc-detail-w-full"><div>  <p class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-text-damask vmc-detail-leading-thing vmc-detail-text-center vmc-detail-mb-2 vmc-detail-mt-5">¡Oportunidad para el que sabe!</p> <div class="vmc-detail-rounded vmc-detail-shadow-lg vmc-detail-relative vmc-detail-z-1"><button class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-w-full vmc-detail-border-none vmc-detail-bg-casablanca vmc-detail-text-white vmc-detail-px-8 vmc-detail-py-5 vmc-detail-rounded leading-2 focus:vmc-detail-outline-none"><span class="vmc-detail-font-display vmc-detail-text-white vmc-detail-text-lg vmc-detail-uppercase vmc-detail-font-bold vmc-detail-leading-none">Participa</span></button></div>  <div class="vmc-detail-mt-4"><div class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><span><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 23" fill="none" class="vmc-detail-w-auto"><path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"></path><path d="M12 23C11.7 23 11.3 22.9 11 22.8L1.5 18.6C0.6 18.2 0 17.4 0 16.4 0 15.4 0.6 14.5 1.5 14.2L11 10C11.7 9.7 12.4 9.7 13 10L22.6 14.2C23.4 14.5 24 15.4 24 16.4 24 17.4 23.4 18.2 22.6 18.6L13 22.8C12.7 22.9 12.3 23 12 23ZM12 11C11.8 11 11.7 11 11.5 11.1L1.9 15.3C1.5 15.5 1.2 15.9 1.2 16.4 1.2 16.9 1.5 17.3 1.9 17.5L11.5 21.7C11.8 21.8 12.2 21.8 12.5 21.7L22.1 17.5C22.5 17.3 22.8 16.9 22.8 16.4 22.8 15.9 22.5 15.5 22.1 15.3L12.5 11.1C12.3 11 12.2 11 12 11Z" fill="#367976"></path><path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"></path><path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3L12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8 11.7 9.8 11.7 9.8 11.8 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6ZM11 7.2C11 6.8 11.3 6.5 11.8 6.5V8.1C11.3 7.9 11 7.7 11 7.2ZM12.5 11.5V10C12.9 10.2 13.2 10.4 13.2 10.8 13.2 11.2 12.9 11.5 12.5 11.5Z" fill="white"></path></svg></span> <span class="vmc-detail-font-display vmc-detail-text-lg vmc-detail-ml-3 vmc-detail-leading-none vmc-detail-text-oracle"><span class="vmc-detail-font-light">Precio Base:</span> <span class="vmc-detail-font-bold">US$ 12,499</span></span></div> <div class="cp-base-price-info vmc-detail-text-center vmc-detail-font-display vmc-detail-text-oracle vmc-detail-font-normal vmc-detail-leading-tight vmc-detail-text-xxs vmc-detail-mt-2">
+										Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50
+									 </div></div></div></div></div></div></div>  <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div></div>  <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div>  </div> <div class="vue-portal-target"></div></div>
+        </div>
+      </div>
+
+      <!-- ── VARIANT 3 — Dark Immersive · Negotiable Teal Banner · Live CTA ─ -->
+      <div class="variant-block">
+        <p class="variant-label">V3 · Dark Immersive · Teal Banner · Live CTA</p>
+        <div class="preview-frame v3">
+<div id="detail-card-app" class="detail-process-app"><div class="wrap-process is-web"><div class="vmc-detail-relative" device="web"><div class="card-process vmc-detail-relative vmc-detail-select-none is-live is-web"><div class="cp-header vmc-detail-relative vmc-detail-z-2 vmc-detail-px-5 vmc-detail-w-full" current-server-datetime="2026-05-12 13:00:29" datetime="2026-05-12 13:00:00"><div class="vmc-detail-absolute vmc-detail-top-0 vmc-detail-inset-x-0 vmc-detail-h-5 vmc-detail-bg-flower vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-z-10"><span class="vmc-detail-font-display vmc-detail-text-xxs vmc-detail-uppercase vmc-detail-font-semibold vmc-detail-text-maria vmc-detail-relative vmc-detail-z-2">Inicio Extendido</span></div> <div class="cp-header-date vmc-detail-flex vmc-detail-py-3 vmc-detail-border-b"><div class="cp-header-top-left vmc-detail-w-1/2 vmc-detail-flex vmc-detail-items-center"><div class="vmc-detail-relative vmc-detail-z-9"><div class="header-state-up-coming vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-font-display vmc-detail-leading-none vmc-detail-font-light vmc-detail-text-xl">Inicia en:</span></div></div></div> <div class="cp-header-top-right vmc-detail-w-1/2 vmc-detail-border-l vmc-detail-pl-6 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"> <div class="header-state-up-coming vmc-detail-relative vmc-detail-z-9 vmc-detail-w-full"><div class="vmc-detail-flex vmc-detail-justify-center vmc-detail-w-full"><div class="display-countdown vmc-detail-flex vmc-detail-items-center"><div class="vmc-detail-relative vmc-detail-inline-flex vmc-detail-justify-center"><span class="display-countdown-name vmc-detail-font-display vmc-detail-font-normal vmc-detail-text-xxs vmc-detail-absolute vmc-detail-top-0 vmc-detail--mt-3">Min</span> <span class="display-countdown-number vmc-detail-font-display vmc-detail-font-bold vmc-detail-leading-none vmc-detail-text-2xl">00</span></div> <span class="display-countdown-separate vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-2xl vmc-detail-leading-none vmc-detail-mx-1">:</span> <div class="vmc-detail-relative vmc-detail-inline-flex vmc-detail-justify-center"><span class="display-countdown-name vmc-detail-font-display vmc-detail-font-normal vmc-detail-text-xxs vmc-detail-absolute vmc-detail-top-0 vmc-detail--mt-3">Seg</span> <span class="display-countdown-number vmc-detail-font-display vmc-detail-font-bold vmc-detail-leading-none vmc-detail-text-2xl">08</span></div></div></div></div> </div></div> <div class="vmc-detail-flex"><div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-mr-2 vmc-detail-font-display vmc-detail-text-sm">100</span> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none" class="vmc-detail-fill-current"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"></path></svg></div> </div></div></div></div> <div class="vmc-detail-flex-shrink"><div class="wrap-like-button vmc-detail-py-3 vmc-detail--mt-8"><div class="wrap-like-button vmc-detail-px-5 vmc-detail-mb-2"><div class="vmc-detail-rounded-full"><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><button disabled="disabled" class="cta-like-button vmc-detail-relative vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-border focus:vmc-detail-outline-none vmc-detail-transition-colors vmc-detail-duration-200 is-guest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vmc-detail-absolute vmc-detail-fill-current vmc-detail-h-6 vmc-detail-w-6"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg> </button> </div></div></div> <div class="content-like-button vmc-detail-text-center vmc-detail-leading-none"><span class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-font-bold vmc-detail-leading-none">1</span></div></div></div> <div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-start"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none" class="vmc-detail-fill-current"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z" fill="currentColor"></path><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z" fill="currentColor"></path><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"></path><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"></path><path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z" fill="currentColor"></path><path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z" fill="currentColor"></path></svg></div> </div></div> <span class="vmc-detail-ml-2 vmc-detail-font-display vmc-detail-text-sm">0</span> </div></div></div></div> <div class="cp-content vmc-detail-relative vmc-detail-z-1 vmc-detail-bg-white"><div class="cta-contains has-button-gy vmc-detail-px-5 vmc-detail-flex vmc-detail-flex-col vmc-detail-justify-center"> <div class="vmc-detail-w-full"><div>  <p class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-text-damask vmc-detail-leading-thing vmc-detail-text-center vmc-detail-mb-2 vmc-detail-mt-5">¡Oportunidad para el que sabe!</p> <div class="vmc-detail-rounded vmc-detail-shadow-lg vmc-detail-relative vmc-detail-z-1"><button class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-w-full vmc-detail-border-none vmc-detail-bg-casablanca vmc-detail-text-white vmc-detail-px-8 vmc-detail-py-5 vmc-detail-rounded leading-2 focus:vmc-detail-outline-none"><span class="vmc-detail-font-display vmc-detail-text-white vmc-detail-text-lg vmc-detail-uppercase vmc-detail-font-bold vmc-detail-leading-none">Participa</span></button></div>  <div class="vmc-detail-mt-4"><div class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><span><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 23" fill="none" class="vmc-detail-w-auto"><path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"></path><path d="M12 23C11.7 23 11.3 22.9 11 22.8L1.5 18.6C0.6 18.2 0 17.4 0 16.4 0 15.4 0.6 14.5 1.5 14.2L11 10C11.7 9.7 12.4 9.7 13 10L22.6 14.2C23.4 14.5 24 15.4 24 16.4 24 17.4 23.4 18.2 22.6 18.6L13 22.8C12.7 22.9 12.3 23 12 23ZM12 11C11.8 11 11.7 11 11.5 11.1L1.9 15.3C1.5 15.5 1.2 15.9 1.2 16.4 1.2 16.9 1.5 17.3 1.9 17.5L11.5 21.7C11.8 21.8 12.2 21.8 12.5 21.7L22.1 17.5C22.5 17.3 22.8 16.9 22.8 16.4 22.8 15.9 22.5 15.5 22.1 15.3L12.5 11.1C12.3 11 12.2 11 12 11Z" fill="#367976"></path><path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"></path><path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3L12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8 11.7 9.8 11.7 9.8 11.8 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6ZM11 7.2C11 6.8 11.3 6.5 11.8 6.5V8.1C11.3 7.9 11 7.7 11 7.2ZM12.5 11.5V10C12.9 10.2 13.2 10.4 13.2 10.8 13.2 11.2 12.9 11.5 12.5 11.5Z" fill="white"></path></svg></span> <span class="vmc-detail-font-display vmc-detail-text-lg vmc-detail-ml-3 vmc-detail-leading-none vmc-detail-text-oracle"><span class="vmc-detail-font-light">Precio Base:</span> <span class="vmc-detail-font-bold">US$ 12,499</span></span></div> <div class="cp-base-price-info vmc-detail-text-center vmc-detail-font-display vmc-detail-text-oracle vmc-detail-font-normal vmc-detail-leading-tight vmc-detail-text-xxs vmc-detail-mt-2">
+										Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50
+									 </div></div></div></div></div></div></div>  <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div></div>  <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div> <div class="v-portal" style="display: none;"></div>  </div> <div class="vue-portal-target"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

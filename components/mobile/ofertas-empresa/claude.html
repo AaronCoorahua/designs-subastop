@@ -1,0 +1,439 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Mobile · Ofertas Hoy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-negotiable:   oklch(0.78 0.14 195);
+
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+
+  --voyager-tint-vault-soft:    color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-radius-pill: 9999px;
+
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-sm:       0 2px 8px  oklch(0.22 0.18 285 / 8%);
+
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+
+.preview-frame {
+  width: 372px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Header — title + brackets · link "Ir al perfil" con flecha naranja ── */
+.preview-frame .head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0;
+  width: auto;
+}
+
+.preview-frame .head .head-info {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  flex: 0 0 auto;
+  width: fit-content;
+  padding: 8px 12px;
+  color: var(--voyager-color-live);
+}
+
+.preview-frame .head .bracket {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  color: var(--voyager-color-live);
+  fill: var(--voyager-color-live);
+}
+
+.preview-frame .head .bracket-tl { top: 0; left: 0; }
+.preview-frame .head .bracket-br { bottom: 0; right: 0; }
+
+.preview-frame .head-title {
+  font-family: var(--voyager-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--voyager-color-vault);
+  line-height: 20px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.preview-frame .head-sub {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--voyager-color-text-on-surface);
+  line-height: 20px;
+  margin: 0;
+}
+
+.preview-frame .head-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  font-family: var(--voyager-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--voyager-color-vault);
+  background: transparent;
+  border-radius: var(--voyager-radius-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .head-link svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--voyager-color-live);
+  transition: transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .head-link:hover {
+  background-color: var(--voyager-tint-vault-soft);
+}
+
+.preview-frame .head-link:hover svg {
+  transform: translateX(2px);
+}
+
+/* ── Grid — 2 cols × 2 rows · cards 180 × 234 · gap 12 ─────────────────── */
+.preview-frame .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 180px);
+  gap: 12px;
+  justify-content: center;
+  padding: 0;
+}
+
+/* ── Vehicle card — copia exacta del Simple del desktop ─────────────────── */
+.preview-frame .vcard-simple {
+  width: 180px;
+  height: 234px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--voyager-color-surface-card);
+  border-radius: var(--voyager-radius-sm);
+  box-shadow: var(--voyager-shadow-sm);
+  overflow: hidden;
+  border-bottom: 6px solid var(--voyager-color-live);
+}
+
+.preview-frame .vcard-simple[data-status="negotiable"] {
+  border-bottom-color: var(--voyager-color-negotiable);
+}
+
+.preview-frame .vcard-simple .simple-image {
+  position: relative;
+  width: 100%;
+  height: 124px;
+  background: linear-gradient(
+    145deg,
+    oklch(0.91 0.022 285) 0%,
+    oklch(0.94 0.010 220) 60%,
+    oklch(0.96 0.005 160) 100%);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.preview-frame .vcard-simple .simple-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.preview-frame .vcard-simple .live-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-live);
+  box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-live) 40%, transparent);
+}
+
+.preview-frame .vcard-simple .live-dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-surface-card);
+}
+
+.preview-frame .vcard-simple .simple-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 4px;
+}
+
+.preview-frame .vcard-simple .simple-title {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-vault);
+  line-height: 1.1;
+}
+
+.preview-frame .vcard-simple .simple-year {
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--voyager-color-text-muted);
+  line-height: 1.2;
+}
+
+.preview-frame .vcard-simple .simple-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 12px;
+  margin-top: auto;
+}
+
+.preview-frame .vcard-simple .simple-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.preview-frame .vcard-simple .shield {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-negotiable);
+  color: var(--voyager-color-surface-card);
+}
+
+.preview-frame .vcard-simple .shield svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+
+.preview-frame .vcard-simple .price-text {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--voyager-color-vault);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.preview-frame .vcard-simple .heart-outline {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-surface-card);
+  color: var(--voyager-color-vault);
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-vault) 16%, transparent);
+  transition:
+    background var(--voyager-duration-micro) var(--voyager-ease-default),
+    transform  var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .vcard-simple .heart-outline svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.preview-frame .vcard-simple .heart-outline:hover {
+  background: var(--voyager-tint-vault-soft);
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Ofertas Hoy">
+    <div class="preview-frame">
+
+        <div class="head">
+          <div class="head-info">
+            <svg class="bracket bracket-tl" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+              <path d="M0 0H3.3V3.3H3.3V6.7H0V3.3H0V0ZM3.3 0H6.7 6.7 10V3.3H6.7 6.7 3.3V0ZM3.3 6.7H0V10H3.3V6.7Z" fill="currentColor"/>
+            </svg>
+            <p class="head-title">AUTOPLAN</p>
+            <p class="head-sub">5 Ofertas</p>
+            <svg class="bracket bracket-br" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+              <path d="M10 10L6.7 10 6.7 6.7 6.7 3.3 10 3.3 10 6.7 10 10ZM6.7 10L3.3 10 0 10 0 6.7 3.3 6.7 6.7 6.7 6.7 10ZM6.7 3.3L10 3.3 10 0 6.7 0 6.7 3.3Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <a href="#" class="head-link">
+            Ir al perfil
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+          </a>
+        </div>
+
+        <div class="grid">
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Chevrolet Joy Sedan</span>
+              <span class="simple-year">2021</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="shield" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                </span>
+                <span class="price-text">US$ 5,699</span>
+              </div>
+              <button class="heart-outline" aria-label="me interesa">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
+              <span class="live-dot" aria-label="En vivo"></span>
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Chery Tiggo 2</span>
+              <span class="simple-year">2023</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="shield" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                </span>
+                <span class="price-text">US$ 6,699</span>
+              </div>
+              <button class="heart-outline" aria-label="me interesa">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="negotiable">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Peugeot New 2008</span>
+              <span class="simple-year">2022</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price"></div>
+              <button class="heart-outline" aria-label="me interesa">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+              <span class="live-dot" aria-label="En vivo"></span>
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Nissan Xtrail</span>
+              <span class="simple-year">2022</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="shield" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                </span>
+                <span class="price-text">US$ 20,999</span>
+              </div>
+              <button class="heart-outline" aria-label="me interesa">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

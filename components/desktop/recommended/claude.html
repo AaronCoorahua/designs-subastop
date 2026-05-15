@@ -1,0 +1,377 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade Preview · Recomendados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — local token surface.  DESIGN.md §2 Color · §6 Radius · §7
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-negotiable:   oklch(0.78 0.14 195);
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-skeleton:        oklch(0.85 0.008 220);
+  --voyager-color-divider-section: color-mix(in oklch, var(--voyager-color-vault) 5%, transparent);
+  --voyager-tint-live-soft:        color-mix(in oklch, var(--voyager-color-live) 10%, var(--voyager-color-surface-card));
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating: 0 12px 28px oklch(0.22 0.18 285 / 14%);
+  --voyager-shadow-sm:       0 2px 8px  oklch(0.22 0.18 285 / 8%);
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ── Preview canvas ─────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse at top left,   color-mix(in oklch, var(--voyager-color-vault) 4%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, color-mix(in oklch, var(--voyager-color-live) 4%, transparent) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 16px 0;
+}
+
+/* ── KEY FIX: frame clips content at exact component height ─────────────── */
+.preview-frame {
+  width: 440px;
+  height: 247.71px;
+  overflow: hidden;
+}
+
+/* ── Layout primitives ──────────────────────────────────────────────────── */
+.preview-frame .p-4          { padding: 12px; }
+.preview-frame .px-3         { padding-left: 10px; padding-right: 10px; }
+.preview-frame .px-4         { padding-left: 10px; padding-right: 10px; }
+.preview-frame .px-2         { padding-left: 6px; padding-right: 6px; }
+.preview-frame .py-2         { padding-top: 0; padding-bottom: 0; }
+.preview-frame .pt-3         { padding-top: 6px; }
+.preview-frame .pl-1         { padding-left: 4px; }
+.preview-frame .mt-4         { margin-top: 12px; }
+.preview-frame .mb-2         { margin-bottom: 8px; }
+.preview-frame .mr-2         { margin-right: 8px; }
+.preview-frame .flex         { display: flex; }
+.preview-frame .inline-flex  { display: inline-flex; }
+.preview-frame .inline-block { display: inline-block; }
+.preview-frame .block        { display: block; }
+.preview-frame .grid         { display: grid; }
+.preview-frame .grid-cols-3  { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.preview-frame .gap-4        { gap: 10px; }
+.preview-frame .gap-2        { gap: 6px; }
+.preview-frame .items-center { align-items: center; }
+.preview-frame .flex-1       { flex: 1 1 0%; }
+.preview-frame .flex-shrink-0 { flex-shrink: 0; }
+.preview-frame .justify-center { justify-content: center; }
+.preview-frame .relative     { position: relative; }
+.preview-frame .absolute     { position: absolute; }
+.preview-frame .top-0        { top: 0; }
+.preview-frame .left-0       { left: 0; }
+.preview-frame .bottom-0     { bottom: 0; }
+.preview-frame .right-0      { right: 0; }
+.preview-frame .bottom-2     { bottom: 8px; }
+.preview-frame .left-2       { left: 8px; }
+.preview-frame .z-1          { z-index: 1; }
+.preview-frame .z-2          { z-index: 2; }
+.preview-frame .w-full       { width: 100%; }
+.preview-frame .h-full       { height: 100%; }
+.preview-frame .w-2          { width: 6px; }
+.preview-frame .h-2          { height: 6px; }
+.preview-frame .w-4          { width: 14px; }
+.preview-frame .h-4          { height: 14px; }
+.preview-frame .w-6          { width: 22px; }
+.preview-frame .h-6          { height: 22px; }
+.preview-frame .h-28         { height: 96px; }
+.preview-frame .h-12         { height: 50px; }
+.preview-frame .pointer-events-none { pointer-events: none; }
+.preview-frame .overflow-hidden     { overflow: hidden; }
+.preview-frame .truncate            { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+.preview-frame .font-display { font-family: var(--voyager-font-display); }
+.preview-frame .text-base    { font-size: 15px; line-height: 18px; }
+.preview-frame .text-xs      { font-size: 11px; }
+.preview-frame .font-bold    { font-weight: 700; }
+.preview-frame .font-normal  { font-weight: 400; }
+.preview-frame .font-light   { font-weight: 300; }
+.preview-frame .leading-none { line-height: 1; }
+.preview-frame .leading-tight { line-height: 1.25; }
+.preview-frame .uppercase    { text-transform: uppercase; }
+
+/* ── Images ─────────────────────────────────────────────────────────────── */
+.preview-frame .object-cover  { object-fit: cover; }
+.preview-frame .object-center { object-position: center; }
+
+/* ── Icons ───────────────────────────────────────────────────────────────── */
+.preview-frame svg           { display: inline-block; vertical-align: middle; }
+.preview-frame .fill-current { fill: currentColor; }
+
+/* ── Voyager color mapping ──────────────────────────────────────────────── */
+
+/* Outer card surface */
+.preview-frame .bg-coral-100 {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+}
+
+/* Corner bracket SVGs */
+.preview-frame .text-coral-400 {
+  color: var(--voyager-color-live, #ED8936);
+}
+
+/* "Recomendados" heading */
+.preview-frame .text-purple-400 {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+/* Inner card surface */
+.preview-frame .bg-white {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+}
+
+/* Title + year text */
+.preview-frame .text-purple-900 {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+/* Heart icon color */
+.preview-frame .text-purple-300 {
+  color: color-mix(in oklch, var(--voyager-color-vault) 35%, oklch(0.92 0.004 280));
+}
+
+/* Price badge background */
+.preview-frame .bg-yellow-100 {
+  background-color: var(--voyager-tint-live-soft);
+}
+
+/* Price badge text */
+.preview-frame .text-turquoise-900 {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+/* ── Rounded ────────────────────────────────────────────────────────────── */
+.preview-frame .rounded-full { border-radius: 9999px; }
+.preview-frame .rounded-lg   { border-radius: var(--voyager-radius-md, 8px); }
+.preview-frame .rounded-t    { border-radius: var(--voyager-radius-sm, 4px) var(--voyager-radius-sm, 4px) 0 0; }
+.preview-frame .rounded-br   { border-radius: 0 0 var(--voyager-radius-sm, 4px) 0; }
+
+/* ── Auction card status bottom borders ─────────────────────────────────── */
+.preview-frame .border-b-8 {
+  border-bottom-width: 8px;
+  border-bottom-style: solid;
+}
+.preview-frame .border-turquoise-500 {
+  border-color: var(--voyager-color-negotiable, #00CACE);
+}
+.preview-frame .border-yellow-500 {
+  border-color: var(--voyager-color-live, #ED8936);
+}
+
+/* ── Inner card image area — gradient fallback when image is loading ─────── */
+.preview-frame .w-full.h-28 {
+  background: linear-gradient(
+    145deg,
+    oklch(0.91 0.022 285) 0%,
+    oklch(0.94 0.010 220) 60%,
+    oklch(0.96 0.005 160) 100%
+  );
+}
+
+/* ── Year mini-pill — floats from .description up onto the image area ────── */
+.preview-frame .description {
+  position: relative;
+}
+
+.preview-frame .description a {
+  text-decoration: none;
+}
+
+.preview-frame .description a > p {
+  position: absolute;
+  bottom: calc(100% + 6px);   /* 6px above .description = inside image bottom */
+  left: 6px;
+  margin: 0;
+  padding: 2px 8px;
+  background: var(--voyager-color-surface-card, #FFFFFF);
+  color: var(--voyager-color-vault, #22005C);
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px oklch(0.22 0.18 285 / 16%);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+/* ── Inner auction card border-radius + shadow ───────────────────────────── */
+.preview-frame .bg-white.rounded {
+  border-radius: var(--voyager-radius-sm, 4px);
+}
+
+.preview-frame .bg-white.shadow-md {
+  box-shadow: var(--voyager-shadow-sm);
+}
+
+/* ── Heart button ────────────────────────────────────────────────────────── */
+.preview-frame .rounded-full.shadow-lg {
+  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 12%);
+}
+.preview-frame button.shadow {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+  border: none;
+  cursor: pointer;
+}
+
+/* ── Outer card — KEY FIX: height + overflow + ::after stripe ───────────── */
+.preview-frame .bg-coral-100.rounded {
+  border-radius: var(--voyager-radius-lg, 16px);
+  height: 247.71px;    /* ← fills exactly the clipped frame */
+  overflow: hidden;    /* ← clips all content inside */
+  position: relative;  /* ← anchors ::after */
+}
+
+.preview-frame .bg-coral-100.shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+  background-image:
+    linear-gradient(145deg,
+      color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%,
+      transparent 50%);
+  transition:
+    box-shadow var(--voyager-duration-standard) var(--voyager-ease-default),
+    transform  var(--voyager-duration-micro)    var(--voyager-ease-default);
+}
+
+/* Vault purple stripe — lives INSIDE the overflow:hidden container */
+.preview-frame .bg-coral-100.shadow-lg::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  border-radius: 0 0 var(--voyager-radius-lg, 16px) var(--voyager-radius-lg, 16px);
+  background: var(--voyager-color-vault, #22005C);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── HR divider ──────────────────────────────────────────────────────────── */
+.preview-frame hr.border-t {
+  border: none;
+  border-top: 1px solid var(--voyager-color-divider-section);
+}
+.preview-frame .my-4 { margin-top: 16px; margin-bottom: 16px; }
+
+/* ── Frozen states ──────────────────────────────────────────────────────── */
+.frame--hover .bg-coral-100.shadow-lg {
+  box-shadow: var(--voyager-shadow-floating);
+  transform: translateY(-2px);
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager UI upgrade preview — Recomendados">
+    <div class="preview-grid">
+
+      <!-- ── DEFAULT ─────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Default</p>
+        <div class="preview-frame">
+<div class="p-4 rounded shadow-lg bg-coral-100">
+				<div class="flex items-center">
+					<div class="flex-1">
+						<div class="relative inline-block px-3 py-2">
+                            <svg class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path>
+                            </svg>
+							<h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Recomendados</h4>
+                            <svg class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path>
+                            </svg>
+						</div>
+					</div>
+				</div>
+				<div id="recommend-list"><div class="grid grid-cols-3 gap-4 mt-4"><div class="relative w-full bg-white border-b-8 rounded shadow-md border-turquoise-500" size="small"><div class="relative w-full h-28">     <a href="/oferta/61548" class="relative block w-full h-full z-1"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" class="object-cover object-center w-full h-full overflow-hidden rounded-t"></a> <div class="absolute flex items-center gap-2 bottom-2 left-2 z-2"> </div> <div class="absolute bottom-0 right-0 mb-2 mr-2 rounded-full shadow-lg z-2"><button aria-label="me interesa" class="flex items-center justify-center w-6 h-6 bg-white rounded-full shadow focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-purple-300 fill-current"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg></button> </div></div> <div class="h-12 px-4 pt-3 description"><a href="/oferta/61548" class="block focus:outline-none"><h4 class="text-xs font-normal leading-tight text-purple-900 truncate font-display">Aire acondicionado Uniflair</h4> <p class="text-xs font-light leading-tight text-purple-900 truncate font-display">2014</p></a></div></div><div class="relative w-full bg-white border-b-8 rounded shadow-md  border-yellow-500" size="small"><div class="relative w-full h-28"><div class="absolute inline-flex items-center h-6 px-2 bg-yellow-100 rounded-br pointer-events-none z-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="flex-shrink-0 w-4 h-4"><path d="M11.4 22L2.7 18.4C1.4 17.9 1.4 16.1 2.7 15.6L11.4 12C11.8 11.8 12.2 11.8 12.7 12L21.3 15.6C22.6 16.1 22.6 17.9 21.3 18.4L12.7 22C12.2 22.2 11.8 22.2 11.4 22Z" fill="#9AFCF4"></path> <path d="M12 23C11.7 23 11.4 22.9 11.1 22.8L2.3 19.1C1.5 18.8 1 18.1 1 17.2 1 16.3 1.5 15.6 2.3 15.2L11.1 11.6C11.7 11.3 12.3 11.3 12.9 11.6L21.7 15.2C22.5 15.6 23 16.3 23 17.2 23 18.1 22.5 18.8 21.7 19.1L12.9 22.8C12.6 22.9 12.3 23 12 23ZM12 12.4C11.8 12.4 11.7 12.5 11.6 12.5L2.8 16.2C2.3 16.4 2.1 16.8 2.1 17.2 2.1 17.6 2.3 18 2.8 18.2L11.6 21.9C11.8 22 12.2 22 12.4 21.9L21.2 18.2C21.7 18 21.9 17.6 21.9 17.2 21.9 16.8 21.7 16.4 21.2 16.2L12.4 12.5C12.3 12.5 12.2 12.4 12 12.4Z" fill="#367976"></path> <path d="M12 1C7.5 1 3.7 4.6 3.7 9.1 3.7 13.6 7.5 17.4 12 17.4 16.6 17.4 20.2 13.6 20.2 9.1 20.2 4.6 16.5 1 12 1Z" fill="#367976"></path> <path d="M14.9 10.8C14.9 9.2 13.6 8.8 12.5 8.5L12.4 8.5V6.7C12.9 6.8 13.4 7 13.7 7.4L14.8 6.3C14.2 5.5 13.3 5.1 12.4 5V3.7H11.8V5C10.4 5.2 9.2 6.1 9.2 7.6 9.2 9.2 10.5 9.7 11.6 10 11.7 10 11.7 10 11.8 10V11.7C11.2 11.6 10.6 11.3 10.2 10.8L9.1 12C9.8 12.9 10.8 13.3 11.8 13.4V14.7H12.4V13.4C13.8 13.2 14.9 12.3 14.9 10.8ZM10.9 7.4C10.9 7 11.3 6.7 11.8 6.7V8.3C11.3 8.1 10.9 7.9 10.9 7.4ZM12.4 11.7V10.2C12.9 10.4 13.2 10.6 13.2 11 13.2 11.4 12.9 11.7 12.4 11.7Z" fill="white"></path></svg> <span class="pl-1 text-xs font-bold leading-tight font-display text-turquoise-900">US$ 16,999</span></div>     <a href="/oferta/61628" class="relative block w-full h-full z-1"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" class="object-cover object-center w-full h-full overflow-hidden rounded-t"></a> <div class="absolute flex items-center gap-2 bottom-2 left-2 z-2"> </div> <div class="absolute bottom-0 right-0 mb-2 mr-2 rounded-full shadow-lg z-2"><button aria-label="me interesa" class="flex items-center justify-center w-6 h-6 bg-white rounded-full shadow focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-purple-300 fill-current"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg></button> </div></div> <div class="h-12 px-4 pt-3 description"><a href="/oferta/61628" class="block focus:outline-none"><h4 class="text-xs font-normal leading-tight text-purple-900 truncate font-display">Hino Dutro</h4> <p class="text-xs font-light leading-tight text-purple-900 truncate font-display">2023</p></a></div></div><div class="relative w-full bg-white border-b-8 rounded shadow-md  border-yellow-500" size="small"><div class="relative w-full h-28"><div class="absolute inline-flex items-center h-6 px-2 bg-yellow-100 rounded-br pointer-events-none z-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="flex-shrink-0 w-4 h-4"><path d="M11.4 22L2.7 18.4C1.4 17.9 1.4 16.1 2.7 15.6L11.4 12C11.8 11.8 12.2 11.8 12.7 12L21.3 15.6C22.6 16.1 22.6 17.9 21.3 18.4L12.7 22C12.2 22.2 11.8 22.2 11.4 22Z" fill="#9AFCF4"></path> <path d="M12 23C11.7 23 11.4 22.9 11.1 22.8L2.3 19.1C1.5 18.8 1 18.1 1 17.2 1 16.3 1.5 15.6 2.3 15.2L11.1 11.6C11.7 11.3 12.3 11.3 12.9 11.6L21.7 15.2C22.5 15.6 23 16.3 23 17.2 23 18.1 22.5 18.8 21.7 19.1L12.9 22.8C12.6 22.9 12.3 23 12 23ZM12 12.4C11.8 12.4 11.7 12.5 11.6 12.5L2.8 16.2C2.3 16.4 2.1 16.8 2.1 17.2 2.1 17.6 2.3 18 2.8 18.2L11.6 21.9C11.8 22 12.2 22 12.4 21.9L21.2 18.2C21.7 18 21.9 17.6 21.9 17.2 21.9 16.8 21.7 16.4 21.2 16.2L12.4 12.5C12.3 12.5 12.2 12.4 12 12.4Z" fill="#367976"></path> <path d="M12 1C7.5 1 3.7 4.6 3.7 9.1 3.7 13.6 7.5 17.4 12 17.4 16.6 17.4 20.2 13.6 20.2 9.1 20.2 4.6 16.5 1 12 1Z" fill="#367976"></path> <path d="M14.9 10.8C14.9 9.2 13.6 8.8 12.5 8.5L12.4 8.5V6.7C12.9 6.8 13.4 7 13.7 7.4L14.8 6.3C14.2 5.5 13.3 5.1 12.4 5V3.7H11.8V5C10.4 5.2 9.2 6.1 9.2 7.6 9.2 9.2 10.5 9.7 11.6 10 11.7 10 11.7 10 11.8 10V11.7C11.2 11.6 10.6 11.3 10.2 10.8L9.1 12C9.8 12.9 10.8 13.3 11.8 13.4V14.7H12.4V13.4C13.8 13.2 14.9 12.3 14.9 10.8ZM10.9 7.4C10.9 7 11.3 6.7 11.8 6.7V8.3C11.3 8.1 10.9 7.9 10.9 7.4ZM12.4 11.7V10.2C12.9 10.4 13.2 10.6 13.2 11 13.2 11.4 12.9 11.7 12.4 11.7Z" fill="white"></path></svg> <span class="pl-1 text-xs font-bold leading-tight font-display text-turquoise-900">US$ 15,999</span></div>     <a href="/oferta/61638" class="relative block w-full h-full z-1"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" class="object-cover object-center w-full h-full overflow-hidden rounded-t"></a> <div class="absolute flex items-center gap-2 bottom-2 left-2 z-2"> </div> <div class="absolute bottom-0 right-0 mb-2 mr-2 rounded-full shadow-lg z-2"><button aria-label="me interesa" class="flex items-center justify-center w-6 h-6 bg-white rounded-full shadow focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-purple-300 fill-current"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg></button> </div></div> <div class="h-12 px-4 pt-3 description"><a href="/oferta/61638" class="block focus:outline-none"><h4 class="text-xs font-normal leading-tight text-purple-900 truncate font-display">Hino Dutro</h4> <p class="text-xs font-light leading-tight text-purple-900 truncate font-display">2022</p></a></div></div> </div></div>
+			</div>
+        </div>
+      </div>
+
+      <!-- ── HOVER ──────────────────────────────────────────────────────── -->
+      <div class="preview-cell">
+        <p class="preview-label">Hover</p>
+        <div class="preview-frame frame--hover">
+<div class="p-4 rounded shadow-lg bg-coral-100">
+				<div class="flex items-center">
+					<div class="flex-1">
+						<div class="relative inline-block px-3 py-2">
+                            <svg class="absolute top-0 left-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"></path>
+                            </svg>
+							<h4 class="text-base font-bold leading-none text-purple-400 uppercase font-display">Recomendados</h4>
+                            <svg class="absolute bottom-0 right-0 w-2 h-2 fill-current text-coral-400" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"></path>
+                            </svg>
+						</div>
+					</div>
+				</div>
+				<div><div class="grid grid-cols-3 gap-4 mt-4"><div class="relative w-full bg-white border-b-8 rounded shadow-md border-turquoise-500" size="small"><div class="relative w-full h-28">     <a href="/oferta/61548" class="relative block w-full h-full z-1"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" class="object-cover object-center w-full h-full overflow-hidden rounded-t"></a> <div class="absolute flex items-center gap-2 bottom-2 left-2 z-2"> </div> <div class="absolute bottom-0 right-0 mb-2 mr-2 rounded-full shadow-lg z-2"><button aria-label="me interesa" class="flex items-center justify-center w-6 h-6 bg-white rounded-full shadow focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-purple-300 fill-current"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg></button> </div></div> <div class="h-12 px-4 pt-3 description"><a href="/oferta/61548" class="block focus:outline-none"><h4 class="text-xs font-normal leading-tight text-purple-900 truncate font-display">Aire acondicionado Uniflair</h4> <p class="text-xs font-light leading-tight text-purple-900 truncate font-display">2014</p></a></div></div><div class="relative w-full bg-white border-b-8 rounded shadow-md  border-yellow-500" size="small"><div class="relative w-full h-28"><div class="absolute inline-flex items-center h-6 px-2 bg-yellow-100 rounded-br pointer-events-none z-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="flex-shrink-0 w-4 h-4"><path d="M11.4 22L2.7 18.4C1.4 17.9 1.4 16.1 2.7 15.6L11.4 12C11.8 11.8 12.2 11.8 12.7 12L21.3 15.6C22.6 16.1 22.6 17.9 21.3 18.4L12.7 22C12.2 22.2 11.8 22.2 11.4 22Z" fill="#9AFCF4"></path> <path d="M12 23C11.7 23 11.4 22.9 11.1 22.8L2.3 19.1C1.5 18.8 1 18.1 1 17.2 1 16.3 1.5 15.6 2.3 15.2L11.1 11.6C11.7 11.3 12.3 11.3 12.9 11.6L21.7 15.2C22.5 15.6 23 16.3 23 17.2 23 18.1 22.5 18.8 21.7 19.1L12.9 22.8C12.6 22.9 12.3 23 12 23ZM12 12.4C11.8 12.4 11.7 12.5 11.6 12.5L2.8 16.2C2.3 16.4 2.1 16.8 2.1 17.2 2.1 17.6 2.3 18 2.8 18.2L11.6 21.9C11.8 22 12.2 22 12.4 21.9L21.2 18.2C21.7 18 21.9 17.6 21.9 17.2 21.9 16.8 21.7 16.4 21.2 16.2L12.4 12.5C12.3 12.5 12.2 12.4 12 12.4Z" fill="#367976"></path> <path d="M12 1C7.5 1 3.7 4.6 3.7 9.1 3.7 13.6 7.5 17.4 12 17.4 16.6 17.4 20.2 13.6 20.2 9.1 20.2 4.6 16.5 1 12 1Z" fill="#367976"></path> <path d="M14.9 10.8C14.9 9.2 13.6 8.8 12.5 8.5L12.4 8.5V6.7C12.9 6.8 13.4 7 13.7 7.4L14.8 6.3C14.2 5.5 13.3 5.1 12.4 5V3.7H11.8V5C10.4 5.2 9.2 6.1 9.2 7.6 9.2 9.2 10.5 9.7 11.6 10 11.7 10 11.7 10 11.8 10V11.7C11.2 11.6 10.6 11.3 10.2 10.8L9.1 12C9.8 12.9 10.8 13.3 11.8 13.4V14.7H12.4V13.4C13.8 13.2 14.9 12.3 14.9 10.8ZM10.9 7.4C10.9 7 11.3 6.7 11.8 6.7V8.3C11.3 8.1 10.9 7.9 10.9 7.4ZM12.4 11.7V10.2C12.9 10.4 13.2 10.6 13.2 11 13.2 11.4 12.9 11.7 12.4 11.7Z" fill="white"></path></svg> <span class="pl-1 text-xs font-bold leading-tight font-display text-turquoise-900">US$ 16,999</span></div>     <a href="/oferta/61628" class="relative block w-full h-full z-1"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" class="object-cover object-center w-full h-full overflow-hidden rounded-t"></a> <div class="absolute flex items-center gap-2 bottom-2 left-2 z-2"> </div> <div class="absolute bottom-0 right-0 mb-2 mr-2 rounded-full shadow-lg z-2"><button aria-label="me interesa" class="flex items-center justify-center w-6 h-6 bg-white rounded-full shadow focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-purple-300 fill-current"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg></button> </div></div> <div class="h-12 px-4 pt-3 description"><a href="/oferta/61628" class="block focus:outline-none"><h4 class="text-xs font-normal leading-tight text-purple-900 truncate font-display">Hino Dutro</h4> <p class="text-xs font-light leading-tight text-purple-900 truncate font-display">2023</p></a></div></div><div class="relative w-full bg-white border-b-8 rounded shadow-md  border-yellow-500" size="small"><div class="relative w-full h-28"><div class="absolute inline-flex items-center h-6 px-2 bg-yellow-100 rounded-br pointer-events-none z-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="flex-shrink-0 w-4 h-4"><path d="M11.4 22L2.7 18.4C1.4 17.9 1.4 16.1 2.7 15.6L11.4 12C11.8 11.8 12.2 11.8 12.7 12L21.3 15.6C22.6 16.1 22.6 17.9 21.3 18.4L12.7 22C12.2 22.2 11.8 22.2 11.4 22Z" fill="#9AFCF4"></path> <path d="M12 23C11.7 23 11.4 22.9 11.1 22.8L2.3 19.1C1.5 18.8 1 18.1 1 17.2 1 16.3 1.5 15.6 2.3 15.2L11.1 11.6C11.7 11.3 12.3 11.3 12.9 11.6L21.7 15.2C22.5 15.6 23 16.3 23 17.2 23 18.1 22.5 18.8 21.7 19.1L12.9 22.8C12.6 22.9 12.3 23 12 23ZM12 12.4C11.8 12.4 11.7 12.5 11.6 12.5L2.8 16.2C2.3 16.4 2.1 16.8 2.1 17.2 2.1 17.6 2.3 18 2.8 18.2L11.6 21.9C11.8 22 12.2 22 12.4 21.9L21.2 18.2C21.7 18 21.9 17.6 21.9 17.2 21.9 16.8 21.7 16.4 21.2 16.2L12.4 12.5C12.3 12.5 12.2 12.4 12 12.4Z" fill="#367976"></path> <path d="M12 1C7.5 1 3.7 4.6 3.7 9.1 3.7 13.6 7.5 17.4 12 17.4 16.6 17.4 20.2 13.6 20.2 9.1 20.2 4.6 16.5 1 12 1Z" fill="#367976"></path> <path d="M14.9 10.8C14.9 9.2 13.6 8.8 12.5 8.5L12.4 8.5V6.7C12.9 6.8 13.4 7 13.7 7.4L14.8 6.3C14.2 5.5 13.3 5.1 12.4 5V3.7H11.8V5C10.4 5.2 9.2 6.1 9.2 7.6 9.2 9.2 10.5 9.7 11.6 10 11.7 10 11.7 10 11.8 10V11.7C11.2 11.6 10.6 11.3 10.2 10.8L9.1 12C9.8 12.9 10.8 13.3 11.8 13.4V14.7H12.4V13.4C13.8 13.2 14.9 12.3 14.9 10.8ZM10.9 7.4C10.9 7 11.3 6.7 11.8 6.7V8.3C11.3 8.1 10.9 7.9 10.9 7.4ZM12.4 11.7V10.2C12.9 10.4 13.2 10.6 13.2 11 13.2 11.4 12.9 11.7 12.4 11.7Z" fill="white"></path></svg> <span class="pl-1 text-xs font-bold leading-tight font-display text-turquoise-900">US$ 15,999</span></div>     <a href="/oferta/61638" class="relative block w-full h-full z-1"><img loading="lazy" src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" class="object-cover object-center w-full h-full overflow-hidden rounded-t"></a> <div class="absolute flex items-center gap-2 bottom-2 left-2 z-2"> </div> <div class="absolute bottom-0 right-0 mb-2 mr-2 rounded-full shadow-lg z-2"><button aria-label="me interesa" class="flex items-center justify-center w-6 h-6 bg-white rounded-full shadow focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-purple-300 fill-current"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg></button> </div></div> <div class="h-12 px-4 pt-3 description"><a href="/oferta/61638" class="block focus:outline-none"><h4 class="text-xs font-normal leading-tight text-purple-900 truncate font-display">Hino Dutro</h4> <p class="text-xs font-light leading-tight text-purple-900 truncate font-display">2022</p></a></div></div> </div></div>
+			</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

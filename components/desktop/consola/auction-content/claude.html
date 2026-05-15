@@ -1,0 +1,578 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auction Content Events — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ════════════════════════════════════════════════════════
+   VOYAGER SYSTEM TOKENS
+   vault (purple-only) · live (orange-only) — never combined
+   ════════════════════════════════════════════════════════ */
+:root {
+  --voyager-color-vault:          #22005C;
+  --voyager-color-vault-dark:     #1A0047;
+  --voyager-color-vault-mid:      #3B1782;
+  --voyager-color-live:           #ED8936;
+  --voyager-color-live-mid:       #F47A20;
+  --voyager-color-live-dark:      #C65C14;
+  --voyager-color-live-glow:      rgba(237, 137, 54, 0.38);
+  --voyager-surface-card:         #FFFFFF;
+  --voyager-surface-page:         #F8FAF9;
+  --voyager-text-on-dark:         #FFFFFF;
+  --voyager-text-on-dark-muted:   rgba(255, 255, 255, 0.55);
+  --voyager-text-on-dark-subtle:  rgba(255, 255, 255, 0.20);
+  --voyager-divider-on-dark:      rgba(255, 255, 255, 0.08);
+
+  /* Gradient vault — PURPLE only */
+  --voyager-gradient-vault:
+    linear-gradient(155deg, #22005C 0%, #3B1782 100%);
+
+  /* Gradient vault deep — container shell, purple only */
+  --voyager-gradient-vault-deep:
+    linear-gradient(180deg, #1A0047 0%, #260B5E 50%, #38178A 100%);
+
+  /* Gradient live — ORANGE only */
+  --voyager-gradient-live:
+    linear-gradient(135deg, #F5A55A 0%, #ED8936 48%, #C65C14 100%);
+
+  --voyager-font-ui:     "Plus Jakarta Sans", system-ui, sans-serif;
+  --voyager-font-number: "Roboto Mono", ui-monospace, "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100vh;
+  font-family: var(--voyager-font-ui);
+  background:
+    radial-gradient(ellipse 80% 60% at top left, rgba(34,0,92,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, rgba(237,137,54,0.05) 0%, transparent 55%),
+    #F8FAF9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════════════════════════════════════════════════════════
+   ROOT — 337 × 376 px FROZEN
+   ════════════════════════════════════════════════════════ */
+.auction-content-events {
+  width: 337px;
+  height: 376px;
+  background: var(--voyager-gradient-vault-deep);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ════════════════════════════════════════════════════════
+   ROOM OFFER — 80px fijo · precio grande
+   ════════════════════════════════════════════════════════ */
+.room-offer {
+  /* height exacto del original */
+  height: 80px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: flex;
+  align-items: center;
+  background: var(--voyager-gradient-vault);
+  border-bottom: 1px solid var(--voyager-divider-on-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Warm glow right — orange hint solo en la superficie, gradiente intacto */
+.room-offer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 45% 90% at 100% 50%,
+    rgba(237, 137, 54, 0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.offer-update {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.offer-update > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0;
+  width: 100%;
+}
+
+/* ── Icon: círculo naranja con flecha ── */
+.icon {
+  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.icon-i10 {
+  width: 40px;
+  height: 40px;
+  background: var(--voyager-gradient-live);
+  border-radius: 50%;
+  font-size: 0;
+  box-shadow:
+    0 2px 12px var(--voyager-color-live-glow),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.icon-i10::after {
+  content: '↑';
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  font-style: normal;
+}
+
+.icon-n3  { font-size: 0; }
+.icon-n3::after  { content: '⏱'; font-size: 18px; color: var(--voyager-color-live); }
+.icon-n9  { font-size: 0; }
+.icon-n9::after  { content: '○'; font-size: 24px; color: var(--voyager-text-on-dark-muted); }
+.icon-n10 { font-size: 0; }
+.icon-n10::after { content: '⚠'; font-size: 24px; color: var(--voyager-color-live); }
+
+/* ── Text stack en el banner ── */
+.offer-update > p > span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title-oferta {
+  display: block;
+  font-family: var(--voyager-font-ui);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--voyager-text-on-dark-muted);
+  line-height: 1;
+}
+
+/* Precio grande — es el elemento más importante del banner */
+.offer-update > p > span > strong {
+  display: block;
+  font-family: var(--voyager-font-number);
+  font-size: 30px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--voyager-text-on-dark);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+/* ════════════════════════════════════════════════════════
+   AUCTION ROOM — feed de mensajes
+   ════════════════════════════════════════════════════════ */
+.auction-room {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fade inferior para profundidad */
+.auction-room::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 28px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(26,0,71,0.65) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.auction-content {
+  height: 100%;
+  position: relative;
+}
+
+/* ── Lista de mensajes ── */
+.message-events {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 12px 20px;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.12) transparent;
+}
+.message-events::-webkit-scrollbar { width: 3px; }
+.message-events::-webkit-scrollbar-track { background: transparent; }
+.message-events::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.16);
+  border-radius: 99px;
+}
+
+.message-events li {
+  display: flex;
+  width: 100%;
+}
+
+/* Centrar mensajes de sistema y countdown */
+.message-events li:has(.robotMsg),
+.message-events li:has(.robotCount1) {
+  justify-content: center;
+}
+
+.message-events li:has(.ofertUser) {
+  justify-content: center;
+}
+
+/* ── Base burbuja ── */
+.mensajeBox {
+  font-family: var(--voyager-font-ui);
+  font-size: 13px;
+  line-height: 18px;
+  padding: 8px 14px;
+}
+
+/* ══════════════════════════════════════════
+   TIPO 1 — robotMsg
+   Sistema/info: fantasma, sutil, centrado
+   ══════════════════════════════════════════ */
+.robotMsg {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 99px;
+  color: var(--voyager-text-on-dark-muted);
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
+  padding: 5px 16px;
+  max-width: 86%;
+}
+
+.robotMsg strong {
+  font-weight: 700;
+  font-family: var(--voyager-font-number);
+  font-variant-numeric: tabular-nums;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ══════════════════════════════════════════
+   TIPO 2 — ofertUser
+   Puja de usuario: naranja, izquierda, prominente
+   ══════════════════════════════════════════ */
+.ofertUser {
+  background: var(--voyager-gradient-live);
+  color: var(--voyager-text-on-dark);
+  border-radius: 9999px;
+  font-weight: 500;
+  max-width: 88%;
+  text-align: center;
+  box-shadow:
+    0 3px 10px var(--voyager-color-live-glow),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+  text-shadow: 0 1px 3px rgba(120, 40, 0, 0.25);
+}
+
+.ofertUser strong {
+  font-weight: 800;
+  font-family: var(--voyager-font-number);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════════════════════════════════════
+   TIPO 3 — robotCount1
+   Anuncio countdown: blanco sólido, vault text
+   Maximamente diferente de robotMsg
+   ══════════════════════════════════════════ */
+.robotCount1 {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 99px;
+  color: var(--voyager-color-vault);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 9px 26px;
+  max-width: 86%;
+  box-shadow:
+    0 2px 16px rgba(26, 0, 71, 0.35),
+    0 0 0 1px rgba(255,255,255,0.60);
+}
+
+.robotCount1 strong {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--voyager-color-vault);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ════════════════════════════════════════════════════════
+   AUCTION MESSAGE — estado oculto (welcome/counter)
+   ════════════════════════════════════════════════════════ */
+.auction-message {
+  position: absolute;
+  inset: 0;
+  background: var(--voyager-gradient-vault-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-auction-counter { width: 100%; }
+
+.message-auction-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.message-auction-flex > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.info-auction-text {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--voyager-text-on-dark-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.info-auction-loader {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--voyager-text-on-dark);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.info-auction-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--voyager-color-live);
+  background: rgba(237, 137, 54, 0.14);
+  border: 1px solid rgba(237, 137, 54, 0.25);
+  border-radius: 99px;
+  padding: 4px 14px;
+  line-height: 1.5;
+}
+
+.info-auction-counter {
+  font-family: var(--voyager-font-number);
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+  color: var(--voyager-color-live);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  line-height: 1;
+}
+
+/* Spinner dots */
+.spinner {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 8px;
+}
+.bounce1, .bounce2, .bounce3 {
+  width: 7px;
+  height: 7px;
+  background: var(--voyager-color-live);
+  border-radius: 50%;
+  display: inline-block;
+  animation: voyager-bounce 1.4s infinite ease-in-out both;
+}
+.bounce1 { animation-delay: -0.32s; }
+.bounce2 { animation-delay: -0.16s; }
+
+@keyframes voyager-bounce {
+  0%, 80%, 100% { transform: scale(0.2); opacity: 0.25; }
+  40%           { transform: scale(1.0); opacity: 1.00; }
+}
+
+.message-auction-process,
+.message-auction-pause {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 24px;
+}
+.message-auction-process .info-auction-text strong,
+.message-auction-pause   .info-auction-text strong {
+  color: var(--voyager-text-on-dark);
+}
+
+/* ════════════════════════════════════════════════════════
+   EVENT AUCTION END — estados ocultos de fin
+   ════════════════════════════════════════════════════════ */
+.event-auction-end {
+  position: absolute;
+  inset: 0;
+  background: var(--voyager-gradient-vault-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 24px;
+}
+
+.message-end-icon { margin-bottom: 4px; }
+
+.message-end-icon .icon-i10 {
+  width: 52px;
+  height: 52px;
+  box-shadow:
+    0 0 0 10px rgba(237,137,54,0.10),
+    0 4px 18px var(--voyager-color-live-glow);
+}
+.message-end-icon .icon-i10::after { font-size: 22px; }
+
+.message-end-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--voyager-text-on-dark-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+.message-end-text .inner-text {
+  font-weight: 700;
+  color: var(--voyager-text-on-dark);
+}
+
+.message-end-price {
+  font-family: var(--voyager-font-number);
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+.message-end-price .inner-text {
+  background: var(--voyager-gradient-live);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.message-end-info {
+  font-size: 12px;
+  color: var(--voyager-text-on-dark-muted);
+  margin: 0;
+}
+.message-end-info strong { color: var(--voyager-color-live); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="auction-content-events">
+                            <div class="room-offer">
+                                <div class="offer-update">
+                                    <p><i class="icon icon-i10"></i><span><span class="title-oferta">Propuesta/Bid Actual</span><strong>US$  5,079</strong></span>
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="auction-room">
+                                <div class="auction-content" id="auctionContent">
+                                    <ul class="message-events" id="messageAuctionList" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+
+                                    <li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">¡Ya puedes enviar tus bids!</div></li><li><div class="mensajeBox ofertUser" style="transform-origin: left center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1; margin-left: 0px;"><strong>KAHTH4</strong> ha propuesto <strong> US$ 5,079</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li><li><div class="mensajeBox robotCount1" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">A la <strong>una</strong></div></li><li><div class="mensajeBox robotMsg" style="transform-origin: center center 0px; transform: translate3d(0px, 0px, 0px); opacity: 1;">Cierra en <strong>US$ 5,079</strong></div></li></ul>
+
+                                    <div class="auction-message" style="display: none;">
+                                        <div class="message-auction-counter">
+                                            <div class="message-auction-flex">
+                                                <div>
+                                                    <p class="info-auction-text" id="textWelcome">¡Bienvenido al proceso en vivo!</p>
+                                                    <div class="info-auction-loader" id="mainTitle">Recibiendo <br>participantes
+                                                        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+                                                    </div>
+                                                    <div class="info-auction-label" id="textExtended" style="display:none">Inicio EXTENDIDO</div>
+                                                    <p class="info-auction-text">Inicia en:</p>
+                                                    <p class="info-auction-counter" id="timetoini"><i class="icon icon-n3"></i> <span>00</span>:<span>00</span>:<span>00</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="display:none;" class="message-auction-process">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">Procesando<br><strong>un momento por favor</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+
+                                        <div class="message-auction-pause" style="display:none">
+                                            <p class="info-auction-icon"></p>
+                                            <p class="info-auction-text">El proceso ha sido<br><strong>pausado</strong><br><strong>¡Espera por favor!</strong></p>
+                                            <p class="info-auction-loader"><span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-auction-end" style="display:none">
+
+                                <div class="message-end end-auction-outoffer" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n9"></i></p>
+                                    <p class="message-end-text">El proceso ha terminado<br><span class="inner-text">sin bids</span></p>
+                                </div>
+
+                                <div class="message-end end-auction-win" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 9,800</span></p>
+                                    <p class="message-end-info">Comisión: US$ 212.00</p>
+                                </div>
+
+                                <div class="message-end end-auction-major" style="display: none">
+                                    <p class="message-end-icon"><i class="icon icon-i10"></i></p>
+                                    <p class="message-end-text"></p>
+                                    <p class="message-end-price"><span class="inner-text">US$ 3,800</span></p>
+                                    <p class="message-end-info">Precio Reserva: <strong>no alcanzado</strong></p>
+                                </div>
+
+                                <div class="message-end end-auction-connectivity" style="display:none">
+                                    <p class="message-end-icon"><i class="icon icon-n10"></i></p>
+                                    <p class="message-end-text">Te informamos que debido<br>problemas de<br><span class="inner-text">conectividad</span><br>este proceso se ha detenido.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Previews · Consola — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault: oklch(0.22 0.18 285);
+  --voyager-color-vault-mid: oklch(0.30 0.20 285);
+  --voyager-color-vault-dark: oklch(0.26 0.19 285);
+  --voyager-color-vault-ink: oklch(0.14 0.16 285);
+  --voyager-color-live: oklch(0.72 0.16 55);
+  --voyager-surface-page: #F8FAF9;
+  --voyager-surface-card: #FFFFFF;
+  --voyager-surface-section: #F2F4F3;
+  --voyager-text-primary: #191C1C;
+  --voyager-text-secondary: #494550;
+  --voyager-text-on-dark: #FFFFFF;
+  --voyager-border-ghost: #22005C1A;
+  --voyager-divider-section: #22005C0D;
+  --voyager-gradient-vault: linear-gradient(135deg, var(--voyager-color-vault) 0%, var(--voyager-color-vault-mid) 100%);
+  --voyager-gradient-vault-deep: linear-gradient(135deg, var(--voyager-color-vault-dark) 0%, var(--voyager-color-vault) 100%);
+  --voyager-font-ui: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --voyager-font-number: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, var(--voyager-border-ghost) 0%, transparent 60%),
+    var(--voyager-surface-page);
+  color: var(--voyager-text-primary);
+  font-family: var(--voyager-font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  color: var(--voyager-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.breadcrumb a { color: var(--voyager-color-vault); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb-sep { color: color-mix(in srgb, var(--voyager-color-vault) 32%, transparent); }
+
+.page-title {
+  margin: 0 0 4px;
+  color: var(--voyager-color-vault);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+}
+
+.page-meta {
+  margin: 0 0 32px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-number);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tabbar {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 32px;
+  border-radius: 4px;
+  background: var(--voyager-surface-section);
+  border: 1px solid var(--voyager-divider-section);
+  width: fit-content;
+}
+
+.tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
+}
+
+.tab:hover {
+  background: color-mix(in srgb, var(--voyager-color-vault) 6%, transparent);
+  color: var(--voyager-color-vault);
+}
+
+.tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
+
+.tab[aria-selected="true"] {
+  color: var(--voyager-text-on-dark);
+  background: var(--voyager-color-vault);
+  box-shadow: 0 4px 8px color-mix(in srgb, var(--voyager-color-vault) 24%, transparent);
+}
+
+.viewer {
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Canvas — composición de claude.html existentes ===== */
+
+.canvas {
+  position: relative;
+  width: 640px;
+  height: 654px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--voyager-surface-card);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--voyager-color-vault) 18%, transparent);
+}
+
+.canvas[hidden] { display: none; }
+
+.zone {
+  position: absolute;
+  overflow: hidden;
+}
+
+.zone iframe {
+  position: absolute;
+  border: 0;
+  background: transparent;
+}
+
+/* Layout 640×654 — medidas reales de cada claude.html */
+.zone-header        { top: 0;     left: 0;     width: 640px; height: 60px;  }
+.zone-header-live   { top: 60px;  left: 0;     width: 640px; height: 66px;  }
+.zone-gallery       { top: 126px; left: 0;     width: 303px; height: 243px; }
+.zone-users         { top: 369px; left: 0;     width: 303px; height: 165px; }
+.zone-info          { top: 534px; left: 0;     width: 303px; height: 120px; }
+.zone-auction-bar   { top: 126px; left: 303px; width: 337px; height: 376px; }
+.zone-bid-button    { top: 532px; left: 303px; width: 337px; height: 122px; }
+
+/* embed=1 garantiza componente sin stage padding / label / fondo.
+   Iframes se anclan a (0,0) y rellenan la zona — clip vía overflow:hidden. */
+.zone-header iframe        { left: 0; top: 0; width: 100%; height: 100%; }
+.zone-header-live iframe   { left: 0; top: 0; width: 100%; height: 100%; }
+.zone-users iframe         { left: 0; top: 0; width: 100%; height: 100%; }
+.zone-info iframe          { left: 0; top: 0; width: 100%; height: 100%; }
+.zone-auction-bar iframe   { left: 0; top: 0; width: 100%; height: 100%; }
+.zone-bid-button iframe    { left: 0; top: 0; width: 100%; height: 100%; }
+
+/* Gallery placeholder — placeholder estructural, no es un componente */
+.zone-gallery {
+  background: var(--voyager-color-vault-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zone-gallery .gallery-icon {
+  width: 64px;
+  height: 64px;
+  color: color-mix(in srgb, var(--voyager-text-on-dark) 14%, transparent);
+}
+
+.zone-gallery .gallery-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.zone-gallery .gallery-dots span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--voyager-text-on-dark) 30%, transparent);
+}
+
+.zone-gallery .gallery-dots span.active {
+  background: #00CACE;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <p class="breadcrumb">
+      <a href="../../index.html">Previews</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Consola</span>
+    </p>
+    <h1 class="page-title">Consola</h1>
+    <p class="page-meta">640 × 654 · 3 variantes</p>
+
+    <div class="tabbar" role="tablist" aria-label="Variantes de la consola">
+      <button type="button" class="tab" role="tab" id="tab-1" aria-selected="true" data-target="canvas-1">Variante 1</button>
+      <button type="button" class="tab" role="tab" id="tab-2" aria-selected="false" data-target="canvas-2">Variante 2</button>
+      <button type="button" class="tab" role="tab" id="tab-3" aria-selected="false" data-target="canvas-3">Variante 3</button>
+    </div>
+
+    <div class="viewer">
+
+      <!-- ====================== VARIANTE 1 ====================== -->
+      <div class="canvas" id="canvas-1" role="tabpanel" aria-labelledby="tab-1">
+        <div class="zone zone-header">
+          <iframe src="../../../../components/desktop/consola/header/claude.html?embed=1&variant=Vault%20status" scrolling="no" loading="lazy" title="Header"></iframe>
+        </div>
+        <div class="zone zone-header-live">
+          <iframe src="../../../../components/desktop/consola/header-auction-live/claude.html?embed=1&variant=Vault%20live" scrolling="no" loading="lazy" title="Header Auction Live"></iframe>
+        </div>
+        <div class="zone zone-gallery">
+          <svg class="gallery-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="13" rx="1.5"/>
+            <path d="M3 16l4-4 3 3 4-5 7 7"/>
+            <circle cx="8" cy="10" r="1.3"/>
+          </svg>
+          <div class="gallery-dots"><span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="zone zone-auction-bar">
+          <iframe src="../../../../components/desktop/consola/auction-content/claude.html?embed=1" scrolling="no" loading="lazy" title="Auction Content Events"></iframe>
+        </div>
+        <div class="zone zone-users">
+          <iframe src="../../../../components/desktop/consola/users/claude.html?embed=1&variant=Variante%20morada" scrolling="no" loading="lazy" title="Users"></iframe>
+        </div>
+        <div class="zone zone-info">
+          <iframe src="../../../../components/desktop/consola/info/claude.html?embed=1&variant=Variante%20morada" scrolling="no" loading="lazy" title="Info"></iframe>
+        </div>
+        <div class="zone zone-bid-button">
+          <iframe src="../../../../components/desktop/consola/bid-button/claude.html?embed=1&variant=Activo" scrolling="no" loading="lazy" title="Bid Button"></iframe>
+        </div>
+      </div>
+
+      <!-- ====================== VARIANTE 2 ====================== -->
+      <div class="canvas" id="canvas-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+        <div class="zone zone-header">
+          <iframe src="../../../../components/desktop/consola/header/claude.html?embed=1&variant=Oferta%20live" scrolling="no" loading="lazy" title="Header"></iframe>
+        </div>
+        <div class="zone zone-header-live">
+          <iframe src="../../../../components/desktop/consola/header-auction-live/claude.html?embed=1&variant=Placa%20live" scrolling="no" loading="lazy" title="Header Auction Live"></iframe>
+        </div>
+        <div class="zone zone-gallery">
+          <svg class="gallery-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="13" rx="1.5"/>
+            <path d="M3 16l4-4 3 3 4-5 7 7"/>
+            <circle cx="8" cy="10" r="1.3"/>
+          </svg>
+          <div class="gallery-dots"><span></span><span class="active"></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="zone zone-auction-bar">
+          <iframe src="../../../../components/desktop/consola/auction-content/claude.html?embed=1" scrolling="no" loading="lazy" title="Auction Content Events"></iframe>
+        </div>
+        <div class="zone zone-users">
+          <iframe src="../../../../components/desktop/consola/users/claude.html?embed=1&variant=Variante%20naranja" scrolling="no" loading="lazy" title="Users"></iframe>
+        </div>
+        <div class="zone zone-info">
+          <iframe src="../../../../components/desktop/consola/info/claude.html?embed=1&variant=Variante%20naranja" scrolling="no" loading="lazy" title="Info"></iframe>
+        </div>
+        <div class="zone zone-bid-button">
+          <iframe src="../../../../components/desktop/consola/bid-button/claude.html?embed=1&variant=Activo" scrolling="no" loading="lazy" title="Bid Button"></iframe>
+        </div>
+      </div>
+
+      <!-- ====================== VARIANTE 3 ====================== -->
+      <div class="canvas" id="canvas-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+        <div class="zone zone-header">
+          <iframe src="../../../../components/desktop/consola/header/claude.html?embed=1&variant=Vault%20status" scrolling="no" loading="lazy" title="Header"></iframe>
+        </div>
+        <div class="zone zone-header-live">
+          <iframe src="../../../../components/desktop/consola/header-auction-live/claude.html?embed=1&variant=Vault%20live" scrolling="no" loading="lazy" title="Header Auction Live"></iframe>
+        </div>
+        <div class="zone zone-gallery">
+          <svg class="gallery-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="13" rx="1.5"/>
+            <path d="M3 16l4-4 3 3 4-5 7 7"/>
+            <circle cx="8" cy="10" r="1.3"/>
+          </svg>
+          <div class="gallery-dots"><span></span><span></span><span class="active"></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="zone zone-auction-bar">
+          <iframe src="../../../../components/desktop/consola/auction-content/claude.html?embed=1" scrolling="no" loading="lazy" title="Auction Content Events"></iframe>
+        </div>
+        <div class="zone zone-users">
+          <iframe src="../../../../components/desktop/consola/users/claude.html?embed=1&variant=Sin%20bids" scrolling="no" loading="lazy" title="Users"></iframe>
+        </div>
+        <div class="zone zone-info">
+          <iframe src="../../../../components/desktop/consola/info/claude.html?embed=1&variant=Variante%20morada" scrolling="no" loading="lazy" title="Info"></iframe>
+        </div>
+        <div class="zone zone-bid-button">
+          <iframe src="../../../../components/desktop/consola/bid-button/claude.html?embed=1&variant=Disabled" scrolling="no" loading="lazy" title="Bid Button"></iframe>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+function handleTabClick(event) {
+  var clicked = event.currentTarget;
+  var tabs = document.querySelectorAll('.tab');
+  var canvases = document.querySelectorAll('.canvas');
+  var targetId = clicked.getAttribute('data-target');
+  var i = 0;
+  for (i = 0; i < tabs.length; i++) {
+    tabs[i].setAttribute('aria-selected', tabs[i] === clicked ? 'true' : 'false');
+  }
+  for (i = 0; i < canvases.length; i++) {
+    if (canvases[i].id === targetId) {
+      canvases[i].removeAttribute('hidden');
+    } else {
+      canvases[i].setAttribute('hidden', '');
+    }
+  }
+}
+
+(function bindTabs() {
+  var tabs = document.querySelectorAll('.tab');
+  var i = 0;
+  for (i = 0; i < tabs.length; i++) {
+    tabs[i].addEventListener('click', handleTabClick);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview Mobile — Home · Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-surface-page:          oklch(0.98 0.004 160);
+  --voyager-surface-secondary:     oklch(0.96 0.006 160);
+  --voyager-text-on-surface:       oklch(0.15 0.008 200);
+  --voyager-text-tertiary:         color-mix(in oklch, oklch(0.38 0.04 280) 50%, transparent);
+  --voyager-font-display:          "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, oklch(0.22 0.18 285 / 5%) 0%, transparent 60%),
+    var(--voyager-surface-page);
+  color: var(--voyager-text-on-surface);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 32px 16px 48px;
+  gap: 24px;
+}
+
+.page-back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: color-mix(in oklch, var(--voyager-text-on-surface) 55%, transparent);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.page-eyebrow {
+  align-self: flex-start;
+  margin: 0;
+  color: var(--voyager-color-live);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  align-self: flex-start;
+  margin: 0 0 4px;
+  color: var(--voyager-color-vault);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.page-meta {
+  align-self: flex-start;
+  margin: 0;
+  color: color-mix(in oklch, var(--voyager-text-on-surface) 60%, transparent);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ── Variant tabs ────────────────────────────────────────────────────────── */
+.variant-tabs {
+  align-self: flex-start;
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 8px 0 16px;
+  border: 1px solid color-mix(in oklch, var(--voyager-color-vault) 10%, transparent);
+  border-radius: 10px;
+  background: oklch(1 0 0);
+  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 5%);
+}
+
+.variant-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: color-mix(in oklch, var(--voyager-color-vault) 55%, transparent);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.variant-tab:hover:not(.is-active) {
+  background: color-mix(in oklch, var(--voyager-color-vault) 4%, transparent);
+  color: var(--voyager-color-vault);
+}
+
+.variant-tab.is-active {
+  background: var(--voyager-color-vault);
+  color: oklch(1 0 0);
+}
+
+/* ── Variant panels ──────────────────────────────────────────────────────── */
+.variant-panel { display: none; }
+.variant-panel.is-active { display: block; }
+
+/* ── Mobile frame — 420 wide · auto height (ajusta al contenido) ─────────── */
+.mobile-frame {
+  width: 420px;
+  background: var(--voyager-surface-page);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px oklch(0.22 0.18 285 / 12%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-frame iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.mobile-frame .padded {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-frame .ph-banner {
+  width: 100%;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: var(--voyager-surface-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-frame .ph-banner p {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--voyager-text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mobile-frame .ph-banner.hero { height: 598px; }
+.mobile-frame .ph-banner.secondary { height: 117px; }
+.mobile-frame .ph-banner.help { height: 230px; }
+
+.mobile-frame .qf-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-frame .qf-wrapper iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+/* ── Empty variant placeholder ─────────────────────────────────────────── */
+.variant-empty {
+  width: 420px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed color-mix(in oklch, var(--voyager-color-vault) 20%, transparent);
+  border-radius: 24px;
+  background: color-mix(in oklch, var(--voyager-surface-page) 80%, transparent);
+  color: color-mix(in oklch, var(--voyager-text-on-surface) 50%, transparent);
+}
+
+.variant-empty p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <a class="page-back" href="../../index.html">← Previews</a>
+    <p class="page-eyebrow">Voyager · Mobile</p>
+    <h1 class="page-title">Home</h1>
+    <p class="page-meta">420 × 3149.34</p>
+
+    <nav class="variant-tabs" role="tablist" aria-label="Variantes">
+      <button class="variant-tab is-active" role="tab" aria-selected="true" data-variant="ancho" type="button">Ancho</button>
+      <button class="variant-tab" role="tab" aria-selected="false" data-variant="cards" type="button">Cards</button>
+    </nav>
+
+    <!-- ── Variante: Ancho ───────────────────────────────────────────────── -->
+    <section class="variant-panel is-active" data-variant="ancho">
+      <div class="mobile-frame" aria-label="Mobile home composition — Ancho">
+
+        <iframe
+          src="../../../../components/mobile/header/claude.html"
+          title="Header"
+          scrolling="no"
+          loading="lazy"
+          data-autoheight="1"
+          style="height:56px"></iframe>
+
+        <div class="padded" style="margin-top:16px">
+          <div class="ph-banner hero" role="img" aria-label="Banner Hero placeholder">
+            <p>Banner Hero</p>
+          </div>
+
+          <div class="ph-banner secondary" role="img" aria-label="Banner Secundario placeholder">
+            <p>Banner Secundario</p>
+          </div>
+
+          <section class="qf-wrapper" aria-label="Quick filter">
+            <iframe
+              src="../../../../components/mobile/offer-type/claude.html"
+              title="Tipo de oferta"
+              scrolling="no"
+              loading="lazy"
+              data-autoheight="1"
+              style="height:180px"></iframe>
+            <iframe
+              src="../../../../components/mobile/categories/claude.html"
+              title="Categorías"
+              scrolling="no"
+              loading="lazy"
+              data-autoheight="1"
+              style="height:180px"></iframe>
+          </section>
+
+          <iframe
+            src="../../../../components/mobile/ofertas-empresa/claude.html"
+            title="Ofertas Empresa"
+            scrolling="no"
+            loading="lazy"
+            data-autoheight="1"
+            style="height:600px;margin:0 -24px;width:calc(100% + 48px)"></iframe>
+
+          <div class="ph-banner help" role="img" aria-label="Centro de Ayuda placeholder">
+            <p>Centro de Ayuda</p>
+          </div>
+        </div>
+
+        <iframe
+          src="../../../../components/mobile/footer/claude.html"
+          title="Footer"
+          scrolling="no"
+          loading="lazy"
+          data-autoheight="1"
+          style="height:870.63px;margin-top:40px"></iframe>
+
+      </div>
+    </section>
+
+    <!-- ── Variante: Cards (vacía por ahora) ─────────────────────────────── -->
+    <section class="variant-panel" data-variant="cards">
+      <div class="variant-empty" aria-label="Variante Cards — pendiente">
+        <p>Variante Cards · pendiente</p>
+      </div>
+    </section>
+
+  </main>
+
+<script>
+function fitIframeToContent(iframe) {
+  try {
+    const doc = iframe.contentDocument;
+    if (!doc) return;
+    const html = doc.documentElement;
+    const body = doc.body;
+    if (!body) return;
+    const h = Math.max(
+      body.scrollHeight, html.scrollHeight,
+      body.offsetHeight, html.offsetHeight
+    );
+    if (h > 0) iframe.style.height = h + "px";
+  } catch (error) {}
+}
+
+const autoIframes = Array.from(document.querySelectorAll("iframe[data-autoheight]"));
+
+autoIframes.forEach(function (iframe) {
+  iframe.addEventListener("load", function () {
+    fitIframeToContent(iframe);
+    setTimeout(function () { fitIframeToContent(iframe); }, 50);
+    setTimeout(function () { fitIframeToContent(iframe); }, 300);
+  });
+  if (iframe.contentDocument && iframe.contentDocument.readyState === "complete") {
+    fitIframeToContent(iframe);
+  }
+});
+
+window.addEventListener("load", function () {
+  autoIframes.forEach(fitIframeToContent);
+});
+
+window.addEventListener("resize", function () {
+  autoIframes.forEach(fitIframeToContent);
+});
+
+const variantTabs = Array.from(document.querySelectorAll(".variant-tab"));
+const variantPanels = Array.from(document.querySelectorAll(".variant-panel"));
+
+function activateVariant(name) {
+  variantTabs.forEach(function (tab) {
+    const isActive = tab.dataset.variant === name;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+  variantPanels.forEach(function (panel) {
+    panel.classList.toggle("is-active", panel.dataset.variant === name);
+  });
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("variant", name);
+    window.history.replaceState(null, "", url.toString());
+  } catch (error) {}
+}
+
+variantTabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    activateVariant(tab.dataset.variant);
+  });
+});
+
+try {
+  const url = new URL(window.location.href);
+  const initial = url.searchParams.get("variant") === "cards" ? "cards" : "ancho";
+  activateVariant(initial);
+} catch (error) {
+  activateVariant("ancho");
+}
+</script>
+</body>
+</html>

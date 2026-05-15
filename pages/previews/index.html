@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -150,6 +150,90 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+
+.platform-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 32px;
+  border: 1px solid color-mix(in srgb, var(--voyager-color-vault) 10%, transparent);
+  border-radius: 10px;
+  background: var(--voyager-surface-card);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--voyager-color-vault) 5%, transparent);
+}
+
+.platform-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: color-mix(in srgb, var(--voyager-color-vault) 55%, transparent);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.platform-tab:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--voyager-color-vault) 4%, transparent);
+  color: var(--voyager-color-vault);
+}
+
+.platform-tab.is-active {
+  background: var(--voyager-color-vault);
+  color: var(--voyager-text-on-dark);
+}
+
+.platform-tab .tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+  font-size: 10px;
+}
+
+.platform-tab:not(.is-active) .tab-count {
+  background: color-mix(in srgb, var(--voyager-color-vault) 8%, transparent);
+}
+
+.preview-card[hidden] {
+  display: none !important;
+}
+
+.previews-empty {
+  display: none;
+  grid-column: 1 / -1;
+  padding: 48px 24px;
+  border: 1px dashed color-mix(in srgb, var(--voyager-color-vault) 20%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--voyager-surface-card) 50%, transparent);
+  color: var(--voyager-text-secondary);
+  font-size: 14px;
+  text-align: center;
+}
+
+.previews-empty.is-visible {
+  display: block;
+}
+
+.previews-empty strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--voyager-color-vault);
+  font-size: 16px;
+}
 </style>
 </head>
 <body>
@@ -159,8 +243,17 @@ html, body {
     <h1 class="page-title">Previews</h1>
     <p class="page-subtitle">Componentes en su contexto de canvas. Cada preview muestra el componente destacado dentro del lienzo completo, con todas sus variantes apiladas.</p>
 
+    <nav class="platform-tabs" role="tablist" aria-label="Plataforma">
+      <button class="platform-tab is-active" role="tab" aria-selected="true" data-platform="desktop" type="button" id="tabDesktop">
+        Desktop <span class="tab-count" id="countDesktop">0</span>
+      </button>
+      <button class="platform-tab" role="tab" aria-selected="false" data-platform="mobile" type="button" id="tabMobile">
+        Mobile <span class="tab-count" id="countMobile">0</span>
+      </button>
+    </nav>
+
     <div class="card-grid">
-      <a class="preview-card" href="./consola/index.html">
+      <a class="preview-card" href="./desktop/consola/index.html">
         <p class="card-label">Página</p>
         <h2 class="card-title">Consola</h2>
         <p class="card-description">Consola de subasta en vivo · 3 variantes que combinan los componentes existentes.</p>
@@ -171,7 +264,7 @@ html, body {
           </span>
         </span>
       </a>
-      <a class="preview-card" href="./zona/index.html">
+      <a class="preview-card" href="./desktop/zona/index.html">
         <p class="card-label">Página</p>
         <h2 class="card-title">Zona</h2>
         <p class="card-description">Mi zona del usuario · perfil, billetera, actividad, recomendados, me interesa y banner SubasPass.</p>
@@ -182,7 +275,7 @@ html, body {
           </span>
         </span>
       </a>
-      <a class="preview-card" href="./editar-perfil/index.html">
+      <a class="preview-card" href="./desktop/editar-perfil/index.html">
         <p class="card-label">Página</p>
         <h2 class="card-title">Editar Perfil</h2>
         <p class="card-description">Vista de edición del perfil · datos personales, información de contacto y cerrar sesión. 2 variantes (Vault / Live).</p>
@@ -193,7 +286,7 @@ html, body {
           </span>
         </span>
       </a>
-      <a class="preview-card" href="./selecciona-monto/index.html">
+      <a class="preview-card" href="./desktop/selecciona-monto/index.html">
         <p class="card-label">Página</p>
         <h2 class="card-title">Selecciona Monto</h2>
         <p class="card-description">Selección de SubasCoins · 3 combinaciones Info + Selector (Vault con imagen, Live sin imagen, Promo card + Coin Selector moderna).</p>
@@ -204,7 +297,7 @@ html, body {
           </span>
         </span>
       </a>
-      <a class="preview-card" href="./canjear-puntos/index.html">
+      <a class="preview-card" href="./desktop/canjear-puntos/index.html">
         <p class="card-label">Página</p>
         <h2 class="card-title">Canjear Puntos</h2>
         <p class="card-description">Canje de Puntos VMC usando SubasCoins · 3 variantes (Live gradiente naranja con sombra en texto, Vault gradiente púrpura, Modern delineado transparente) reutilizando canje-info + seleccionar-canje.</p>
@@ -215,7 +308,7 @@ html, body {
           </span>
         </span>
       </a>
-      <a class="preview-card" href="./movimientos/index.html">
+      <a class="preview-card" href="./desktop/movimientos/index.html">
         <p class="card-label">Página</p>
         <h2 class="card-title">Movimientos</h2>
         <p class="card-description">Vista de billetera y movimientos · 3 combinaciones componiendo header (saldo + SubasCoins), banner promo (Adquiere SubasCoins) e historial de transacciones.</p>
@@ -226,7 +319,100 @@ html, body {
           </span>
         </span>
       </a>
+      <a class="preview-card" href="./mobile/home/index.html">
+        <p class="card-label">Página · Mobile</p>
+        <h2 class="card-title">Home</h2>
+        <p class="card-description">420 × 3149.34 · 2 variantes (Ancho · Cards).</p>
+        <span class="card-meta">
+          <span>Abrir</span>
+          <span class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M5 2.5L9.5 7 5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      </a>
+      <div class="previews-empty" id="previewsEmpty">
+        <strong>Sin previews en esta plataforma</strong>
+        Crea páginas en <code>pages/previews/mobile/</code> para verlas aquí.
+      </div>
     </div>
   </main>
+<script>
+const previewCards = Array.from(document.querySelectorAll(".card-grid .preview-card"));
+const platformTabs = Array.from(document.querySelectorAll(".platform-tab"));
+const previewsEmpty = document.getElementById("previewsEmpty");
+const countDesktop = document.getElementById("countDesktop");
+const countMobile = document.getElementById("countMobile");
+
+function detectPlatform(href) {
+  if (!href) return "desktop";
+  if (href.indexOf("/mobile/") !== -1) return "mobile";
+  return "desktop";
+}
+
+previewCards.forEach(function (card) {
+  card.dataset.platform = detectPlatform(card.getAttribute("href"));
+});
+
+function getActivePlatform() {
+  const active = platformTabs.find(function (t) { return t.classList.contains("is-active"); });
+  return active ? active.dataset.platform : "desktop";
+}
+
+function applyPlatformFilter() {
+  const platform = getActivePlatform();
+  let visible = 0;
+  previewCards.forEach(function (card) {
+    const match = card.dataset.platform === platform;
+    card.hidden = !match;
+    if (match) visible += 1;
+  });
+  previewsEmpty.classList.toggle("is-visible", visible === 0);
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("platform", platform);
+    window.history.replaceState(null, "", url.toString());
+  } catch (error) {}
+}
+
+function updatePlatformCounts() {
+  let desktop = 0;
+  let mobile = 0;
+  previewCards.forEach(function (card) {
+    if (card.dataset.platform === "mobile") mobile += 1;
+    else desktop += 1;
+  });
+  countDesktop.textContent = String(desktop);
+  countMobile.textContent = String(mobile);
+}
+
+platformTabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    platformTabs.forEach(function (t) {
+      const isActive = t === tab;
+      t.classList.toggle("is-active", isActive);
+      t.setAttribute("aria-selected", String(isActive));
+    });
+    applyPlatformFilter();
+  });
+});
+
+const initialPlatform = (function () {
+  try {
+    const url = new URL(window.location.href);
+    return url.searchParams.get("platform") === "mobile" ? "mobile" : "desktop";
+  } catch (error) {
+    return "desktop";
+  }
+})();
+
+platformTabs.forEach(function (tab) {
+  const isActive = tab.dataset.platform === initialPlatform;
+  tab.classList.toggle("is-active", isActive);
+  tab.setAttribute("aria-selected", String(isActive));
+});
+
+updatePlatformCounts();
+applyPlatformFilter();
+</script>
 </body>
 </html>

@@ -1,0 +1,398 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Detail Card · Negociable — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — token surface  ·  DESIGN.md §2 Color · §6 Radius · §7 Shadow
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:             oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-mid:         oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-vault-light:       oklch(0.44 0.18 285);
+  --voyager-color-negotiable:        oklch(0.78 0.14 195);   /* #00CACE */
+  --voyager-color-negotiable-dark:   oklch(0.62 0.14 195);
+  --voyager-color-surface-card:      oklch(1 0 0);           /* #FFFFFF */
+  --voyager-color-surface-section:   oklch(0.96 0.004 160);
+  --voyager-color-surface-page:      oklch(0.98 0.004 160);
+  --voyager-color-text-on-dark:      oklch(1 0 0);
+  --voyager-color-text-on-surface:   oklch(0.15 0.008 200);
+  --voyager-color-text-muted:        color-mix(in oklch, oklch(0.22 0.18 285) 45%, white);
+
+  /* Gradients */
+  --voyager-gradient-vault:
+    linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
+  --voyager-gradient-vault-vivid:
+    linear-gradient(160deg, oklch(0.22 0.18 285) 0%, oklch(0.44 0.18 285) 100%);
+  --voyager-gradient-negotiable:
+    linear-gradient(135deg, oklch(0.78 0.14 195) 0%, oklch(0.62 0.14 195) 100%);
+  --voyager-gradient-negotiable-banner:
+    linear-gradient(135deg, oklch(0.78 0.14 195) 0%, oklch(0.66 0.14 195) 100%);
+
+  /* Radius */
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-full: 9999px;
+
+  /* Shadows — DESIGN.md §7 — clean, no color tint on v1/v2 */
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-like:     0 4px 16px oklch(0.22 0.18 285 / 20%);
+  --voyager-shadow-cta-v3:   0 8px 24px oklch(0.78 0.14 195 / 28%),
+                              inset 0 1px 0 oklch(1 0 0 / 18%);
+
+  /* Typography */
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* ─── Canvas ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,    oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.78 0.14 195 / 4%) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+.variants-row {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+}
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  text-align: center;
+}
+.preview-frame { width: 317px; height: 422px; overflow: hidden; }
+.preview-frame .detail-process-app,
+.preview-frame .wrap-process,
+.preview-frame [device="web"],
+.preview-frame .card-process { height: 100%; }
+
+/* ─── vmc-detail-* utility class map ─────────────────────────────────── */
+.preview-frame .vmc-detail-relative  { position: relative; }
+.preview-frame .vmc-detail-absolute  { position: absolute; }
+.preview-frame .vmc-detail-flex      { display: flex; }
+.preview-frame .vmc-detail-flex-col  { flex-direction: column; }
+.preview-frame .vmc-detail-flex-1    { flex: 1 1 0%; }
+.preview-frame .vmc-detail-flex-shrink   { flex-shrink: 1; }
+.preview-frame .vmc-detail-flex-shrink-0 { flex-shrink: 0; }
+.preview-frame .vmc-detail-items-center   { align-items: center; }
+.preview-frame .vmc-detail-justify-center { justify-content: center; }
+.preview-frame .vmc-detail-justify-end    { justify-content: flex-end; }
+.preview-frame .vmc-detail-justify-start  { justify-content: flex-start; }
+.preview-frame .vmc-detail-w-full   { width: 100%; }
+.preview-frame .vmc-detail-w-1\/2   { width: 50%; }
+.preview-frame .vmc-detail-h-6      { height: 24px; }
+.preview-frame .vmc-detail-w-6      { width: 24px; }
+.preview-frame .vmc-detail-select-none    { user-select: none; }
+.preview-frame .vmc-detail-cursor-pointer { cursor: pointer; }
+.preview-frame .vmc-detail-z-1  { z-index: 1; }
+.preview-frame .vmc-detail-z-2  { z-index: 2; }
+.preview-frame .vmc-detail-z-9  { z-index: 9; }
+.preview-frame .vmc-detail-z-10 { z-index: 10; }
+
+/* Spacing */
+.preview-frame .vmc-detail-px-5  { padding-left: 20px;  padding-right: 20px; }
+.preview-frame .vmc-detail-px-4  { padding-left: 16px;  padding-right: 16px; }
+.preview-frame .vmc-detail-px-8  { padding-left: 32px;  padding-right: 32px; }
+.preview-frame .vmc-detail-py-3  { padding-top: 12px;   padding-bottom: 12px; }
+.preview-frame .vmc-detail-py-5  { padding-top: 20px;   padding-bottom: 20px; }
+.preview-frame .vmc-detail-py-6  { padding-top: 24px;   padding-bottom: 24px; }
+.preview-frame .vmc-detail-pb-6  { padding-bottom: 24px; }
+.preview-frame .vmc-detail-pl-6  { padding-left: 24px; }
+.preview-frame .vmc-detail-mt-3  { margin-top: 12px; }
+.preview-frame .vmc-detail-mt-4  { margin-top: 16px; }
+.preview-frame .vmc-detail-mt-5  { margin-top: 20px; }
+.preview-frame .vmc-detail-mb-2  { margin-bottom: 8px; }
+.preview-frame .vmc-detail-ml-2  { margin-left: 8px; }
+.preview-frame .vmc-detail-ml-3  { margin-left: 12px; }
+.preview-frame .vmc-detail-mr-2  { margin-right: 8px; }
+.preview-frame .vmc-detail--mt-8 { margin-top: -32px; }
+.preview-frame .vmc-detail--mx-5 { margin-left: -20px; margin-right: -20px; }
+
+/* Typography */
+.preview-frame .vmc-detail-font-display  { font-family: var(--voyager-font-display); }
+.preview-frame .vmc-detail-font-bold     { font-weight: 700; }
+.preview-frame .vmc-detail-font-semibold { font-weight: 600; }
+.preview-frame .vmc-detail-font-normal   { font-weight: 400; }
+.preview-frame .vmc-detail-font-light    { font-weight: 300; }
+.preview-frame .vmc-detail-text-sm   { font-size: 13px; }
+.preview-frame .vmc-detail-text-base { font-size: 15px; }
+.preview-frame .vmc-detail-text-xl   { font-size: 20px; }
+.preview-frame .vmc-detail-text-lg   { font-size: 17px; }
+.preview-frame .vmc-detail-text-xxs  { font-size: 10px; }
+.preview-frame .vmc-detail-uppercase    { text-transform: uppercase; }
+.preview-frame .vmc-detail-text-center  { text-align: center; }
+.preview-frame .vmc-detail-leading-none  { line-height: 1; }
+.preview-frame .vmc-detail-leading-tight { line-height: 1.2; }
+.preview-frame .vmc-detail-text-thing    { line-height: 1.15; }
+.preview-frame .leading-2                { line-height: 1.1; }
+
+/* Shapes */
+.preview-frame .vmc-detail-rounded-full { border-radius: var(--voyager-radius-full); }
+.preview-frame .vmc-detail-rounded      { border-radius: var(--voyager-radius-sm); }
+.preview-frame .vmc-detail-rounded-b    {
+  border-bottom-left-radius:  var(--voyager-radius-sm);
+  border-bottom-right-radius: var(--voyager-radius-sm);
+}
+.preview-frame .vmc-detail-border-none  { border: none; }
+.preview-frame .vmc-detail-fill-current { fill: currentColor; }
+.preview-frame .vmc-detail-absolute     { position: absolute; }
+.preview-frame .vmc-detail-transition-colors {
+  transition: color 150ms var(--voyager-ease-default),
+              background-color 150ms var(--voyager-ease-default);
+}
+.preview-frame .v-portal                { display: none !important; }
+.preview-frame .focus\:vmc-detail-outline-none:focus { outline: none; }
+.preview-frame a { text-decoration: none; }
+
+/* ─── Shared component structure ─────────────────────────────────────── */
+.preview-frame .card-process {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0 0 var(--voyager-radius-md) var(--voyager-radius-md);
+  box-shadow: var(--voyager-shadow-card);
+}
+.preview-frame .cp-content  { flex: 1; display: flex; flex-direction: column; }
+.preview-frame .cta-contains { flex: 1; }
+
+/* Header — vault bg, white text everywhere */
+.preview-frame .cp-header             { color: var(--voyager-color-text-on-dark); }
+.preview-frame .cp-header *           { color: inherit; }
+.preview-frame .vmc-detail-border-b   { border-bottom: 1px solid oklch(1 0 0 / 14%); }
+.preview-frame .vmc-detail-border-l   { border-left:   1px solid oklch(1 0 0 / 14%); }
+
+/* Indicator icon circles */
+.preview-frame .cp-indicators-icon.vmc-detail-border {
+  width: 28px; height: 28px;
+  border: 1.5px solid oklch(1 0 0 / 28%) !important;
+  color: white;
+}
+
+/* Like button */
+.preview-frame .vmc-detail-rounded-full.vmc-detail-shadow-md {
+  box-shadow: var(--voyager-shadow-like);
+}
+.preview-frame .cta-like-button {
+  width: 44px; height: 44px;
+  background: oklch(1 0 0 / 12%);
+  border: 1.5px solid oklch(1 0 0 / 32%) !important;
+  color: oklch(1 0 0 / 70%);
+  transition: background 150ms var(--voyager-ease-default);
+}
+.preview-frame .cta-like-button.is-guest {
+  background: oklch(1 0 0 / 8%);
+  color: oklch(1 0 0 / 50%);
+}
+.preview-frame .content-like-button .vmc-detail-font-display { color: white; }
+
+/* White content area */
+.preview-frame .vmc-detail-bg-white {
+  background-color: var(--voyager-color-surface-card, #FFFFFF);
+}
+
+/* Eastern banner — negotiable teal · dark text for WCAG contrast */
+.preview-frame .vmc-detail-bg-eastern {
+  color: var(--voyager-color-vault, #22005C);
+}
+.preview-frame .vmc-detail-bg-eastern .vmc-detail-text-white {
+  color: var(--voyager-color-vault, #22005C);
+}
+/* CTA button — dark text on teal for WCAG contrast */
+.preview-frame .vmc-detail-bg-turquoise .vmc-detail-text-white {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+/* Jungle text (body text in content area) → vault */
+.preview-frame .vmc-detail-text-jungle {
+  color: var(--voyager-color-vault, #22005C);
+}
+
+/* White text */
+.preview-frame .vmc-detail-text-white {
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+}
+
+/* CTA base */
+.preview-frame .vmc-detail-bg-turquoise {
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--voyager-font-display);
+  transition: filter 150ms var(--voyager-ease-default),
+              transform 100ms var(--voyager-ease-default);
+}
+.preview-frame .vmc-detail-bg-turquoise:hover  { filter: brightness(1.07); }
+.preview-frame .vmc-detail-bg-turquoise:active { transform: scale(0.98); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VARIANT 1 — Base · Solid  (no colored shadow on CTA)
+   ═══════════════════════════════════════════════════════════════════════ */
+.v1 .cp-header {
+  background-color: var(--voyager-color-vault, #22005C);
+}
+.v1 .vmc-detail-bg-eastern {
+  background-color: var(--voyager-color-negotiable, #00CACE);
+}
+.v1 .vmc-detail-bg-turquoise {
+  background-color: var(--voyager-color-negotiable, #00CACE);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+}
+/* Neutral card shadow on CTA wrapper — no teal glow */
+.v1 .vmc-detail-shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VARIANT 2 — Gradient  (vault header + negotiable gradient, no shadow)
+   ═══════════════════════════════════════════════════════════════════════ */
+.v2 .cp-header {
+  background: var(--voyager-gradient-vault);
+}
+.v2 .vmc-detail-bg-eastern {
+  background: var(--voyager-gradient-negotiable-banner);
+}
+.v2 .vmc-detail-bg-turquoise {
+  background: var(--voyager-gradient-negotiable);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle shine — no colored drop-shadow */
+.v2 .vmc-detail-bg-turquoise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 11%) 0%, transparent 55%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.v2 .vmc-detail-shadow-lg {
+  box-shadow: var(--voyager-shadow-card);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VARIANT 3 — Modern · Bold glow + elevated like button
+   ═══════════════════════════════════════════════════════════════════════ */
+.v3 .cp-header {
+  background: var(--voyager-gradient-vault-vivid);
+}
+/* White solid like button */
+.v3 .cta-like-button {
+  background: white;
+  border: none !important;
+  color: var(--voyager-color-vault);
+  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%);
+}
+.v3 .cta-like-button.is-guest {
+  background: oklch(1 0 0 / 90%);
+  color: color-mix(in oklch, var(--voyager-color-vault) 55%, white);
+}
+.v3 .vmc-detail-bg-eastern {
+  background: var(--voyager-gradient-negotiable-banner);
+  position: relative;
+  overflow: hidden;
+}
+.v3 .vmc-detail-bg-eastern::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 10%) 0%, transparent 100%);
+  pointer-events: none;
+}
+.v3 .vmc-detail-bg-turquoise {
+  background: var(--voyager-gradient-negotiable);
+  color: var(--voyager-color-text-on-dark, #FFFFFF);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.02em;
+}
+.v3 .vmc-detail-bg-turquoise::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 100%);
+  pointer-events: none;
+}
+/* Bold teal glow only on v3 */
+.v3 .vmc-detail-shadow-lg {
+  box-shadow: var(--voyager-shadow-cta-v3);
+}
+/* Subtle tinted content area in v3 */
+.v3 .cp-content {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--voyager-color-negotiable) 5%, white) 0%,
+    white 35%
+  );
+}
+.v3 .vmc-detail-bg-white { background: transparent; }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Detail Card · Negociable — Voyager upgrade variants">
+    <div class="variants-row">
+
+      <!-- ────────── VARIANT 1 — Base ──────────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Base · Solid</p>
+        <div class="preview-frame v1">
+          <div class="card-process vmc-detail-relative vmc-detail-select-none is-negotiable is-web"><div class="cp-header vmc-detail-relative vmc-detail-z-2 vmc-detail-px-5 vmc-detail-w-full" current-server-datetime="2026-05-08 09:52:23" datetime="2026-05-20 18:00:00"> <div class="cp-header-date vmc-detail-flex vmc-detail-py-3 vmc-detail-border-b"><div class="cp-header-top-left vmc-detail-w-1/2 vmc-detail-flex vmc-detail-items-center"><div class="header-state-default vmc-detail-relative vmc-detail-z-9"><span class="vmc-detail-font-display vmc-detail-block vmc-detail-leading-tight vmc-detail-text-sm vmc-detail-font-normal">Cierra</span> <span class="vmc-detail-font-display vmc-detail-block vmc-detail-leading-none vmc-detail-font-bold vmc-detail-text-base vmc-detail-uppercase">miércoles 20</span></div></div> <div class="cp-header-top-right vmc-detail-w-1/2 vmc-detail-border-l vmc-detail-pl-6 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="vmc-detail-relative vmc-detail-z-9 header-state-default"><span class="vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-xl vmc-detail-leading-none">06:00 pm</span></div>  </div></div> <div class="vmc-detail-flex"><div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-mr-2 vmc-detail-font-display vmc-detail-text-sm">63</span> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none" class="vmc-detail-fill-current"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"></path></svg></div> </div></div></div></div> <div class="vmc-detail-flex-shrink"><div class="wrap-like-button vmc-detail-py-3 vmc-detail--mt-8"><div class="wrap-like-button vmc-detail-px-5 vmc-detail-mb-2"><div class="vmc-detail-rounded-full vmc-detail-shadow-md"><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><button class="cta-like-button vmc-detail-relative vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-border focus:vmc-detail-outline-none vmc-detail-transition-colors vmc-detail-duration-200 is-guest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vmc-detail-absolute vmc-detail-fill-current vmc-detail-h-6 vmc-detail-w-6"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg> </button> </div></div></div> <div class="content-like-button vmc-detail-text-center vmc-detail-leading-none"><span class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-font-bold vmc-detail-leading-none">1</span></div></div></div> <div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-start"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none" class="vmc-detail-fill-current"><path d="M12.4 2.6H11.1V8.5H2.6V9.8C2.6 10.1 2.9 10.4 3.3 10.4H10.4L13 13V3.3C13 2.9 12.7 2.6 12.4 2.6ZM9.8 6.5V0.7C9.8 0.3 9.5 0 9.1 0H0.7C0.3 0 0 0.3 0 0.7V9.8L2.6 7.2H9.1C9.5 7.2 9.8 6.9 9.8 6.5Z"></path></svg></div> </div></div> <span class="vmc-detail-ml-2 vmc-detail-font-display vmc-detail-text-sm">1</span></div></div></div></div> <div class="cp-content vmc-detail-relative vmc-detail-z-1 vmc-detail-bg-white"><div class="cta-contains has-button-gy vmc-detail-px-5 vmc-detail-flex vmc-detail-flex-col vmc-detail-justify-start"><a href="https://ayuda.vmcsubastas.com/es/articles/5823664-new-la-oferta-negociable-como-funciona" target="_blank" class="vmc-detail-flex vmc-detail-items-center vmc-detail--mx-5 vmc-detail-bg-eastern vmc-detail-px-5 vmc-detail-py-6 vmc-detail-flex-1 focus:vmc-detail-outline-none vmc-detail-rounded-b"><span class="vmc-detail-flex-shrink-0"><img src="/4app/assets/images/frontend/subastin/subastin_head_with_mask.svg" width="57" height="53" alt=""></span> <span class="vmc-detail-flex-1 vmc-detail-text-white vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-lg vmc-detail-text-thing vmc-detail-uppercase vmc-detail-ml-3">¡Aprende a negociar con subastin!</span></a> <div class="vmc-detail-w-full vmc-detail-pb-6"><div> <p class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-text-jungle vmc-detail-leading-thing vmc-detail-text-center vmc-detail-mb-2 vmc-detail-mt-4">Aprovecha esta oportunidad y haz una propuesta al vendedor.</p> <div class="vmc-detail-rounded vmc-detail-shadow-lg vmc-detail-relative vmc-detail-z-1"><button class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-w-full vmc-detail-border-none vmc-detail-bg-turquoise vmc-detail-text-white vmc-detail-px-4 vmc-detail-py-5 vmc-detail-rounded leading-2 focus:vmc-detail-outline-none"><span class="vmc-detail-font-display vmc-detail-text-white vmc-detail-text-lg vmc-detail-uppercase vmc-detail-font-bold vmc-detail-leading-none">Negocia Ahora</span></button></div> <div class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-mt-3"><span class="vmc-detail-font-display vmc-detail-text-xxs vmc-detail-text-jungle vmc-detail-font-semibold vmc-detail-text-center">
+                                        Comisión: &gt;S&lt; 0
+                                    </span></div></div></div></div></div></div>
+        </div>
+      </div>
+
+      <!-- ────────── VARIANT 2 — Gradient ──────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Gradient · Vault + Negotiable shine</p>
+        <div class="preview-frame v2">
+          <div class="card-process vmc-detail-relative vmc-detail-select-none is-negotiable is-web"><div class="cp-header vmc-detail-relative vmc-detail-z-2 vmc-detail-px-5 vmc-detail-w-full" current-server-datetime="2026-05-08 09:52:23" datetime="2026-05-20 18:00:00"> <div class="cp-header-date vmc-detail-flex vmc-detail-py-3 vmc-detail-border-b"><div class="cp-header-top-left vmc-detail-w-1/2 vmc-detail-flex vmc-detail-items-center"><div class="header-state-default vmc-detail-relative vmc-detail-z-9"><span class="vmc-detail-font-display vmc-detail-block vmc-detail-leading-tight vmc-detail-text-sm vmc-detail-font-normal">Cierra</span> <span class="vmc-detail-font-display vmc-detail-block vmc-detail-leading-none vmc-detail-font-bold vmc-detail-text-base vmc-detail-uppercase">miércoles 20</span></div></div> <div class="cp-header-top-right vmc-detail-w-1/2 vmc-detail-border-l vmc-detail-pl-6 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="vmc-detail-relative vmc-detail-z-9 header-state-default"><span class="vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-xl vmc-detail-leading-none">06:00 pm</span></div>  </div></div> <div class="vmc-detail-flex"><div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-mr-2 vmc-detail-font-display vmc-detail-text-sm">63</span> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none" class="vmc-detail-fill-current"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"></path></svg></div> </div></div></div></div> <div class="vmc-detail-flex-shrink"><div class="wrap-like-button vmc-detail-py-3 vmc-detail--mt-8"><div class="wrap-like-button vmc-detail-px-5 vmc-detail-mb-2"><div class="vmc-detail-rounded-full vmc-detail-shadow-md"><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><button class="cta-like-button vmc-detail-relative vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-border focus:vmc-detail-outline-none vmc-detail-transition-colors vmc-detail-duration-200 is-guest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vmc-detail-absolute vmc-detail-fill-current vmc-detail-h-6 vmc-detail-w-6"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg> </button> </div></div></div> <div class="content-like-button vmc-detail-text-center vmc-detail-leading-none"><span class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-font-bold vmc-detail-leading-none">1</span></div></div></div> <div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-start"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none" class="vmc-detail-fill-current"><path d="M12.4 2.6H11.1V8.5H2.6V9.8C2.6 10.1 2.9 10.4 3.3 10.4H10.4L13 13V3.3C13 2.9 12.7 2.6 12.4 2.6ZM9.8 6.5V0.7C9.8 0.3 9.5 0 9.1 0H0.7C0.3 0 0 0.3 0 0.7V9.8L2.6 7.2H9.1C9.5 7.2 9.8 6.9 9.8 6.5Z"></path></svg></div> </div></div> <span class="vmc-detail-ml-2 vmc-detail-font-display vmc-detail-text-sm">1</span></div></div></div></div> <div class="cp-content vmc-detail-relative vmc-detail-z-1 vmc-detail-bg-white"><div class="cta-contains has-button-gy vmc-detail-px-5 vmc-detail-flex vmc-detail-flex-col vmc-detail-justify-start"><a href="https://ayuda.vmcsubastas.com/es/articles/5823664-new-la-oferta-negociable-como-funciona" target="_blank" class="vmc-detail-flex vmc-detail-items-center vmc-detail--mx-5 vmc-detail-bg-eastern vmc-detail-px-5 vmc-detail-py-6 vmc-detail-flex-1 focus:vmc-detail-outline-none vmc-detail-rounded-b"><span class="vmc-detail-flex-shrink-0"><img src="/4app/assets/images/frontend/subastin/subastin_head_with_mask.svg" width="57" height="53" alt=""></span> <span class="vmc-detail-flex-1 vmc-detail-text-white vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-lg vmc-detail-text-thing vmc-detail-uppercase vmc-detail-ml-3">¡Aprende a negociar con subastin!</span></a> <div class="vmc-detail-w-full vmc-detail-pb-6"><div> <p class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-text-jungle vmc-detail-leading-thing vmc-detail-text-center vmc-detail-mb-2 vmc-detail-mt-4">Aprovecha esta oportunidad y haz una propuesta al vendedor.</p> <div class="vmc-detail-rounded vmc-detail-shadow-lg vmc-detail-relative vmc-detail-z-1"><button class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-w-full vmc-detail-border-none vmc-detail-bg-turquoise vmc-detail-text-white vmc-detail-px-4 vmc-detail-py-5 vmc-detail-rounded leading-2 focus:vmc-detail-outline-none"><span class="vmc-detail-font-display vmc-detail-text-white vmc-detail-text-lg vmc-detail-uppercase vmc-detail-font-bold vmc-detail-leading-none">Negocia Ahora</span></button></div> <div class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-mt-3"><span class="vmc-detail-font-display vmc-detail-text-xxs vmc-detail-text-jungle vmc-detail-font-semibold vmc-detail-text-center">
+                                        Comisión: &gt;S&lt; 0
+                                    </span></div></div></div></div></div></div>
+        </div>
+      </div>
+
+      <!-- ────────── VARIANT 3 — Modern ────────────────────────────────── -->
+      <div class="variant-block">
+        <p class="variant-label">Modern · Vivid + Bold glow</p>
+        <div class="preview-frame v3">
+          <div class="card-process vmc-detail-relative vmc-detail-select-none is-negotiable is-web"><div class="cp-header vmc-detail-relative vmc-detail-z-2 vmc-detail-px-5 vmc-detail-w-full" current-server-datetime="2026-05-08 09:52:23" datetime="2026-05-20 18:00:00"> <div class="cp-header-date vmc-detail-flex vmc-detail-py-3 vmc-detail-border-b"><div class="cp-header-top-left vmc-detail-w-1/2 vmc-detail-flex vmc-detail-items-center"><div class="header-state-default vmc-detail-relative vmc-detail-z-9"><span class="vmc-detail-font-display vmc-detail-block vmc-detail-leading-tight vmc-detail-text-sm vmc-detail-font-normal">Cierra</span> <span class="vmc-detail-font-display vmc-detail-block vmc-detail-leading-none vmc-detail-font-bold vmc-detail-text-base vmc-detail-uppercase">miércoles 20</span></div></div> <div class="cp-header-top-right vmc-detail-w-1/2 vmc-detail-border-l vmc-detail-pl-6 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="vmc-detail-relative vmc-detail-z-9 header-state-default"><span class="vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-xl vmc-detail-leading-none">06:00 pm</span></div>  </div></div> <div class="vmc-detail-flex"><div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-end"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"><span class="vmc-detail-mr-2 vmc-detail-font-display vmc-detail-text-sm">63</span> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none" class="vmc-detail-fill-current"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"></path></svg></div> </div></div></div></div> <div class="vmc-detail-flex-shrink"><div class="wrap-like-button vmc-detail-py-3 vmc-detail--mt-8"><div class="wrap-like-button vmc-detail-px-5 vmc-detail-mb-2"><div class="vmc-detail-rounded-full vmc-detail-shadow-md"><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><button class="cta-like-button vmc-detail-relative vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-border focus:vmc-detail-outline-none vmc-detail-transition-colors vmc-detail-duration-200 is-guest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vmc-detail-absolute vmc-detail-fill-current vmc-detail-h-6 vmc-detail-w-6"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"></path></svg> </button> </div></div></div> <div class="content-like-button vmc-detail-text-center vmc-detail-leading-none"><span class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-font-bold vmc-detail-leading-none">1</span></div></div></div> <div class="vmc-detail-flex-1 vmc-detail-flex vmc-detail-items-center vmc-detail-justify-start"><div class="cp-indicators vmc-detail-flex vmc-detail-items-center"> <div><div class="vmc-detail-relative vmc-detail-z-10 vmc-detail-cursor-pointer vmc-detail-flex vmc-detail-justify-center"><div class="cp-indicators-icon vmc-detail-border vmc-detail-rounded-full vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none" class="vmc-detail-fill-current"><path d="M12.4 2.6H11.1V8.5H2.6V9.8C2.6 10.1 2.9 10.4 3.3 10.4H10.4L13 13V3.3C13 2.9 12.7 2.6 12.4 2.6ZM9.8 6.5V0.7C9.8 0.3 9.5 0 9.1 0H0.7C0.3 0 0 0.3 0 0.7V9.8L2.6 7.2H9.1C9.5 7.2 9.8 6.9 9.8 6.5Z"></path></svg></div> </div></div> <span class="vmc-detail-ml-2 vmc-detail-font-display vmc-detail-text-sm">1</span></div></div></div></div> <div class="cp-content vmc-detail-relative vmc-detail-z-1 vmc-detail-bg-white"><div class="cta-contains has-button-gy vmc-detail-px-5 vmc-detail-flex vmc-detail-flex-col vmc-detail-justify-start"><a href="https://ayuda.vmcsubastas.com/es/articles/5823664-new-la-oferta-negociable-como-funciona" target="_blank" class="vmc-detail-flex vmc-detail-items-center vmc-detail--mx-5 vmc-detail-bg-eastern vmc-detail-px-5 vmc-detail-py-6 vmc-detail-flex-1 focus:vmc-detail-outline-none vmc-detail-rounded-b"><span class="vmc-detail-flex-shrink-0"><img src="/4app/assets/images/frontend/subastin/subastin_head_with_mask.svg" width="57" height="53" alt=""></span> <span class="vmc-detail-flex-1 vmc-detail-text-white vmc-detail-font-display vmc-detail-font-bold vmc-detail-text-lg vmc-detail-text-thing vmc-detail-uppercase vmc-detail-ml-3">¡Aprende a negociar con subastin!</span></a> <div class="vmc-detail-w-full vmc-detail-pb-6"><div> <p class="vmc-detail-font-display vmc-detail-text-sm vmc-detail-text-jungle vmc-detail-leading-thing vmc-detail-text-center vmc-detail-mb-2 vmc-detail-mt-4">Aprovecha esta oportunidad y haz una propuesta al vendedor.</p> <div class="vmc-detail-rounded vmc-detail-shadow-lg vmc-detail-relative vmc-detail-z-1"><button class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-w-full vmc-detail-border-none vmc-detail-bg-turquoise vmc-detail-text-white vmc-detail-px-4 vmc-detail-py-5 vmc-detail-rounded leading-2 focus:vmc-detail-outline-none"><span class="vmc-detail-font-display vmc-detail-text-white vmc-detail-text-lg vmc-detail-uppercase vmc-detail-font-bold vmc-detail-leading-none">Negocia Ahora</span></button></div> <div class="vmc-detail-flex vmc-detail-items-center vmc-detail-justify-center vmc-detail-mt-3"><span class="vmc-detail-font-display vmc-detail-text-xxs vmc-detail-text-jungle vmc-detail-font-semibold vmc-detail-text-center">
+                                        Comisión: &gt;S&lt; 0
+                                    </span></div></div></div></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

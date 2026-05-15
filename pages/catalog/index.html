@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -341,6 +341,90 @@ footer {
     height: 560px;
   }
 }
+
+.platform-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 24px;
+  border: 1px solid rgba(34, 0, 92, 0.1);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 5%);
+}
+
+.platform-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: rgba(34, 0, 92, 0.55);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.platform-tab:hover:not(.is-active) {
+  background: rgba(34, 0, 92, 0.04);
+  color: oklch(0.22 0.18 285);
+}
+
+.platform-tab.is-active {
+  background: oklch(0.22 0.18 285);
+  color: #fff;
+}
+
+.platform-tab .tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+  font-size: 10px;
+}
+
+.platform-tab:not(.is-active) .tab-count {
+  background: rgba(34, 0, 92, 0.08);
+}
+
+.preview-card[hidden] {
+  display: none !important;
+}
+
+.catalog-empty {
+  display: none;
+  padding: 48px 24px;
+  border: 1px dashed rgba(34, 0, 92, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(79, 71, 99, 0.7);
+  font-size: 14px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.catalog-empty.is-visible {
+  display: block;
+}
+
+.catalog-empty strong {
+  display: block;
+  margin-bottom: 6px;
+  color: oklch(0.22 0.18 285);
+  font-size: 16px;
+}
 </style>
 </head>
 <body>
@@ -361,185 +445,199 @@ footer {
     </div>
   </header>
 
+  <nav class="platform-tabs" role="tablist" aria-label="Plataforma">
+    <button class="platform-tab is-active" role="tab" aria-selected="true" data-platform="desktop" type="button" id="tabDesktop">
+      Desktop <span class="tab-count" id="countDesktop">0</span>
+    </button>
+    <button class="platform-tab" role="tab" aria-selected="false" data-platform="mobile" type="button" id="tabMobile">
+      Mobile <span class="tab-count" id="countMobile">0</span>
+    </button>
+  </nav>
+
   <main class="catalog" aria-label="Previews Claude">
+    <div class="catalog-empty" id="catalogEmpty">
+      <strong>Sin componentes en esta plataforma</strong>
+      Crea componentes en <code>components/mobile/</code> para verlos aquí.
+    </div>
+
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Your Profile Info</h2>
-          <p class="preview-path">../../components/your-profile-info/claude.html</p>
+          <p class="preview-path">../../components/desktop/your-profile-info/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/your-profile-info/claude.html" loading="lazy" title="Your Profile Info"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/your-profile-info/claude.html" loading="lazy" title="Your Profile Info"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Your Contact Info</h2>
-          <p class="preview-path">../../components/your-contact-info/claude.html</p>
+          <p class="preview-path">../../components/desktop/your-contact-info/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/your-contact-info/claude.html" loading="lazy" title="Your Contact Info"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/your-contact-info/claude.html" loading="lazy" title="Your Contact Info"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Logout Button</h2>
-          <p class="preview-path">../../components/logout-button/claude.html</p>
+          <p class="preview-path">../../components/desktop/logout-button/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/logout-button/claude.html" loading="lazy" title="Logout Button"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/logout-button/claude.html" loading="lazy" title="Logout Button"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">User Profile Card</h2>
-          <p class="preview-path">../../components/user-profile-card/claude.html</p>
+          <p class="preview-path">../../components/desktop/user-profile-card/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/user-profile-card/claude.html" loading="lazy" title="User Profile Card"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/user-profile-card/claude.html" loading="lazy" title="User Profile Card"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">User Profile Card v2</h2>
-          <p class="preview-path">../../components/user-profile-card-v2/claude.html</p>
+          <p class="preview-path">../../components/desktop/user-profile-card-v2/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/user-profile-card-v2/claude.html" loading="lazy" title="User Profile Card v2"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/user-profile-card-v2/claude.html" loading="lazy" title="User Profile Card v2"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Recomendados v2</h2>
-          <p class="preview-path">../../components/recommended-v2/claude.html</p>
+          <p class="preview-path">../../components/desktop/recommended-v2/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/recommended-v2/claude.html" loading="lazy" title="Recomendados v2"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/recommended-v2/claude.html" loading="lazy" title="Recomendados v2"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Condiciones del Ofrecimiento</h2>
-          <p class="preview-path">../../components/condiciones-ofrecimiento/claude.html</p>
+          <p class="preview-path">../../components/desktop/condiciones-ofrecimiento/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/condiciones-ofrecimiento/claude.html" loading="lazy" title="Condiciones del Ofrecimiento"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/condiciones-ofrecimiento/claude.html" loading="lazy" title="Condiciones del Ofrecimiento"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Auction Conditions - Vivo</h2>
-          <p class="preview-path">../../components/auction-conditions/vivo/claude.html</p>
+          <p class="preview-path">../../components/desktop/auction-conditions/vivo/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/auction-conditions/vivo/claude.html" loading="lazy" title="Auction Conditions Vivo"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/auction-conditions/vivo/claude.html" loading="lazy" title="Auction Conditions Vivo"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Auction Conditions - Negociable</h2>
-          <p class="preview-path">../../components/auction-conditions/negociable/claude.html</p>
+          <p class="preview-path">../../components/desktop/auction-conditions/negociable/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/auction-conditions/negociable/claude.html" loading="lazy" title="Auction Conditions Negociable"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/auction-conditions/negociable/claude.html" loading="lazy" title="Auction Conditions Negociable"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Consola Info</h2>
-          <p class="preview-path">../../components/consola/info/claude.html</p>
+          <p class="preview-path">../../components/desktop/consola/info/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/consola/info/claude.html" loading="lazy" title="Consola Info"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/consola/info/claude.html" loading="lazy" title="Consola Info"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Consola Users</h2>
-          <p class="preview-path">../../components/consola/users/claude.html</p>
+          <p class="preview-path">../../components/desktop/consola/users/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/consola/users/claude.html" loading="lazy" title="Consola Users"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/consola/users/claude.html" loading="lazy" title="Consola Users"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Consola Bid Button</h2>
-          <p class="preview-path">../../components/consola/bid-button/claude.html</p>
+          <p class="preview-path">../../components/desktop/consola/bid-button/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/consola/bid-button/claude.html" loading="lazy" title="Consola Bid Button"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/consola/bid-button/claude.html" loading="lazy" title="Consola Bid Button"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Header Auction Live</h2>
-          <p class="preview-path">../../components/consola/header-auction-live/claude.html</p>
+          <p class="preview-path">../../components/desktop/consola/header-auction-live/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/consola/header-auction-live/claude.html" loading="lazy" title="Header Auction Live"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/consola/header-auction-live/claude.html" loading="lazy" title="Header Auction Live"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Consola Header</h2>
-          <p class="preview-path">../../components/consola/header/claude.html</p>
+          <p class="preview-path">../../components/desktop/consola/header/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/consola/header/claude.html" loading="lazy" title="Consola Header"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/consola/header/claude.html" loading="lazy" title="Consola Header"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Auction Bar</h2>
-          <p class="preview-path">../../components/consola/auction-bar/claude.html</p>
+          <p class="preview-path">../../components/desktop/consola/auction-bar/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/consola/auction-bar/claude.html" loading="lazy" title="Auction Bar"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/consola/auction-bar/claude.html" loading="lazy" title="Auction Bar"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Detail Card - Negociable</h2>
-          <p class="preview-path">../../components/detail-card/negociable/claude.html</p>
+          <p class="preview-path">../../components/desktop/detail-card/negociable/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/detail-card/negociable/claude.html" loading="lazy" title="Detail Card Negociable"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/detail-card/negociable/claude.html" loading="lazy" title="Detail Card Negociable"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Detail Card - Cerrada</h2>
-          <p class="preview-path">../../components/detail-card/cerrada/claude.html</p>
+          <p class="preview-path">../../components/desktop/detail-card/cerrada/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/detail-card/cerrada/claude.html" loading="lazy" title="Detail Card Cerrada"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/detail-card/cerrada/claude.html" loading="lazy" title="Detail Card Cerrada"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Detail Card - En Vivo</h2>
-          <p class="preview-path">../../components/detail-card/en vivo/claude.html</p>
+          <p class="preview-path">../../components/desktop/detail-card/en vivo/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/detail-card/en vivo/claude.html" loading="lazy" title="Detail Card En Vivo"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/detail-card/en vivo/claude.html" loading="lazy" title="Detail Card En Vivo"></iframe>
     </article>
 
     <article class="preview-card">
@@ -549,177 +647,227 @@ footer {
           <p class="preview-path">detail-card/oferta-live/index.htm</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/detail-card/oferta-live/claude.html" loading="lazy" title="Detail Card Oferta en Vivo"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/detail-card/oferta-live/claude.html" loading="lazy" title="Detail Card Oferta en Vivo"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Detail Card - Desierta</h2>
-          <p class="preview-path">../../components/detail-card/desierta/claude.html</p>
+          <p class="preview-path">../../components/desktop/detail-card/desierta/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/detail-card/desierta/claude.html" loading="lazy" title="Detail Card Desierta"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/detail-card/desierta/claude.html" loading="lazy" title="Detail Card Desierta"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Detail Card - Inicio Extendido</h2>
-          <p class="preview-path">../../components/detail-card/extended/claude.html</p>
+          <p class="preview-path">../../components/desktop/detail-card/extended/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/detail-card/extended/claude.html" loading="lazy" title="Detail Card Inicio Extendido"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/detail-card/extended/claude.html" loading="lazy" title="Detail Card Inicio Extendido"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Image Header</h2>
-          <p class="preview-path">../../components/image-header/claude.html</p>
+          <p class="preview-path">../../components/desktop/image-header/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/image-header/claude.html" loading="lazy" title="Image Header"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/image-header/claude.html" loading="lazy" title="Image Header"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Wallet</h2>
-          <p class="preview-path">../../components/wallet/claude.html</p>
+          <p class="preview-path">../../components/desktop/wallet/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/wallet/claude.html" loading="lazy" title="Wallet"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/wallet/claude.html" loading="lazy" title="Wallet"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Tu Actividad</h2>
-          <p class="preview-path">../../components/activity/claude.html</p>
+          <p class="preview-path">../../components/desktop/activity/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/activity/claude.html" loading="lazy" title="Tu Actividad"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/activity/claude.html" loading="lazy" title="Tu Actividad"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Recomendados</h2>
-          <p class="preview-path">../../components/recommended/claude.html</p>
+          <p class="preview-path">../../components/desktop/recommended/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/recommended/claude.html" loading="lazy" title="Recomendados"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/recommended/claude.html" loading="lazy" title="Recomendados"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Me Interesa</h2>
-          <p class="preview-path">../../components/interests/claude.html</p>
+          <p class="preview-path">../../components/desktop/interests/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/interests/claude.html" loading="lazy" title="Me Interesa"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/interests/claude.html" loading="lazy" title="Me Interesa"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Login Form</h2>
-          <p class="preview-path">../../components/login-form/claude.html</p>
+          <p class="preview-path">../../components/desktop/login-form/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/login-form/claude.html" loading="lazy" title="Login Form"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/login-form/claude.html" loading="lazy" title="Login Form"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Thumbnail Strip</h2>
-          <p class="preview-path">../../components/thumbnail/claude.html</p>
+          <p class="preview-path">../../components/desktop/thumbnail/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/thumbnail/claude.html" loading="lazy" title="Thumbnail Strip"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/thumbnail/claude.html" loading="lazy" title="Thumbnail Strip"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Sidebar Nav</h2>
-          <p class="preview-path">../../components/sidebar/claude.html</p>
+          <p class="preview-path">../../components/desktop/sidebar/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/sidebar/claude.html" loading="lazy" title="Sidebar Nav"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/sidebar/claude.html" loading="lazy" title="Sidebar Nav"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Select SubasCoins</h2>
-          <p class="preview-path">../../components/select-subascoins/claude.html</p>
+          <p class="preview-path">../../components/desktop/select-subascoins/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/select-subascoins/claude.html" loading="lazy" title="Select SubasCoins"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/select-subascoins/claude.html" loading="lazy" title="Select SubasCoins"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">SubasCoins Info</h2>
-          <p class="preview-path">../../components/subascoins-info/claude.html</p>
+          <p class="preview-path">../../components/desktop/subascoins-info/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/subascoins-info/claude.html" loading="lazy" title="SubasCoins Info"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/subascoins-info/claude.html" loading="lazy" title="SubasCoins Info"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Canje Info</h2>
-          <p class="preview-path">../../components/canje-info/claude.html</p>
+          <p class="preview-path">../../components/desktop/canje-info/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/canje-info/claude.html" loading="lazy" title="Canje Info"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/canje-info/claude.html" loading="lazy" title="Canje Info"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Seleccionar Canje</h2>
-          <p class="preview-path">../../components/seleccionar-canje/claude.html</p>
+          <p class="preview-path">../../components/desktop/seleccionar-canje/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/seleccionar-canje/claude.html" loading="lazy" title="Seleccionar Canje"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/seleccionar-canje/claude.html" loading="lazy" title="Seleccionar Canje"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Movimientos Header</h2>
-          <p class="preview-path">../../components/movimientos-header/claude.html</p>
+          <p class="preview-path">../../components/desktop/movimientos-header/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/movimientos-header/claude.html" loading="lazy" title="Movimientos Header"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/movimientos-header/claude.html" loading="lazy" title="Movimientos Header"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Banner Movimientos</h2>
-          <p class="preview-path">../../components/banner-movimientos/claude.html</p>
+          <p class="preview-path">../../components/desktop/banner-movimientos/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/banner-movimientos/claude.html" loading="lazy" title="Banner Movimientos"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/banner-movimientos/claude.html" loading="lazy" title="Banner Movimientos"></iframe>
     </article>
 
     <article class="preview-card">
       <div class="preview-header">
         <div>
           <h2 class="preview-title">Historial de Transacciones</h2>
-          <p class="preview-path">../../components/historial-transacciones/claude.html</p>
+          <p class="preview-path">../../components/desktop/historial-transacciones/claude.html</p>
         </div>
       </div>
-      <iframe class="preview-frame" src="../../components/historial-transacciones/claude.html" loading="lazy" title="Historial de Transacciones"></iframe>
+      <iframe class="preview-frame" src="../../components/desktop/historial-transacciones/claude.html" loading="lazy" title="Historial de Transacciones"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Mobile · Ofertas Empresa</h2>
+          <p class="preview-path">../../components/mobile/ofertas-empresa/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/mobile/ofertas-empresa/claude.html" loading="lazy" title="Mobile Ofertas Empresa"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Mobile · Offer Type</h2>
+          <p class="preview-path">../../components/mobile/offer-type/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/mobile/offer-type/claude.html" loading="lazy" title="Mobile Offer Type"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Mobile · Categorías</h2>
+          <p class="preview-path">../../components/mobile/categories/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/mobile/categories/claude.html" loading="lazy" title="Mobile Categorías"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Mobile · Header</h2>
+          <p class="preview-path">../../components/mobile/header/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/mobile/header/claude.html" loading="lazy" title="Mobile Header"></iframe>
+    </article>
+
+    <article class="preview-card">
+      <div class="preview-header">
+        <div>
+          <h2 class="preview-title">Mobile · Footer</h2>
+          <p class="preview-path">../../components/mobile/footer/claude.html</p>
+        </div>
+      </div>
+      <iframe class="preview-frame" src="../../components/mobile/footer/claude.html" loading="lazy" title="Mobile Footer"></iframe>
     </article>
 
   </main>
@@ -730,150 +878,150 @@ footer {
 </div>
 <script>
 const DESIGN_VARIANTS = {
-  "../../components/movimientos-header/claude.html": [
+  "../../components/desktop/movimientos-header/claude.html": [
     "Vault · Gradient",
     "Modern · Clean"
   ],
-  "../../components/banner-movimientos/claude.html": [
+  "../../components/desktop/banner-movimientos/claude.html": [
     "Vault · Button",
     "Live · Button"
   ],
-  "../../components/historial-transacciones/claude.html": [
+  "../../components/desktop/historial-transacciones/claude.html": [
     "Vault · Gradient horizontal",
     "Vault · Solid (sin gradiente)",
     "Live · Gradient horizontal"
   ],
-  "../../components/your-profile-info/claude.html": [
+  "../../components/desktop/your-profile-info/claude.html": [
     "Vault",
     "Live"
   ],
-  "../../components/logout-button/claude.html": [
+  "../../components/desktop/logout-button/claude.html": [
     "Live",
     "Vault"
   ],
-  "../../components/user-profile-card/claude.html": [
+  "../../components/desktop/user-profile-card/claude.html": [
     "Default",
     "Hover"
   ],
-  "../../components/user-profile-card-v2/claude.html": [
+  "../../components/desktop/user-profile-card-v2/claude.html": [
     "Default",
     "Hover"
   ],
-  "../../components/recommended-v2/claude.html": [
+  "../../components/desktop/recommended-v2/claude.html": [
     "Default",
     "Simple"
   ],
-  "../../components/auction-conditions/vivo/claude.html": [
+  "../../components/desktop/auction-conditions/vivo/claude.html": [
     "Modern · Vivid gradient + Ghost inactive",
     "Secondary gradient · vault-900→vault-800 · conditions only"
   ],
-  "../../components/auction-conditions/negociable/claude.html": [
+  "../../components/desktop/auction-conditions/negociable/claude.html": [
     "Modern · Vivid gradient + Ghost inactive",
     "Secondary gradient · vault-900→vault-800 · conditions only"
   ],
-  "../../components/consola/info/claude.html": [
+  "../../components/desktop/consola/info/claude.html": [
     "Variante morada",
     "Variante naranja"
   ],
-  "../../components/consola/users/claude.html": [
+  "../../components/desktop/consola/users/claude.html": [
     "Variante morada",
     "Variante naranja",
     "Sin bids"
   ],
-  "../../components/consola/bid-button/claude.html": [
+  "../../components/desktop/consola/bid-button/claude.html": [
     "Activo",
     "Disabled"
   ],
-  "../../components/consola/header-auction-live/claude.html": [
+  "../../components/desktop/consola/header-auction-live/claude.html": [
     "Vault live",
     "Placa live"
   ],
-  "../../components/consola/header/claude.html": [
+  "../../components/desktop/consola/header/claude.html": [
     "Vault status",
     "Oferta live"
   ],
-  "../../components/consola/auction-bar/claude.html": [
+  "../../components/desktop/consola/auction-bar/claude.html": [
     "Auction Bar moderna",
     "Auction Content Events"
   ],
-  "../../components/detail-card/negociable/claude.html": [
+  "../../components/desktop/detail-card/negociable/claude.html": [
     "Base · Solid",
     "Gradient · Vault + Negotiable shine",
     "Modern · Vivid + Bold glow"
   ],
-  "../../components/detail-card/cerrada/claude.html": [
+  "../../components/desktop/detail-card/cerrada/claude.html": [
     "Naranja Sólido",
     "Glass Dark · Transparente",
     "Vault Premium"
   ],
-  "../../components/detail-card/en vivo/claude.html": [
+  "../../components/desktop/detail-card/en vivo/claude.html": [
     "Gradient · Inicia fecha",
     "Gradient · Hoy"
   ],
-  "../../components/detail-card/oferta-live/claude.html": [
+  "../../components/desktop/detail-card/oferta-live/claude.html": [
     "V2 · Naranja puro · Vault CTA",
     "V3 · Premium Dark · Vivid CTA",
     "V4 · Swap layout"
   ],
-  "../../components/detail-card/desierta/claude.html": [
+  "../../components/desktop/detail-card/desierta/claude.html": [
     "Naranja Vivo",
     "Vault Premium",
     "Glass Dark · Transparente"
   ],
-  "../../components/detail-card/extended/claude.html": [
+  "../../components/desktop/detail-card/extended/claude.html": [
     "V1 · Vault · Live Banner · Live CTA",
     "V2 · Vivid Vault · Amber Banner · Vault CTA",
     "V3 · Dark Immersive · Teal Banner · Live CTA"
   ],
-  "../../components/image-header/claude.html": [
+  "../../components/desktop/image-header/claude.html": [
     "Base · Solid Live",
     "Gradient · Warm amber + shine",
     "Modern · Vivid + Glow"
   ],
-  "../../components/login-form/claude.html": [
+  "../../components/desktop/login-form/claude.html": [
     "Base · Desactivado",
     "Gradient · Modern"
   ],
-  "../../components/thumbnail/claude.html": [
+  "../../components/desktop/thumbnail/claude.html": [
     "Acento · Inferior"
   ],
-  "../../components/wallet/claude.html": [
+  "../../components/desktop/wallet/claude.html": [
     "Default",
     "Hover",
     "Pressed"
   ],
-  "../../components/activity/claude.html": [
+  "../../components/desktop/activity/claude.html": [
     "Default"
   ],
-  "../../components/recommended/claude.html": [
+  "../../components/desktop/recommended/claude.html": [
     "Default",
     "Hover"
   ],
-  "../../components/interests/claude.html": [
+  "../../components/desktop/interests/claude.html": [
     "Default",
     "Hover"
   ],
-  "../../components/sidebar/claude.html": [
+  "../../components/desktop/sidebar/claude.html": [
     "Mañana",
     "Próximamente",
     "Stroke · Modern"
   ],
-  "../../components/select-subascoins/claude.html": [
+  "../../components/desktop/select-subascoins/claude.html": [
     "Vault · Seleccionado",
     "Live · Naranja",
     "Modern · Coin Selector"
   ],
-  "../../components/subascoins-info/claude.html": [
+  "../../components/desktop/subascoins-info/claude.html": [
     "Con imagen",
     "Sin imagen",
     "Promo card (propuesta)"
   ],
-  "../../components/canje-info/claude.html": [
+  "../../components/desktop/canje-info/claude.html": [
     "Live",
     "Vault",
     "Modern"
   ],
-  "../../components/seleccionar-canje/claude.html": [
+  "../../components/desktop/seleccionar-canje/claude.html": [
     "Live",
     "Vault",
     "Modern"
@@ -1029,7 +1177,83 @@ function getSelectionPayload() {
     });
 }
 
+function detectPlatform(path) {
+  if (!path) return "desktop";
+  if (path.indexOf("/components/mobile/") !== -1) return "mobile";
+  return "desktop";
+}
+
+cards.forEach(function (card) {
+  card.dataset.platform = detectPlatform(card.querySelector(".preview-path")?.textContent.trim() || "");
+});
+
 cards.forEach(setupCard);
+
+const platformTabs = Array.from(document.querySelectorAll(".platform-tab"));
+const catalogEmpty = document.getElementById("catalogEmpty");
+const countDesktop = document.getElementById("countDesktop");
+const countMobile = document.getElementById("countMobile");
+
+function getActivePlatform() {
+  const active = platformTabs.find(function (t) { return t.classList.contains("is-active"); });
+  return active ? active.dataset.platform : "desktop";
+}
+
+function applyPlatformFilter() {
+  const platform = getActivePlatform();
+  let visible = 0;
+  cards.forEach(function (card) {
+    const match = card.dataset.platform === platform;
+    card.hidden = !match;
+    if (match) visible += 1;
+  });
+  catalogEmpty.classList.toggle("is-visible", visible === 0);
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("platform", platform);
+    window.history.replaceState(null, "", url.toString());
+  } catch (error) {}
+}
+
+function updatePlatformCounts() {
+  let desktop = 0;
+  let mobile = 0;
+  cards.forEach(function (card) {
+    if (card.dataset.platform === "mobile") mobile += 1;
+    else desktop += 1;
+  });
+  countDesktop.textContent = String(desktop);
+  countMobile.textContent = String(mobile);
+}
+
+platformTabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    platformTabs.forEach(function (t) {
+      const isActive = t === tab;
+      t.classList.toggle("is-active", isActive);
+      t.setAttribute("aria-selected", String(isActive));
+    });
+    applyPlatformFilter();
+  });
+});
+
+const initialPlatform = (function () {
+  try {
+    const url = new URL(window.location.href);
+    return url.searchParams.get("platform") === "mobile" ? "mobile" : "desktop";
+  } catch (error) {
+    return "desktop";
+  }
+})();
+
+platformTabs.forEach(function (tab) {
+  const isActive = tab.dataset.platform === initialPlatform;
+  tab.classList.toggle("is-active", isActive);
+  tab.setAttribute("aria-selected", String(isActive));
+});
+
+updatePlatformCounts();
+applyPlatformFilter();
 
 selectAllButton.addEventListener("click", function () {
   cards.forEach(function (card) {

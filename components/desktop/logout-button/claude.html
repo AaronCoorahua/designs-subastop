@@ -1,0 +1,156 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Voyager Upgrade · Logout Button</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-live:         oklch(0.72 0.16 55);    /* #ED8936 */
+  --voyager-color-live-hover:   oklch(0.62 0.15 50);    /* #D07128 */
+  --voyager-color-vault:        oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-hover:  oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-text-muted:   color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-font-display:       "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-radius-sm:          4px;
+  --voyager-shadow-btn:         0 0 16px rgba(0, 0, 0, 0.14);
+  --voyager-duration-micro:     150ms;
+  --voyager-ease-default:       cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #F8FAF9;
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+
+.preview-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 16px;
+}
+
+/* ── Base button ─────────────────────────────────────────────────────────── */
+.btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 227px;
+  padding: 12px 24px;
+  border-radius: var(--voyager-radius-sm);
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition:
+    color        var(--voyager-duration-micro) var(--voyager-ease-default),
+    background   var(--voyager-duration-micro) var(--voyager-ease-default),
+    border-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow   var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+/* ── Variante Live — naranja ─────────────────────────────────────────────── */
+.btn-logout--live {
+  border: 2px solid var(--voyager-color-live);
+  color: var(--voyager-color-live);
+}
+
+.btn-logout--live:hover {
+  background: var(--voyager-color-live);
+  border-color: var(--voyager-color-live);
+  color: #ffffff;
+  box-shadow: var(--voyager-shadow-btn);
+}
+
+.btn-logout--live:active,
+.btn-logout--live:focus,
+.btn-logout--live:focus-visible {
+  background: var(--voyager-color-live-hover);
+  border-color: var(--voyager-color-live-hover);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* ── Variante Vault — morado ─────────────────────────────────────────────── */
+.btn-logout--vault {
+  border: 2px solid var(--voyager-color-vault);
+  color: var(--voyager-color-vault);
+}
+
+.btn-logout--vault:hover {
+  background: var(--voyager-color-vault);
+  border-color: var(--voyager-color-vault);
+  color: #ffffff;
+  box-shadow: var(--voyager-shadow-btn);
+}
+
+.btn-logout--vault:active,
+.btn-logout--vault:focus,
+.btn-logout--vault:focus-visible {
+  background: var(--voyager-color-vault-hover);
+  border-color: var(--voyager-color-vault-hover);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager UI upgrade preview — Logout Button">
+
+    <div class="preview-cell" data-variant="Live">
+      <p class="preview-label">Live</p>
+      <a href="/logout" class="btn-logout btn-logout--live">Cerrar sesión</a>
+    </div>
+
+    <div class="preview-cell" data-variant="Vault">
+      <p class="preview-label">Vault</p>
+      <a href="/logout" class="btn-logout btn-logout--vault">Cerrar sesión</a>
+    </div>
+
+  </main>
+<script>
+  document.querySelectorAll('.btn-logout').forEach(function (el) {
+    el.addEventListener('click', function (event) {
+      event.preventDefault();
+      el.blur();
+    });
+  });
+</script>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

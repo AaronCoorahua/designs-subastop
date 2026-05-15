@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Subastop Designs — Mobile · Ofertas Hoy</title>
+<title>Subastop Designs — Mobile · Oferta Terminada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -13,14 +13,6 @@
   --voyager-color-vault-mid:    oklch(0.30 0.20 285);
   --voyager-color-live:         oklch(0.72 0.16 55);
   --voyager-color-negotiable:   oklch(0.78 0.14 195);
-
-  /* Gradient stops (orange / cyan) — Tokens Studio */
-  --voyager-color-orange-500:   oklch(0.78 0.16 60);
-  --voyager-color-orange-600:   oklch(0.72 0.16 55);
-  --voyager-color-orange-700:   oklch(0.62 0.18 45);
-  --voyager-color-cyan-500:     oklch(0.82 0.13 200);
-  --voyager-color-cyan-600:     oklch(0.78 0.14 195);
-  --voyager-color-cyan-700:     oklch(0.68 0.13 200);
 
   --voyager-color-surface-page:    oklch(0.98 0.004 160);
   --voyager-color-surface-card:    oklch(1 0 0);
@@ -181,28 +173,11 @@ html, body {
   border-radius: var(--voyager-radius-sm);
   box-shadow: var(--voyager-shadow-sm);
   overflow: hidden;
-  padding-bottom: 6px;
+  border-bottom: 6px solid var(--voyager-color-live);
 }
 
-.preview-frame .vcard-simple::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(to right,
-    var(--voyager-color-orange-500) 0%,
-    var(--voyager-color-orange-600) 50%,
-    var(--voyager-color-orange-700) 100%);
-  z-index: 2;
-}
-
-.preview-frame .vcard-simple[data-status="negotiable"]::after {
-  background: linear-gradient(to right,
-    var(--voyager-color-cyan-500) 0%,
-    var(--voyager-color-cyan-600) 50%,
-    var(--voyager-color-cyan-700) 100%);
+.preview-frame .vcard-simple[data-status="negotiable"] {
+  border-bottom-color: var(--voyager-color-negotiable);
 }
 
 .preview-frame .vcard-simple .simple-image {
@@ -351,10 +326,20 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .preview-frame * { transition: none !important; transform: none !important; }
 }
+
+/* ── Variante terminada — TODA la card en blanco y negro ──────────────── */
+.preview-frame .vcard-simple {
+  filter: grayscale(1);
+  border-bottom-color: oklch(0.65 0 0) !important;
+}
+
+.preview-frame .vcard-simple .live-dot {
+  display: none;
+}
 </style>
 </head>
 <body>
-  <main class="preview-stage" aria-label="Voyager mobile preview — Ofertas Hoy">
+  <main class="preview-stage" aria-label="Voyager mobile preview — Oferta Terminada">
     <div class="preview-frame">
 
         <div class="head">
@@ -362,16 +347,12 @@ html, body {
             <svg class="bracket bracket-tl" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
               <path d="M0 0H3.3V3.3H3.3V6.7H0V3.3H0V0ZM3.3 0H6.7 6.7 10V3.3H6.7 6.7 3.3V0ZM3.3 6.7H0V10H3.3V6.7Z" fill="currentColor"/>
             </svg>
-            <p class="head-title">AUTOPLAN</p>
-            <p class="head-sub">5 Ofertas</p>
+            <p class="head-title">TERMINADAS</p>
             <svg class="bracket bracket-br" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
               <path d="M10 10L6.7 10 6.7 6.7 6.7 3.3 10 3.3 10 6.7 10 10ZM6.7 10L3.3 10 0 10 0 6.7 3.3 6.7 6.7 6.7 6.7 10ZM6.7 3.3L10 3.3 10 0 6.7 0 6.7 3.3Z" fill="currentColor"/>
             </svg>
           </div>
-          <a href="#" class="head-link">
-            Ir al perfil
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
-          </a>
+          <span class="head-link head-link-static">4 ofertas</span>
         </div>
 
         <div class="grid">

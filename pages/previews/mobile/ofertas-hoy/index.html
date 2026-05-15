@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Preview Mobile — Home · Voyager</title>
+<title>Preview Mobile — Ofertas Hoy · Voyager</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
@@ -74,50 +74,12 @@ html, body {
   font-weight: 500;
 }
 
-/* ── Variant tabs (estilo desktop tabbar) ─────────────────────────────── */
-.variant-tabs {
+.viewer {
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin: 0 0 32px;
-  border-radius: 4px;
-  background: var(--voyager-surface-section);
-  border: 1px solid var(--voyager-divider-section);
-  width: fit-content;
+  justify-content: center;
 }
 
-.variant-tab {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: var(--voyager-text-secondary);
-  font-family: var(--voyager-font-display);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
-}
-
-.variant-tab:hover:not(.is-active) {
-  background: color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
-  color: var(--voyager-color-vault);
-}
-
-.variant-tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
-
-.variant-tab.is-active {
-  color: var(--voyager-text-on-dark);
-  background: var(--voyager-color-vault);
-  box-shadow: 0 4px 8px color-mix(in oklch, var(--voyager-color-vault) 24%, transparent);
-}
-
-/* ── Variant panels — viewer centra el mobile-frame ───────────────────── */
-.variant-panel { display: none; }
-.variant-panel.is-active { display: flex; justify-content: center; }
-
-/* ── Mobile frame — 420 wide · auto height (ajusta al contenido) ─────────── */
+/* ── Mobile frame — 420 wide · auto height ─────────────────────────────── */
 .mobile-frame {
   width: 420px;
   background: var(--voyager-surface-page);
@@ -162,25 +124,52 @@ html, body {
   text-transform: uppercase;
 }
 
-.mobile-frame .ph-banner.hero { height: 598px; }
-.mobile-frame .ph-banner.secondary { height: 117px; }
+.mobile-frame .ph-banner.banner { height: 126px; }
 .mobile-frame .ph-banner.help { height: 230px; }
 
-.mobile-frame .qf-wrapper {
-  width: 100%;
+/* ── Variant tabs (estilo desktop tabbar) ─────────────────────────────── */
+.variant-tabs {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 32px;
+  border-radius: 4px;
+  background: var(--voyager-surface-section);
+  border: 1px solid var(--voyager-divider-section);
+  width: fit-content;
 }
 
-.mobile-frame .qf-wrapper iframe {
-  display: block;
-  width: 100%;
+.variant-tab {
+  appearance: none;
   border: 0;
   background: transparent;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
 }
 
-/* ── Card wrapper (variante "Cards") ───────────────────────────────────── */
+.variant-tab:hover:not(.is-active) {
+  background: color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+  color: var(--voyager-color-vault);
+}
+
+.variant-tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
+
+.variant-tab.is-active {
+  color: var(--voyager-text-on-dark);
+  background: var(--voyager-color-vault);
+  box-shadow: 0 4px 8px color-mix(in oklch, var(--voyager-color-vault) 24%, transparent);
+}
+
+.variant-panel { display: none; }
+.variant-panel.is-active { display: flex; justify-content: center; }
+
+/* Card wrap (variante Cards) — fondo gris envolviendo varios componentes */
 .mobile-frame .card-wrap {
   width: 100%;
   background: var(--voyager-surface-secondary);
@@ -188,7 +177,7 @@ html, body {
   padding: 20px 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .mobile-frame .card-wrap iframe {
@@ -197,27 +186,6 @@ html, body {
   border: 0;
   background: transparent;
 }
-
-/* ── Empty variant placeholder ─────────────────────────────────────────── */
-.variant-empty {
-  width: 420px;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed color-mix(in oklch, var(--voyager-color-vault) 20%, transparent);
-  border-radius: 24px;
-  background: color-mix(in oklch, var(--voyager-surface-page) 80%, transparent);
-  color: color-mix(in oklch, var(--voyager-text-on-surface) 50%, transparent);
-}
-
-.variant-empty p {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 </style>
 </head>
 <body>
@@ -225,10 +193,10 @@ html, body {
     <p class="breadcrumb">
       <a href="../../index.html">Previews</a>
       <span class="breadcrumb-sep">›</span>
-      <span>Home · Mobile</span>
+      <span>Ofertas Hoy · Mobile</span>
     </p>
-    <h1 class="page-title">Home</h1>
-    <p class="page-meta">420 × 3149.34 · 2 variantes</p>
+    <h1 class="page-title">Ofertas Hoy</h1>
+    <p class="page-meta">420 · 2 variantes</p>
 
     <nav class="variant-tabs" role="tablist" aria-label="Variantes">
       <button class="variant-tab is-active" role="tab" aria-selected="true" data-variant="ancho" type="button">Ancho</button>
@@ -237,7 +205,7 @@ html, body {
 
     <!-- ── Variante: Ancho ───────────────────────────────────────────────── -->
     <section class="variant-panel is-active" data-variant="ancho">
-      <div class="mobile-frame" aria-label="Mobile home composition — Ancho">
+      <div class="mobile-frame" aria-label="Mobile ofertas hoy composition — Ancho">
 
         <iframe
           src="../../../../components/mobile/header/claude.html"
@@ -248,38 +216,25 @@ html, body {
           style="height:56px"></iframe>
 
         <div class="padded" style="margin-top:16px">
-          <div class="ph-banner hero" role="img" aria-label="Banner Hero placeholder">
-            <p>Banner Hero</p>
+          <div class="ph-banner banner" role="img" aria-label="Banner placeholder">
+            <p>Banner</p>
           </div>
-
-          <div class="ph-banner secondary" role="img" aria-label="Banner Secundario placeholder">
-            <p>Banner Secundario</p>
-          </div>
-
-          <section class="qf-wrapper" aria-label="Quick filter">
-            <iframe
-              src="../../../../components/mobile/offer-type/claude.html"
-              title="Tipo de oferta"
-              scrolling="no"
-              loading="lazy"
-              data-autoheight="1"
-              style="height:140px"></iframe>
-            <iframe
-              src="../../../../components/mobile/categories/claude.html"
-              title="Categorías"
-              scrolling="no"
-              loading="lazy"
-              data-autoheight="1"
-              style="height:155px"></iframe>
-          </section>
 
           <iframe
-            src="../../../../components/mobile/ofertas-empresa/claude.html"
-            title="Ofertas Empresa"
+            src="../../../../components/mobile/oferta-fecha/claude.html"
+            title="Oferta Fecha"
             scrolling="no"
             loading="lazy"
             data-autoheight="1"
-            style="height:600px;margin:0 -24px;width:calc(100% + 48px)"></iframe>
+            style="height:820px"></iframe>
+
+          <iframe
+            src="../../../../components/mobile/oferta-terminada/claude.html"
+            title="Oferta Terminada"
+            scrolling="no"
+            loading="lazy"
+            data-autoheight="1"
+            style="height:560px"></iframe>
 
           <div class="ph-banner help" role="img" aria-label="Centro de Ayuda placeholder">
             <p>Centro de Ayuda</p>
@@ -299,7 +254,7 @@ html, body {
 
     <!-- ── Variante: Cards ───────────────────────────────────────────────── -->
     <section class="variant-panel" data-variant="cards">
-      <div class="mobile-frame" aria-label="Mobile home composition — Cards">
+      <div class="mobile-frame" aria-label="Mobile ofertas hoy composition — Cards">
 
         <iframe
           src="../../../../components/mobile/header/claude.html"
@@ -310,35 +265,21 @@ html, body {
           style="height:56px"></iframe>
 
         <div class="padded" style="margin-top:16px">
-          <div class="ph-banner hero" role="img" aria-label="Banner Hero placeholder">
-            <p>Banner Hero</p>
+          <div class="ph-banner banner" role="img" aria-label="Banner placeholder">
+            <p>Banner</p>
           </div>
 
-          <div class="ph-banner secondary" role="img" aria-label="Banner Secundario placeholder">
-            <p>Banner Secundario</p>
-          </div>
-
-          <section class="card-wrap" aria-label="Quick filter">
+          <section class="card-wrap" aria-label="Ofertas">
             <iframe
-              src="../../../../components/mobile/offer-type/claude.html"
-              title="Tipo de oferta"
+              src="../../../../components/mobile/oferta-fecha/claude.html"
+              title="Oferta Fecha"
               scrolling="no"
               loading="lazy"
               data-autoheight="1"
-              style="height:140px"></iframe>
+              style="height:820px"></iframe>
             <iframe
-              src="../../../../components/mobile/categories/claude.html"
-              title="Categorías"
-              scrolling="no"
-              loading="lazy"
-              data-autoheight="1"
-              style="height:155px"></iframe>
-          </section>
-
-          <section class="card-wrap" aria-label="Ofertas Empresa">
-            <iframe
-              src="../../../../components/mobile/ofertas-empresa/claude.html"
-              title="Ofertas Empresa"
+              src="../../../../components/mobile/oferta-terminada/claude.html"
+              title="Oferta Terminada"
               scrolling="no"
               loading="lazy"
               data-autoheight="1"
@@ -360,7 +301,6 @@ html, body {
 
       </div>
     </section>
-
   </main>
 
 <script>

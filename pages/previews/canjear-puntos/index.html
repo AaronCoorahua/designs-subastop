@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Previews · Canjear Puntos — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           #22005C;
+  --voyager-color-vault-mid:       #3B1782;
+  --voyager-color-vault-dark:      #2E0F70;
+  --voyager-color-live:            #ED8936;
+  --voyager-vault-grad-1:          #200068;
+  --voyager-vault-grad-2:          #4E38AF;
+
+  --voyager-orange-500:            #F4AC59;
+  --voyager-orange-600:            #ED8936;
+  --voyager-orange-700:            #D07128;
+
+  --voyager-surface-page:          #F8FAF9;
+  --voyager-surface-card:          #FFFFFF;
+  --voyager-surface-section:       #F2F4F3;
+  --voyager-text-primary:          #191C1C;
+  --voyager-text-secondary:        #494550;
+  --voyager-text-on-dark:          #FFFFFF;
+  --voyager-text-on-dark-muted:    rgba(255, 255, 255, 0.78);
+  --voyager-border-ghost:          rgba(34, 0, 92, 0.10);
+  --voyager-divider-section:       rgba(34, 0, 92, 0.05);
+
+  --voyager-grad-live:             linear-gradient(90deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
+  --voyager-grad-vault:            linear-gradient(270deg, #200068 0%, #4E38AF 100%);
+
+  --voyager-shadow-card:           0 12px 32px rgba(34, 0, 92, 0.18);
+  --voyager-text-shadow-live:      0 1px 2px rgba(120, 56, 8, 0.40), 0 0 1px rgba(120, 56, 8, 0.25);
+
+  --voyager-font-ui:               "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --voyager-font-number:           "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, var(--voyager-border-ghost) 0%, transparent 60%),
+    var(--voyager-surface-page);
+  color: var(--voyager-text-primary);
+  font-family: var(--voyager-font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  color: var(--voyager-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.breadcrumb a { color: var(--voyager-color-vault); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb-sep { color: rgba(34, 0, 92, 0.32); }
+
+.page-title {
+  margin: 0 0 4px;
+  color: var(--voyager-color-vault);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+}
+
+.page-meta {
+  margin: 0 0 32px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-number);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ── Tab bar ─────────────────────────────────────────────────────────────── */
+.tabbar {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 32px;
+  border-radius: 8px;
+  background: var(--voyager-surface-section);
+  border: 1px solid var(--voyager-divider-section);
+  width: fit-content;
+}
+
+.tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
+}
+.tab:hover {
+  background: rgba(34, 0, 92, 0.06);
+  color: var(--voyager-color-vault);
+}
+.tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
+.tab[aria-selected="true"] {
+  color: var(--voyager-text-on-dark);
+  background: var(--voyager-color-vault);
+  box-shadow: 0 4px 8px rgba(34, 0, 92, 0.24);
+}
+
+.viewer { display: flex; justify-content: center; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Canvas 790 × 775.1 — corresponde al rect del wireframe original
+   ══════════════════════════════════════════════════════════════════════════ */
+.canvas {
+  position: relative;
+  width:  790px;
+  height: 775.1px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--voyager-surface-section);
+  box-shadow: var(--voyager-shadow-card);
+}
+.canvas[hidden] { display: none; }
+
+/* ── Outer card (bg-coral-100 reemplazo · 40px padding) ─────────────────── */
+.ec-outer {
+  position: absolute;
+  inset: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Fondo común a las 3 variantes: transparente, sin delineado.
+   La diferenciación entre variantes vive en los componentes embebidos. */
+.ec-outer--live,
+.ec-outer--vault,
+.ec-outer--modern {
+  background: transparent;
+}
+
+/* ── Header (subastin head + greeting) ──────────────────────────────────── */
+.ec-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.ec-header-text {
+  flex: 1;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--voyager-color-vault);
+}
+
+.ec-header-text-bold { font-weight: 700; }
+
+/* ── White card (banner + grid) ─────────────────────────────────────────── */
+.ec-card {
+  margin-top: 32px;
+  padding: 20px;
+  flex: 1;
+  background: var(--voyager-surface-card);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+/* ── Banner subaspass ───────────────────────────────────────────────────── */
+.ec-banner {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ec-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ec-banner:focus-visible {
+  outline: 2px solid var(--voyager-color-vault-mid);
+  outline-offset: 2px;
+}
+
+/* ── Two-column grid (374px canje-info + 1fr seleccionar-canje) ─────────── */
+.ec-grid {
+  display: grid;
+  grid-template-columns: 374px 1fr;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+
+.ec-zone {
+  position: relative;
+  overflow: hidden;
+}
+
+.ec-zone iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <p class="breadcrumb">
+    <a href="../index.html">Previews</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Canjear Puntos</span>
+  </p>
+  <h1 class="page-title">Canjear Puntos</h1>
+  <p class="page-meta">790 × 775.1 · 3 variantes · reutiliza canje-info + seleccionar-canje</p>
+
+  <div class="tabbar" role="tablist" aria-label="Variantes de canjear puntos">
+    <button type="button" class="tab" role="tab" id="tab-live"   aria-selected="true"  data-target="canvas-live">Live</button>
+    <button type="button" class="tab" role="tab" id="tab-vault"  aria-selected="false" data-target="canvas-vault">Vault</button>
+    <button type="button" class="tab" role="tab" id="tab-modern" aria-selected="false" data-target="canvas-modern">Modern</button>
+  </div>
+
+  <div class="viewer">
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         VARIANT 1 — LIVE
+         Fondo gradiente live · header con text-shadow
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="canvas" id="canvas-live" role="tabpanel" aria-labelledby="tab-live">
+      <div class="ec-outer ec-outer--live">
+
+        <div class="ec-header">
+          <p class="ec-header-text">
+            ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
+          </p>
+        </div>
+
+        <div class="ec-card">
+
+          <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
+            <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
+                 alt="subaspass">
+          </a>
+
+          <div class="ec-grid">
+            <div class="ec-zone">
+              <iframe src="../../../components/canje-info/claude.html?embed=1&variant=Live"
+                      scrolling="no" loading="lazy" title="Canje Info — Live"></iframe>
+            </div>
+            <div class="ec-zone">
+              <iframe src="../../../components/seleccionar-canje/claude.html?embed=1&variant=Live"
+                      scrolling="no" loading="lazy" title="Seleccionar Canje — Live"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         VARIANT 2 — VAULT
+         Fondo gradiente vault
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="canvas" id="canvas-vault" role="tabpanel" aria-labelledby="tab-vault" hidden>
+      <div class="ec-outer ec-outer--vault">
+
+        <div class="ec-header">
+          <p class="ec-header-text">
+            ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
+          </p>
+        </div>
+
+        <div class="ec-card">
+
+          <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
+            <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
+                 alt="subaspass">
+          </a>
+
+          <div class="ec-grid">
+            <div class="ec-zone">
+              <iframe src="../../../components/canje-info/claude.html?embed=1&variant=Vault"
+                      scrolling="no" loading="lazy" title="Canje Info — Vault"></iframe>
+            </div>
+            <div class="ec-zone">
+              <iframe src="../../../components/seleccionar-canje/claude.html?embed=1&variant=Vault"
+                      scrolling="no" loading="lazy" title="Seleccionar Canje — Vault"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         VARIANT 3 — MODERN
+         Fondo transparente + delineado vault · header texto vault
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="canvas" id="canvas-modern" role="tabpanel" aria-labelledby="tab-modern" hidden>
+      <div class="ec-outer ec-outer--modern">
+
+        <div class="ec-header">
+          <p class="ec-header-text">
+            ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
+          </p>
+        </div>
+
+        <div class="ec-card">
+
+          <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
+            <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
+                 alt="subaspass">
+          </a>
+
+          <div class="ec-grid">
+            <div class="ec-zone">
+              <iframe src="../../../components/canje-info/claude.html?embed=1&variant=Modern"
+                      scrolling="no" loading="lazy" title="Canje Info — Modern"></iframe>
+            </div>
+            <div class="ec-zone">
+              <iframe src="../../../components/seleccionar-canje/claude.html?embed=1&variant=Modern"
+                      scrolling="no" loading="lazy" title="Seleccionar Canje — Modern"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+(function () {
+  const tabs    = document.querySelectorAll('[role="tab"]');
+  const panels  = document.querySelectorAll('[role="tabpanel"]');
+
+  function activate(targetId) {
+    tabs.forEach(function (t) {
+      const isActive = t.getAttribute('data-target') === targetId;
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    panels.forEach(function (p) {
+      if (p.id === targetId) { p.removeAttribute('hidden'); }
+      else { p.setAttribute('hidden', ''); }
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { activate(tab.getAttribute('data-target')); });
+  });
+})();
+</script>
+</body>
+</html>

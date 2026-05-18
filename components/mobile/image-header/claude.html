@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Image Header — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.22 0.18 285) 50%, white);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,    oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 56px 24px;
+}
+.variants-col {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  text-align: center;
+}
+
+.preview-frame { width: 420px; }
+
+.preview-frame header { display: block; }
+.preview-frame h1,
+.preview-frame p { margin: 0; padding: 0; }
+
+.preview-frame .relative           { position: relative; }
+.preview-frame .h-\[60px\]         { height: 60px; }
+.preview-frame .pl-12              { padding-left: 48px; }
+.preview-frame .pr-5               { padding-right: 20px; }
+.preview-frame .py-3               { padding-top: 12px; padding-bottom: 12px; }
+.preview-frame .font-display       { font-family: var(--voyager-font-display); }
+.preview-frame .text-white         { color: var(--voyager-color-text-on-dark); }
+
+.preview-frame .absolute           { position: absolute; }
+.preview-frame .left-0             { left: 0; }
+.preview-frame .px-4               { padding-left: 16px; padding-right: 16px; }
+.preview-frame .top-1\/2           { top: 50%; }
+.preview-frame .-translate-y-1\/2  { transform: translateY(-50%); }
+
+.preview-frame .w-8                { width: 32px; }
+.preview-frame .h-8                { height: 32px; }
+.preview-frame .-ml-2              { margin-left: -8px; }
+.preview-frame .fill-current       { fill: currentColor; }
+
+.preview-frame .text-lg            { font-size: 15px; }
+.preview-frame .font-bold          { font-weight: 700; }
+.preview-frame .leading-tight      { line-height: 1.2; }
+.preview-frame .truncate           { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.preview-frame .text-sm            { font-size: 12px; }
+.preview-frame .leading-normal     { line-height: 1.45; }
+
+.preview-frame .absolute svg { display: block; }
+.preview-frame .absolute svg:not([width]) { opacity: 0; }
+
+/* VARIANT 1 — Base · Solid Live */
+.v1 .bg-yellow-500 {
+  background-color: var(--voyager-color-live);
+  color: var(--voyager-color-vault);
+}
+.v1 .bg-yellow-500 .text-white { color: var(--voyager-color-vault); }
+.v1 .bg-yellow-500 .text-sm {
+  color: color-mix(in oklch, var(--voyager-color-vault) 72%, white);
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Mobile · Image Header — Voyager upgrade">
+    <div class="variants-col">
+
+      <div class="variant-block">
+        <p class="variant-label">Base · Solid Live</p>
+        <div class="preview-frame v1">
+          <header class="relative h-[60px] pl-12 pr-5 py-3 font-display text-white bg-yellow-500"><a href="/subascars" role="button" aria-pressed="true" class="absolute left-0 px-4 transform -translate-y-1/2 top-1/2"><svg viewBox="0 0 24 24" width="24" height="24" class="w-8 h-8 -ml-2 text-white fill-current"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a> <h1 class="text-lg font-bold leading-tight truncate">Volkswagen Gol 2015</h1> <p class="text-sm leading-normal truncate">Vendedor: SubasCars</p></header>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

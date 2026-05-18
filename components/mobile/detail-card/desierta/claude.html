@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Detail Card · Desierta — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-live-light:      oklch(0.80 0.13 70);
+  --voyager-color-live-dark:       oklch(0.62 0.17 50);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+
+  --voyager-gradient-live:
+    linear-gradient(160deg,
+      oklch(0.80 0.13 70)  0%,
+      oklch(0.72 0.16 55) 55%,
+      oklch(0.62 0.17 50) 100%);
+
+  --voyager-radius-sm:    4px;
+  --voyager-radius-md:    8px;
+  --voyager-shadow-card:  0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-ease: cubic-bezier(0.3, 0, 0, 1);
+  --voyager-font: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background:
+    radial-gradient(ellipse 65% 45% at top left,    oklch(0.22 0.18 285 / 5%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 5%) 0%, transparent 55%),
+    var(--voyager-color-surface-page);
+  font-family: var(--voyager-font);
+  -webkit-font-smoothing: antialiased;
+}
+.preview-stage {
+  display: flex;
+  justify-content: center;
+  padding: 56px 24px 80px;
+}
+.variants-row {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+}
+.variant-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.variant-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--voyager-color-vault) 45%, white);
+  text-align: center;
+}
+
+.card-desierta {
+  width: 372px;
+  height: 422px;
+  border-radius: 0 0 var(--voyager-radius-md) var(--voyager-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--voyager-shadow-card);
+}
+
+.card-desierta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.headline-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 24px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.headline-border-t,
+.headline-border-b {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+}
+.headline-border-t { top: 0; }
+.headline-border-b { bottom: 0; }
+
+.label-oferta {
+  font-family: var(--voyager-font);
+  font-size: 30px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  line-height: 1;
+  display: block;
+}
+
+.label-desierta {
+  font-family: var(--voyager-font);
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  display: block;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--voyager-font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  padding: 20px 24px;
+  margin-top: 32px;
+  border-radius: var(--voyager-radius-sm);
+  cursor: pointer;
+  transition:
+    background 200ms var(--voyager-ease),
+    border-color 200ms var(--voyager-ease),
+    color 200ms var(--voyager-ease),
+    box-shadow 200ms var(--voyager-ease),
+    transform 120ms var(--voyager-ease),
+    filter 150ms var(--voyager-ease);
+  width: 100%;
+  max-width: 260px;
+}
+.cta-btn span {
+  font-family: var(--voyager-font);
+  font-weight: 700;
+}
+
+/* V1 — NARANJA VIVO */
+.v1 {
+  background: var(--voyager-gradient-live);
+}
+.v1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 12%) 0%, transparent 38%);
+  pointer-events: none;
+}
+.v1::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 36%;
+  background: linear-gradient(0deg, oklch(0.62 0.17 50 / 22%) 0%, transparent 100%);
+  pointer-events: none;
+}
+.v1 .headline-border-t,
+.v1 .headline-border-b {
+  background: oklch(0.70 0.16 60 / 50%);
+}
+.v1 .label-oferta   { color: oklch(1 0 0 / 70%); }
+.v1 .label-desierta { color: var(--voyager-color-text-on-dark); }
+.v1 .cta-btn {
+  border: 1.5px solid oklch(1 0 0 / 52%);
+  background: transparent;
+  color: var(--voyager-color-text-on-dark);
+}
+.v1 .cta-btn:hover {
+  background: white;
+  border-color: white;
+  color: var(--voyager-color-live);
+  box-shadow: 0 4px 16px oklch(0.62 0.17 50 / 30%);
+  transform: translateY(-1px);
+}
+.v1 .cta-btn:active { transform: scale(0.98); }
+</style>
+</head>
+<body>
+<main class="preview-stage" aria-label="Mobile · Detail Card · Desierta — Voyager upgrade">
+  <div class="variants-row">
+
+    <div class="variant-block">
+      <p class="variant-label">Naranja Vivo</p>
+      <div class="card-desierta v1">
+        <div class="card-desierta-content">
+          <div class="headline-wrap">
+            <div class="headline-border-t"></div>
+            <span class="label-oferta">Oferta</span>
+            <span class="label-desierta">Desierta</span>
+            <div class="headline-border-b"></div>
+          </div>
+          <a class="cta-btn" href="#">
+            <span>Ver ofertas relacionadas</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

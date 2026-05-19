@@ -11,11 +11,20 @@
 :root {
   --voyager-color-vault:             oklch(0.22 0.18 285);
   --voyager-color-vault-mid:         oklch(0.30 0.20 285);
-  --voyager-color-negotiable:        oklch(0.78 0.14 195);
+  --voyager-color-negotiable:        oklch(0.751 0.114 198);
   --voyager-color-surface-card:      oklch(1 0 0);
   --voyager-color-surface-page:      oklch(0.98 0.004 160);
   --voyager-color-text-on-dark:      oklch(1 0 0);
   --voyager-color-text-muted:        color-mix(in oklch, oklch(0.22 0.18 285) 45%, white);
+
+  /* Gradients — Figma sync */
+  --voyager-gradient-vault2:
+    linear-gradient(135deg, oklch(0.198 0.176 287) 0%, oklch(0.405 0.205 285) 100%);
+  --voyager-gradient-negotiable:
+    linear-gradient(135deg,
+      oklch(0.806 0.117 198) 0%,
+      oklch(0.751 0.114 198) 50%,
+      oklch(0.638 0.103 197) 100%);
 
   --voyager-radius-sm:   4px;
   --voyager-radius-md:   8px;
@@ -211,13 +220,13 @@ html, body {
 
 /* VARIANT 1 — Base · Solid */
 .v1 .cp-header {
-  background-color: var(--voyager-color-vault);
+  background: var(--voyager-gradient-vault2);
 }
 .v1 .vmc-detail-bg-eastern {
-  background-color: var(--voyager-color-negotiable);
+  background: var(--voyager-gradient-negotiable);
 }
 .v1 .vmc-detail-bg-turquoise {
-  background-color: var(--voyager-color-negotiable);
+  background: var(--voyager-gradient-negotiable);
   color: var(--voyager-color-text-on-dark);
 }
 .v1 .vmc-detail-shadow-lg {

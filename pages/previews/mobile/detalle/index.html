@@ -40,8 +40,9 @@
   --voyager-tint-vault-soft:       color-mix(in oklch, oklch(0.22 0.18 285) 6%, transparent);
 
   --voyager-gradient-vault:        linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
-  --voyager-gradient-vault2:       linear-gradient(135deg, oklch(0.15 0.27 278) 0%, oklch(0.38 0.21 282) 100%);
+  --voyager-gradient-vault2:       linear-gradient(135deg, oklch(0.198 0.176 287) 0%, oklch(0.405 0.205 285) 100%);
   --voyager-gradient-live:         linear-gradient(180deg, oklch(0.80 0.13 70) 0%, oklch(0.72 0.16 55) 55%, oklch(0.62 0.17 50) 100%);
+  --voyager-gradient-negotiable:   linear-gradient(135deg, oklch(0.806 0.117 198) 0%, oklch(0.751 0.114 198) 50%, oklch(0.638 0.103 197) 100%);
 
   --voyager-radius-sm:   4px;
   --voyager-radius-md:   8px;
@@ -604,9 +605,9 @@ html, body {
   box-shadow: var(--voyager-shadow-cta-vault);
 }
 
-/* negociable — header vault sólido + CTA negotiable */
+/* negociable — header vault gradient + banner/CTA negotiable gradient */
 .cmp-detail-card.v-negociable .cp-header {
-  background: var(--voyager-color-vault);
+  background: var(--voyager-gradient-vault2);
 }
 .cmp-detail-card.v-negociable .cp-content {
   justify-content: flex-start;
@@ -618,19 +619,21 @@ html, body {
   margin: 0 -20px 20px;
   padding: 24px 20px;
   justify-content: center;
+  background: var(--voyager-gradient-negotiable);
 }
 .cmp-detail-card.v-negociable .negotiate-banner span {
   flex: none;
   text-align: center;
   font-size: 14px;
   letter-spacing: 0.02em;
+  color: var(--voyager-color-text-on-dark);
 }
 .cmp-detail-card.v-negociable .cta-participa {
-  background: var(--voyager-color-negotiable);
-  color: var(--voyager-color-vault);
+  background: var(--voyager-gradient-negotiable);
+  color: var(--voyager-color-text-on-dark);
 }
 .cmp-detail-card.v-negociable .cta-participa span {
-  color: var(--voyager-color-vault);
+  color: var(--voyager-color-text-on-dark);
 }
 .cmp-detail-card.v-negociable .cta-participa-wrap {
   box-shadow: var(--voyager-shadow-card);

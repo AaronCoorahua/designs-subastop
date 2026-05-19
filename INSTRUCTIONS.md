@@ -148,13 +148,35 @@ Pasar variante por query string: `?variant=Nombre%20Variante`
         scrolling="no" loading="lazy" title="Header"></iframe>
 ```
 
-Registrar la nueva página en `pages/previews/index.html`:
+**🚨 OBLIGATORIO — registrar la nueva página en `pages/previews/index.html`:**
+
+Crear el `index.html` de la página **NO basta**. La tarea se considera incompleta si el
+preview no aparece como tarjeta en `pages/previews/index.html`. Sin esa tarjeta el preview
+queda huérfano: nadie lo descubre desde el landing y el contador de la pestaña
+Desktop/Mobile no lo cuenta.
+
 ```html
-<a class="preview-card" href="./desktop/<pagina>/index.html">...</a>
+<a class="preview-card" href="./desktop/<pagina>/index.html">
+  <p class="card-label">Página · Desktop</p>
+  <h2 class="card-title">Nombre Visible</h2>
+  <p class="card-description">WxH · descripción corta de qué incluye.</p>
+  <span class="card-meta">
+    <span>Abrir</span>
+    <span class="card-arrow">
+      <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M5 2.5L9.5 7 5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </span>
+</a>
 <!-- o para mobile -->
-<a class="preview-card" href="./mobile/<pagina>/index.html">...</a>
+<a class="preview-card" href="./mobile/<pagina>/index.html"> ... </a>
 ```
 > El tab Desktop/Mobile se infiere automáticamente del segmento `desktop` o `mobile` en el href.
+
+**Checklist al crear un preview (no saltarse ningún paso):**
+1. ✅ Crear `pages/previews/<plataforma>/<pagina>/index.html` con los iframes.
+2. ✅ Añadir la tarjeta `<a class="preview-card">` en `pages/previews/index.html`.
+3. ✅ Verificar que el href de la tarjeta coincide exactamente con la nueva ruta.
+4. ✅ Confirmar que la descripción incluye dimensiones (`WxH`) y los componentes apilados.
 
 ---
 
@@ -182,3 +204,4 @@ Registrar la nueva página en `pages/previews/index.html`:
 | Plataforma se infiere del path | El segmento `desktop` o `mobile` determina el tab — NO añadir `data-platform` manual |
 | Un componente desktop NUNCA vive en `mobile/` | Si una vista necesita ambas, dos carpetas separadas |
 | **Variantes apiladas en vertical** | Dentro de cada `claude.html`, las `.preview-cell` se renderizan en una sola columna (`.preview-grid { grid-template-columns: auto; }`). El catálogo embebe el iframe completo, por lo que cada variante aparece **debajo** de la anterior, nunca al costado. |
+| **Toda página nueva se registra en `pages/previews/index.html`** | Crear el `index.html` de la página NO basta. Sin la tarjeta `<a class="preview-card">` en el landing, el preview queda huérfano. Ver la sección "Crear una página nueva" para el snippet completo y el checklist. |

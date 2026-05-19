@@ -62,26 +62,27 @@ html, body {
   overflow: hidden;
 }
 
-/* Gradient pill button — Participa / Ingresa */
-.pvbtn {
+/* Gradient pill button SMALL — header Ingresa (spec exacto pvbtn-sm) */
+.pvbtn-sm {
   --vbtn-angle:  90deg;
   --vbtn-stop-a: var(--vmc-color-orange-600);
   --vbtn-stop-b: var(--vmc-color-vault-500);
 
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
   height: 40px;
-  padding: 0 24px;
+  padding: 0 16px 0 4px;
   border-radius: var(--vmc-radius-full);
   border: 2px solid transparent;
   cursor: pointer;
   position: relative;
+  /* overflow: hidden omitido — necesario para el halo ::after */
   font-family: var(--vmc-font-display);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
+  text-shadow: 0 1px 2px oklch(0 0 0 / 20%);
   white-space: nowrap;
   flex-shrink: 0;
 
@@ -99,8 +100,8 @@ html, body {
   background-clip:   padding-box, border-box;
 
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 28%),
-    0 2px 6px oklch(0.72 0.16 55 / 30%);
+    inset 0 1px 0 oklch(1 0 0 / 25%),
+    0 2px 6px oklch(0.72 0.16 55 / 25%);
 
   transition:
     --vbtn-angle   0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
@@ -111,8 +112,20 @@ html, body {
   transform: translateZ(0);
 }
 
-/* Halo glow ::after — blurred gradient behind the button */
-.pvbtn::after {
+.pvbtn-sm .pvbtn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background: oklch(0 0 0 / 18%);
+  flex-shrink: 0;
+}
+.pvbtn-sm .pvbtn-icon svg { display: block; }
+
+/* Halo glow ::after */
+.pvbtn-sm::after {
   content: '';
   position: absolute;
   inset: -4px;
@@ -127,7 +140,7 @@ html, body {
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.pvbtn:hover {
+.pvbtn-sm:hover {
   --vbtn-angle:  135deg;
   --vbtn-stop-a: var(--vmc-color-orange-400);
   --vbtn-stop-b: var(--vmc-color-vault-400);
@@ -135,12 +148,9 @@ html, body {
     inset 0 1px 0 oklch(1 0 0 / 36%),
     0 6px 16px oklch(0.72 0.16 55 / 36%);
 }
-.pvbtn:hover::after {
-  opacity: 1;
-  filter: blur(18px);
-}
+.pvbtn-sm:hover::after { opacity: 1; filter: blur(18px); }
 
-.pvbtn:active {
+.pvbtn-sm:active {
   --vbtn-angle:  180deg;
   --vbtn-stop-a: var(--vmc-color-orange-700);
   --vbtn-stop-b: var(--vmc-color-orange-600);
@@ -149,32 +159,7 @@ html, body {
     inset 0 1px 0 oklch(1 0 0 / 18%),
     0 1px 3px oklch(0.55 0.18 35 / 45%);
 }
-.pvbtn:active::after {
-  opacity: 0.5;
-  filter: blur(8px);
-}
-
-/* Frozen state helpers — for documenting hover/pressed without interaction */
-.pvbtn.is-hover {
-  --vbtn-angle:  135deg;
-  --vbtn-stop-a: var(--vmc-color-orange-400);
-  --vbtn-stop-b: var(--vmc-color-vault-400);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 36%),
-    0 6px 16px oklch(0.72 0.16 55 / 36%);
-}
-.pvbtn.is-hover::after { opacity: 1; filter: blur(18px); }
-
-.pvbtn.is-active {
-  --vbtn-angle:  180deg;
-  --vbtn-stop-a: var(--vmc-color-orange-700);
-  --vbtn-stop-b: var(--vmc-color-orange-600);
-  transform: scale(0.97);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 18%),
-    0 1px 3px oklch(0.55 0.18 35 / 45%);
-}
-.pvbtn.is-active::after { opacity: 0.5; filter: blur(8px); }
+.pvbtn-sm:active::after { opacity: 0.5; filter: blur(8px); }
 </style>
 </head>
 <body>
@@ -191,7 +176,15 @@ html, body {
           </button>
           <img src="../../../../logo-preview.png" alt="VMC Subastas" style="width:173px;height:25px;display:block;flex-shrink:0">
         </div>
-        <button type="button" class="pvbtn">Ingresa</button>
+        <button type="button" class="pvbtn-sm">
+          <span class="pvbtn-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path>
+            </svg>
+          </span>
+          Ingresa
+        </button>
       </header>
     </div>
   </main>

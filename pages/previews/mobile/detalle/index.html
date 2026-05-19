@@ -251,9 +251,13 @@ body.is-new-style .cmp-header .login-btn {
 
   position: relative;
   height: 40px;
-  padding: 0 24px;
+  padding: 0 16px 0 4px;
+  gap: 8px;
   border: 2px solid transparent;
   border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px oklch(0 0 0 / 20%);
   background:
     linear-gradient(var(--vbtn-angle),
       var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%,
@@ -285,7 +289,9 @@ body.is-new-style .cmp-header .login-btn::after {
   pointer-events: none;
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
-body.is-new-style .cmp-header .login-btn .avatar { display: none; }
+body.is-new-style .cmp-header .login-btn .avatar {
+  background: oklch(0 0 0 / 18%);
+}
 body.is-new-style .cmp-header .login-btn:hover {
   --vbtn-angle:  135deg;
   --vbtn-stop-a: oklch(0.80 0.13 65);

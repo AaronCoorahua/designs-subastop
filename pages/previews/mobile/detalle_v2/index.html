@@ -125,8 +125,6 @@ html, body {
 .mobile-frame {
   width: 430px;
   background: var(--voyager-color-surface-page);
-  border-radius: 24px;
-  box-shadow: var(--voyager-shadow-page);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -141,9 +139,29 @@ html, body {
   background: var(--voyager-color-vault);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 0 11px 0 20px;
+  justify-content: space-between;
+  padding: 0 11px 0 12px;
+  gap: 12px;
   flex-shrink: 0;
+}
+.mf-header .header-left {
+  display: flex; align-items: center;
+  gap: 10px; min-width: 0; flex: 1;
+}
+.mf-header .menu-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  padding: 0; border: none;
+  border-radius: 9999px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: oklch(1 0 0 / 80%);
+}
+.mf-header .menu-btn svg { display: block; }
+.mf-header .brand-logo {
+  width: 173px; height: 25px;
+  display: block; flex-shrink: 0;
 }
 .mf-header-cta {
   display: flex;
@@ -1019,6 +1037,16 @@ html, body {
 
         <!-- 1 · HEADER -->
         <header class="mf-header">
+          <div class="header-left">
+            <button type="button" class="menu-btn" aria-label="Abrir menú">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.83" stroke-linecap="butt" aria-hidden="true">
+                <line x1="2.75" y1="6.42" x2="19.25" y2="6.42"></line>
+                <line x1="2.75" y1="11" x2="19.25" y2="11"></line>
+                <line x1="2.75" y1="15.58" x2="19.25" y2="15.58"></line>
+              </svg>
+            </button>
+            <img src="../../../../logo-preview.png" alt="VMC Subastas" class="brand-logo">
+          </div>
           <button type="button" class="mf-header-cta">
             <span class="avatar">
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">

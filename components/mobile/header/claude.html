@@ -52,7 +52,17 @@ html, body {
 <body>
   <main class="preview-stage" aria-label="Voyager mobile preview — Header">
     <div class="preview-frame">
-      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;padding:0 11px 0 20px">
+      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 11px 0 12px;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">
+          <button type="button" aria-label="Abrir menú" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:9999px;background:transparent;cursor:pointer;flex-shrink:0;color:oklch(1 0 0 / 80%);padding:0">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.83" stroke-linecap="butt" aria-hidden="true">
+              <line x1="2.75" y1="6.42" x2="19.25" y2="6.42"></line>
+              <line x1="2.75" y1="11" x2="19.25" y2="11"></line>
+              <line x1="2.75" y1="15.58" x2="19.25" y2="15.58"></line>
+            </svg>
+          </button>
+          <img src="../../../logo-preview.png" alt="VMC Subastas" style="width:173px;height:25px;display:block;flex-shrink:0">
+        </div>
         <button type="button" style="display:flex;align-items:center;gap:8px;height:38px;border-radius:9999px;border:none;cursor:pointer;background:linear-gradient(132deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-orange-600) 50%, var(--vmc-color-orange-700) 100%);padding:0 14px 0 4px;flex-shrink:0">
           <div style="width:30px;height:30px;border-radius:9999px;flex-shrink:0;background:color-mix(in oklch, var(--vmc-color-background-brand) 10%, transparent);display:flex;align-items:center;justify-content:center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">

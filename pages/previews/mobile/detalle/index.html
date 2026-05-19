@@ -161,30 +161,25 @@ html, body {
   color: var(--voyager-color-text-on-surface);
 }
 
-/* Stack body — área entre header y footer */
+/* Stack body — área entre header trio y footer.
+   Todos los previews son full-width: sin padding lateral, gap entre componentes. */
 .mobile-frame .stack-body {
   display: flex; flex-direction: column;
   background: var(--voyager-color-surface-section);
-}
-
-/* Full-width: header→image-header→skeleton pegados, sin gap entre componentes,
-   sin border-radius en ningún componente */
-.mobile-frame.full-width .stack-body {
   padding: 0;
   gap: 14px;
 }
-.mobile-frame.full-width .cmp-image-header,
-.mobile-frame.full-width .skeleton-image,
-.mobile-frame.full-width .cmp-detail-card,
-.mobile-frame.full-width .cmp-auction-conditions,
-.mobile-frame.full-width .cmp-condiciones,
-.mobile-frame.full-width .cmp-ofertas {
+
+/* Full-width: ningún componente tiene border-radius (todos pegados a los bordes) */
+.mobile-frame .cmp-image-header,
+.mobile-frame .skeleton-image,
+.mobile-frame .cmp-detail-card,
+.mobile-frame .cmp-detail-card-closed,
+.mobile-frame .cmp-detail-card-deserted,
+.mobile-frame .cmp-auction-conditions,
+.mobile-frame .cmp-condiciones,
+.mobile-frame .cmp-ofertas {
   border-radius: 0;
-}
-/* Padded: padding lateral + vertical gap entre componentes */
-.mobile-frame.padded .stack-body {
-  padding: 16px 14px;
-  gap: 14px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -266,6 +261,7 @@ html, body {
    COMPONENTE: SKELETON IMAGE
    ───────────────────────────────────────────────────────────────────────── */
 .skeleton-image {
+  position: relative;
   width: 100%;
   height: 362px;
   background: linear-gradient(145deg,
@@ -284,6 +280,25 @@ html, body {
   letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--voyager-color-text-tertiary);
 }
+.skeleton-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center;
+  gap: 8px;
+}
+.skeleton-dots .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: oklch(1 0 0 / 70%);
+  box-shadow: 0 1px 3px oklch(0 0 0 / 18%);
+}
+.skeleton-dots .dot.is-active {
+  width: 10px; height: 10px;
+  background: var(--voyager-color-vault);
+  box-shadow: 0 2px 6px oklch(0.22 0.18 285 / 35%);
+}
 
 /* ─────────────────────────────────────────────────────────────────────────
    COMPONENTE: DETAIL CARD — Base (compartida por en-vivo, extended,
@@ -292,7 +307,7 @@ html, body {
 .cmp-detail-card {
   position: relative;
   display: flex; flex-direction: column;
-  width: 430px; height: 363px;
+  width: 100%; height: 363px;
   overflow: hidden;
   border-radius: var(--voyager-radius-md);
   box-shadow: var(--voyager-shadow-card);
@@ -492,7 +507,8 @@ html, body {
 }
 
 .cmp-detail-card .cta-participa-wrap {
-  width: 390px;
+  width: 100%;
+  max-width: 390px;
   margin: 0 auto;
   border-radius: var(--voyager-radius-sm);
   position: relative; z-index: 1;
@@ -502,7 +518,7 @@ html, body {
   position: relative;
   overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  width: 390px; height: 58px;
+  width: 100%; height: 58px;
   margin: 0 auto;
   padding: 0 32px;
   border: none;
@@ -574,6 +590,23 @@ html, body {
 .cmp-detail-card.v-negociable .cp-header {
   background: var(--voyager-color-vault);
 }
+.cmp-detail-card.v-negociable .cp-content {
+  justify-content: flex-start;
+  padding-bottom: 20px;
+}
+.cmp-detail-card.v-negociable .negotiate-banner {
+  flex: 1;
+  align-items: center;
+  margin: 0 -20px 20px;
+  padding: 24px 20px;
+  justify-content: center;
+}
+.cmp-detail-card.v-negociable .negotiate-banner span {
+  flex: none;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
 .cmp-detail-card.v-negociable .cta-participa {
   background: var(--voyager-color-negotiable);
   color: var(--voyager-color-vault);
@@ -591,7 +624,7 @@ html, body {
 .cmp-detail-card-closed,
 .cmp-detail-card-deserted {
   position: relative;
-  width: 430px; height: 363px;
+  width: 100%; height: 363px;
   border-radius: var(--voyager-radius-md);
   overflow: hidden;
   display: flex; align-items: center; justify-content: center;
@@ -683,19 +716,19 @@ html, body {
 .cmp-detail-card-deserted .headline-border-t { top: 0; }
 .cmp-detail-card-deserted .headline-border-b { bottom: 0; }
 .cmp-detail-card-deserted .label-oferta {
-  font-size: 30px; font-weight: 300;
-  text-transform: uppercase; letter-spacing: 0.20em;
+  font-size: 20px; font-weight: 300;
+  text-transform: uppercase; letter-spacing: 0.18em;
   line-height: 1;
-  color: oklch(1 0 0 / 70%);
+  color: oklch(1 0 0 / 75%);
   display: block;
 }
 .cmp-detail-card-deserted .label-desierta {
-  font-size: 20px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 40px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.04em;
   line-height: 1;
   color: var(--voyager-color-text-on-dark);
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 .cmp-detail-card-deserted .cta-btn-deserted {
   margin-top: 24px;
@@ -753,19 +786,21 @@ html, body {
 }
 .cmp-condiciones .cond-trigger {
   position: relative;
-  display: flex; align-items: center; justify-content: center;
-  padding: 18px 52px 18px 18px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 20px 18px 12px;
+  gap: 10px;
   cursor: pointer;
 }
 .cmp-condiciones .cond-trigger-inner {
   position: relative;
-  display: inline-block;
-  width: 100%; min-width: 0;
-  text-align: center;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  min-width: 0;
   padding: 8px 18px;
 }
 .cmp-condiciones .cond-trigger-inner > svg {
-  color: var(--voyager-color-live);
+  color: var(--voyager-color-vault);
   position: absolute;
   width: 12px; height: 12px;
   fill: currentColor;
@@ -779,14 +814,14 @@ html, body {
 .cmp-condiciones .cond-title {
   margin: 0;
   font-family: var(--voyager-font-display);
-  font-size: 13px; font-weight: 700;
+  font-size: 14px; font-weight: 700;
   line-height: 1.15;
+  text-align: center;
   color: var(--voyager-color-vault);
 }
 .cmp-condiciones .cond-chevron {
-  position: absolute;
-  right: 18px; top: 50%;
-  transform: translateY(-50%) rotate(180deg);
+  display: inline-flex;
+  align-items: center; justify-content: center;
   width: 24px; height: 24px;
   color: var(--voyager-color-live);
   transition: transform var(--voyager-duration-standard) var(--voyager-ease-default);
@@ -797,8 +832,8 @@ html, body {
   fill: none; stroke: currentColor; stroke-width: 2.2;
   stroke-linecap: round; stroke-linejoin: round;
 }
-.cmp-condiciones.is-collapsed .cond-chevron {
-  transform: translateY(-50%) rotate(0deg);
+.cmp-condiciones.is-open .cond-chevron {
+  transform: rotate(180deg);
 }
 .cmp-condiciones.is-collapsed .cond-body { display: none; }
 .cmp-condiciones .cond-body { padding: 0 18px 24px; }
@@ -898,23 +933,9 @@ html, body {
   position: relative;
   width: 100%;
   padding: 16px 0;
-  border-radius: var(--voyager-radius-lg);
-  background: var(--voyager-color-surface-card);
-  box-shadow: var(--voyager-shadow-card);
-  background-image: linear-gradient(145deg,
-    color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%,
-    transparent 50%);
-  overflow: hidden;
+  background: transparent;
   display: flex; flex-direction: column;
   gap: 12px;
-}
-.cmp-ofertas::after {
-  content: "";
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 6px;
-  background: var(--voyager-color-vault);
-  border-radius: 0 0 var(--voyager-radius-lg) var(--voyager-radius-lg);
-  pointer-events: none; z-index: 0;
 }
 .cmp-ofertas .head {
   display: flex; flex-direction: row;
@@ -1155,7 +1176,7 @@ html, body {
     <section class="preview-section">
       <h2>Variante · Full width</h2>
       <div class="preview-panel">
-        <div class="mobile-frame full-width" aria-label="Mobile preview — Detalle · Full width">
+        <div class="mobile-frame" aria-label="Mobile preview — Detalle · Full width">
 
           <header class="cmp-header">
             <button type="button" class="login-btn">
@@ -1180,6 +1201,11 @@ html, body {
 
           <div class="skeleton-image" role="img" aria-label="Foto principal">
             <p>Imagen</p>
+            <div class="skeleton-dots" aria-hidden="true">
+              <span class="dot is-active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
           </div>
 
           <div class="stack-body">
@@ -1257,6 +1283,26 @@ html, body {
               <div class="chip is-inactive">Sin Opción a Visitas</div>
               <div class="chip is-inactive">Sin Comisión</div>
               <div class="chip is-active">Cuota mínima de participantes: 2</div>
+            </section>
+
+            <section class="cmp-condiciones is-collapsed" aria-label="Información general">
+              <div class="cond-trigger" role="button" tabindex="0" aria-expanded="false">
+                <div class="cond-trigger-inner">
+                  <svg class="cond-bracket-tl" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                    <path d="M11 1H1v10"/>
+                  </svg>
+                  <h2 class="cond-title">Información General</h2>
+                  <svg class="cond-bracket-br" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                    <path d="M1 11h10V1"/>
+                  </svg>
+                </div>
+                <span class="cond-chevron" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cond-body"></div>
             </section>
 
             <section class="cmp-condiciones is-open" aria-label="Condiciones del ofrecimiento">
@@ -1426,28 +1472,34 @@ html, body {
          SECCIÓN 2 · Variantes con padding interno (una por cada detail-card)
          ════════════════════════════════════════════════════════════════════ -->
     <section class="preview-section">
-      <h2>Variantes con padding · 6 estados del detail card</h2>
+      <h2>Variantes · 6 estados del detail card</h2>
 
       <div class="variants-grid">
 
         <!-- VARIANT 1 · EN VIVO -->
         <div class="variant-cell">
           <p class="variant-label">En Vivo</p>
-          <div class="mobile-frame padded" aria-label="Detalle · En Vivo · padded">
+          <div class="mobile-frame" aria-label="Detalle · En Vivo">
             <header class="cmp-header">
               <button type="button" class="login-btn">
                 <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
                 <span class="label">Ingresa</span>
               </button>
             </header>
-            <div class="stack-body">
-              <header class="cmp-image-header">
+            <header class="cmp-image-header">
                 <a href="#" class="back-btn" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 <h1 class="title">Volkswagen Gol 2015</h1>
                 <p class="subtitle">Vendedor: SubasCars</p>
               </header>
-              <div class="skeleton-image"><p>Imagen</p></div>
-
+              <div class="skeleton-image" role="img" aria-label="Foto principal">
+                <p>Imagen</p>
+                <div class="skeleton-dots" aria-hidden="true">
+                  <span class="dot is-active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            <div class="stack-body">
               <section class="cmp-detail-card v-en-vivo">
                 <div class="cp-header">
                   <div class="cp-header-date">
@@ -1483,13 +1535,6 @@ html, body {
                   <div class="price-info">Comisión: &gt;S&lt; 0</div>
                 </div>
               </section>
-
-              <section class="cmp-auction-conditions">
-                <div class="chip is-active">Con Fee de Habilitacion</div>
-                <div class="chip is-active">Con Precio Reserva</div>
-                <div class="chip is-inactive">Sin Opción a Visitas</div>
-                <div class="chip is-inactive">Sin Comisión</div>
-              </section>
             </div>
           </div>
         </div>
@@ -1497,21 +1542,27 @@ html, body {
         <!-- VARIANT 2 · EXTENDED (Inicio Extendido + countdown) -->
         <div class="variant-cell">
           <p class="variant-label">Inicio Extendido</p>
-          <div class="mobile-frame padded" aria-label="Detalle · Extended · padded">
+          <div class="mobile-frame" aria-label="Detalle · Extended">
             <header class="cmp-header">
               <button type="button" class="login-btn">
                 <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
                 <span class="label">Ingresa</span>
               </button>
             </header>
-            <div class="stack-body">
-              <header class="cmp-image-header">
+            <header class="cmp-image-header">
                 <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 <h1 class="title">Toyota Corolla 2024</h1>
                 <p class="subtitle">Vendedor: SubasCars</p>
               </header>
-              <div class="skeleton-image"><p>Imagen</p></div>
-
+              <div class="skeleton-image" role="img" aria-label="Foto principal">
+                <p>Imagen</p>
+                <div class="skeleton-dots" aria-hidden="true">
+                  <span class="dot is-active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            <div class="stack-body">
               <section class="cmp-detail-card v-extended">
                 <div class="cp-header">
                   <div class="extended-top"><span>Inicio Extendido</span></div>
@@ -1551,13 +1602,6 @@ html, body {
                   <div class="price-info">Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50</div>
                 </div>
               </section>
-
-              <section class="cmp-auction-conditions">
-                <div class="chip is-active">Con Fee de Habilitacion</div>
-                <div class="chip is-active">Con Precio Reserva</div>
-                <div class="chip is-inactive">Sin Opción a Visitas</div>
-                <div class="chip is-inactive">Sin Comisión</div>
-              </section>
             </div>
           </div>
         </div>
@@ -1565,21 +1609,27 @@ html, body {
         <!-- VARIANT 3 · OFERTA LIVE (encabezado naranja, CTA vault) -->
         <div class="variant-cell">
           <p class="variant-label">Oferta en Vivo</p>
-          <div class="mobile-frame padded" aria-label="Detalle · Oferta Live · padded">
+          <div class="mobile-frame" aria-label="Detalle · Oferta Live">
             <header class="cmp-header">
               <button type="button" class="login-btn">
                 <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
                 <span class="label">Ingresa</span>
               </button>
             </header>
-            <div class="stack-body">
-              <header class="cmp-image-header">
+            <header class="cmp-image-header">
                 <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 <h1 class="title">BMW X3 2023</h1>
                 <p class="subtitle">Vendedor: SubasCars</p>
               </header>
-              <div class="skeleton-image"><p>Imagen</p></div>
-
+              <div class="skeleton-image" role="img" aria-label="Foto principal">
+                <p>Imagen</p>
+                <div class="skeleton-dots" aria-hidden="true">
+                  <span class="dot is-active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            <div class="stack-body">
               <section class="cmp-detail-card v-oferta-live">
                 <div class="cp-header">
                   <div class="cp-header-centered"><span>Oferta en vivo</span></div>
@@ -1611,12 +1661,6 @@ html, body {
                 </div>
               </section>
 
-              <section class="cmp-auction-conditions">
-                <div class="chip is-active">Con Fee de Habilitacion</div>
-                <div class="chip is-inactive">Sin Precio Reserva</div>
-                <div class="chip is-inactive">Sin Opción a Visitas</div>
-                <div class="chip is-active">Con Comisión</div>
-              </section>
             </div>
           </div>
         </div>
@@ -1624,21 +1668,27 @@ html, body {
         <!-- VARIANT 4 · NEGOCIABLE -->
         <div class="variant-cell">
           <p class="variant-label">Negociable</p>
-          <div class="mobile-frame padded" aria-label="Detalle · Negociable · padded">
+          <div class="mobile-frame" aria-label="Detalle · Negociable">
             <header class="cmp-header">
               <button type="button" class="login-btn">
                 <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
                 <span class="label">Ingresa</span>
               </button>
             </header>
-            <div class="stack-body">
-              <header class="cmp-image-header">
+            <header class="cmp-image-header">
                 <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 <h1 class="title">Mercedes A200 2022</h1>
                 <p class="subtitle">Vendedor: SubasCars</p>
               </header>
-              <div class="skeleton-image"><p>Imagen</p></div>
-
+              <div class="skeleton-image" role="img" aria-label="Foto principal">
+                <p>Imagen</p>
+                <div class="skeleton-dots" aria-hidden="true">
+                  <span class="dot is-active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            <div class="stack-body">
               <section class="cmp-detail-card v-negociable">
                 <div class="cp-header">
                   <div class="cp-header-date">
@@ -1673,12 +1723,6 @@ html, body {
                 </div>
               </section>
 
-              <section class="cmp-auction-conditions">
-                <div class="chip is-active">Negociable</div>
-                <div class="chip is-inactive">Sin Precio Reserva</div>
-                <div class="chip is-inactive">Sin Opción a Visitas</div>
-                <div class="chip is-inactive">Sin Comisión</div>
-              </section>
             </div>
           </div>
         </div>
@@ -1686,21 +1730,27 @@ html, body {
         <!-- VARIANT 5 · CERRADA -->
         <div class="variant-cell">
           <p class="variant-label">Cerrada</p>
-          <div class="mobile-frame padded" aria-label="Detalle · Cerrada · padded">
+          <div class="mobile-frame" aria-label="Detalle · Cerrada">
             <header class="cmp-header">
               <button type="button" class="login-btn">
                 <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
                 <span class="label">Ingresa</span>
               </button>
             </header>
-            <div class="stack-body">
-              <header class="cmp-image-header">
+            <header class="cmp-image-header">
                 <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 <h1 class="title">Mazda CX-5 2020</h1>
                 <p class="subtitle">Vendedor: SubasCars</p>
               </header>
-              <div class="skeleton-image"><p>Imagen</p></div>
-
+              <div class="skeleton-image" role="img" aria-label="Foto principal">
+                <p>Imagen</p>
+                <div class="skeleton-dots" aria-hidden="true">
+                  <span class="dot is-active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            <div class="stack-body">
               <section class="cmp-detail-card-closed">
                 <div class="closed-content">
                   <span class="label-oferta">Oferta</span>
@@ -1711,12 +1761,6 @@ html, body {
                 </div>
               </section>
 
-              <section class="cmp-auction-conditions">
-                <div class="chip is-active">Con Fee de Habilitacion</div>
-                <div class="chip is-active">Con Precio Reserva</div>
-                <div class="chip is-inactive">Sin Opción a Visitas</div>
-                <div class="chip is-inactive">Sin Comisión</div>
-              </section>
             </div>
           </div>
         </div>
@@ -1724,21 +1768,27 @@ html, body {
         <!-- VARIANT 6 · DESIERTA -->
         <div class="variant-cell">
           <p class="variant-label">Desierta</p>
-          <div class="mobile-frame padded" aria-label="Detalle · Desierta · padded">
+          <div class="mobile-frame" aria-label="Detalle · Desierta">
             <header class="cmp-header">
               <button type="button" class="login-btn">
                 <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
                 <span class="label">Ingresa</span>
               </button>
             </header>
-            <div class="stack-body">
-              <header class="cmp-image-header">
+            <header class="cmp-image-header">
                 <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 <h1 class="title">Honda Civic 2019</h1>
                 <p class="subtitle">Vendedor: SubasCars</p>
               </header>
-              <div class="skeleton-image"><p>Imagen</p></div>
-
+              <div class="skeleton-image" role="img" aria-label="Foto principal">
+                <p>Imagen</p>
+                <div class="skeleton-dots" aria-hidden="true">
+                  <span class="dot is-active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            <div class="stack-body">
               <section class="cmp-detail-card-deserted">
                 <div class="deserted-content">
                   <div class="headline-wrap">
@@ -1751,12 +1801,6 @@ html, body {
                 </div>
               </section>
 
-              <section class="cmp-auction-conditions">
-                <div class="chip is-inactive">Sin Fee de Habilitacion</div>
-                <div class="chip is-inactive">Sin Precio Reserva</div>
-                <div class="chip is-inactive">Sin Opción a Visitas</div>
-                <div class="chip is-inactive">Sin Comisión</div>
-              </section>
             </div>
           </div>
         </div>

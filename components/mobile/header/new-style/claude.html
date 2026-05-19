@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Mobile · Header · New Style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* Registered custom property — smooth angle animation */
+@property --vbtn-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 90deg;
+}
+
+:root {
+  /* Voyager tokens */
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-text-on-dark: oklch(1 0 0);
+  --voyager-font-display:       "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:          "Roboto", system-ui, -apple-system, sans-serif;
+
+  /* VMC mapping — palette stops for the gradient button */
+  --vmc-color-base-white:    oklch(1 0 0);
+  --vmc-color-orange-400:    oklch(0.80 0.13 65);
+  --vmc-color-orange-600:    var(--voyager-color-live);
+  --vmc-color-orange-700:    oklch(0.55 0.18 35);
+  --vmc-color-vault-400:     oklch(0.44 0.18 285);
+  --vmc-color-vault-500:     oklch(0.30 0.20 285);
+  --vmc-color-vault-600:     var(--voyager-color-vault);
+
+  --vmc-color-background-brand: var(--voyager-color-vault);
+  --vmc-color-text-inverse:     var(--voyager-color-text-on-dark);
+
+  --vmc-radius-full:    9999px;
+  --vmc-font-display:   var(--voyager-font-display);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.preview-frame {
+  width: 430px;
+  height: 56px;
+  overflow: hidden;
+}
+
+/* Gradient pill button — Participa / Ingresa */
+.pvbtn {
+  --vbtn-angle:  90deg;
+  --vbtn-stop-a: var(--vmc-color-orange-600);
+  --vbtn-stop-b: var(--vmc-color-vault-500);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: var(--vmc-radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  font-family: var(--vmc-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  background-image:
+    linear-gradient(var(--vbtn-angle),
+      var(--vbtn-stop-a) 0%,
+      var(--vbtn-stop-a) 40%,
+      var(--vbtn-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  background-origin: padding-box, border-box;
+  background-clip:   padding-box, border-box;
+
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 28%),
+    0 2px 6px oklch(0.72 0.16 55 / 30%);
+
+  transition:
+    --vbtn-angle   0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    --vbtn-stop-a  0.35s ease,
+    --vbtn-stop-b  0.35s ease,
+    transform      0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow     0.25s ease;
+  transform: translateZ(0);
+}
+
+/* Halo glow ::after — blurred gradient behind the button */
+.pvbtn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-600),
+    var(--vmc-color-vault-500));
+  filter: blur(14px);
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.pvbtn:hover {
+  --vbtn-angle:  135deg;
+  --vbtn-stop-a: var(--vmc-color-orange-400);
+  --vbtn-stop-b: var(--vmc-color-vault-400);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 36%),
+    0 6px 16px oklch(0.72 0.16 55 / 36%);
+}
+.pvbtn:hover::after {
+  opacity: 1;
+  filter: blur(18px);
+}
+
+.pvbtn:active {
+  --vbtn-angle:  180deg;
+  --vbtn-stop-a: var(--vmc-color-orange-700);
+  --vbtn-stop-b: var(--vmc-color-orange-600);
+  transform: scale(0.97) translateZ(0);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 18%),
+    0 1px 3px oklch(0.55 0.18 35 / 45%);
+}
+.pvbtn:active::after {
+  opacity: 0.5;
+  filter: blur(8px);
+}
+
+/* Frozen state helpers — for documenting hover/pressed without interaction */
+.pvbtn.is-hover {
+  --vbtn-angle:  135deg;
+  --vbtn-stop-a: var(--vmc-color-orange-400);
+  --vbtn-stop-b: var(--vmc-color-vault-400);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 36%),
+    0 6px 16px oklch(0.72 0.16 55 / 36%);
+}
+.pvbtn.is-hover::after { opacity: 1; filter: blur(18px); }
+
+.pvbtn.is-active {
+  --vbtn-angle:  180deg;
+  --vbtn-stop-a: var(--vmc-color-orange-700);
+  --vbtn-stop-b: var(--vmc-color-orange-600);
+  transform: scale(0.97);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 18%),
+    0 1px 3px oklch(0.55 0.18 35 / 45%);
+}
+.pvbtn.is-active::after { opacity: 0.5; filter: blur(8px); }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Header · New Style">
+    <div class="preview-frame">
+      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 11px 0 12px;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">
+          <button type="button" aria-label="Abrir menú" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:9999px;background:transparent;cursor:pointer;flex-shrink:0;color:oklch(1 0 0 / 80%);padding:0">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.83" stroke-linecap="butt" aria-hidden="true">
+              <line x1="2.75" y1="6.42" x2="19.25" y2="6.42"></line>
+              <line x1="2.75" y1="11" x2="19.25" y2="11"></line>
+              <line x1="2.75" y1="15.58" x2="19.25" y2="15.58"></line>
+            </svg>
+          </button>
+          <img src="../../../../logo-preview.png" alt="VMC Subastas" style="width:173px;height:25px;display:block;flex-shrink:0">
+        </div>
+        <button type="button" class="pvbtn">Ingresa</button>
+      </header>
+    </div>
+  </main>
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Me Interesa — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-skeleton:        oklch(0.85 0.008 220);
+
+  --voyager-radius-sm:    0px;
+  --voyager-radius-md:    0px;
+  --voyager-radius-pill:  9999px;
+
+  --voyager-shadow-card:  0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-pill:  0 4px 10px oklch(0.22 0.18 285 / 12%);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.preview-frame {
+  width: 100%;
+  max-width: 430.4px;
+  height: 278px;
+  overflow: hidden;
+}
+
+.preview-frame .card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--voyager-color-surface-card);
+  box-shadow: var(--voyager-shadow-card);
+  padding: 20px 22px 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-image:
+    linear-gradient(145deg,
+      color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%,
+      transparent 55%);
+}
+
+.preview-frame .card::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background: var(--voyager-color-live);
+  pointer-events: none;
+}
+
+.preview-frame .head {
+  display: flex;
+  align-items: center;
+}
+
+.preview-frame .title-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 4px 14px;
+}
+.preview-frame .title-wrap .bracket {
+  position: absolute;
+  width: 9px; height: 9px;
+  color: var(--voyager-color-live);
+  fill: currentColor;
+}
+.preview-frame .title-wrap .bracket.tl { top: 0; left: 0; }
+.preview-frame .title-wrap .bracket.br { bottom: 0; right: 0; }
+.preview-frame .title {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--voyager-color-vault);
+}
+
+.preview-frame .grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.preview-frame .thumb {
+  position: relative;
+  width: 100%;
+  height: 168px;
+  background: linear-gradient(
+    145deg,
+    oklch(0.91 0.022 285) 0%,
+    oklch(0.94 0.010 220) 60%,
+    oklch(0.96 0.005 160) 100%
+  );
+  border-bottom: 8px solid var(--voyager-color-skeleton);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.preview-frame .thumb .heart-wrap {
+  position: absolute;
+  right: 10px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-frame .thumb .heart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-skeleton);
+  box-shadow: var(--voyager-shadow-pill);
+  color: oklch(1 0 0);
+  border: 0;
+  cursor: pointer;
+}
+.preview-frame .thumb .heart svg { width: 18px; height: 18px; fill: currentColor; }
+
+.preview-frame svg { display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Mobile · Me Interesa — Voyager upgrade">
+    <div class="preview-frame">
+      <div class="card">
+        <div class="head">
+          <div class="title-wrap">
+            <svg class="bracket tl" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.75 22C7.82 22 9.5 20.32 9.5 18.25L9.5 9.5H18.25C20.32 9.5 22 7.82 22 5.75C22 3.68 20.32 2 18.25 2L7 2C4.24 2 2 4.24 2 7L2 18.25C2 20.32 3.68 22 5.75 22Z" fill="currentColor"/></svg>
+            <h4 class="title">Me interesa</h4>
+            <svg class="bracket br" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.25 2C16.18 2 14.5 3.68 14.5 5.75V14.5L5.75 14.5C3.68 14.5 2 16.18 2 18.25C2 20.32 3.68 22 5.75 22H17C19.76 22 22 19.76 22 17V5.75C22 3.68 20.32 2 18.25 2Z" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="thumb">
+            <span class="heart-wrap">
+              <span class="heart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"/></svg>
+              </span>
+            </span>
+          </div>
+          <div class="thumb">
+            <span class="heart-wrap">
+              <span class="heart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21L10.6 19.7C5.4 15.1 2 12.1 2 8.4 2 5.4 4.4 3 7.5 3 9.2 3 10.9 3.8 12 5.1 13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.4 22 12.1 18.6 15.1 13.5 19.7L12 21Z" fill="currentColor"/></svg>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Wallet — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-divider-section: color-mix(in oklch, oklch(0.22 0.18 285) 8%, transparent);
+
+  --voyager-gradient-vault:
+    linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
+
+  --voyager-radius-sm:    0px;
+  --voyager-radius-md:    0px;
+  --voyager-radius-pill:  9999px;
+
+  --voyager-shadow-card:  0 8px 16px oklch(0.22 0.18 285 / 6%);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.preview-frame {
+  width: 100%;
+  max-width: 430.4px;
+  height: 220.8px;
+  overflow: hidden;
+}
+
+.preview-frame .card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--voyager-color-surface-card);
+  box-shadow: var(--voyager-shadow-card);
+  padding: 18px 22px 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-image:
+    linear-gradient(145deg,
+      color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%,
+      transparent 55%);
+}
+
+.preview-frame .card::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 9px;
+  background: var(--voyager-color-live);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.preview-frame .head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preview-frame .title-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 4px 14px;
+}
+.preview-frame .title-wrap .bracket {
+  position: absolute;
+  width: 9px; height: 9px;
+  color: var(--voyager-color-live);
+  fill: currentColor;
+}
+.preview-frame .title-wrap .bracket.tl { top: 0; left: 0; }
+.preview-frame .title-wrap .bracket.br { bottom: 0; right: 0; }
+.preview-frame .title {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--voyager-color-vault);
+}
+
+.preview-frame .head-link {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--voyager-color-vault);
+}
+.preview-frame .head-link svg { fill: currentColor; }
+
+.preview-frame hr {
+  border: 0;
+  border-top: 1px solid var(--voyager-color-divider-section);
+  margin: 12px 0;
+}
+
+.preview-frame .row {
+  display: flex;
+  align-items: center;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  color: var(--voyager-color-vault-mid);
+}
+.preview-frame .row + .row { margin-top: 8px; }
+.preview-frame .row .label { flex: 1 1 0%; font-weight: 400; }
+.preview-frame .row .value { font-weight: 700; }
+.preview-frame .row .value .prefix { margin-right: 4px; font-weight: 700; }
+
+.preview-frame .cta {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 40px;
+  padding: 6px 20px;
+  background: var(--voyager-gradient-vault);
+  color: oklch(1 0 0);
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 12px oklch(0.22 0.18 285 / 28%);
+  border: 0;
+  cursor: pointer;
+}
+.preview-frame .cta svg { fill: currentColor; }
+
+.preview-frame svg { display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Mobile · Wallet — Voyager upgrade">
+    <div class="preview-frame">
+      <div class="card">
+        <div class="head">
+          <div class="title-wrap">
+            <svg class="bracket tl" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.75 22C7.82 22 9.5 20.32 9.5 18.25L9.5 9.5H18.25C20.32 9.5 22 7.82 22 5.75C22 3.68 20.32 2 18.25 2L7 2C4.24 2 2 4.24 2 7L2 18.25C2 20.32 3.68 22 5.75 22Z" fill="currentColor"/></svg>
+            <h4 class="title">Billetera</h4>
+            <svg class="bracket br" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.25 2C16.18 2 14.5 3.68 14.5 5.75V14.5L5.75 14.5C3.68 14.5 2 16.18 2 18.25C2 20.32 3.68 22 5.75 22H17C19.76 22 22 19.76 22 17V5.75C22 3.68 20.32 2 18.25 2Z" fill="currentColor"/></svg>
+          </div>
+          <a href="#" class="head-link">
+            Transacciones
+            <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+          </a>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="label">SubasCoins:</div>
+          <div class="value"><span class="prefix">&gt;S&lt;</span>0</div>
+        </div>
+        <div class="row">
+          <div class="label">Saldo:</div>
+          <div class="value"><span class="prefix">US$</span>0</div>
+        </div>
+        <a href="#" class="cta">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-.7 14.4L7.3 12.4l1.4-1.4 2.6 2.6 4.6-4.6 1.4 1.4-6 6z" fill="currentColor"/></svg>
+          Adquiere SubasCoins
+        </a>
+      </div>
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

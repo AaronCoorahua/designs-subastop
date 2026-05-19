@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview Mobile — Zona · Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:       oklch(0.22 0.18 285);
+  --voyager-color-live:        oklch(0.72 0.16 55);
+  --voyager-surface-page:      oklch(0.98 0.004 160);
+  --voyager-surface-section:   oklch(0.96 0.006 160);
+  --voyager-text-on-surface:   oklch(0.15 0.008 200);
+  --voyager-text-secondary:    color-mix(in oklch, oklch(0.38 0.04 280) 70%, transparent);
+  --voyager-text-on-dark:      oklch(1 0 0);
+  --voyager-divider-section:   color-mix(in oklch, oklch(0.22 0.18 285) 8%, transparent);
+  --voyager-font-display:      "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, oklch(0.22 0.18 285 / 5%) 0%, transparent 60%),
+    var(--voyager-surface-page);
+  color: var(--voyager-text-on-surface);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  color: var(--voyager-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.breadcrumb a { color: var(--voyager-color-vault); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb-sep { color: color-mix(in oklch, var(--voyager-color-vault) 32%, transparent); }
+
+.page-title {
+  margin: 0 0 4px;
+  color: var(--voyager-color-vault);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+}
+
+.page-meta {
+  margin: 0 0 32px;
+  color: var(--voyager-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Variant tabs */
+.variant-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 32px;
+  border-radius: 4px;
+  background: var(--voyager-surface-section);
+  border: 1px solid var(--voyager-divider-section);
+  width: fit-content;
+}
+
+.variant-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--voyager-text-secondary);
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
+}
+
+.variant-tab:hover:not(.is-active) {
+  background: color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+  color: var(--voyager-color-vault);
+}
+
+.variant-tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
+
+.variant-tab.is-active {
+  color: var(--voyager-text-on-dark);
+  background: var(--voyager-color-vault);
+  box-shadow: 0 4px 8px color-mix(in oklch, var(--voyager-color-vault) 24%, transparent);
+}
+
+.variant-panel { display: none; }
+.variant-panel.is-active { display: flex; justify-content: center; }
+
+.mobile-frame {
+  width: 430.4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-frame > iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+/* ── Shared card-wrap · transparente, sólo organiza el stack ──────── */
+.mobile-frame .card-stage {
+  padding: 16px 8px;
+  display: flex;
+  justify-content: center;
+}
+.mobile-frame .card-stage .card-wrap {
+  width: 414.4px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.mobile-frame .card-stage .card-wrap iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+/* ── Default · gray background ───────────────────────────────────── */
+.mobile-frame.is-default { background: var(--voyager-surface-section); }
+
+/* ── Carded · vault background ────────────────────────────────────── */
+.mobile-frame.is-carded { background: var(--voyager-color-vault); }
+</style>
+</head>
+<body>
+  <main class="page">
+    <p class="breadcrumb">
+      <a href="../../index.html">Previews</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Zona · Mobile</span>
+    </p>
+    <h1 class="page-title">Zona</h1>
+    <p class="page-meta">430.4 wide · Card wrap 414.4 con rounded · Header + User Profile + Wallet + Tu Actividad + Me Interesa + Footer · 2 variantes (Default gris · Card sobre Vault)</p>
+
+    <nav class="variant-tabs" role="tablist" aria-label="Variantes">
+      <button class="variant-tab is-active" role="tab" aria-selected="true" data-variant="default" type="button">Default</button>
+      <button class="variant-tab" role="tab" aria-selected="false" data-variant="carded" type="button">Card sobre Vault</button>
+    </nav>
+
+    <!-- ── Variante: Default (gray bg) ───────────────────────────────────── -->
+    <section class="variant-panel is-active" data-variant="default">
+      <div class="mobile-frame is-default" aria-label="Mobile zona — Default">
+
+        <iframe
+          src="../../../../components/mobile/header/claude.html"
+          title="Header" scrolling="no" loading="lazy"
+          style="height:56px"></iframe>
+
+        <div class="card-stage">
+          <div class="card-wrap">
+            <iframe
+              src="../../../../components/mobile/user-profile-card/claude.html"
+              title="User Profile Card" scrolling="no" loading="lazy"
+              style="height:150.6px"></iframe>
+
+            <iframe
+              src="../../../../components/mobile/wallet/claude.html"
+              title="Wallet" scrolling="no" loading="lazy"
+              style="height:220.8px"></iframe>
+
+            <iframe
+              src="../../../../components/mobile/activity/claude.html"
+              title="Tu Actividad" scrolling="no" loading="lazy"
+              style="height:144.8px"></iframe>
+
+            <iframe
+              src="../../../../components/mobile/interests/claude.html"
+              title="Me Interesa" scrolling="no" loading="lazy"
+              style="height:278px"></iframe>
+          </div>
+        </div>
+
+        <iframe
+          src="../../../../components/mobile/footer/claude.html"
+          title="Footer" scrolling="no" loading="lazy"
+          style="height:870.63px"></iframe>
+
+      </div>
+    </section>
+
+    <!-- ── Variante: Card sobre Vault ────────────────────────────────────── -->
+    <section class="variant-panel" data-variant="carded">
+      <div class="mobile-frame is-carded" aria-label="Mobile zona — Card sobre Vault">
+
+        <iframe
+          src="../../../../components/mobile/header/claude.html"
+          title="Header" scrolling="no" loading="lazy"
+          style="height:56px"></iframe>
+
+        <div class="card-stage">
+          <div class="card-wrap">
+            <iframe
+              src="../../../../components/mobile/user-profile-card/claude.html"
+              title="User Profile Card" scrolling="no" loading="lazy"
+              style="height:150.6px"></iframe>
+
+            <iframe
+              src="../../../../components/mobile/wallet/claude.html"
+              title="Wallet" scrolling="no" loading="lazy"
+              style="height:220.8px"></iframe>
+
+            <iframe
+              src="../../../../components/mobile/activity/claude.html"
+              title="Tu Actividad" scrolling="no" loading="lazy"
+              style="height:144.8px"></iframe>
+
+            <iframe
+              src="../../../../components/mobile/interests/claude.html"
+              title="Me Interesa" scrolling="no" loading="lazy"
+              style="height:278px"></iframe>
+          </div>
+        </div>
+
+        <iframe
+          src="../../../../components/mobile/footer/claude.html"
+          title="Footer" scrolling="no" loading="lazy"
+          style="height:870.63px"></iframe>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll(".variant-tab"));
+    const panels = Array.from(document.querySelectorAll(".variant-panel"));
+
+    function activate(variant) {
+      tabs.forEach(function (tab) {
+        const isActive = tab.dataset.variant === variant;
+        tab.classList.toggle("is-active", isActive);
+        tab.setAttribute("aria-selected", String(isActive));
+      });
+      panels.forEach(function (panel) {
+        panel.classList.toggle("is-active", panel.dataset.variant === variant);
+      });
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        activate(tab.dataset.variant);
+      });
+    });
+  </script>
+</body>
+</html>

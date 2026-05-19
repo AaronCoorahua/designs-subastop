@@ -1,0 +1,1349 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview Mobile · Detalle V2 — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   TOKENS VOYAGER — fuente única de verdad
+   ============================================================ */
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:       oklch(0.30 0.20 285);
+  --voyager-color-vault-light:     oklch(0.44 0.18 285);
+  --voyager-color-vault-deep:      oklch(0.15 0.27 278);
+
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-live-light:      oklch(0.80 0.13 70);
+  --voyager-color-live-dark:       oklch(0.62 0.17 50);
+  --voyager-color-live-orange-500: oklch(0.78 0.18 55);
+  --voyager-color-live-orange-700: oklch(0.62 0.18 45);
+
+  --voyager-color-negotiable:      oklch(0.78 0.14 195);
+  --voyager-color-text-price:      oklch(0.53 0.13 193);
+
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-body:       oklch(0.32 0.05 280);
+  --voyager-color-text-secondary:  color-mix(in oklch, oklch(0.38 0.04 280) 70%, transparent);
+  --voyager-color-text-tertiary:   color-mix(in oklch, oklch(0.38 0.04 280) 50%, transparent);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.22 0.18 285) 50%, white);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+
+  --voyager-color-neutral-700:     oklch(0.70 0.015 257);
+  --voyager-color-skeleton:        oklch(0.85 0.008 220);
+  --voyager-color-status-success:  oklch(0.70 0.20 145);
+
+  --voyager-tint-vault-soft:       color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+
+  --voyager-gradient-vault:        linear-gradient(135deg, oklch(0.22 0.18 285) 0%, oklch(0.30 0.20 285) 100%);
+  --voyager-gradient-vault-deep:   linear-gradient(135deg, oklch(0.15 0.27 278) 0%, oklch(0.38 0.21 282) 100%);
+  --voyager-gradient-live:         linear-gradient(180deg, oklch(0.80 0.13 70) 0%, oklch(0.72 0.16 55) 55%, oklch(0.62 0.17 50) 100%);
+  --voyager-gradient-live-pill:    linear-gradient(132deg, oklch(0.78 0.18 55) 0%, oklch(0.72 0.16 55) 50%, oklch(0.62 0.18 45) 100%);
+
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-radius-pill: 9999px;
+
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-sm:       0 2px 8px  oklch(0.22 0.18 285 / 8%);
+  --voyager-shadow-like:     0 4px 16px oklch(0.22 0.18 285 / 20%);
+  --voyager-shadow-cta-live: 0 8px 24px oklch(0.72 0.16 55 / 30%), inset 0 1px 0 oklch(1 0 0 / 18%);
+  --voyager-shadow-page:     0 12px 40px oklch(0.22 0.18 285 / 12%);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-font-number:  "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, oklch(0.22 0.18 285 / 5%) 0%, transparent 60%),
+    var(--voyager-color-surface-page);
+  color: var(--voyager-color-text-on-surface);
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  color: var(--voyager-color-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.breadcrumb a { color: var(--voyager-color-vault); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb-sep { color: color-mix(in oklch, var(--voyager-color-vault) 32%, transparent); }
+
+.page-title {
+  margin: 0 0 4px;
+  color: var(--voyager-color-vault);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+}
+
+.page-meta {
+  margin: 0 0 32px;
+  color: var(--voyager-color-text-secondary);
+  font-family: var(--voyager-font-number);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   MOBILE FRAME — 430px contenedor
+   ============================================================ */
+.preview-panel { display: flex; justify-content: center; }
+
+.mobile-frame {
+  width: 430px;
+  background: var(--voyager-color-surface-page);
+  border-radius: 24px;
+  box-shadow: var(--voyager-shadow-page);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   1 · HEADER · barra vault 56px con CTA "Ingresa"
+   ============================================================ */
+.mf-header {
+  width: 100%;
+  height: 56px;
+  background: var(--voyager-color-vault);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 11px 0 20px;
+  flex-shrink: 0;
+}
+.mf-header-cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  border-radius: var(--voyager-radius-pill);
+  border: none;
+  cursor: pointer;
+  background: var(--voyager-gradient-live-pill);
+  padding: 0 14px 0 4px;
+  flex-shrink: 0;
+}
+.mf-header-cta .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--voyager-radius-pill);
+  flex-shrink: 0;
+  background: color-mix(in oklch, var(--voyager-color-vault) 10%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mf-header-cta .avatar svg { fill: var(--voyager-color-text-on-dark); }
+.mf-header-cta .label {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--voyager-color-text-on-dark);
+  white-space: nowrap;
+  text-shadow: 0 1px 1.5px rgba(0,0,0,0.25);
+}
+
+/* ============================================================
+   2 · IMAGE HEADER · barra naranja con título del vehículo
+   ============================================================ */
+.mf-image-header {
+  position: relative;
+  height: 60px;
+  padding: 12px 20px 12px 48px;
+  background: var(--voyager-color-live);
+  color: var(--voyager-color-text-on-dark);
+  text-shadow: 0 1px 3px oklch(0 0 0 / 30%);
+  font-family: var(--voyager-font-display);
+  flex-shrink: 0;
+}
+.mf-image-header .back-btn {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.mf-image-header .back-btn svg {
+  width: 32px;
+  height: 32px;
+  margin-left: -8px;
+  color: var(--voyager-color-text-on-dark);
+  fill: none;
+  stroke: currentColor;
+}
+.mf-image-header h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mf-image-header p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: oklch(1 0 0 / 85%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   STACK BODY — secciones del cuerpo del frame
+   ============================================================ */
+.stack-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 14px;
+  background: var(--voyager-color-surface-section);
+}
+
+/* ============================================================
+   3 · SKELETON IMAGEN · placeholder de foto del vehículo
+   ============================================================ */
+.skeleton-image {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(
+    145deg,
+    oklch(0.91 0.022 285) 0%,
+    oklch(0.94 0.010 220) 60%,
+    oklch(0.96 0.005 160) 100%
+  );
+  border-radius: var(--voyager-radius-lg);
+  box-shadow: 0 1px 3px oklch(0.22 0.18 285 / 8%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.skeleton-image p {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-tertiary);
+}
+
+/* ============================================================
+   4 · DETAIL CARD · En Vivo (header vault + cuerpo blanco + CTA naranja)
+   ============================================================ */
+.detail-card {
+  position: relative;
+  border-radius: var(--voyager-radius-md);
+  overflow: hidden;
+  box-shadow: var(--voyager-shadow-card);
+  display: flex;
+  flex-direction: column;
+  background: var(--voyager-color-surface-card);
+}
+
+.dc-header {
+  background: var(--voyager-gradient-vault-deep);
+  color: var(--voyager-color-text-on-dark);
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+.dc-header * { color: inherit; }
+
+.dc-header-top {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: 1px solid oklch(1 0 0 / 14%);
+}
+.dc-header-top .col {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.dc-header-top .col.right {
+  border-left: 1px solid oklch(1 0 0 / 14%);
+  padding-left: 24px;
+  justify-content: flex-end;
+}
+.dc-header-top .label-sm {
+  font-family: var(--voyager-font-display);
+  display: block;
+  line-height: 1.2;
+  font-size: 13px;
+  font-weight: 400;
+}
+.dc-header-top .label-lg {
+  font-family: var(--voyager-font-display);
+  display: block;
+  line-height: 1;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+.dc-header-top .time {
+  font-family: var(--voyager-font-display);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.dc-header-mid {
+  display: flex;
+  padding-bottom: 12px;
+}
+.dc-indicators {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dc-indicators.right { justify-content: flex-end; }
+.dc-indicators .count {
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+}
+.dc-icon-pill {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid oklch(1 0 0 / 28%);
+  border-radius: var(--voyager-radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--voyager-color-text-on-dark);
+  fill: currentColor;
+}
+
+.dc-like-wrap {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  margin-top: -32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.dc-like-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--voyager-radius-pill);
+  background: oklch(1 0 0 / 8%);
+  border: 1.5px solid oklch(1 0 0 / 32%);
+  color: oklch(1 0 0 / 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--voyager-shadow-like);
+  transition: background 150ms var(--voyager-ease-default);
+}
+.dc-like-btn svg { width: 24px; height: 24px; fill: currentColor; }
+.dc-like-count {
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--voyager-color-text-on-dark);
+}
+
+.dc-body {
+  background: var(--voyager-color-surface-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.dc-tagline {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--voyager-color-live);
+}
+.dc-cta {
+  width: 227px;
+  height: 47px;
+  border-radius: var(--voyager-radius-sm);
+  border: none;
+  background: var(--voyager-gradient-live);
+  box-shadow: var(--voyager-shadow-cta-live);
+  color: var(--voyager-color-text-on-dark);
+  font-family: var(--voyager-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 150ms var(--voyager-ease-default), transform 100ms var(--voyager-ease-default);
+}
+.dc-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 12%) 0%, transparent 45%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.dc-cta:hover  { filter: brightness(1.06); }
+.dc-cta:active { transform: scale(0.98); }
+
+.dc-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.dc-price .price-text {
+  font-family: var(--voyager-font-display);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--voyager-color-text-price);
+}
+.dc-price .price-text .light { font-weight: 300; }
+.dc-price .price-text .strong { font-weight: 700; }
+
+.dc-commission {
+  margin: 0;
+  text-align: center;
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--voyager-color-text-muted);
+}
+
+/* ============================================================
+   5 · AUCTION CONDITIONS · pills
+   ============================================================ */
+.auction-cond {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 8px;
+  background: var(--voyager-color-surface-card);
+  border-radius: var(--voyager-radius-md);
+  box-shadow: var(--voyager-shadow-card);
+}
+.auction-cond .pill {
+  width: calc(50% - 8px);
+  height: 46px;
+  margin: 8px 4px;
+  padding: 8px;
+  border-radius: var(--voyager-radius-sm);
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
+}
+.auction-cond .pill.active {
+  background: var(--voyager-color-neutral-700);
+  color: var(--voyager-color-text-on-dark);
+  letter-spacing: 0.01em;
+  box-shadow:
+    0 4px 12px oklch(0.70 0.015 257 / 50%),
+    0 1px 0   oklch(1 0 0 / 15%);
+}
+.auction-cond .pill.ghost {
+  background: transparent;
+  border: 1.5px solid var(--voyager-color-neutral-700);
+  color: var(--voyager-color-neutral-700);
+  text-shadow: none;
+}
+
+/* ============================================================
+   6 · CONDICIONES DEL OFRECIMIENTO · accordion
+   ============================================================ */
+.cond-ofr {
+  background: var(--voyager-color-surface-section);
+  border-radius: var(--voyager-radius-sm);
+  box-shadow: var(--voyager-shadow-card);
+  overflow: hidden;
+}
+.cond-ofr-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 52px 18px 18px;
+  cursor: pointer;
+}
+.cond-ofr-title-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 8px 18px;
+  width: 100%;
+  text-align: center;
+}
+.cond-ofr-title-wrap > svg.bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  fill: var(--voyager-color-live);
+  stroke: var(--voyager-color-live);
+  stroke-width: 2;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.cond-ofr-title-wrap > svg.bracket.tl { top: 0;    left: 0; }
+.cond-ofr-title-wrap > svg.bracket.br { bottom: 0; right: 0; }
+.cond-ofr-title-wrap h2 {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--voyager-color-vault);
+}
+.cond-ofr-chevron {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--voyager-color-live);
+  transition: transform var(--voyager-duration-standard) var(--voyager-ease-default);
+}
+.cond-ofr-chevron svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cond-ofr.is-collapsed .cond-ofr-chevron { transform: translateY(-50%) rotate(0deg); }
+.cond-ofr.is-collapsed .cond-ofr-body    { display: none; }
+
+.cond-ofr-body { padding: 0 18px 24px; }
+
+.cond-ofr-complexity {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.cond-ofr-complexity .label {
+  display: flex;
+  align-items: center;
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--voyager-color-vault) 65%, white);
+}
+.cond-ofr-complexity .dots {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+}
+.cond-ofr-complexity .dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-skeleton);
+}
+.cond-ofr-complexity .dot.on { background: var(--voyager-color-status-success); }
+
+.cond-typo { font-family: var(--voyager-font-body); font-size: 14px; line-height: 1.65; color: var(--voyager-color-text-on-surface); }
+.cond-typo h3 {
+  font-family: var(--voyager-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-vault);
+  margin: 28px 0 8px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid color-mix(in oklch, var(--voyager-color-vault) 8%, transparent);
+}
+.cond-typo h3:first-child { margin-top: 0; }
+.cond-typo h4 {
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--voyager-color-vault) 70%, white);
+  margin: 20px 0 8px 0;
+  display: flex;
+  align-items: center;
+}
+.cond-typo p {
+  position: relative;
+  margin: 0 0 12px 0;
+  padding-left: 12px;
+  color: var(--voyager-color-text-on-surface);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.cond-typo p > strong:first-child:last-child {
+  font-size: 13px;
+  color: color-mix(in oklch, var(--voyager-color-vault) 80%, white);
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.cond-typo strong { font-weight: 700; color: inherit; }
+.cond-typo ul { margin: 0 0 16px 0; padding-left: 0; list-style: none; }
+.cond-typo ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--voyager-color-text-on-surface);
+}
+.cond-typo ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--voyager-color-live);
+}
+.cond-typo ul ul { margin: 8px 0 0; padding-left: 12px; }
+.cond-typo ul ul li::before {
+  background: color-mix(in oklch, var(--voyager-color-vault) 30%, white);
+  width: 4px;
+  height: 4px;
+  top: 10px;
+}
+.cond-typo a {
+  color: var(--voyager-color-vault-mid);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--voyager-color-vault-mid) 40%, transparent);
+  text-underline-offset: 2px;
+}
+.cond-typo a:hover {
+  color: var(--voyager-color-live);
+  text-decoration-color: var(--voyager-color-live);
+}
+
+/* ============================================================
+   7 · OFERTAS RELACIONADAS · grid 2x2
+   ============================================================ */
+.related {
+  position: relative;
+  width: 100%;
+  padding: 16px 0;
+  border-radius: var(--voyager-radius-lg);
+  background: var(--voyager-color-surface-card);
+  box-shadow: var(--voyager-shadow-card);
+  background-image: linear-gradient(145deg, color-mix(in oklch, var(--voyager-color-vault) 2%, transparent) 0%, transparent 50%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.related::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: var(--voyager-color-vault);
+  border-radius: 0 0 var(--voyager-radius-lg) var(--voyager-radius-lg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.related-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 16px;
+}
+.related-head-info {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 0 0 auto;
+  width: fit-content;
+  padding: 4px 12px;
+}
+.related-head-info .bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  color: var(--voyager-color-live);
+  fill: currentColor;
+}
+.related-head-info .bracket-tl { top: 0; left: 0; }
+.related-head-info .bracket-br { bottom: 0; right: 0; }
+.related-head-info .title {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--voyager-color-vault);
+  line-height: 1;
+}
+.related-head-info .sub {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  line-height: 1.2;
+}
+.related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  margin: -4px -8px 0 0;
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--voyager-color-vault);
+  background: transparent;
+  border-radius: var(--voyager-radius-sm);
+  text-decoration: none;
+  transition: background-color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.related-link svg {
+  width: 11px;
+  height: 11px;
+  fill: var(--voyager-color-vault);
+  transition: transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.related-link:hover { background-color: var(--voyager-tint-vault-soft); }
+.related-link:hover svg { transform: translateX(2px); }
+
+.related-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.vcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--voyager-color-surface-card);
+  border-radius: var(--voyager-radius-sm);
+  box-shadow: var(--voyager-shadow-sm);
+  overflow: hidden;
+  border-bottom: 6px solid var(--voyager-color-live);
+  min-width: 0;
+}
+.vcard[data-status="negotiable"] { border-bottom-color: var(--voyager-color-negotiable); }
+
+.vcard .img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(145deg, oklch(0.91 0.022 285) 0%, oklch(0.94 0.010 220) 60%, oklch(0.96 0.005 160) 100%);
+  overflow: hidden;
+}
+.vcard .img-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.vcard .live-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-live);
+  box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-live) 40%, transparent);
+}
+.vcard .live-dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-surface-card);
+}
+
+.vcard .info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 4px;
+}
+.vcard .info .title {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-vault);
+  line-height: 1.1;
+}
+.vcard .info .year {
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--voyager-color-text-muted);
+  line-height: 1.2;
+}
+
+.vcard .footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 12px;
+  margin-top: auto;
+}
+.vcard .price {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.vcard .shield {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-negotiable);
+  color: var(--voyager-color-surface-card);
+}
+.vcard .shield svg { width: 13px; height: 13px; fill: currentColor; }
+.vcard .price-text {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--voyager-color-vault);
+  line-height: 1;
+  white-space: nowrap;
+}
+.vcard .heart {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-surface-card);
+  color: var(--voyager-color-vault);
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-vault) 16%, transparent);
+  transition: background var(--voyager-duration-micro) var(--voyager-ease-default), transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.vcard .heart svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+.vcard .heart:hover { background: var(--voyager-tint-vault-soft); transform: scale(1.06); }
+
+/* ============================================================
+   8 · FOOTER · vault, columnas verticales
+   ============================================================ */
+.mf-footer {
+  background: var(--voyager-color-vault);
+  width: 100%;
+  padding: 32px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex-shrink: 0;
+}
+.mf-footer img.brand {
+  width: 178px;
+  height: 99.34px;
+  object-fit: contain;
+  object-position: left;
+  flex-shrink: 0;
+}
+.mf-footer .col { display: flex; flex-direction: column; gap: 8px; }
+.mf-footer .col-head {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--voyager-color-text-on-dark);
+  margin: 0;
+}
+.mf-footer .col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mf-footer .col ul li a,
+.mf-footer .single-link {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: color-mix(in oklch, var(--voyager-color-text-on-dark) 60%, transparent);
+  text-decoration: none;
+}
+.mf-footer .social {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.mf-footer .social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.mf-footer .social a img { width: 20px; height: 20px; object-fit: contain; }
+.mf-footer .libro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mf-footer .libro img {
+  width: 86px;
+  height: 35px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.mf-footer .libro p {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--voyager-color-text-on-dark);
+}
+.mf-footer .divider {
+  height: 1px;
+  background: color-mix(in oklch, var(--voyager-color-text-on-dark) 15%, transparent);
+  flex-shrink: 0;
+}
+.mf-footer .copy {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: color-mix(in oklch, var(--voyager-color-text-on-dark) 60%, transparent);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <p class="breadcrumb">
+      <a href="../../index.html">Previews</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Mobile · Detalle · En Vivo · V2</span>
+    </p>
+    <h1 class="page-title">Detalle V2</h1>
+    <p class="page-meta">430 wide · hardcoded · sin iframes</p>
+
+    <div class="preview-panel">
+      <div class="mobile-frame" aria-label="Mobile preview — Detalle En Vivo V2">
+
+        <!-- 1 · HEADER -->
+        <header class="mf-header">
+          <button type="button" class="mf-header-cta">
+            <span class="avatar">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/>
+              </svg>
+            </span>
+            <span class="label">Ingresa</span>
+          </button>
+        </header>
+
+        <!-- 2 · IMAGE HEADER -->
+        <section class="mf-image-header" aria-label="Image Header">
+          <a href="#" class="back-btn" aria-label="Volver">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+              <path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <h1>Volkswagen Gol 2015</h1>
+          <p>Vendedor: SubasCars</p>
+        </section>
+
+        <div class="stack-body">
+
+          <!-- 3 · IMAGE SKELETON -->
+          <div class="skeleton-image" role="img" aria-label="Foto principal">
+            <p>Imagen</p>
+          </div>
+
+          <!-- 4 · DETAIL CARD · En Vivo -->
+          <article class="detail-card" aria-label="Detail Card En Vivo">
+            <div class="dc-header">
+              <div class="dc-header-top">
+                <div class="col left">
+                  <div>
+                    <span class="label-sm">Inicia</span>
+                    <span class="label-lg">miércoles 13</span>
+                  </div>
+                </div>
+                <div class="col right">
+                  <span class="time">01:35 pm</span>
+                </div>
+              </div>
+              <div class="dc-header-mid">
+                <div class="dc-indicators right">
+                  <span class="count">264</span>
+                  <span class="dc-icon-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z" fill="currentColor"/></svg>
+                  </span>
+                </div>
+                <div class="dc-like-wrap">
+                  <button type="button" class="dc-like-btn" aria-label="Me interesa">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"/></svg>
+                  </button>
+                  <span class="dc-like-count">1</span>
+                </div>
+                <div class="dc-indicators">
+                  <span class="dc-icon-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z" fill="currentColor"/><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z" fill="currentColor"/><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"/><path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z" fill="currentColor"/><path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z" fill="currentColor"/></svg>
+                  </span>
+                  <span class="count">0</span>
+                </div>
+              </div>
+            </div>
+            <div class="dc-body">
+              <p class="dc-tagline">¡Oportunidad para el que sabe!</p>
+              <button type="button" class="dc-cta">Participa</button>
+              <div class="dc-price">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 23" fill="none" aria-hidden="true">
+                  <path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"/>
+                  <path d="M12 23C11.7 23 11.3 22.9 11 22.8L1.5 18.6C0.6 18.2 0 17.4 0 16.4 0 15.4 0.6 14.5 1.5 14.2L11 10C11.7 9.7 12.4 9.7 13 10L22.6 14.2C23.4 14.5 24 15.4 24 16.4 24 17.4 23.4 18.2 22.6 18.6L13 22.8C12.7 22.9 12.3 23 12 23ZM12 11C11.8 11 11.7 11 11.5 11.1L1.9 15.3C1.5 15.5 1.2 15.9 1.2 16.4 1.2 16.9 1.5 17.3 1.9 17.5L11.5 21.7C11.8 21.8 12.2 21.8 12.5 21.7L22.1 17.5C22.5 17.3 22.8 16.9 22.8 16.4 22.8 15.9 22.5 15.5 22.1 15.3L12.5 11.1C12.3 11 12.2 11 12 11Z" fill="#367976"/>
+                  <path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"/>
+                  <path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3L12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8 11.7 9.8 11.7 9.8 11.8 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6ZM11 7.2C11 6.8 11.3 6.5 11.8 6.5V8.1C11.3 7.9 11 7.7 11 7.2ZM12.5 11.5V10C12.9 10.2 13.2 10.4 13.2 10.8 13.2 11.2 12.9 11.5 12.5 11.5Z" fill="white"/>
+                </svg>
+                <span class="price-text"><span class="light">Precio Base:</span> <span class="strong">US$ 54,999</span></span>
+              </div>
+              <p class="dc-commission">Comisión: &gt;S&lt; 0</p>
+            </div>
+          </article>
+
+          <!-- 5 · AUCTION CONDITIONS · pills -->
+          <section class="auction-cond" aria-label="Auction Conditions">
+            <div class="pill active">Con Fee de Habilitacion</div>
+            <div class="pill active">Con Precio Reserva</div>
+            <div class="pill ghost">Sin Opción a Visitas</div>
+            <div class="pill ghost">Sin Comisión</div>
+            <div class="pill active">Cuota mínima de participantes: 2</div>
+          </section>
+
+          <!-- 6 · CONDICIONES DEL OFRECIMIENTO -->
+          <section class="cond-ofr is-open" aria-label="Condiciones del ofrecimiento">
+            <div class="cond-ofr-head" role="button" tabindex="0" aria-expanded="true">
+              <div class="cond-ofr-title-wrap">
+                <svg class="bracket tl" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M11 1H1v10"/></svg>
+                <h2>Condiciones del ofrecimiento</h2>
+                <svg class="bracket br" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M1 11h10V1"/></svg>
+              </div>
+              <span class="cond-ofr-chevron">
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </div>
+            <div class="cond-ofr-body">
+              <div class="cond-ofr-complexity">
+                <span class="label">
+                  Complejidad del ofrecimiento
+                  <span class="dots">
+                    <span class="dot on" aria-label="Fácil"></span>
+                    <span class="dot" aria-label="Regular"></span>
+                    <span class="dot" aria-label="Experto"></span>
+                  </span>
+                </span>
+              </div>
+              <div class="cond-typo">
+                <h3>1. Responsabilidades de los Participantes</h3>
+                <p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
+                <ul>
+                  <li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso al consignar para participar en esta oferta.</li>
+                  <li>Al hacer una consignación, todo usuario conoce y acepta que es su responsabilidad disponer de una conexión estable a internet con un ancho de banda de mínimo 5Mbps.</li>
+                  <li>Es responsabilidad de cada participante acceder oportunamente a la sala y realizar por lo menos un bid válido.</li>
+                  <li>El incumplimiento de las responsabilidades como participante resulta en:
+                    <ul>
+                      <li>La retención del monto consignado hasta las 23:59:59 horas del día del proceso "En Vivo".</li>
+                      <li>La devolución de la consignación en SubasCoins.</li>
+                      <li>La pérdida de 15 puntos VMC y correspondiente afectación al Riesgo Usuario.</li>
+                    </ul>
+                  </li>
+                  <li>El Precio Reserva de la oferta podrá ser retirado durante el proceso "En Vivo".</li>
+                </ul>
+                <h3>2. Condiciones de Compra</h3>
+                <p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR al ser habilitado.</strong></p>
+                <h4>A. Responsabilidades del Vendedor</h4>
+                <ul>
+                  <li>El vendedor tendrá 10 días hábiles para habilitar al ganador.</li>
+                  <li>El vendedor se reserva el derecho de habilitación del ganador a libre discreción.</li>
+                </ul>
+                <h4>B. Habilitación del Ganador</h4>
+                <ul>
+                  <li>El ganador deberá ser habilitado para poder iniciar el proceso de compra.</li>
+                  <li>De ser habilitado, el ganador deberá pagar US$ 200 por concepto de Fee de habilitación previo a la validación de documentos.</li>
+                </ul>
+                <h3>3. Condiciones generales</h3>
+                <p><strong>Contemplan las condiciones aplicables a todos los ofrecimientos de la plataforma.</strong></p>
+                <ul>
+                  <li>El vendedor ofrece el o los bienes como están y donde están.</li>
+                  <li>Todas las imágenes y características publicadas han sido remitidas por el vendedor.</li>
+                  <li>El o los bienes ofrecidos pueden presentar daños y/o faltantes.</li>
+                  <li>VMC Subastas nunca interviene en el proceso de compraventa ni en el de entrega de las ofertas.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7 · OFERTAS RELACIONADAS -->
+          <section class="related" aria-label="Ofertas Relacionadas">
+            <div class="related-head">
+              <div class="related-head-info">
+                <svg class="bracket bracket-tl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+                </svg>
+                <span class="title">Ofertas Relacionadas</span>
+                <span class="sub">4 Ofertas</span>
+                <svg class="bracket bracket-br" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <a href="#" class="related-link">
+                Ver más
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+              </a>
+            </div>
+
+            <div class="related-grid">
+              <article class="vcard" data-status="live">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price">
+                    <span class="shield" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                    </span>
+                    <span class="price-text">US$ 9,999</span>
+                  </div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="vcard" data-status="live">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
+                  <span class="live-dot" aria-label="En vivo"></span>
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price">
+                    <span class="shield" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                    </span>
+                    <span class="price-text">US$ 9,999</span>
+                  </div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="vcard" data-status="negotiable">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" />
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price"></div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="vcard" data-status="live">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+                  <span class="live-dot" aria-label="En vivo"></span>
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price">
+                    <span class="shield" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                    </span>
+                    <span class="price-text">US$ 9,999</span>
+                  </div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- 8 · FOOTER -->
+        <footer class="mf-footer">
+          <img class="brand" src="https://www.figma.com/api/mcp/asset/5cbcd9a7-5eb0-4533-a732-de72391440f9" alt="VMC Subastas" />
+          <div class="col">
+            <p class="col-head">Plataforma</p>
+            <ul>
+              <li><a href="#">SubasCars</a></li>
+              <li><a href="#">SubasBlog</a></li>
+              <li><a href="#">¿Quiénes somos?</a></li>
+              <li><a href="#">¿Cómo vender?</a></li>
+              <li><a href="#">Subaspass</a></li>
+              <li><a href="#">BlackSheep Nation</a></li>
+            </ul>
+          </div>
+          <div class="col">
+            <p class="col-head">Legal &amp; Compliance</p>
+            <ul>
+              <li><a href="#">Condiciones y Términos</a></li>
+              <li><a href="#">Política de Protección de Datos Personales</a></li>
+              <li><a href="#">Política de privacidad General</a></li>
+              <li><a href="#">Testimonios</a></li>
+              <li><a href="#">Canal de denuncias</a></li>
+            </ul>
+          </div>
+          <div class="col">
+            <p class="col-head">Contacto</p>
+            <a href="#" class="single-link">Contáctanos</a>
+          </div>
+          <div class="col">
+            <p class="col-head">Encuéntranos en</p>
+            <div class="social">
+              <a href="#" aria-label="Facebook"><img src="https://www.figma.com/api/mcp/asset/8915e61d-9d9a-4ba0-a7e2-43117817b13c" alt="Facebook"></a>
+              <a href="#" aria-label="Instagram"><img src="https://www.figma.com/api/mcp/asset/2f92cfc2-1f01-4963-a6e4-068fdd6c94ff" alt="Instagram"></a>
+              <a href="#" aria-label="YouTube"><img src="https://www.figma.com/api/mcp/asset/616532dd-e802-4718-8d41-3f72e8631522" alt="YouTube"></a>
+              <a href="#" aria-label="X"><img src="https://www.figma.com/api/mcp/asset/c8e77c67-871c-4ec8-ac5e-bcebd0bc2b7e" alt="X"></a>
+            </div>
+          </div>
+          <div class="libro">
+            <img src="https://www.figma.com/api/mcp/asset/36a6ae2d-5b34-448e-9812-9c2fe907d004" alt="Libro de reclamaciones">
+            <p>Libros de reclamaciones</p>
+          </div>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="copy">© VMC Subastas es una marca registrada de Subastop S.A.C.<br>Todos los derechos reservados 2026</p>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var accordion = document.querySelector('.cond-ofr');
+      if (!accordion) return;
+      var trigger = accordion.querySelector('.cond-ofr-head');
+      function setOpen(isOpen) {
+        accordion.classList.toggle('is-open', isOpen);
+        accordion.classList.toggle('is-collapsed', !isOpen);
+        if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
+      }
+      function toggle() { setOpen(accordion.classList.contains('is-collapsed')); }
+      if (trigger) {
+        trigger.addEventListener('click', toggle);
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          e.preventDefault();
+          toggle();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

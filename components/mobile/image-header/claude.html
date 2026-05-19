@@ -59,7 +59,7 @@ html, body {
   text-align: center;
 }
 
-.preview-frame { width: 420px; }
+.preview-frame { width: 430px; }
 
 .preview-frame header { display: block; }
 .preview-frame h1,
@@ -97,11 +97,12 @@ html, body {
 /* VARIANT 1 — Base · Solid Live */
 .v1 .bg-yellow-500 {
   background-color: var(--voyager-color-live);
-  color: var(--voyager-color-vault);
+  color: var(--voyager-color-text-on-dark);
+  text-shadow: 0 1px 3px oklch(0 0 0 / 30%);
 }
-.v1 .bg-yellow-500 .text-white { color: var(--voyager-color-vault); }
+.v1 .bg-yellow-500 .text-white { color: var(--voyager-color-text-on-dark); }
 .v1 .bg-yellow-500 .text-sm {
-  color: color-mix(in oklch, var(--voyager-color-vault) 72%, white);
+  color: oklch(1 0 0 / 85%);
 }
 </style>
 </head>

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Preview Mobile — Detalle · En Vivo · Voyager</title>
+<title>Preview Mobile — Detalle · Voyager</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
 <style>
 /* ─────────────────────────────────────────────────────────────────────────
-   TOKENS (consolidados de todos los componentes)
+   TOKENS
    ───────────────────────────────────────────────────────────────────────── */
 :root {
   --voyager-color-vault:           oklch(0.22 0.18 285);
@@ -54,6 +54,8 @@
   --voyager-shadow-like:     0 4px 16px oklch(0.22 0.18 285 / 20%);
   --voyager-shadow-cta-live: 0 8px 24px oklch(0.72 0.16 55 / 30%),
                              inset 0 1px 0 oklch(1 0 0 / 18%);
+  --voyager-shadow-cta-vault: 0 8px 24px oklch(0.22 0.18 285 / 30%),
+                              inset 0 1px 0 oklch(1 0 0 / 18%);
 
   --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
@@ -63,7 +65,6 @@
   --voyager-duration-standard: 300ms;
   --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
 
-  /* Aliases legacy */
   --vmc-color-background-brand: var(--voyager-color-vault);
   --vmc-color-orange-500: oklch(0.78 0.18 55);
   --vmc-color-orange-600: var(--voyager-color-live);
@@ -75,8 +76,7 @@
 * { box-sizing: border-box; }
 
 html, body {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   background:
     radial-gradient(ellipse 70% 50% at top left, oklch(0.22 0.18 285 / 5%) 0%, transparent 60%),
     var(--voyager-color-surface-page);
@@ -89,7 +89,7 @@ html, body {
    PAGE CHROME
    ───────────────────────────────────────────────────────────────────────── */
 .page {
-  max-width: 1120px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 40px 24px 72px;
 }
@@ -114,33 +114,77 @@ html, body {
   font-size: 12px; font-weight: 500;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   MOBILE FRAME — 430 wide, stack vertical de componentes inlineados
-   ───────────────────────────────────────────────────────────────────────── */
+.preview-section { margin-top: 48px; }
+.preview-section h2 {
+  font-family: var(--voyager-font-display);
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 24px;
+}
+
 .preview-panel {
   display: flex;
   justify-content: center;
 }
 
+.variants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+.variant-cell {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.variant-cell .variant-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MOBILE FRAME — 430 wide
+   ───────────────────────────────────────────────────────────────────────── */
 .mobile-frame {
   width: 430px;
   background: var(--voyager-color-surface-page);
   border-radius: 24px;
   box-shadow: 0 12px 40px oklch(0.22 0.18 285 / 12%);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   font-family: var(--voyager-font-body);
   color: var(--voyager-color-text-on-surface);
 }
 
-/* Stack body — área entre header y footer con padding lateral consistente */
-.stack-body {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 16px 0;
+/* Stack body — área entre header y footer */
+.mobile-frame .stack-body {
+  display: flex; flex-direction: column;
   background: var(--voyager-color-surface-section);
+}
+
+/* Full-width: header→image-header→skeleton pegados, sin gap entre componentes,
+   sin border-radius en ningún componente */
+.mobile-frame.full-width .stack-body {
+  padding: 0;
+  gap: 14px;
+}
+.mobile-frame.full-width .cmp-image-header,
+.mobile-frame.full-width .skeleton-image,
+.mobile-frame.full-width .cmp-detail-card,
+.mobile-frame.full-width .cmp-auction-conditions,
+.mobile-frame.full-width .cmp-condiciones,
+.mobile-frame.full-width .cmp-ofertas {
+  border-radius: 0;
+}
+/* Padded: padding lateral + vertical gap entre componentes */
+.mobile-frame.padded .stack-body {
+  padding: 16px 14px;
+  gap: 14px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -177,7 +221,7 @@ html, body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: IMAGE HEADER (cmp-image-header) — barra naranja con título
+   COMPONENTE: IMAGE HEADER (cmp-image-header)
    ───────────────────────────────────────────────────────────────────────── */
 .cmp-image-header {
   position: relative;
@@ -189,6 +233,7 @@ html, body {
   text-shadow: 0 1px 3px oklch(0 0 0 / 30%);
   border-radius: var(--voyager-radius-sm);
   overflow: hidden;
+  flex-shrink: 0;
 }
 .cmp-image-header .back-btn {
   position: absolute;
@@ -218,7 +263,7 @@ html, body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: SKELETON IMAGE (placeholder foto principal)
+   COMPONENTE: SKELETON IMAGE
    ───────────────────────────────────────────────────────────────────────── */
 .skeleton-image {
   width: 100%;
@@ -241,7 +286,8 @@ html, body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: DETAIL CARD · EN VIVO (cmp-detail-card)
+   COMPONENTE: DETAIL CARD — Base (compartida por en-vivo, extended,
+   oferta-live, negociable). Las variantes cerrada/desierta son distintas.
    ───────────────────────────────────────────────────────────────────────── */
 .cmp-detail-card {
   position: relative;
@@ -259,15 +305,30 @@ html, body {
   padding: 0 20px;
   width: 100%;
   color: var(--voyager-color-text-on-dark);
-  background: var(--voyager-gradient-vault2);
+  background: var(--voyager-gradient-vault2); /* default = en-vivo / extended */
+  flex-shrink: 0;
 }
 .cmp-detail-card .cp-header * { color: inherit; }
+
+.cmp-detail-card .extended-top {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 20px;
+  background: var(--voyager-color-live);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+}
+.cmp-detail-card .extended-top span {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase;
+  color: var(--voyager-color-vault);
+}
 
 .cmp-detail-card .cp-header-date {
   display: flex;
   padding: 12px 0;
   border-bottom: 1px solid oklch(1 0 0 / 14%);
 }
+.cmp-detail-card .cp-header-date.has-extended { padding-top: 28px; }
 .cmp-detail-card .cp-header-top-left {
   width: 50%;
   display: flex; align-items: center;
@@ -290,6 +351,42 @@ html, body {
 .cmp-detail-card .label-time {
   font-weight: 700; font-size: 20px; line-height: 1;
 }
+.cmp-detail-card .label-inicia-lg {
+  font-size: 18px; font-weight: 300; line-height: 1;
+}
+
+/* Countdown (extended) */
+.cmp-detail-card .countdown {
+  display: flex; align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.cmp-detail-card .countdown .unit {
+  position: relative;
+  display: inline-flex; justify-content: center;
+}
+.cmp-detail-card .countdown .unit-label {
+  position: absolute; top: -12px;
+  font-size: 10px; font-weight: 400;
+}
+.cmp-detail-card .countdown .unit-number {
+  font-size: 22px; font-weight: 700; line-height: 1;
+}
+.cmp-detail-card .countdown .sep {
+  font-size: 22px; font-weight: 700; line-height: 1;
+  margin: 0 4px;
+}
+
+/* Centered header text (oferta-live) */
+.cmp-detail-card .cp-header-centered {
+  padding: 12px 0;
+  border-bottom: 1px solid oklch(1 0 0 / 14%);
+  text-align: center;
+}
+.cmp-detail-card .cp-header-centered span {
+  font-size: 22px; font-weight: 700; line-height: 1;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-on-dark);
+}
 
 .cmp-detail-card .indicators-row { display: flex; }
 .cmp-detail-card .indicators-cell {
@@ -298,7 +395,6 @@ html, body {
 }
 .cmp-detail-card .indicators-cell.right { justify-content: flex-end; }
 .cmp-detail-card .indicators-cell.left  { justify-content: flex-start; }
-
 .cmp-detail-card .indicators-cell .count {
   margin-right: 8px;
   font-size: 13px;
@@ -314,9 +410,7 @@ html, body {
 }
 .cmp-detail-card .indicators-icon svg { fill: currentColor; }
 
-.cmp-detail-card .like-wrap {
-  flex-shrink: 1;
-}
+.cmp-detail-card .like-wrap { flex-shrink: 1; }
 .cmp-detail-card .like-stack {
   padding: 12px 0;
   margin-top: -32px;
@@ -336,8 +430,7 @@ html, body {
   color: oklch(1 0 0 / 50%);
   border-radius: 9999px;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  position: relative;
+  cursor: pointer; position: relative;
   transition: background 150ms var(--voyager-ease-default);
 }
 .cmp-detail-card .cta-like-button:focus { outline: none; }
@@ -359,15 +452,45 @@ html, body {
   background-color: var(--voyager-color-surface-card);
   flex: 1;
   display: flex; flex-direction: column;
-  padding: 0 20px 24px;
+  justify-content: center;
+  padding: 0 20px;
 }
+
+/* Negociable: banner azul antes del CTA */
+.cmp-detail-card .negotiate-banner {
+  display: flex; align-items: center;
+  background: var(--voyager-color-negotiable);
+  margin: 0 -20px 16px;
+  padding: 14px 20px;
+}
+.cmp-detail-card .negotiate-banner span {
+  flex: 1;
+  font-family: var(--voyager-font-display);
+  font-size: 15px; font-weight: 700;
+  text-transform: uppercase;
+  color: var(--voyager-color-vault);
+}
+
+/* Oferta-live: timer bar */
+.cmp-detail-card .live-timer-bar {
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px 0;
+  margin-bottom: 8px;
+}
+.cmp-detail-card .live-timer-bar span {
+  font-family: var(--voyager-font-display);
+  font-size: 15px; font-weight: 500;
+  color: var(--voyager-color-vault);
+}
+
 .cmp-detail-card .opportunity-text {
-  margin: 20px 0 8px;
+  margin: 0 0 8px;
   font-size: 13px; font-weight: 600;
   color: var(--voyager-color-live);
   line-height: 1.15;
   text-align: center;
 }
+
 .cmp-detail-card .cta-participa-wrap {
   width: 390px;
   margin: 0 auto;
@@ -429,8 +552,160 @@ html, body {
   font-size: 10px;
 }
 
+/* ─── Variantes modificadoras ─── */
+
+/* extended — top bar amarillo + cabecera vault2 (default) */
+.cmp-detail-card.v-extended .cp-header {
+  padding-top: 0;
+}
+
+/* oferta-live — header naranja con texto centrado */
+.cmp-detail-card.v-oferta-live .cp-header {
+  background: var(--voyager-color-live);
+}
+.cmp-detail-card.v-oferta-live .cta-participa {
+  background: var(--voyager-gradient-vault);
+}
+.cmp-detail-card.v-oferta-live .cta-participa-wrap {
+  box-shadow: var(--voyager-shadow-cta-vault);
+}
+
+/* negociable — header vault sólido + CTA negotiable */
+.cmp-detail-card.v-negociable .cp-header {
+  background: var(--voyager-color-vault);
+}
+.cmp-detail-card.v-negociable .cta-participa {
+  background: var(--voyager-color-negotiable);
+  color: var(--voyager-color-vault);
+}
+.cmp-detail-card.v-negociable .cta-participa span {
+  color: var(--voyager-color-vault);
+}
+.cmp-detail-card.v-negociable .cta-participa-wrap {
+  box-shadow: var(--voyager-shadow-card);
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: AUCTION CONDITIONS · VIVO (cmp-auction-conditions) — chips
+   DETAIL CARD — Cerrada
+   ───────────────────────────────────────────────────────────────────────── */
+.cmp-detail-card-closed,
+.cmp-detail-card-deserted {
+  position: relative;
+  width: 430px; height: 363px;
+  border-radius: var(--voyager-radius-md);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--voyager-shadow-card);
+  background: var(--voyager-gradient-live);
+  color: var(--voyager-color-text-on-dark);
+  font-family: var(--voyager-font-display);
+}
+.cmp-detail-card-closed::before,
+.cmp-detail-card-deserted::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, oklch(1 0 0 / 10%) 0%, transparent 40%);
+  pointer-events: none;
+}
+.cmp-detail-card-closed::after,
+.cmp-detail-card-deserted::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(0deg, oklch(0.62 0.17 50 / 25%) 0%, transparent 100%);
+  pointer-events: none;
+}
+.cmp-detail-card-closed .closed-content,
+.cmp-detail-card-deserted .deserted-content {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 32px 40px;
+  position: relative; z-index: 2;
+  width: 100%;
+}
+.cmp-detail-card-closed .label-oferta {
+  font-size: 20px; font-weight: 300;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  line-height: 1;
+  color: oklch(1 0 0 / 75%);
+}
+.cmp-detail-card-closed .label-cerrada {
+  font-size: 40px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--voyager-color-text-on-dark);
+  margin-top: 4px;
+}
+.cmp-detail-card-closed .divider {
+  width: 40px; height: 1px;
+  margin: 20px auto;
+  background: oklch(1 0 0 / 28%);
+  border: 0;
+}
+.cmp-detail-card-closed .label-sub {
+  font-size: 13px; font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: oklch(1 0 0 / 72%);
+  margin: 0 0 24px;
+}
+.cmp-detail-card-closed .cta-btn-closed,
+.cmp-detail-card-deserted .cta-btn-deserted {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 11px 22px;
+  border-radius: var(--voyager-radius-sm);
+  border: 1.5px solid oklch(1 0 0 / 55%);
+  background: transparent;
+  color: var(--voyager-color-text-on-dark);
+  cursor: pointer;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   DETAIL CARD — Desierta
+   ───────────────────────────────────────────────────────────────────────── */
+.cmp-detail-card-deserted .headline-wrap {
+  display: inline-flex; flex-direction: column;
+  align-items: center;
+  padding: 12px 24px;
+  position: relative;
+  margin-bottom: 16px;
+}
+.cmp-detail-card-deserted .headline-border-t,
+.cmp-detail-card-deserted .headline-border-b {
+  position: absolute; left: 0; right: 0; height: 1px;
+  background: oklch(0.70 0.16 60 / 50%);
+}
+.cmp-detail-card-deserted .headline-border-t { top: 0; }
+.cmp-detail-card-deserted .headline-border-b { bottom: 0; }
+.cmp-detail-card-deserted .label-oferta {
+  font-size: 30px; font-weight: 300;
+  text-transform: uppercase; letter-spacing: 0.20em;
+  line-height: 1;
+  color: oklch(1 0 0 / 70%);
+  display: block;
+}
+.cmp-detail-card-deserted .label-desierta {
+  font-size: 20px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--voyager-color-text-on-dark);
+  display: block;
+  margin-top: 2px;
+}
+.cmp-detail-card-deserted .cta-btn-deserted {
+  margin-top: 24px;
+  padding: 16px 24px;
+  font-size: 13px; font-weight: 700;
+  width: 100%; max-width: 260px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   COMPONENTE: AUCTION CONDITIONS (chips)
    ───────────────────────────────────────────────────────────────────────── */
 .cmp-auction-conditions {
   display: flex; flex-wrap: wrap; justify-content: center;
@@ -456,9 +731,7 @@ html, body {
 .cmp-auction-conditions .chip.is-active {
   background-color: var(--voyager-color-neutral-700);
   letter-spacing: 0.01em;
-  box-shadow:
-    0 4px 12px oklch(0.70 0.015 257 / 50%),
-    0 1px 0 oklch(1 0 0 / 15%);
+  box-shadow: 0 4px 12px oklch(0.70 0.015 257 / 50%), 0 1px 0 oklch(1 0 0 / 15%);
 }
 .cmp-auction-conditions .chip.is-inactive {
   background-color: transparent;
@@ -468,7 +741,7 @@ html, body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: CONDICIONES DE OFRECIMIENTO (cmp-condiciones) — accordion
+   COMPONENTE: CONDICIONES DE OFRECIMIENTO (accordion)
    ───────────────────────────────────────────────────────────────────────── */
 .cmp-condiciones {
   width: 100%;
@@ -496,7 +769,6 @@ html, body {
   position: absolute;
   width: 12px; height: 12px;
   fill: currentColor;
-  transition: color 200ms var(--voyager-ease-default);
 }
 .cmp-condiciones .cond-trigger-inner > svg path {
   fill: none; stroke: currentColor; stroke-width: 2;
@@ -529,14 +801,10 @@ html, body {
   transform: translateY(-50%) rotate(0deg);
 }
 .cmp-condiciones.is-collapsed .cond-body { display: none; }
-
-.cmp-condiciones .cond-body {
-  padding: 0 18px 24px;
-}
+.cmp-condiciones .cond-body { padding: 0 18px 24px; }
 .cmp-condiciones .cond-quality {
   display: flex; align-items: center; justify-content: center;
-  width: 100%;
-  margin-bottom: 32px;
+  width: 100%; margin-bottom: 32px;
 }
 .cmp-condiciones .cond-quality-label {
   display: flex; align-items: center;
@@ -548,8 +816,7 @@ html, body {
 }
 .cmp-condiciones .cond-quality-dots {
   display: flex; align-items: center;
-  margin-left: 8px;
-  gap: 4px;
+  margin-left: 8px; gap: 4px;
 }
 .cmp-condiciones .cond-dot {
   display: block;
@@ -557,14 +824,11 @@ html, body {
   border-radius: 9999px;
   background-color: var(--voyager-color-skeleton);
 }
-.cmp-condiciones .cond-dot.is-on {
-  background-color: var(--voyager-color-status-success);
-}
+.cmp-condiciones .cond-dot.is-on { background-color: var(--voyager-color-status-success); }
 .cmp-condiciones .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
-
 .cmp-condiciones .cond-typography {
   font-family: var(--voyager-font-body);
   font-size: 14px; line-height: 1.65;
@@ -598,24 +862,18 @@ html, body {
 .cmp-condiciones .cond-typography p > strong:first-child:last-child {
   font-size: 13px;
   color: color-mix(in oklch, var(--voyager-color-vault) 80%, white);
-  display: block;
-  margin-bottom: 12px;
-  font-weight: 600;
+  display: block; margin-bottom: 12px; font-weight: 600;
 }
 .cmp-condiciones .cond-typography strong { font-weight: 700; color: inherit; }
-.cmp-condiciones .cond-typography ul {
-  margin: 0 0 16px; padding-left: 0; list-style: none;
-}
+.cmp-condiciones .cond-typography ul { margin: 0 0 16px; padding-left: 0; list-style: none; }
 .cmp-condiciones .cond-typography ul li {
   position: relative;
-  padding-left: 18px;
-  margin-bottom: 8px;
+  padding-left: 18px; margin-bottom: 8px;
   font-size: 13.5px; line-height: 1.65;
   color: var(--voyager-color-text-on-surface);
 }
 .cmp-condiciones .cond-typography ul li::before {
-  content: '';
-  position: absolute;
+  content: ''; position: absolute;
   left: 0; top: 9px;
   width: 5px; height: 5px;
   border-radius: 50%;
@@ -631,16 +889,10 @@ html, body {
   text-decoration: underline;
   text-decoration-color: color-mix(in oklch, var(--voyager-color-vault-mid) 40%, transparent);
   text-underline-offset: 2px;
-  transition: color var(--voyager-duration-micro) var(--voyager-ease-default),
-              text-decoration-color var(--voyager-duration-micro) var(--voyager-ease-default);
-}
-.cmp-condiciones .cond-typography a:hover {
-  color: var(--voyager-color-live);
-  text-decoration-color: var(--voyager-color-live);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: OFERTAS RELACIONADAS (cmp-ofertas)
+   COMPONENTE: OFERTAS RELACIONADAS
    ───────────────────────────────────────────────────────────────────────── */
 .cmp-ofertas {
   position: relative;
@@ -658,13 +910,11 @@ html, body {
 }
 .cmp-ofertas::after {
   content: "";
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
+  position: absolute; bottom: 0; left: 0; right: 0;
   height: 6px;
   background: var(--voyager-color-vault);
   border-radius: 0 0 var(--voyager-radius-lg) var(--voyager-radius-lg);
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
 .cmp-ofertas .head {
   display: flex; flex-direction: row;
@@ -712,16 +962,11 @@ html, body {
   background: transparent;
   border-radius: var(--voyager-radius-sm);
   text-decoration: none;
-  transition: background-color var(--voyager-duration-micro) var(--voyager-ease-default);
 }
 .cmp-ofertas .head-link svg {
   width: 11px; height: 11px;
   fill: var(--voyager-color-vault);
-  transition: transform var(--voyager-duration-micro) var(--voyager-ease-default);
 }
-.cmp-ofertas .head-link:hover { background-color: var(--voyager-tint-vault-soft); }
-.cmp-ofertas .head-link:hover svg { transform: translateX(2px); }
-
 .cmp-ofertas .grid {
   position: relative; z-index: 1;
   display: grid;
@@ -752,8 +997,7 @@ html, body {
   overflow: hidden;
 }
 .cmp-ofertas .simple-image img {
-  display: block;
-  width: 100%; height: 100%;
+  display: block; width: 100%; height: 100%;
   object-fit: cover; object-position: center;
 }
 .cmp-ofertas .live-dot {
@@ -766,8 +1010,7 @@ html, body {
   box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-live) 40%, transparent);
 }
 .cmp-ofertas .live-dot::after {
-  content: "";
-  width: 8px; height: 8px;
+  content: ""; width: 8px; height: 8px;
   border-radius: var(--voyager-radius-pill);
   background: var(--voyager-color-surface-card);
 }
@@ -797,8 +1040,7 @@ html, body {
 }
 .cmp-ofertas .simple-price {
   display: inline-flex; align-items: center; gap: 6px;
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 1 1 auto; min-width: 0;
 }
 .cmp-ofertas .shield {
   flex-shrink: 0;
@@ -808,16 +1050,12 @@ html, body {
   background: var(--voyager-color-negotiable);
   color: var(--voyager-color-surface-card);
 }
-.cmp-ofertas .shield svg {
-  width: 13px; height: 13px;
-  fill: currentColor;
-}
+.cmp-ofertas .shield svg { width: 13px; height: 13px; fill: currentColor; }
 .cmp-ofertas .price-text {
   font-family: var(--voyager-font-display);
   font-size: 12px; font-weight: 700;
   color: var(--voyager-color-vault);
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1; white-space: nowrap;
 }
 .cmp-ofertas .heart-outline {
   flex-shrink: 0;
@@ -828,20 +1066,14 @@ html, body {
   color: var(--voyager-color-vault);
   border: 0; cursor: pointer;
   box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-vault) 16%, transparent);
-  transition: background var(--voyager-duration-micro) var(--voyager-ease-default),
-              transform var(--voyager-duration-micro) var(--voyager-ease-default);
 }
 .cmp-ofertas .heart-outline svg {
   width: 14px; height: 14px;
   fill: none; stroke: currentColor; stroke-width: 2;
 }
-.cmp-ofertas .heart-outline:hover {
-  background: var(--voyager-tint-vault-soft);
-  transform: scale(1.06);
-}
 
 /* ─────────────────────────────────────────────────────────────────────────
-   COMPONENTE: FOOTER (cmp-footer)
+   COMPONENTE: FOOTER
    ───────────────────────────────────────────────────────────────────────── */
 .cmp-footer {
   background: var(--vmc-color-background-brand);
@@ -873,22 +1105,14 @@ html, body {
   color: color-mix(in oklch, var(--vmc-color-text-inverse) 60%, transparent);
   text-decoration: none;
 }
-.cmp-footer .ft-social {
-  display: flex; gap: 12px; align-items: center;
-}
+.cmp-footer .ft-social { display: flex; gap: 12px; align-items: center; }
 .cmp-footer .ft-social a {
   display: flex; align-items: center; justify-content: center;
   width: 24px; height: 24px; flex-shrink: 0;
 }
-.cmp-footer .ft-social img {
-  width: 20px; height: 20px; object-fit: contain;
-}
-.cmp-footer .ft-libro {
-  display: flex; align-items: center; gap: 12px;
-}
-.cmp-footer .ft-libro img {
-  width: 86px; height: 35px; object-fit: contain; flex-shrink: 0;
-}
+.cmp-footer .ft-social img { width: 20px; height: 20px; object-fit: contain; }
+.cmp-footer .ft-libro { display: flex; align-items: center; gap: 12px; }
+.cmp-footer .ft-libro img { width: 86px; height: 35px; object-fit: contain; flex-shrink: 0; }
 .cmp-footer .ft-libro p {
   margin: 0;
   font-family: var(--voyager-font-display);
@@ -908,6 +1132,8 @@ html, body {
   text-align: center;
 }
 
+/* full-width: footer también sin radius (ya hereda border-radius: 0) */
+
 @media (prefers-reduced-motion: reduce) {
   .mobile-frame * { transition: none !important; transform: none !important; }
 }
@@ -918,29 +1144,30 @@ html, body {
     <p class="breadcrumb">
       <a href="../../index.html">Previews</a>
       <span class="breadcrumb-sep">›</span>
-      <span>Mobile · Detalle · En Vivo</span>
+      <span>Mobile · Detalle</span>
     </p>
     <h1 class="page-title">Detalle</h1>
-    <p class="page-meta">430 wide · stack vertical · En Vivo</p>
+    <p class="page-meta">430 wide · Full width + variantes con padding</p>
 
-    <div class="preview-panel">
-      <div class="mobile-frame" aria-label="Mobile preview — Detalle En Vivo">
+    <!-- ════════════════════════════════════════════════════════════════════
+         SECCIÓN 1 · Variante Full width
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="preview-section">
+      <h2>Variante · Full width</h2>
+      <div class="preview-panel">
+        <div class="mobile-frame full-width" aria-label="Mobile preview — Detalle · Full width">
 
-        <!-- 1 · HEADER (full-bleed) -->
-        <header class="cmp-header">
-          <button type="button" class="login-btn">
-            <div class="avatar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                <path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/>
-              </svg>
-            </div>
-            <span class="label">Ingresa</span>
-          </button>
-        </header>
+          <header class="cmp-header">
+            <button type="button" class="login-btn">
+              <div class="avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                  <path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/>
+                </svg>
+              </div>
+              <span class="label">Ingresa</span>
+            </button>
+          </header>
 
-        <div class="stack-body">
-
-          <!-- 2 · IMAGE HEADER (barra naranja con título del vehículo) -->
           <header class="cmp-image-header">
             <a href="#" class="back-btn" aria-label="Volver">
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -951,348 +1178,609 @@ html, body {
             <p class="subtitle">Vendedor: SubasCars</p>
           </header>
 
-          <!-- 3 · IMAGE SKELETON -->
           <div class="skeleton-image" role="img" aria-label="Foto principal">
             <p>Imagen</p>
           </div>
 
-          <!-- 4 · DETAIL CARD · EN VIVO -->
-          <section class="cmp-detail-card" aria-label="Detalle de subasta">
-            <div class="cp-header">
-              <div class="cp-header-date">
-                <div class="cp-header-top-left">
-                  <div>
-                    <span class="label-inicia">Inicia</span>
-                    <span class="label-day">miércoles 13</span>
-                  </div>
-                </div>
-                <div class="cp-header-top-right">
-                  <span class="label-time">01:35 pm</span>
-                </div>
-              </div>
-
-              <div class="indicators-row">
-                <div class="indicators-cell right">
-                  <span class="count">264</span>
-                  <div class="indicators-icon">
-                    <svg width="13" height="9" viewBox="0 0 13 9" fill="none">
-                      <path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"/>
-                    </svg>
-                  </div>
-                </div>
-
-                <div class="like-wrap">
-                  <div class="like-stack">
-                    <div class="like-inner">
-                      <div class="like-shadow">
-                        <button class="cta-like-button" aria-label="Me interesa">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"/>
-                          </svg>
-                        </button>
-                      </div>
+          <div class="stack-body">
+            <section class="cmp-detail-card v-en-vivo" aria-label="Detalle de subasta · En vivo">
+              <div class="cp-header">
+                <div class="cp-header-date">
+                  <div class="cp-header-top-left">
+                    <div>
+                      <span class="label-inicia">Inicia</span>
+                      <span class="label-day">miércoles 13</span>
                     </div>
-                    <div class="like-count"><span>1</span></div>
+                  </div>
+                  <div class="cp-header-top-right">
+                    <span class="label-time">01:35 pm</span>
                   </div>
                 </div>
-
-                <div class="indicators-cell left">
-                  <div class="indicators-icon">
-                    <svg width="13" height="11" viewBox="0 0 13 11" fill="none">
-                      <path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z" fill="currentColor"/>
-                      <path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z" fill="currentColor"/>
-                      <path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/>
-                      <path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"/>
-                      <path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z" fill="currentColor"/>
-                      <path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z" fill="currentColor"/>
-                    </svg>
+                <div class="indicators-row">
+                  <div class="indicators-cell right">
+                    <span class="count">264</span>
+                    <div class="indicators-icon">
+                      <svg width="13" height="9" viewBox="0 0 13 9" fill="none">
+                        <path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5Z"/>
+                      </svg>
+                    </div>
                   </div>
-                  <span class="count left">0</span>
+                  <div class="like-wrap">
+                    <div class="like-stack">
+                      <div class="like-inner">
+                        <div class="like-shadow">
+                          <button class="cta-like-button" aria-label="Me interesa">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" fill="currentColor"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="like-count"><span>1</span></div>
+                    </div>
+                  </div>
+                  <div class="indicators-cell left">
+                    <div class="indicators-icon">
+                      <svg width="13" height="11" viewBox="0 0 13 11" fill="none">
+                        <path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/>
+                        <path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"/>
+                      </svg>
+                    </div>
+                    <span class="count left">0</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="cp-content">
-              <p class="opportunity-text">¡Oportunidad para el que sabe!</p>
-
-              <div class="cta-participa-wrap">
-                <button class="cta-participa" type="button">
-                  <span>Participa</span>
-                </button>
-              </div>
-
-              <div class="price-row">
-                <svg width="28" height="28" viewBox="0 0 24 23" fill="none" aria-hidden="true">
-                  <path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"/>
-                  <path d="M12 23C11.7 23 11.3 22.9 11 22.8L1.5 18.6C0.6 18.2 0 17.4 0 16.4 0 15.4 0.6 14.5 1.5 14.2L11 10C11.7 9.7 12.4 9.7 13 10L22.6 14.2C23.4 14.5 24 15.4 24 16.4 24 17.4 23.4 18.2 22.6 18.6L13 22.8C12.7 22.9 12.3 23 12 23ZM12 11C11.8 11 11.7 11 11.5 11.1L1.9 15.3C1.5 15.5 1.2 15.9 1.2 16.4 1.2 16.9 1.5 17.3 1.9 17.5L11.5 21.7C11.8 21.8 12.2 21.8 12.5 21.7L22.1 17.5C22.5 17.3 22.8 16.9 22.8 16.4 22.8 15.9 22.5 15.5 22.1 15.3L12.5 11.1C12.3 11 12.2 11 12 11Z" fill="#367976"/>
-                  <path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"/>
-                  <path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3L12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8 11.7 9.8 11.7 9.8 11.8 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6ZM11 7.2C11 6.8 11.3 6.5 11.8 6.5V8.1C11.3 7.9 11 7.7 11 7.2ZM12.5 11.5V10C12.9 10.2 13.2 10.4 13.2 10.8 13.2 11.2 12.9 11.5 12.5 11.5Z" fill="white"/>
-                </svg>
-                <span class="price-text">
-                  <span class="light">Precio Base:</span>
-                  <span class="bold">US$ 54,999</span>
-                </span>
-              </div>
-              <div class="price-info">Comisión: &gt;S&lt; 0</div>
-            </div>
-          </section>
-
-          <!-- 5 · AUCTION CONDITIONS (chips) -->
-          <section class="cmp-auction-conditions" aria-label="Condiciones de la subasta">
-            <div class="chip is-active">Con Fee de Habilitacion</div>
-            <div class="chip is-active">Con Precio Reserva</div>
-            <div class="chip is-inactive">Sin Opción a Visitas</div>
-            <div class="chip is-inactive">Sin Comisión</div>
-            <div class="chip is-active">Cuota mínima de participantes: 2</div>
-          </section>
-
-          <!-- 6 · CONDICIONES DE OFRECIMIENTO (accordion) -->
-          <section class="cmp-condiciones is-open" aria-label="Condiciones del ofrecimiento">
-            <div class="cond-trigger" role="button" tabindex="0" aria-expanded="true">
-              <div class="cond-trigger-inner">
-                <svg class="cond-bracket-tl" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                  <path d="M11 1H1v10"/>
-                </svg>
-                <h2 class="cond-title">Condiciones del ofrecimiento</h2>
-                <svg class="cond-bracket-br" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                  <path d="M1 11h10V1"/>
-                </svg>
-              </div>
-              <span class="cond-chevron" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                  <path d="M6 9l6 6 6-6"/>
-                </svg>
-              </span>
-            </div>
-
-            <div class="cond-body">
-              <div class="cond-quality">
-                <span class="cond-quality-label">
-                  Complejidad del ofrecimiento
-                  <span class="cond-quality-dots">
-                    <span class="cond-dot is-on"><span class="sr-only">Fácil</span></span>
-                    <span class="cond-dot"><span class="sr-only">Regular</span></span>
-                    <span class="cond-dot"><span class="sr-only">Experto</span></span>
+              <div class="cp-content">
+                <p class="opportunity-text">¡Oportunidad para el que sabe!</p>
+                <div class="cta-participa-wrap">
+                  <button class="cta-participa" type="button"><span>Participa</span></button>
+                </div>
+                <div class="price-row">
+                  <svg width="28" height="28" viewBox="0 0 24 23" fill="none" aria-hidden="true">
+                    <path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"/>
+                    <path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"/>
+                    <path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6Z" fill="white"/>
+                  </svg>
+                  <span class="price-text">
+                    <span class="light">Precio Base:</span>
+                    <span class="bold">US$ 54,999</span>
                   </span>
+                </div>
+                <div class="price-info">Comisión: &gt;S&lt; 0</div>
+              </div>
+            </section>
+
+            <section class="cmp-auction-conditions" aria-label="Condiciones de la subasta">
+              <div class="chip is-active">Con Fee de Habilitacion</div>
+              <div class="chip is-active">Con Precio Reserva</div>
+              <div class="chip is-inactive">Sin Opción a Visitas</div>
+              <div class="chip is-inactive">Sin Comisión</div>
+              <div class="chip is-active">Cuota mínima de participantes: 2</div>
+            </section>
+
+            <section class="cmp-condiciones is-open" aria-label="Condiciones del ofrecimiento">
+              <div class="cond-trigger" role="button" tabindex="0" aria-expanded="true">
+                <div class="cond-trigger-inner">
+                  <svg class="cond-bracket-tl" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                    <path d="M11 1H1v10"/>
+                  </svg>
+                  <h2 class="cond-title">Condiciones del ofrecimiento</h2>
+                  <svg class="cond-bracket-br" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                    <path d="M1 11h10V1"/>
+                  </svg>
+                </div>
+                <span class="cond-chevron" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
                 </span>
               </div>
-
-              <div class="cond-typography">
-                <h3>1. Responsabilidades de los Participantes</h3>
-                <p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
-                <ul>
-                  <li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso al consignar para participar en esta oferta.</li>
-                  <li>Al hacer una consignación, todo usuario conoce y acepta que es su responsabilidad disponer de una conexión estable a internet con un ancho de banda de mínimo 5Mbps.</li>
-                  <li>Es responsabilidad de cada participante acceder oportunamente a la sala y realizar por lo menos un bid válido.</li>
-                  <li>El incumplimiento de las responsabilidades como participante resulta en:
-                    <ul>
-                      <li>La retención del monto consignado hasta las 23:59:59 horas del día del proceso "En Vivo".</li>
-                      <li>La devolución de la consignación en SubasCoins.</li>
-                      <li>La pérdida de 15 puntos VMC y correspondiente afectación al Riesgo Usuario.</li>
-                    </ul>
-                  </li>
-                  <li>El Precio Reserva de la oferta podrá ser retirado durante el proceso "En Vivo".</li>
-                </ul>
-
-                <h3>2. Condiciones de Compra</h3>
-                <p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR al ser habilitado.</strong></p>
-                <h4>A. Responsabilidades del Vendedor</h4>
-                <ul>
-                  <li>El vendedor tendrá 10 días hábiles para habilitar al ganador.</li>
-                  <li>El vendedor se reserva el derecho de habilitación del ganador a libre discreción.</li>
-                </ul>
-                <h4>B. Habilitación del Ganador</h4>
-                <ul>
-                  <li>El ganador deberá ser habilitado para poder iniciar el proceso de compra.</li>
-                  <li>De ser habilitado, el ganador deberá pagar US$ 200 por concepto de Fee de habilitación previo a la validación de documentos.</li>
-                </ul>
-
-                <h3>3. Condiciones generales</h3>
-                <p><strong>Contemplan las condiciones aplicables a todos los ofrecimientos de la plataforma.</strong></p>
-                <ul>
-                  <li>El vendedor ofrece el o los bienes como están y donde están.</li>
-                  <li>Todas las imágenes y características publicadas han sido remitidas por el vendedor.</li>
-                  <li>El o los bienes ofrecidos pueden presentar daños y/o faltantes.</li>
-                  <li>VMC Subastas nunca interviene en el proceso de compraventa ni en el de entrega de las ofertas.</li>
-                </ul>
+              <div class="cond-body">
+                <div class="cond-quality">
+                  <span class="cond-quality-label">
+                    Complejidad del ofrecimiento
+                    <span class="cond-quality-dots">
+                      <span class="cond-dot is-on"><span class="sr-only">Fácil</span></span>
+                      <span class="cond-dot"><span class="sr-only">Regular</span></span>
+                      <span class="cond-dot"><span class="sr-only">Experto</span></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="cond-typography">
+                  <h3>1. Responsabilidades de los Participantes</h3>
+                  <p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
+                  <ul>
+                    <li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso.</li>
+                    <li>Al hacer una consignación, todo usuario conoce y acepta su responsabilidad de disponer de una conexión estable a internet (mínimo 5Mbps).</li>
+                    <li>El incumplimiento resulta en:
+                      <ul>
+                        <li>Retención del monto consignado hasta las 23:59:59 del proceso "En Vivo".</li>
+                        <li>Devolución de la consignación en SubasCoins.</li>
+                        <li>Pérdida de 15 puntos VMC.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <h3>2. Condiciones de Compra</h3>
+                  <p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR.</strong></p>
+                  <h4>A. Responsabilidades del Vendedor</h4>
+                  <ul>
+                    <li>10 días hábiles para habilitar al ganador.</li>
+                  </ul>
+                  <h4>B. Habilitación del Ganador</h4>
+                  <ul>
+                    <li>El ganador deberá pagar US$ 200 por concepto de Fee de habilitación.</li>
+                  </ul>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <!-- 7 · OFERTAS RELACIONADAS -->
-          <section class="cmp-ofertas" aria-label="Ofertas relacionadas">
-            <div class="head">
-              <div class="head-info">
-                <svg class="bracket bracket-tl" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
-                </svg>
-                <span class="head-title">Ofertas Relacionadas</span>
-                <span class="head-sub">4 Ofertas</span>
-                <svg class="bracket bracket-br" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
-                </svg>
+            <section class="cmp-ofertas" aria-label="Ofertas relacionadas">
+              <div class="head">
+                <div class="head-info">
+                  <svg class="bracket bracket-tl" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+                  </svg>
+                  <span class="head-title">Ofertas Relacionadas</span>
+                  <span class="head-sub">4 Ofertas</span>
+                  <svg class="bracket bracket-br" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <a href="#" class="head-link">
+                  Ver más
+                  <svg viewBox="0 0 24 24"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+                </a>
               </div>
-              <a href="#" class="head-link">
-                Ver más
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
-              </a>
+              <div class="grid">
+                <article class="vcard-simple" data-status="live">
+                  <div class="simple-image"><img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" /></div>
+                  <div class="simple-info"><span class="simple-title">Audi Q3</span><span class="simple-year">2026</span></div>
+                  <div class="simple-footer">
+                    <div class="simple-price">
+                      <span class="shield"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="currentColor"/></svg></span>
+                      <span class="price-text">US$ 9,999</span>
+                    </div>
+                    <button class="heart-outline" aria-label="me interesa">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                </article>
+                <article class="vcard-simple" data-status="live">
+                  <div class="simple-image">
+                    <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
+                    <span class="live-dot" aria-label="En vivo"></span>
+                  </div>
+                  <div class="simple-info"><span class="simple-title">Audi Q3</span><span class="simple-year">2026</span></div>
+                  <div class="simple-footer">
+                    <div class="simple-price">
+                      <span class="shield"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="currentColor"/></svg></span>
+                      <span class="price-text">US$ 9,999</span>
+                    </div>
+                    <button class="heart-outline" aria-label="me interesa">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                </article>
+                <article class="vcard-simple" data-status="negotiable">
+                  <div class="simple-image"><img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" /></div>
+                  <div class="simple-info"><span class="simple-title">Audi Q3</span><span class="simple-year">2026</span></div>
+                  <div class="simple-footer">
+                    <div class="simple-price"></div>
+                    <button class="heart-outline" aria-label="me interesa">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                </article>
+                <article class="vcard-simple" data-status="live">
+                  <div class="simple-image">
+                    <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+                    <span class="live-dot" aria-label="En vivo"></span>
+                  </div>
+                  <div class="simple-info"><span class="simple-title">Audi Q3</span><span class="simple-year">2026</span></div>
+                  <div class="simple-footer">
+                    <div class="simple-price">
+                      <span class="shield"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="currentColor"/></svg></span>
+                      <span class="price-text">US$ 9,999</span>
+                    </div>
+                    <button class="heart-outline" aria-label="me interesa">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <footer class="cmp-footer">
+            <img class="ft-brand" src="https://www.figma.com/api/mcp/asset/5cbcd9a7-5eb0-4533-a732-de72391440f9" alt="VMC Subastas" width="178" height="99" />
+            <div class="ft-col">
+              <p class="ft-col-title">Plataforma</p>
+              <ul class="ft-list">
+                <li><a href="#">SubasCars</a></li>
+                <li><a href="#">SubasBlog</a></li>
+                <li><a href="#">¿Quiénes somos?</a></li>
+                <li><a href="#">¿Cómo vender?</a></li>
+              </ul>
             </div>
-
-            <div class="grid">
-              <article class="vcard-simple" data-status="live">
-                <div class="simple-image">
-                  <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
-                </div>
-                <div class="simple-info">
-                  <span class="simple-title">Audi Q3</span>
-                  <span class="simple-year">2026</span>
-                </div>
-                <div class="simple-footer">
-                  <div class="simple-price">
-                    <span class="shield" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
-                    </span>
-                    <span class="price-text">US$ 9,999</span>
-                  </div>
-                  <button class="heart-outline" aria-label="me interesa">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                  </button>
-                </div>
-              </article>
-
-              <article class="vcard-simple" data-status="live">
-                <div class="simple-image">
-                  <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
-                  <span class="live-dot" aria-label="En vivo"></span>
-                </div>
-                <div class="simple-info">
-                  <span class="simple-title">Audi Q3</span>
-                  <span class="simple-year">2026</span>
-                </div>
-                <div class="simple-footer">
-                  <div class="simple-price">
-                    <span class="shield" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
-                    </span>
-                    <span class="price-text">US$ 9,999</span>
-                  </div>
-                  <button class="heart-outline" aria-label="me interesa">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                  </button>
-                </div>
-              </article>
-
-              <article class="vcard-simple" data-status="negotiable">
-                <div class="simple-image">
-                  <img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" />
-                </div>
-                <div class="simple-info">
-                  <span class="simple-title">Audi Q3</span>
-                  <span class="simple-year">2026</span>
-                </div>
-                <div class="simple-footer">
-                  <div class="simple-price"></div>
-                  <button class="heart-outline" aria-label="me interesa">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                  </button>
-                </div>
-              </article>
-
-              <article class="vcard-simple" data-status="live">
-                <div class="simple-image">
-                  <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
-                  <span class="live-dot" aria-label="En vivo"></span>
-                </div>
-                <div class="simple-info">
-                  <span class="simple-title">Audi Q3</span>
-                  <span class="simple-year">2026</span>
-                </div>
-                <div class="simple-footer">
-                  <div class="simple-price">
-                    <span class="shield" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
-                    </span>
-                    <span class="price-text">US$ 9,999</span>
-                  </div>
-                  <button class="heart-outline" aria-label="me interesa">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                  </button>
-                </div>
-              </article>
+            <div class="ft-col">
+              <p class="ft-col-title">Legal &amp; Compliance</p>
+              <ul class="ft-list">
+                <li><a href="#">Condiciones y Términos</a></li>
+                <li><a href="#">Política de Privacidad</a></li>
+                <li><a href="#">Canal de denuncias</a></li>
+              </ul>
             </div>
-          </section>
+            <div class="ft-libro">
+              <img src="https://www.figma.com/api/mcp/asset/36a6ae2d-5b34-448e-9812-9c2fe907d004" alt="Libro de reclamaciones" />
+              <p>Libros de reclamaciones</p>
+            </div>
+            <div class="ft-divider" aria-hidden="true"></div>
+            <p class="ft-copy">© VMC Subastas — Subastop S.A.C. · 2026</p>
+          </footer>
+        </div>
+      </div>
+    </section>
 
+    <!-- ════════════════════════════════════════════════════════════════════
+         SECCIÓN 2 · Variantes con padding interno (una por cada detail-card)
+         ════════════════════════════════════════════════════════════════════ -->
+    <section class="preview-section">
+      <h2>Variantes con padding · 6 estados del detail card</h2>
+
+      <div class="variants-grid">
+
+        <!-- VARIANT 1 · EN VIVO -->
+        <div class="variant-cell">
+          <p class="variant-label">En Vivo</p>
+          <div class="mobile-frame padded" aria-label="Detalle · En Vivo · padded">
+            <header class="cmp-header">
+              <button type="button" class="login-btn">
+                <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
+                <span class="label">Ingresa</span>
+              </button>
+            </header>
+            <div class="stack-body">
+              <header class="cmp-image-header">
+                <a href="#" class="back-btn" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <h1 class="title">Volkswagen Gol 2015</h1>
+                <p class="subtitle">Vendedor: SubasCars</p>
+              </header>
+              <div class="skeleton-image"><p>Imagen</p></div>
+
+              <section class="cmp-detail-card v-en-vivo">
+                <div class="cp-header">
+                  <div class="cp-header-date">
+                    <div class="cp-header-top-left"><div>
+                      <span class="label-inicia">Inicia</span>
+                      <span class="label-day">miércoles 13</span>
+                    </div></div>
+                    <div class="cp-header-top-right"><span class="label-time">01:35 pm</span></div>
+                  </div>
+                  <div class="indicators-row">
+                    <div class="indicators-cell right">
+                      <span class="count">264</span>
+                      <div class="indicators-icon"><svg width="13" height="9" viewBox="0 0 13 9"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0Z"/></svg></div>
+                    </div>
+                    <div class="like-wrap"><div class="like-stack">
+                      <div class="like-inner"><div class="like-shadow"><button class="cta-like-button"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" fill="currentColor"/></svg></button></div></div>
+                      <div class="like-count"><span>1</span></div>
+                    </div></div>
+                    <div class="indicators-cell left">
+                      <div class="indicators-icon"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/></svg></div>
+                      <span class="count left">0</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="cp-content">
+                  <p class="opportunity-text">¡Oportunidad para el que sabe!</p>
+                  <div class="cta-participa-wrap">
+                    <button class="cta-participa"><span>Participa</span></button>
+                  </div>
+                  <div class="price-row">
+                    <span class="price-text"><span class="light">Precio Base:</span> <span class="bold">US$ 54,999</span></span>
+                  </div>
+                  <div class="price-info">Comisión: &gt;S&lt; 0</div>
+                </div>
+              </section>
+
+              <section class="cmp-auction-conditions">
+                <div class="chip is-active">Con Fee de Habilitacion</div>
+                <div class="chip is-active">Con Precio Reserva</div>
+                <div class="chip is-inactive">Sin Opción a Visitas</div>
+                <div class="chip is-inactive">Sin Comisión</div>
+              </section>
+            </div>
+          </div>
         </div>
 
-        <!-- 8 · FOOTER (full-bleed) -->
-        <footer class="cmp-footer">
-          <img class="ft-brand" src="https://www.figma.com/api/mcp/asset/5cbcd9a7-5eb0-4533-a732-de72391440f9" alt="VMC Subastas" width="178" height="99" />
-          <div class="ft-col">
-            <p class="ft-col-title">Plataforma</p>
-            <ul class="ft-list">
-              <li><a href="#">SubasCars</a></li>
-              <li><a href="#">SubasBlog</a></li>
-              <li><a href="#">¿Quiénes somos?</a></li>
-              <li><a href="#">¿Cómo vender?</a></li>
-              <li><a href="#">Subaspass</a></li>
-              <li><a href="#">BlackSheep Nation</a></li>
-            </ul>
-          </div>
-          <div class="ft-col">
-            <p class="ft-col-title">Legal &amp; Compliance</p>
-            <ul class="ft-list">
-              <li><a href="#">Condiciones y Términos</a></li>
-              <li><a href="#">Política de Protección de Datos Personales</a></li>
-              <li><a href="#">Política de privacidad General</a></li>
-              <li><a href="#">Testimonios</a></li>
-              <li><a href="#">Canal de denuncias</a></li>
-            </ul>
-          </div>
-          <div class="ft-col">
-            <p class="ft-col-title">Contacto</p>
-            <a class="ft-link" href="#">Contáctanos</a>
-          </div>
-          <div class="ft-col">
-            <p class="ft-col-title">Encuéntranos en</p>
-            <div class="ft-social">
-              <a href="#" aria-label="Facebook"><img src="https://www.figma.com/api/mcp/asset/8915e61d-9d9a-4ba0-a7e2-43117817b13c" alt="Facebook" /></a>
-              <a href="#" aria-label="Instagram"><img src="https://www.figma.com/api/mcp/asset/2f92cfc2-1f01-4963-a6e4-068fdd6c94ff" alt="Instagram" /></a>
-              <a href="#" aria-label="YouTube"><img src="https://www.figma.com/api/mcp/asset/616532dd-e802-4718-8d41-3f72e8631522" alt="YouTube" /></a>
-              <a href="#" aria-label="X"><img src="https://www.figma.com/api/mcp/asset/c8e77c67-871c-4ec8-ac5e-bcebd0bc2b7e" alt="X" /></a>
+        <!-- VARIANT 2 · EXTENDED (Inicio Extendido + countdown) -->
+        <div class="variant-cell">
+          <p class="variant-label">Inicio Extendido</p>
+          <div class="mobile-frame padded" aria-label="Detalle · Extended · padded">
+            <header class="cmp-header">
+              <button type="button" class="login-btn">
+                <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
+                <span class="label">Ingresa</span>
+              </button>
+            </header>
+            <div class="stack-body">
+              <header class="cmp-image-header">
+                <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <h1 class="title">Toyota Corolla 2024</h1>
+                <p class="subtitle">Vendedor: SubasCars</p>
+              </header>
+              <div class="skeleton-image"><p>Imagen</p></div>
+
+              <section class="cmp-detail-card v-extended">
+                <div class="cp-header">
+                  <div class="extended-top"><span>Inicio Extendido</span></div>
+                  <div class="cp-header-date has-extended">
+                    <div class="cp-header-top-left"><span class="label-inicia-lg">Inicia en:</span></div>
+                    <div class="cp-header-top-right">
+                      <div class="countdown">
+                        <div class="unit"><span class="unit-label">Min</span><span class="unit-number">00</span></div>
+                        <span class="sep">:</span>
+                        <div class="unit"><span class="unit-label">Seg</span><span class="unit-number">08</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="indicators-row">
+                    <div class="indicators-cell right">
+                      <span class="count">100</span>
+                      <div class="indicators-icon"><svg width="13" height="9" viewBox="0 0 13 9"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0Z"/></svg></div>
+                    </div>
+                    <div class="like-wrap"><div class="like-stack">
+                      <div class="like-inner"><div class="like-shadow"><button class="cta-like-button"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" fill="currentColor"/></svg></button></div></div>
+                      <div class="like-count"><span>1</span></div>
+                    </div></div>
+                    <div class="indicators-cell left">
+                      <div class="indicators-icon"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/></svg></div>
+                      <span class="count left">0</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="cp-content">
+                  <p class="opportunity-text">¡Oportunidad para el que sabe!</p>
+                  <div class="cta-participa-wrap">
+                    <button class="cta-participa"><span>Participa</span></button>
+                  </div>
+                  <div class="price-row">
+                    <span class="price-text"><span class="light">Precio Base:</span> <span class="bold">US$ 12,499</span></span>
+                  </div>
+                  <div class="price-info">Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50</div>
+                </div>
+              </section>
+
+              <section class="cmp-auction-conditions">
+                <div class="chip is-active">Con Fee de Habilitacion</div>
+                <div class="chip is-active">Con Precio Reserva</div>
+                <div class="chip is-inactive">Sin Opción a Visitas</div>
+                <div class="chip is-inactive">Sin Comisión</div>
+              </section>
             </div>
           </div>
-          <div class="ft-libro">
-            <img src="https://www.figma.com/api/mcp/asset/36a6ae2d-5b34-448e-9812-9c2fe907d004" alt="Libro de reclamaciones" />
-            <p>Libros de reclamaciones</p>
+        </div>
+
+        <!-- VARIANT 3 · OFERTA LIVE (encabezado naranja, CTA vault) -->
+        <div class="variant-cell">
+          <p class="variant-label">Oferta en Vivo</p>
+          <div class="mobile-frame padded" aria-label="Detalle · Oferta Live · padded">
+            <header class="cmp-header">
+              <button type="button" class="login-btn">
+                <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
+                <span class="label">Ingresa</span>
+              </button>
+            </header>
+            <div class="stack-body">
+              <header class="cmp-image-header">
+                <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <h1 class="title">BMW X3 2023</h1>
+                <p class="subtitle">Vendedor: SubasCars</p>
+              </header>
+              <div class="skeleton-image"><p>Imagen</p></div>
+
+              <section class="cmp-detail-card v-oferta-live">
+                <div class="cp-header">
+                  <div class="cp-header-centered"><span>Oferta en vivo</span></div>
+                  <div class="indicators-row">
+                    <div class="indicators-cell right">
+                      <span class="count">340</span>
+                      <div class="indicators-icon"><svg width="13" height="9" viewBox="0 0 13 9"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0Z"/></svg></div>
+                    </div>
+                    <div class="like-wrap"><div class="like-stack">
+                      <div class="like-inner"><div class="like-shadow"><button class="cta-like-button"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" fill="currentColor"/></svg></button></div></div>
+                      <div class="like-count"><span>5</span></div>
+                    </div></div>
+                    <div class="indicators-cell left">
+                      <div class="indicators-icon"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/></svg></div>
+                      <span class="count left">1</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="cp-content">
+                  <div class="live-timer-bar"><span>Inició hace: 00:00:20</span></div>
+                  <p class="opportunity-text">¡Oportunidad para el que sabe!</p>
+                  <div class="cta-participa-wrap">
+                    <button class="cta-participa"><span>Participa</span></button>
+                  </div>
+                  <div class="price-row">
+                    <span class="price-text"><span class="light">Precio Base:</span> <span class="bold">US$ 12,999</span></span>
+                  </div>
+                  <div class="price-info">Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50</div>
+                </div>
+              </section>
+
+              <section class="cmp-auction-conditions">
+                <div class="chip is-active">Con Fee de Habilitacion</div>
+                <div class="chip is-inactive">Sin Precio Reserva</div>
+                <div class="chip is-inactive">Sin Opción a Visitas</div>
+                <div class="chip is-active">Con Comisión</div>
+              </section>
+            </div>
           </div>
-          <div class="ft-divider" aria-hidden="true"></div>
-          <p class="ft-copy">© VMC Subastas es una marca registrada de Subastop S.A.C.<br>Todos los derechos reservados 2026</p>
-        </footer>
+        </div>
+
+        <!-- VARIANT 4 · NEGOCIABLE -->
+        <div class="variant-cell">
+          <p class="variant-label">Negociable</p>
+          <div class="mobile-frame padded" aria-label="Detalle · Negociable · padded">
+            <header class="cmp-header">
+              <button type="button" class="login-btn">
+                <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
+                <span class="label">Ingresa</span>
+              </button>
+            </header>
+            <div class="stack-body">
+              <header class="cmp-image-header">
+                <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <h1 class="title">Mercedes A200 2022</h1>
+                <p class="subtitle">Vendedor: SubasCars</p>
+              </header>
+              <div class="skeleton-image"><p>Imagen</p></div>
+
+              <section class="cmp-detail-card v-negociable">
+                <div class="cp-header">
+                  <div class="cp-header-date">
+                    <div class="cp-header-top-left"><div>
+                      <span class="label-inicia">Cierra</span>
+                      <span class="label-day">miércoles 20</span>
+                    </div></div>
+                    <div class="cp-header-top-right"><span class="label-time">06:00 pm</span></div>
+                  </div>
+                  <div class="indicators-row">
+                    <div class="indicators-cell right">
+                      <span class="count">63</span>
+                      <div class="indicators-icon"><svg width="13" height="9" viewBox="0 0 13 9"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0Z"/></svg></div>
+                    </div>
+                    <div class="like-wrap"><div class="like-stack">
+                      <div class="like-inner"><div class="like-shadow"><button class="cta-like-button"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" fill="currentColor"/></svg></button></div></div>
+                      <div class="like-count"><span>1</span></div>
+                    </div></div>
+                    <div class="indicators-cell left">
+                      <div class="indicators-icon"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/></svg></div>
+                      <span class="count left">1</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="cp-content">
+                  <div class="negotiate-banner"><span>¡Aprende a negociar con Subastin!</span></div>
+                  <p class="opportunity-text">Aprovecha y haz una propuesta al vendedor.</p>
+                  <div class="cta-participa-wrap">
+                    <button class="cta-participa"><span>Negocia Ahora</span></button>
+                  </div>
+                  <div class="price-info" style="margin-top:12px">Comisión: &gt;S&lt; 0</div>
+                </div>
+              </section>
+
+              <section class="cmp-auction-conditions">
+                <div class="chip is-active">Negociable</div>
+                <div class="chip is-inactive">Sin Precio Reserva</div>
+                <div class="chip is-inactive">Sin Opción a Visitas</div>
+                <div class="chip is-inactive">Sin Comisión</div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 5 · CERRADA -->
+        <div class="variant-cell">
+          <p class="variant-label">Cerrada</p>
+          <div class="mobile-frame padded" aria-label="Detalle · Cerrada · padded">
+            <header class="cmp-header">
+              <button type="button" class="login-btn">
+                <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
+                <span class="label">Ingresa</span>
+              </button>
+            </header>
+            <div class="stack-body">
+              <header class="cmp-image-header">
+                <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <h1 class="title">Mazda CX-5 2020</h1>
+                <p class="subtitle">Vendedor: SubasCars</p>
+              </header>
+              <div class="skeleton-image"><p>Imagen</p></div>
+
+              <section class="cmp-detail-card-closed">
+                <div class="closed-content">
+                  <span class="label-oferta">Oferta</span>
+                  <span class="label-cerrada">Cerrada</span>
+                  <hr class="divider" />
+                  <p class="label-sub">En Consulta</p>
+                  <a class="cta-btn-closed" href="#">Ver ofertas relacionadas</a>
+                </div>
+              </section>
+
+              <section class="cmp-auction-conditions">
+                <div class="chip is-active">Con Fee de Habilitacion</div>
+                <div class="chip is-active">Con Precio Reserva</div>
+                <div class="chip is-inactive">Sin Opción a Visitas</div>
+                <div class="chip is-inactive">Sin Comisión</div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 6 · DESIERTA -->
+        <div class="variant-cell">
+          <p class="variant-label">Desierta</p>
+          <div class="mobile-frame padded" aria-label="Detalle · Desierta · padded">
+            <header class="cmp-header">
+              <button type="button" class="login-btn">
+                <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/></svg></div>
+                <span class="label">Ingresa</span>
+              </button>
+            </header>
+            <div class="stack-body">
+              <header class="cmp-image-header">
+                <a href="#" class="back-btn"><svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <h1 class="title">Honda Civic 2019</h1>
+                <p class="subtitle">Vendedor: SubasCars</p>
+              </header>
+              <div class="skeleton-image"><p>Imagen</p></div>
+
+              <section class="cmp-detail-card-deserted">
+                <div class="deserted-content">
+                  <div class="headline-wrap">
+                    <div class="headline-border-t"></div>
+                    <span class="label-oferta">Oferta</span>
+                    <span class="label-desierta">Desierta</span>
+                    <div class="headline-border-b"></div>
+                  </div>
+                  <a class="cta-btn-deserted" href="#"><span>Ver ofertas relacionadas</span></a>
+                </div>
+              </section>
+
+              <section class="cmp-auction-conditions">
+                <div class="chip is-inactive">Sin Fee de Habilitacion</div>
+                <div class="chip is-inactive">Sin Precio Reserva</div>
+                <div class="chip is-inactive">Sin Opción a Visitas</div>
+                <div class="chip is-inactive">Sin Comisión</div>
+              </section>
+            </div>
+          </div>
+        </div>
 
       </div>
-    </div>
+    </section>
   </main>
 
   <script>
-    // Accordion interactivo para "Condiciones del ofrecimiento"
-    const accordion = document.querySelector('.cmp-condiciones');
-    const trigger = accordion?.querySelector('.cond-trigger');
-
-    function setAccordionOpen(isOpen) {
-      if (!accordion) return;
-      accordion.classList.toggle('is-open', isOpen);
-      accordion.classList.toggle('is-collapsed', !isOpen);
-      trigger?.setAttribute('aria-expanded', String(isOpen));
-    }
-
-    trigger?.addEventListener('click', function () {
-      setAccordionOpen(accordion.classList.contains('is-collapsed'));
-    });
-
-    trigger?.addEventListener('keydown', function (event) {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      event.preventDefault();
-      setAccordionOpen(accordion.classList.contains('is-collapsed'));
+    document.querySelectorAll('.cmp-condiciones').forEach(function (accordion) {
+      const trigger = accordion.querySelector('.cond-trigger');
+      function setOpen(isOpen) {
+        accordion.classList.toggle('is-open', isOpen);
+        accordion.classList.toggle('is-collapsed', !isOpen);
+        trigger && trigger.setAttribute('aria-expanded', String(isOpen));
+      }
+      trigger && trigger.addEventListener('click', function () {
+        setOpen(accordion.classList.contains('is-collapsed'));
+      });
+      trigger && trigger.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        setOpen(accordion.classList.contains('is-collapsed'));
+      });
     });
   </script>
 </body>

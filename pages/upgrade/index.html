@@ -1014,6 +1014,306 @@ html, body {
     var(--vmc-color-vault-300) 100%);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   HEADER · 790 × 64 · vault background + auth button (4 variants)
+   ═══════════════════════════════════════════════════════════════ */
+.hd {
+  width: 790px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: var(--vmc-color-vault-800);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  user-select: none;
+}
+.hd::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, oklch(1 0 0 / 6%) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 80% at 100% 50%, oklch(0.66 0.17 50 / 8%) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.hd > * { position: relative; z-index: 1; }
+.hd-logo {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--voyager-font-display);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--vmc-color-base-white);
+}
+.hd-logo-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--vmc-color-orange-500), var(--vmc-color-orange-700));
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 25%);
+  font-size: 14px; font-weight: 800;
+  color: var(--vmc-color-base-white);
+  letter-spacing: 0;
+}
+.hd-logo-text {
+  display: inline-flex; flex-direction: column;
+  line-height: 1; gap: 2px;
+}
+.hd-logo-text-main {
+  font-size: 16px; font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.hd-logo-text-sub {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: oklch(1 0 0 / 60%);
+}
+
+/* ── HD · Auth button base ──────────────────────────────────────── */
+.hd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px 0 4px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 2px oklch(0 0 0 / 22%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  transition:
+    --vbtn-angle 0.4s var(--voyager-ease-default),
+    --vbtn-stop-a 0.35s ease,
+    --vbtn-stop-b 0.35s ease,
+    transform 0.2s var(--voyager-ease-default),
+    box-shadow 0.25s ease;
+  transform: translateZ(0);
+}
+.hd-btn::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.hd-btn > *:not(.hd-btn-icon) { position: relative; z-index: 2; }
+.hd-btn-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative; z-index: 2;
+}
+.hd-btn-icon svg { width: 18px; height: 18px; fill: currentColor; }
+.hd-btn-username { font-weight: 700; }
+.hd-btn-light { font-weight: 300; }
+
+/* ── V1 · SM Ingresa Guest (orange→vault iridescent) ────────────── */
+.hd-btn--sm {
+  --vbtn-stop-a: var(--vmc-color-orange-600);
+  --vbtn-stop-b: var(--vmc-color-vault-500);
+  background-image:
+    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 25%),
+    0 2px 6px oklch(0.66 0.17 50 / 25%);
+}
+.hd-btn--sm .hd-btn-icon {
+  background: oklch(0 0 0 / 18%);
+  color: var(--vmc-color-base-white);
+}
+.hd-btn--sm:hover {
+  --vbtn-angle: 220deg;
+  --vbtn-stop-a: var(--vmc-color-orange-400);
+  --vbtn-stop-b: var(--vmc-color-vault-400);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 20%),
+    0 6px 18px oklch(0.45 0.20 285 / 30%),
+    0 3px 8px  oklch(0.66 0.17 50 / 35%);
+}
+.hd-btn--sm:active {
+  --vbtn-angle: 135deg;
+  --vbtn-stop-a: var(--vmc-color-orange-700);
+  --vbtn-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 4px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%);
+}
+.hd-btn--sm.hd-btn--hover {
+  --vbtn-angle: 220deg !important;
+  --vbtn-stop-a: var(--vmc-color-orange-400) !important;
+  --vbtn-stop-b: var(--vmc-color-vault-400) !important;
+  transform: translateY(-1px) scale(1.02) !important;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 20%),
+    0 6px 18px oklch(0.45 0.20 285 / 30%),
+    0 3px 8px  oklch(0.66 0.17 50 / 35%) !important;
+}
+.hd-btn--sm.hd-btn--pressed {
+  --vbtn-angle: 135deg !important;
+  --vbtn-stop-a: var(--vmc-color-orange-700) !important;
+  --vbtn-stop-b: var(--vmc-color-vault-600) !important;
+  transform: scale(0.97) translateY(1px) !important;
+  box-shadow: inset 0 2px 4px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%) !important;
+}
+
+/* ── V2 · D Primary Clone (orange→vault iridescent · logged-in) ── */
+.hd-btn--d {
+  --vbtn-stop-a: var(--vmc-color-orange-600);
+  --vbtn-stop-b: var(--vmc-color-vault-500);
+  background-image:
+    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 28%),
+    0 2px 6px oklch(0.66 0.17 50 / 30%);
+}
+.hd-btn--d .hd-btn-icon {
+  background: oklch(0 0 0 / 18%);
+  color: var(--vmc-color-base-white);
+}
+.hd-btn--d:hover {
+  --vbtn-angle: 220deg;
+  --vbtn-stop-a: var(--vmc-color-orange-400);
+  --vbtn-stop-b: var(--vmc-color-vault-400);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 22%),
+    0 8px 20px oklch(0.45 0.20 285 / 35%),
+    0 4px 10px oklch(0.66 0.17 50 / 40%);
+}
+.hd-btn--d:active {
+  --vbtn-angle: 135deg;
+  --vbtn-stop-a: var(--vmc-color-orange-700);
+  --vbtn-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%);
+}
+.hd-btn--d.hd-btn--hover {
+  --vbtn-angle: 220deg !important;
+  --vbtn-stop-a: var(--vmc-color-orange-400) !important;
+  --vbtn-stop-b: var(--vmc-color-vault-400) !important;
+  transform: translateY(-1px) scale(1.02) !important;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 22%),
+    0 8px 20px oklch(0.45 0.20 285 / 35%),
+    0 4px 10px oklch(0.66 0.17 50 / 40%) !important;
+}
+.hd-btn--d.hd-btn--pressed {
+  --vbtn-angle: 135deg !important;
+  --vbtn-stop-a: var(--vmc-color-orange-700) !important;
+  --vbtn-stop-b: var(--vmc-color-vault-600) !important;
+  transform: scale(0.97) translateY(1px) !important;
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%) !important;
+}
+
+/* ── V3 · E Vault→Orange (vault izq · orange der) ───────────────── */
+.hd-btn--e {
+  background-image:
+    linear-gradient(135deg,
+      var(--vmc-color-vault-600) 0%,
+      var(--vmc-color-vault-500) 45%,
+      var(--vmc-color-orange-500) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-400) 0%,
+      var(--vmc-color-base-white) 40%,
+      var(--vmc-color-orange-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 22%),
+    0 2px 8px oklch(0.45 0.20 285 / 35%);
+}
+.hd-btn--e .hd-btn-icon {
+  background: oklch(1 0 0 / 18%);
+  color: var(--vmc-color-base-white);
+}
+.hd-btn--e .hd-btn-username {
+  color: oklch(0.86 0.10 60);
+  text-shadow: 0 1px 2px oklch(0 0 0 / 25%);
+}
+.hd-btn--e:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 20%),
+    0 8px 22px oklch(0.45 0.20 285 / 40%),
+    0 4px 10px oklch(0.66 0.17 50 / 35%);
+}
+.hd-btn--e:active {
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 25%), 0 1px 2px oklch(0 0 0 / 10%);
+}
+.hd-btn--e.hd-btn--hover {
+  transform: translateY(-1px) scale(1.02) !important;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 20%),
+    0 8px 22px oklch(0.45 0.20 285 / 40%),
+    0 4px 10px oklch(0.66 0.17 50 / 35%) !important;
+}
+.hd-btn--e.hd-btn--pressed {
+  transform: scale(0.97) translateY(1px) !important;
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 25%), 0 1px 2px oklch(0 0 0 / 10%) !important;
+}
+
+/* ── V4 · A Cinematic Dark (vault dark · orange ring + glow) ────── */
+.hd-btn--a {
+  background-image:
+    linear-gradient(135deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-900) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-orange-600) 0%,
+      var(--vmc-color-orange-400) 45%,
+      var(--vmc-color-vault-400) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 15%),
+    0 0 16px oklch(0.66 0.17 50 / 25%);
+}
+.hd-btn--a .hd-btn-icon {
+  background: oklch(0.66 0.17 50 / 22%);
+  color: var(--vmc-color-base-white);
+}
+.hd-btn--a .hd-btn-username {
+  color: var(--vmc-color-orange-400);
+  text-shadow: 0 0 8px oklch(0.66 0.17 50 / 55%);
+}
+.hd-btn--a:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 18%),
+    0 0 24px oklch(0.66 0.17 50 / 40%),
+    0 4px 16px oklch(0.15 0.27 278 / 50%);
+}
+.hd-btn--a:active {
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 35%), 0 1px 2px oklch(0 0 0 / 15%);
+}
+.hd-btn--a.hd-btn--hover {
+  transform: translateY(-1px) !important;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 18%),
+    0 0 24px oklch(0.66 0.17 50 / 40%),
+    0 4px 16px oklch(0.15 0.27 278 / 50%) !important;
+}
+.hd-btn--a.hd-btn--pressed {
+  transform: scale(0.97) translateY(1px) !important;
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 35%), 0 1px 2px oklch(0 0 0 / 15%) !important;
+}
+
 /* ── Subrow + showcase slots (shared) ──────────────────────────── */
 .subrow {
   margin-top: 40px; padding-top: 24px;
@@ -1128,7 +1428,7 @@ html, body {
 
     <nav class="platform-tabs" role="tablist" aria-label="Plataforma">
       <button class="platform-tab is-active" role="tab" aria-selected="true" data-platform="desktop" type="button" id="tabDesktop">
-        Desktop <span class="tab-count">2</span>
+        Desktop <span class="tab-count">3</span>
       </button>
       <button class="platform-tab" role="tab" aria-selected="false" data-platform="mobile" type="button" id="tabMobile">
         Mobile <span class="tab-count">0</span>
@@ -1453,6 +1753,120 @@ html, body {
               <span class="btn-slot-label">V4 · Back · pressed</span>
               <button type="button" class="dh-back dh-back--pressed-vault" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
               <span class="btn-slot-sublabel">bg vault-700 · icon muted</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           Header · 790 × 64
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Header · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Header</h2>
+          <span class="component-size">790 × 64</span>
+          <span class="component-note">4 variantes · V1 SM Guest · V2 Primary Clone · V3 Vault→Orange · V4 Cinematic Dark</span>
+        </header>
+
+        <div class="catalog-row">
+
+          <!-- V1 · SM Guest -->
+          <div class="variant-slot">
+            <span class="variant-label">V1 · SM Guest</span>
+            <span class="variant-sublabel">40px iridescent · "Ingresa"</span>
+            <article class="hd">
+              <span aria-hidden="true"></span>
+<button type="button" class="hd-btn hd-btn--sm" aria-label="Ingresa">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span>Ingresa</span>
+              </button>
+            </article>
+          </div>
+
+          <!-- V2 · D Primary Clone -->
+          <div class="variant-slot">
+            <span class="variant-label">V2 · D Primary Clone</span>
+            <span class="variant-sublabel">orange → vault · logged-in</span>
+            <article class="hd">
+              <span aria-hidden="true"></span>
+<button type="button" class="hd-btn hd-btn--d" aria-label="Mi cuenta">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span class="hd-btn-light">Bienvenido,</span>
+                <span class="hd-btn-username">COOT8R</span>
+              </button>
+            </article>
+          </div>
+
+          <!-- V3 · E Vault→Orange -->
+          <div class="variant-slot">
+            <span class="variant-label">V3 · E Vault → Orange</span>
+            <span class="variant-sublabel">vault izq · orange der · username orange</span>
+            <article class="hd">
+              <span aria-hidden="true"></span>
+<button type="button" class="hd-btn hd-btn--e" aria-label="Mi cuenta">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span class="hd-btn-light">Bienvenido,</span>
+                <span class="hd-btn-username">COOT8R</span>
+              </button>
+            </article>
+          </div>
+
+          <!-- V4 · A Cinematic Dark -->
+          <div class="variant-slot">
+            <span class="variant-label">V4 · A Cinematic Dark</span>
+            <span class="variant-sublabel">vault dark · orange ring + glow</span>
+            <article class="hd">
+              <span aria-hidden="true"></span>
+<button type="button" class="hd-btn hd-btn--a" aria-label="Mi cuenta">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span class="hd-btn-light">Bienvenido,</span>
+                <span class="hd-btn-username">COOT8R</span>
+              </button>
+            </article>
+          </div>
+
+        </div>
+
+        <div class="subrow">
+          <div class="subrow-header">
+            <h3 class="subrow-title">Auth button · Estados estáticos</h3>
+            <span class="subrow-note">Hover · Pressed por variante</span>
+          </div>
+
+          <div class="btn-row">
+            <div class="btn-slot">
+              <span class="btn-slot-label">V1 · hover</span>
+              <button type="button" class="hd-btn hd-btn--sm hd-btn--hover">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span>Ingresa</span>
+              </button>
+              <span class="btn-slot-sublabel">SM iridescent</span>
+            </div>
+            <div class="btn-slot">
+              <span class="btn-slot-label">V1 · pressed</span>
+              <button type="button" class="hd-btn hd-btn--sm hd-btn--pressed">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span>Ingresa</span>
+              </button>
+              <span class="btn-slot-sublabel">SM iridescent</span>
+            </div>
+            <div class="btn-slot">
+              <span class="btn-slot-label">V2 · hover</span>
+              <button type="button" class="hd-btn hd-btn--d hd-btn--hover">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span class="hd-btn-light">Bienvenido,</span>
+                <span class="hd-btn-username">COOT8R</span>
+              </button>
+              <span class="btn-slot-sublabel">primary clone</span>
+            </div>
+            <div class="btn-slot">
+              <span class="btn-slot-label">V2 · pressed</span>
+              <button type="button" class="hd-btn hd-btn--d hd-btn--pressed">
+                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+                <span class="hd-btn-light">Bienvenido,</span>
+                <span class="hd-btn-username">COOT8R</span>
+              </button>
+              <span class="btn-slot-sublabel">primary clone</span>
             </div>
           </div>
         </div>

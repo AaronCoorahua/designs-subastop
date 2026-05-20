@@ -97,7 +97,13 @@ El catálogo registra el path una sola vez y lista los nombres de variantes en `
    <script src="../../../variant-filter.js"></script>
    ```
 
-4. **Registrar en el catálogo** — editar `pages/catalog/index.html`:
+4. **🚨 OBLIGATORIO — registrar el componente en `pages/catalog/index.html`:**
+
+   Crear el `claude.html` del componente **NO basta**. La tarea se considera incompleta si el
+   componente no aparece como tarjeta en `pages/catalog/index.html`. Sin esa tarjeta el
+   componente queda huérfano: no se descubre desde el catálogo y el contador de la pestaña
+   Desktop/Mobile no lo cuenta. Aplica igual a **cada subcarpeta de variante** (tipo A): cada
+   subcarpeta es una tarjeta independiente.
 
    a. Añadir `<article class="preview-card">` en el `<main>`:
    ```html
@@ -124,6 +130,12 @@ El catálogo registra el path una sola vez y lista los nombres de variantes en `
    ],
    ```
    > Para variantes-subcarpeta (tipo A): registrar una entrada por subcarpeta, sin entradas en `DESIGN_VARIANTS`.
+
+   **Checklist al crear un componente (no saltarse ningún paso):**
+   1. ✅ Crear `components/<plataforma>/<nombre>/claude.html` (y subcarpetas de variantes si aplica).
+   2. ✅ Añadir `<article class="preview-card">` en `pages/catalog/index.html` por cada `claude.html`.
+   3. ✅ Verificar que `preview-path` coincide exactamente con el `src` del `iframe`.
+   4. ✅ Si tiene variantes internas, registrar el array en `DESIGN_VARIANTS`.
 
 ---
 
@@ -205,3 +217,4 @@ Desktop/Mobile no lo cuenta.
 | Un componente desktop NUNCA vive en `mobile/` | Si una vista necesita ambas, dos carpetas separadas |
 | **Variantes apiladas en vertical** | Dentro de cada `claude.html`, las `.preview-cell` se renderizan en una sola columna (`.preview-grid { grid-template-columns: auto; }`). El catálogo embebe el iframe completo, por lo que cada variante aparece **debajo** de la anterior, nunca al costado. |
 | **Toda página nueva se registra en `pages/previews/index.html`** | Crear el `index.html` de la página NO basta. Sin la tarjeta `<a class="preview-card">` en el landing, el preview queda huérfano. Ver la sección "Crear una página nueva" para el snippet completo y el checklist. |
+| **Todo componente nuevo se registra en `pages/catalog/index.html`** | Crear el `claude.html` NO basta. Sin la tarjeta `<article class="preview-card">` en el catálogo, el componente queda huérfano. Aplica una tarjeta por cada `claude.html`, incluidas todas las subcarpetas de variante (tipo A). Ver la sección "Crear un componente nuevo" para el snippet y el checklist. |

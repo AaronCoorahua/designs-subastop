@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
+/* ─── Registered custom properties — cinematic button system ─────────── */
+@property --vsec-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
+@property --vsec-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.5931 0.193 291.92); }
+@property --vsec-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.3354 0.1624 289.86); }
+
 :root {
   --voyager-color-vault:           oklch(0.22 0.18 285);
   --voyager-color-vault-mid:       oklch(0.30 0.20 285);
@@ -24,16 +29,27 @@
   --voyager-color-border-input:   color-mix(in oklch, oklch(0.22 0.18 285) 12%, transparent);
   --voyager-color-divider:        color-mix(in oklch, oklch(0.22 0.18 285) 30%, white);
 
-  --voyager-radius-sm:    0px;
-  --voyager-radius-md:    0px;
+  --voyager-radius-sm:      0px;
+  --voyager-radius-md:      0px;
   --voyager-radius-control: 6px;
-  --voyager-radius-full:  9999px;
+  --voyager-radius-full:    9999px;
 
   --voyager-shadow-card: 0 8px 16px oklch(0.22 0.18 285 / 6%);
   --voyager-shadow-btn:  0 4px 12px oklch(0.22 0.18 285 / 20%);
 
   --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+
+  /* VMC palette — tokens/studio-primitives.json (vmc.auth.oklch) */
+  --vmc-color-base-white:   oklch(1 0 0);
+  --vmc-color-vault-300:    oklch(0.8304 0.0976 298.2);
+  --vmc-color-vault-400:    oklch(0.723  0.1617 295.09);
+  --vmc-color-vault-500:    oklch(0.5931 0.193  291.92);
+  --vmc-color-vault-600:    oklch(0.4641 0.2049 287.57);
+  --vmc-color-vault-700:    oklch(0.3354 0.1624 289.86);
+  --vmc-color-vault-900:    oklch(0.2418 0.1393 287.29);
+  --vmc-radius-full:        9999px;
+  --vmc-font-display:       var(--voyager-font-display);
 }
 
 * { box-sizing: border-box; }
@@ -44,12 +60,33 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Preview stage (catálogo) ──────────────────────────────────────────── */
 .preview-stage {
-  display: flex;
-  align-items: flex-start;
+  display:         flex;
+  align-items:     flex-start;
   justify-content: center;
-  min-height: 100vh;
-  padding: 0;
+  min-height:      100vh;
+  padding:         32px 16px;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,     oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%)  0%, transparent 55%),
+    var(--voyager-color-surface-page);
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  align-items: start;
+}
+.preview-cell { display: flex; flex-direction: column; align-items: center; }
+.preview-label {
+  font-family:     var(--voyager-font-display);
+  font-size:       10px;
+  font-weight:     700;
+  letter-spacing:  0.12em;
+  text-transform:  uppercase;
+  color:           var(--voyager-color-text-muted);
+  margin:          0 0 12px;
 }
 
 .preview-frame {
@@ -57,6 +94,7 @@ html, body {
   height: 572.2px;
   background: var(--voyager-color-surface-card);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .preview-frame h1,
@@ -164,61 +202,218 @@ html, body {
 }
 
 .preview-frame .pass-toggle svg { display: block; }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   .psec — MD Secondary (vault-dominant, cinematic)
+   source: src/app/preview/components/button-primary/page.tsx
+   ═════════════════════════════════════════════════════════════════════════ */
+.preview-frame .psec {
+  --vsec-stop-a: var(--vmc-color-vault-500);
+  --vsec-stop-b: var(--vmc-color-vault-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--vmc-radius-full);
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--vmc-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vmc-color-base-white);
+  text-decoration: none;
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.30);
+  background-image:
+    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-300) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      var(--vmc-color-vault-300) 100%
+    );
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30);
+  transition:
+    --vsec-angle  0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    --vsec-stop-a 0.35s ease,
+    --vsec-stop-b 0.35s ease,
+    transform     0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow    0.25s ease;
+  transform: translateZ(0);
+}
+.preview-frame .psec::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.16) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+.preview-frame .psec::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(135deg, var(--vmc-color-vault-400), var(--vmc-color-vault-600));
+  filter: blur(14px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.preview-frame .psec:hover {
+  --vsec-angle:  220deg;
+  --vsec-stop-a: var(--vmc-color-vault-400);
+  --vsec-stop-b: var(--vmc-color-vault-600);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
+    0 8px 24px rgb(51.76% 37.65% 89.8% / 0.40),
+    0 4px 10px rgb(51.76% 37.65% 89.8% / 0.25);
+}
+.preview-frame .psec:hover::after { opacity: 0.45; filter: blur(18px); }
+.preview-frame .psec:active {
+  --vsec-angle:  160deg;
+  --vsec-stop-a: var(--vmc-color-vault-700);
+  --vsec-stop-b: var(--vmc-color-vault-900);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.28),
+    0 1px 3px rgb(0% 0% 0% / 0.14);
+}
+.preview-frame .psec:active::after { opacity: 0; }
 </style>
 </head>
 <body>
   <main class="preview-stage" aria-label="Mobile · Login Form — Voyager upgrade">
-    <div class="preview-frame">
-      <div id="sign-in" class="w-full py-6">
-        <div class="flex items-center justify-center">
-          <h1 class="font-display font-light text-2xl text-vault leading-tight text-center">
-            ¡Bienvenido <br>
-            <span class="text-lg">Cazador de ofertas!</span>
-          </h1>
-        </div>
-        <div class="mt-12 px-7">
-          <form novalidate="novalidate" class="space-y-5">
-            <div>
-              <label for="email" class="font-display text-xs text-vault leading-tight">Correo Electrónico</label>
-              <div class="mt-1 relative">
-                <input id="email" type="email" name="email" class="input w-full bg-input-soft px-5 py-3 leading-tight text-sm font-normal text-vault border-vault-soft" />
-              </div>
-            </div>
-            <div>
-              <label for="password" class="font-display text-xs text-vault leading-tight">Contraseña</label>
-              <div class="mt-1 relative">
-                <input id="password" name="password" type="password" class="input w-full bg-input-soft px-5 pr-9 py-3 leading-tight text-sm font-normal text-vault border-vault-soft" />
-                <span class="pass-toggle" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current w-6 h-6">
-                    <path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z" fill="currentColor"/>
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div class="text-center">
-              <a href="#" class="font-display font-bold text-xs text-vault">¿Olvidaste tu contraseña?</a>
-            </div>
-            <div>
-              <div class="shadow-md rounded">
-                <button type="submit" class="button shadow rounded bg-vault-disabled leading-6 px-7 py-3 w-full flex items-center justify-center font-display font-bold text-xs text-white uppercase" disabled="disabled">
-                  Ingresa
-                </button>
-              </div>
-            </div>
-          </form>
-          <div class="relative mt-5">
+    <div class="preview-grid">
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           BASE · DESACTIVADO — botón muted disabled (estado original)
+           ═══════════════════════════════════════════════════════════════ -->
+      <div class="preview-cell" data-variant="Base">
+        <p class="preview-label">Base · Desactivado</p>
+        <div class="preview-frame">
+          <div id="sign-in" class="w-full py-6">
             <div class="flex items-center justify-center">
-              <div class="absolute w-full border-t border-vault-div" style="z-index:0"></div>
-              <span class="font-display font-bold text-sm text-vault-muted bg-surface py-1 leading-none px-6 text-center relative" style="z-index:1">ó</span>
+              <h1 class="font-display font-light text-2xl text-vault leading-tight text-center">
+                ¡Bienvenido <br>
+                <span class="text-lg">Cazador de ofertas!</span>
+              </h1>
             </div>
-          </div>
-          <div class="mt-6">
-            <a href="#" class="rounded bg-surface border border-vault leading-6 px-7 py-3 w-full flex items-center justify-center font-display font-bold text-xs text-vault uppercase">
-              Regístrate
-            </a>
+            <div class="mt-12 px-7">
+              <form novalidate="novalidate" class="space-y-5">
+                <div>
+                  <label for="email-base" class="font-display text-xs text-vault leading-tight">Correo Electrónico</label>
+                  <div class="mt-1 relative">
+                    <input id="email-base" type="email" name="email" class="input w-full bg-input-soft px-5 py-3 leading-tight text-sm font-normal text-vault border-vault-soft" />
+                  </div>
+                </div>
+                <div>
+                  <label for="password-base" class="font-display text-xs text-vault leading-tight">Contraseña</label>
+                  <div class="mt-1 relative">
+                    <input id="password-base" name="password" type="password" class="input w-full bg-input-soft px-5 pr-9 py-3 leading-tight text-sm font-normal text-vault border-vault-soft" />
+                    <span class="pass-toggle" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current w-6 h-6">
+                        <path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z" fill="currentColor"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <a href="#" class="font-display font-bold text-xs text-vault">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div>
+                  <div class="shadow-md rounded">
+                    <button type="submit" class="button shadow rounded bg-vault-disabled leading-6 px-7 py-3 w-full flex items-center justify-center font-display font-bold text-xs text-white uppercase" disabled="disabled">
+                      Ingresa
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <div class="relative mt-5">
+                <div class="flex items-center justify-center">
+                  <div class="absolute w-full border-t border-vault-div" style="z-index:0"></div>
+                  <span class="font-display font-bold text-sm text-vault-muted bg-surface py-1 leading-none px-6 text-center relative" style="z-index:1">ó</span>
+                </div>
+              </div>
+              <div class="mt-6">
+                <a href="#" class="rounded bg-surface border border-vault leading-6 px-7 py-3 w-full flex items-center justify-center font-display font-bold text-xs text-vault uppercase">
+                  Regístrate
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           VAULT CINEMATIC — .psec en lugar del botón disabled
+           ═══════════════════════════════════════════════════════════════ -->
+      <div class="preview-cell" data-variant="Vault Cinematic">
+        <p class="preview-label">Vault Cinematic</p>
+        <div class="preview-frame">
+          <div class="w-full py-6">
+            <div class="flex items-center justify-center">
+              <h1 class="font-display font-light text-2xl text-vault leading-tight text-center">
+                ¡Bienvenido <br>
+                <span class="text-lg">Cazador de ofertas!</span>
+              </h1>
+            </div>
+            <div class="mt-12 px-7">
+              <form novalidate="novalidate" class="space-y-5">
+                <div>
+                  <label for="email-cinematic" class="font-display text-xs text-vault leading-tight">Correo Electrónico</label>
+                  <div class="mt-1 relative">
+                    <input id="email-cinematic" type="email" name="email" class="input w-full bg-input-soft px-5 py-3 leading-tight text-sm font-normal text-vault border-vault-soft" />
+                  </div>
+                </div>
+                <div>
+                  <label for="password-cinematic" class="font-display text-xs text-vault leading-tight">Contraseña</label>
+                  <div class="mt-1 relative">
+                    <input id="password-cinematic" name="password" type="password" class="input w-full bg-input-soft px-5 pr-9 py-3 leading-tight text-sm font-normal text-vault border-vault-soft" />
+                    <span class="pass-toggle" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="fill-current w-6 h-6">
+                        <path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z" fill="currentColor"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <a href="#" class="font-display font-bold text-xs text-vault">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div>
+                  <button type="submit" class="psec">
+                    Ingresa
+                  </button>
+                </div>
+              </form>
+              <div class="relative mt-5">
+                <div class="flex items-center justify-center">
+                  <div class="absolute w-full border-t border-vault-div" style="z-index:0"></div>
+                  <span class="font-display font-bold text-sm text-vault-muted bg-surface py-1 leading-none px-6 text-center relative" style="z-index:1">ó</span>
+                </div>
+              </div>
+              <div class="mt-6">
+                <a href="#" class="rounded bg-surface border border-vault leading-6 px-7 py-3 w-full flex items-center justify-center font-display font-bold text-xs text-vault uppercase">
+                  Regístrate
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 <script src="../../variant-filter.js"></script>

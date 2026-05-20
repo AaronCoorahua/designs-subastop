@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Subastop Designs — Mobile · Header · New Style</title>
+<title>Subastop Designs — Mobile · Header · Logged · Iridescent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 <style>
 /* ─────────────────────────────────────────────────────────────────────────
-   Header · New Style (Guest) — Botón "Ingresa" = SM · Ingresa — Guest
-   (.pvbtn-sm) — spec exacto del preview live:
-   /preview/components/button-primary → SM · 40px · icono usuario · header nav
+   Logged · Iridescent — Bienvenido button = D Primary Clone (.pvbtn-auth-d)
+   Spec source: src/app/preview/components/button-primary/page.tsx — sección
+   "Estilo primary (fill sólido) · D — Primary Clone".
    ──────────────────────────────────────────────────────────────────────── */
-@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 90deg; }
+@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
 @property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.7244 0.1533 56.07); }
 @property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.5931 0.193  291.92); }
 
@@ -24,8 +24,7 @@
   --voyager-font-display:       "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --voyager-font-body:          "Roboto", system-ui, -apple-system, sans-serif;
 
-  /* VMC palette — tokens/studio-primitives.json (vmc.auth.oklch) — coincide
-     uno-a-uno con los stops usados en src/app/preview/components/button-primary. */
+  /* VMC palette — tokens/studio-primitives.json (vmc.auth.oklch) */
   --vmc-color-base-white:    oklch(1 0 0);
   --vmc-color-orange-400:    oklch(0.8545 0.1085 72.6);
   --vmc-color-orange-600:    oklch(0.7244 0.1533 56.07);
@@ -64,11 +63,9 @@ html, body {
   overflow: hidden;
 }
 
-/* ── .pvbtn-sm — spec exacto del button-primary preview ─────────────── */
-.pvbtn-sm {
-  --vbtn-stop-a: var(--vmc-color-orange-600);
-  --vbtn-stop-b: var(--vmc-color-vault-500);
-
+/* ── D — Primary Clone (.pvbtn-auth-d) — fill sólido naranja→vault con
+   borde iridiscente, inset shine ::before, halo ::after. ─────────────── */
+.pvbtn-auth-d {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -83,10 +80,9 @@ html, body {
   font-size: 14px;
   font-weight: 600;
   color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 2px rgb(0% 0% 0% / 0.20);
+  text-shadow: 0 1px 2px rgb(0% 0% 0% / 0.22);
   white-space: nowrap;
   flex-shrink: 0;
-
   background-image:
     linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
     linear-gradient(135deg,
@@ -97,11 +93,9 @@ html, body {
     );
   background-origin: padding-box, border-box;
   background-clip:   padding-box, border-box;
-
   box-shadow:
-    inset 0 1px 0 rgb(100% 100% 100% / 0.25),
-    0 2px 6px rgb(92.94% 53.73% 21.18% / 0.25);
-
+    inset 0 1px 0 rgb(100% 100% 100% / 0.28),
+    0 2px 6px rgb(92.94% 53.73% 21.18% / 0.30);
   transition:
     --vbtn-angle  0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
     --vbtn-stop-a 0.35s ease,
@@ -110,21 +104,52 @@ html, body {
     box-shadow    0.25s ease;
   transform: translateZ(0);
 }
-.pvbtn-sm::before {
+.pvbtn-auth-d::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: var(--vmc-radius-full);
-  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.15) 0%, transparent 55%);
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.17) 0%, transparent 55%);
   pointer-events: none;
   z-index: 1;
 }
+.pvbtn-auth-d::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(135deg, var(--vmc-color-orange-600), var(--vmc-color-vault-500));
+  filter: blur(12px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+.pvbtn-auth-d:hover {
+  --vbtn-angle:  220deg;
+  --vbtn-stop-a: var(--vmc-color-orange-400);
+  --vbtn-stop-b: var(--vmc-color-vault-400);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 8px 20px rgb(51.76% 37.65% 89.8% / 0.35),
+    0 4px 10px rgb(92.94% 53.73% 21.18% / 0.40);
+}
+.pvbtn-auth-d:hover::after { opacity: 0.40; filter: blur(16px); }
+.pvbtn-auth-d:active {
+  --vbtn-angle:  135deg;
+  --vbtn-stop-a: var(--vmc-color-orange-700);
+  --vbtn-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.22),
+    0 1px 2px rgb(0% 0% 0% / 0.10);
+}
 
-.pvbtn-sm .pvbtn-icon {
+.pvbtn-auth-d .pvbtn-auth-d-icon {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgb(100% 100% 100% / 0.20);
+  background: rgb(0% 0% 0% / 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,51 +157,37 @@ html, body {
   position: relative;
   z-index: 2;
 }
-.pvbtn-sm .pvbtn-icon svg { display: block; }
-
-.pvbtn-sm:hover {
-  --vbtn-angle:  220deg;
-  --vbtn-stop-a: var(--vmc-color-orange-400);
-  --vbtn-stop-b: var(--vmc-color-vault-400);
-  transform: translateY(-1px) scale(1.02);
-  box-shadow:
-    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
-    0 6px 18px rgb(51.76% 37.65% 89.8% / 0.30),
-    0 3px 8px rgb(92.94% 53.73% 21.18% / 0.35);
-}
-.pvbtn-sm:active {
-  --vbtn-angle:  135deg;
-  --vbtn-stop-a: var(--vmc-color-orange-700);
-  --vbtn-stop-b: var(--vmc-color-vault-600);
-  transform: scale(0.97) translateZ(0);
-  box-shadow:
-    inset 0 1px 0 rgb(100% 100% 100% / 0.18),
-    0 1px 3px rgb(0% 0% 0% / 0.10);
+.pvbtn-auth-d .pvbtn-auth-d-icon svg { display: block; }
+.pvbtn-auth-d .pvbtn-auth-d-username {
+  font-weight: 700;
+  opacity: 0.92;
+  position: relative;
+  z-index: 2;
 }
 </style>
 </head>
 <body>
-  <main class="preview-stage" aria-label="Voyager mobile preview — Header · New Style">
+  <main class="preview-stage" aria-label="Voyager mobile preview — Header · Logged · Iridescent">
     <div class="preview-frame">
-      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 11px 0 12px;gap:12px">
-        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">
+      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 11px 0 12px;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;overflow:hidden">
           <button type="button" aria-label="Abrir menú" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:9999px;background:transparent;cursor:pointer;flex-shrink:0;color:oklch(1 0 0 / 80%);padding:0">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.83" stroke-linecap="butt" aria-hidden="true">
-              <line x1="2.75" y1="6.42"  x2="19.25" y2="6.42"></line>
-              <line x1="2.75" y1="11"    x2="19.25" y2="11"></line>
+              <line x1="2.75" y1="6.42" x2="19.25" y2="6.42"></line>
+              <line x1="2.75" y1="11"   x2="19.25" y2="11"></line>
               <line x1="2.75" y1="15.58" x2="19.25" y2="15.58"></line>
             </svg>
           </button>
-          <img src="../../../../logo-preview.png" alt="VMC Subastas" style="width:173px;height:25px;display:block;flex-shrink:0">
+          <img src="../../../../logo-preview.png" alt="VMC Subastas" style="width:140px;height:20px;display:block;flex-shrink:0">
         </div>
-        <button type="button" class="pvbtn-sm">
-          <span class="pvbtn-icon">
+        <button type="button" class="pvbtn-auth-d">
+          <span class="pvbtn-auth-d-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="8" r="4"></circle>
               <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path>
             </svg>
           </span>
-          Ingresa
+          Bienvenido,&nbsp;<span class="pvbtn-auth-d-username">ZAEX5G</span>
         </button>
       </header>
     </div>

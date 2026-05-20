@@ -244,78 +244,84 @@ html, body {
   initial-value: 90deg;
 }
 
+/* SM · Ingresa — Guest (.pvbtn-sm) — spec exacto del button-primary preview
+   (src/app/preview/components/button-primary/page.tsx · sección SM · 40px). */
 body.is-new-style .cmp-header .login-btn {
   --vbtn-angle:  90deg;
-  --vbtn-stop-a: oklch(0.72 0.16 55);
-  --vbtn-stop-b: oklch(0.30 0.20 285);
+  --vbtn-stop-a: oklch(0.7244 0.1533 56.07);   /* orange-600 */
+  --vbtn-stop-b: oklch(0.5931 0.193  291.92);  /* vault-500  */
 
   position: relative;
+  overflow: hidden;
   height: 40px;
   padding: 0 16px 0 4px;
   gap: 8px;
   border: 2px solid transparent;
   border-radius: 9999px;
+  font-family: var(--voyager-font-display);
   font-size: 14px;
   font-weight: 600;
-  text-shadow: 0 1px 2px oklch(0 0 0 / 20%);
-  background:
+  text-shadow: 0 1px 2px rgb(0% 0% 0% / 0.20);
+  background-image:
     linear-gradient(var(--vbtn-angle),
       var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%,
       var(--vbtn-stop-b) 100%),
     linear-gradient(135deg,
-      oklch(1 0 0) 0%, oklch(0.80 0.13 65) 25%,
-      oklch(0.44 0.18 285) 75%, oklch(1 0 0) 100%);
+      oklch(1 0 0)              0%,
+      oklch(0.8545 0.1085 72.6) 25%,
+      oklch(0.723  0.1617 295.09) 75%,
+      oklch(1 0 0)              100%);
   background-origin: padding-box, border-box;
   background-clip:   padding-box, border-box;
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 28%),
-    0 2px 6px oklch(0.72 0.16 55 / 30%);
+    inset 0 1px 0 rgb(100% 100% 100% / 0.25),
+    0 2px 6px rgb(92.94% 53.73% 21.18% / 0.25);
   transition:
-    --vbtn-angle 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    --vbtn-angle  0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     --vbtn-stop-a 0.35s ease,
     --vbtn-stop-b 0.35s ease,
-    transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
-    box-shadow 0.25s ease;
+    transform     0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow    0.25s ease;
+  transform: translateZ(0);
 }
-body.is-new-style .cmp-header .login-btn::after {
+body.is-new-style .cmp-header .login-btn::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: 0;
   border-radius: 9999px;
-  background: linear-gradient(135deg, oklch(0.72 0.16 55), oklch(0.30 0.20 285));
-  filter: blur(14px);
-  opacity: 0;
-  z-index: -1;
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.15) 0%, transparent 55%);
   pointer-events: none;
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  z-index: 1;
 }
 body.is-new-style .cmp-header .login-btn .avatar {
-  background: oklch(0 0 0 / 18%);
+  width: 32px;
+  height: 32px;
+  background: rgb(100% 100% 100% / 0.20);
+  position: relative;
+  z-index: 2;
+}
+body.is-new-style .cmp-header .login-btn .label {
+  position: relative;
+  z-index: 2;
 }
 body.is-new-style .cmp-header .login-btn:hover {
-  --vbtn-angle:  135deg;
-  --vbtn-stop-a: oklch(0.80 0.13 65);
-  --vbtn-stop-b: oklch(0.44 0.18 285);
+  --vbtn-angle:  220deg;
+  --vbtn-stop-a: oklch(0.8545 0.1085 72.6);   /* orange-400 */
+  --vbtn-stop-b: oklch(0.723  0.1617 295.09); /* vault-400  */
+  transform: translateY(-1px) scale(1.02);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 36%),
-    0 6px 16px oklch(0.72 0.16 55 / 36%);
-}
-body.is-new-style .cmp-header .login-btn:hover::after {
-  opacity: 1;
-  filter: blur(18px);
+    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
+    0 6px 18px rgb(51.76% 37.65% 89.8% / 0.30),
+    0 3px 8px rgb(92.94% 53.73% 21.18% / 0.35);
 }
 body.is-new-style .cmp-header .login-btn:active {
-  --vbtn-angle:  180deg;
-  --vbtn-stop-a: oklch(0.55 0.18 35);
-  --vbtn-stop-b: oklch(0.72 0.16 55);
-  transform: scale(0.97);
+  --vbtn-angle:  135deg;
+  --vbtn-stop-a: oklch(0.6453 0.153  52.09);  /* orange-700 */
+  --vbtn-stop-b: oklch(0.4641 0.2049 287.57); /* vault-600  */
+  transform: scale(0.97) translateZ(0);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 18%),
-    0 1px 3px oklch(0.55 0.18 35 / 45%);
-}
-body.is-new-style .cmp-header .login-btn:active::after {
-  opacity: 0.5;
-  filter: blur(8px);
+    inset 0 1px 0 rgb(100% 100% 100% / 0.18),
+    0 1px 3px rgb(0% 0% 0% / 0.10);
 }
 
 /* Style toggle UI */

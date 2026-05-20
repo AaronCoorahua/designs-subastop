@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Your Contact Info — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-surface-section: oklch(0.96 0.004 160);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-border-ghost:    color-mix(in oklch, oklch(0.22 0.18 285) 10%, transparent);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  --voyager-radius-card:    10px;
+  --voyager-radius-control: 8px;
+
+  --voyager-duration-micro: 150ms;
+  --voyager-ease-default:   cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  align-items: start;
+}
+.preview-cell { display: flex; flex-direction: column; align-items: center; }
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 12px;
+}
+
+/* ── Card root — 390×220.5 ─────────────────────────────────────────── */
+.preview-frame {
+  width: 390px;
+  height: 220.5px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--voyager-radius-card);
+}
+
+.card-root {
+  width: 100%;
+  height: 100%;
+  background: var(--voyager-color-surface-card);
+  border-radius: var(--voyager-radius-card);
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--voyager-color-vault);
+  margin: 0 0 16px;
+}
+
+/* ── Fields stacked (single column on mobile) ────────────────────────── */
+.fields-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  line-height: 1.25;
+  color: var(--voyager-color-vault);
+}
+
+.field-label { font-weight: 400; }
+
+.field-edit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--voyager-color-vault);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding-right: 2px;
+  cursor: pointer;
+  transition: color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.field-edit:hover { color: var(--voyager-color-live); }
+
+.field-value {
+  width: 100%;
+  height: 38px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-family: var(--voyager-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--voyager-color-text-on-surface);
+  background: var(--voyager-color-surface-section);
+  border: 1px solid var(--voyager-color-border-ghost);
+  border-radius: var(--voyager-radius-control);
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Your Contact Info">
+    <div class="preview-grid">
+
+      <div class="preview-cell" data-variant="Default">
+        <p class="preview-label">Default</p>
+        <div class="preview-frame">
+          <div class="card-root">
+            <h3 class="section-title">Información de contacto:</h3>
+            <div class="fields-grid">
+              <div class="field-group">
+                <div class="field-header">
+                  <span class="field-label">Teléfono</span>
+                  <span role="button" class="field-edit">Editar</span>
+                </div>
+                <div class="field-value">+51 999 000 000</div>
+              </div>
+              <div class="field-group">
+                <div class="field-header">
+                  <span class="field-label">Correo Electrónico</span>
+                  <span role="button" class="field-edit">Editar</span>
+                </div>
+                <div class="field-value">lorem@ipsum.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Logout Button — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+@property --vsec-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 160deg;
+}
+@property --vsec-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.38 0.20 285); }
+@property --vsec-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.28 0.18 285); }
+
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);   /* #22005C */
+  --voyager-color-vault-hover:  oklch(0.30 0.20 285);   /* #3B1782 */
+  --voyager-color-text-muted:   color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-font-display:       "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-radius-sm:          4px;
+  --voyager-shadow-btn:         0 0 16px rgba(0, 0, 0, 0.14);
+  --voyager-duration-micro:     150ms;
+  --voyager-ease-default:       cubic-bezier(0.3, 0, 0, 1);
+
+  /* VMC palette */
+  --vmc-color-base-white:   oklch(1 0 0);
+  --vmc-color-vault-300:    oklch(0.8304 0.0976 298.2);
+  --vmc-color-vault-400:    oklch(0.723  0.1617 295.09);
+  --vmc-color-vault-500:    oklch(0.5931 0.193  291.92);
+  --vmc-color-vault-600:    oklch(0.4641 0.2049 287.57);
+  --vmc-color-vault-700:    oklch(0.3354 0.1624 289.86);
+  --vmc-color-vault-900:    oklch(0.2418 0.1393 287.29);
+  --vmc-radius-full:        9999px;
+  --vmc-font-display:       var(--voyager-font-display);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  align-items: start;
+}
+.preview-cell { display: flex; flex-direction: column; align-items: center; }
+.preview-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-color-text-muted);
+  margin: 0 0 12px;
+}
+
+.preview-frame {
+  width: 200px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Vault variant — outline (desktop parity) ────────────────────────── */
+.btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: var(--voyager-radius-sm);
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: 2px solid var(--voyager-color-vault);
+  color: var(--voyager-color-vault);
+  transition:
+    color        var(--voyager-duration-micro) var(--voyager-ease-default),
+    background   var(--voyager-duration-micro) var(--voyager-ease-default),
+    border-color var(--voyager-duration-micro) var(--voyager-ease-default),
+    box-shadow   var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.btn-logout:hover {
+  background: var(--voyager-color-vault);
+  border-color: var(--voyager-color-vault);
+  color: #ffffff;
+  box-shadow: var(--voyager-shadow-btn);
+}
+.btn-logout:active,
+.btn-logout:focus,
+.btn-logout:focus-visible {
+  background: var(--voyager-color-vault-hover);
+  border-color: var(--voyager-color-vault-hover);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   .psec — MD Secondary cinematic (vault-dominant)
+   source: src/app/preview/components/button-primary/page.tsx
+   ──────────────────────────────────────────────────────────────────── */
+.psec {
+  --vsec-stop-a: var(--vmc-color-vault-500);
+  --vsec-stop-b: var(--vmc-color-vault-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: var(--vmc-radius-full);
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--vmc-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vmc-color-base-white);
+  text-decoration: none;
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.30);
+  background-image:
+    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-300) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      var(--vmc-color-vault-300) 100%
+    );
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30);
+  transition:
+    --vsec-angle  0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    --vsec-stop-a 0.35s ease,
+    --vsec-stop-b 0.35s ease,
+    transform     0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow    0.25s ease;
+  transform: translateZ(0);
+}
+.psec::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.16) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+.psec::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(135deg, var(--vmc-color-vault-400), var(--vmc-color-vault-600));
+  filter: blur(14px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.psec:hover {
+  --vsec-angle:  220deg;
+  --vsec-stop-a: var(--vmc-color-vault-400);
+  --vsec-stop-b: var(--vmc-color-vault-600);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
+    0 8px 24px rgb(51.76% 37.65% 89.8% / 0.40),
+    0 4px 10px rgb(51.76% 37.65% 89.8% / 0.25);
+}
+.psec:hover::after { opacity: 0.45; filter: blur(18px); }
+.psec:active {
+  --vsec-angle:  160deg;
+  --vsec-stop-a: var(--vmc-color-vault-700);
+  --vsec-stop-b: var(--vmc-color-vault-900);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.28),
+    0 1px 3px rgb(0% 0% 0% / 0.14);
+}
+.psec:active::after { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Logout Button">
+    <div class="preview-grid">
+
+      <div class="preview-cell" data-variant="Vault">
+        <p class="preview-label">Vault</p>
+        <div class="preview-frame">
+          <a href="/logout" class="btn-logout">Cerrar sesión</a>
+        </div>
+      </div>
+
+      <div class="preview-cell" data-variant="New Style">
+        <p class="preview-label">New Style</p>
+        <div class="preview-frame">
+          <a href="/logout" class="psec">Cerrar sesión</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+<script>
+  document.querySelectorAll('.btn-logout, .psec').forEach(function (el) {
+    el.addEventListener('click', function (event) {
+      event.preventDefault();
+      el.blur();
+    });
+  });
+</script>
+<script src="../../variant-filter.js"></script>
+</body>
+</html>

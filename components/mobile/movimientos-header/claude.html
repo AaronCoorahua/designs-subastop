@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Movimientos Header — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — Mobile · Movimientos Header (390×168)
+   Layout vertical centrado · BILLETERA con coral brackets · Saldo + SubasCoins
+   apilados. Theming via scoping .mh-wrap[modifier] — mismo contrato de
+   variantes que el desktop (Vault Gradient · Modern Clean).
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:            oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:        oklch(0.30 0.20 285);
+  --voyager-color-live:             oklch(0.72 0.16 55);
+
+  --voyager-surface-card:           oklch(1 0 0);
+  --voyager-surface-section:        oklch(0.96 0.004 160);
+  --voyager-surface-page:           oklch(0.98 0.004 160);
+
+  --voyager-text-on-surface:        oklch(0.15 0.008 200);
+  --voyager-text-muted:             oklch(0.55 0.02 260);
+  --voyager-text-on-dark:           oklch(1 0 0);
+
+  --voyager-color-border-ghost:     oklch(0.22 0.18 285 / 10%);
+
+  --voyager-gradient-vault:         linear-gradient(135deg, #22005C 0%, #3B1782 100%);
+
+  --voyager-shadow-card:            0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-floating:        0 12px 28px oklch(0.22 0.18 285 / 14%);
+
+  --voyager-radius-sm:              4px;
+  --voyager-radius-md:              10px;
+  --voyager-radius-full:            9999px;
+
+  --voyager-font-display:           "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-duration-micro:         150ms;
+  --voyager-ease-default:           cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Preview stage (catálogo) ──────────────────────────────────────────── */
+.preview-stage {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  min-height:      100vh;
+  padding:         32px 16px;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,     oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-surface-page);
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  align-items: start;
+}
+.preview-cell { display: flex; flex-direction: column; align-items: center; }
+.preview-label {
+  font-family:     var(--voyager-font-display);
+  font-size:       10px;
+  font-weight:     700;
+  letter-spacing:  0.12em;
+  text-transform:  uppercase;
+  color:           var(--voyager-text-muted);
+  margin:          0 0 12px;
+}
+
+/* Frame fijo 390×168 */
+.preview-frame {
+  width:          390px;
+  height:         168px;
+  flex-shrink:    0;
+  overflow:       hidden;
+  border-radius:  var(--voyager-radius-md);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Card root — 390×168
+   ══════════════════════════════════════════════════════════════════════════ */
+.mh-wrap {
+  width:            100%;
+  height:           100%;
+  border-radius:    var(--voyager-radius-md);
+  padding:          22px 28px 24px;
+  display:          flex;
+  flex-direction:   column;
+  justify-content:  center;
+  align-items:      stretch;
+  gap:              14px;
+  font-family:      var(--voyager-font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Título BILLETERA con coral brackets — centrado horizontalmente */
+.mh-title-wrap {
+  position: relative;
+  display:  inline-block;
+  padding:  10px 14px;
+  align-self: center;
+}
+.mh-title-wrap svg {
+  position: absolute;
+  width:    14px;
+  height:   14px;
+  fill:     currentColor;
+}
+.mh-title-wrap svg.mh-bracket-tl { top: 0;    left: 0; }
+.mh-title-wrap svg.mh-bracket-br { bottom: 0; right: 0; }
+.mh-title {
+  font-size:      18px;
+  font-weight:    700;
+  line-height:    1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Filas de datos — apiladas, label + value en flex inline */
+.mh-rows {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+}
+.mh-row {
+  display:    flex;
+  align-items: baseline;
+  gap:        8px;
+  font-size:  15px;
+  line-height: 1.25;
+}
+.mh-row strong { font-weight: 700; }
+.mh-row span.mh-value { font-weight: 400; }
+.mh-row .mh-coin-mark { font-weight: 700; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VARIANT 1 — VAULT · GRADIENT
+   ══════════════════════════════════════════════════════════════════════════ */
+.mh--vault {
+  background:      var(--voyager-gradient-vault);
+  box-shadow:      var(--voyager-shadow-floating);
+  color:           var(--voyager-text-on-dark);
+}
+.mh--vault .mh-title-wrap        { color: var(--voyager-color-live); }
+.mh--vault .mh-title             { color: var(--voyager-text-on-dark); }
+.mh--vault .mh-row               { color: var(--voyager-text-on-dark); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VARIANT 2 — MODERN · CLEAN
+   ══════════════════════════════════════════════════════════════════════════ */
+.mh--modern {
+  background:    var(--voyager-surface-card);
+  box-shadow:    var(--voyager-shadow-card);
+  border:        1px solid var(--voyager-color-border-ghost);
+  color:         var(--voyager-color-vault);
+}
+.mh--modern .mh-title-wrap       { color: var(--voyager-color-live); }
+.mh--modern .mh-title            { color: var(--voyager-color-vault); }
+.mh--modern .mh-row              { color: var(--voyager-color-vault); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Movimientos Header">
+    <div class="preview-grid">
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           VAULT · GRADIENT
+           ═══════════════════════════════════════════════════════════════ -->
+      <div class="preview-cell" data-variant="Vault">
+        <p class="preview-label">Vault</p>
+        <div class="preview-frame">
+          <section class="mh-wrap mh--vault" aria-label="Billetera">
+            <div class="mh-title-wrap">
+              <svg class="mh-bracket-tl" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+              </svg>
+              <h4 class="mh-title">Billetera</h4>
+              <svg class="mh-bracket-br" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <div class="mh-rows">
+              <div class="mh-row">
+                <strong>Saldo:</strong>
+                <span class="mh-value">US$&nbsp;0</span>
+              </div>
+              <div class="mh-row">
+                <strong>SubasCoins:</strong>
+                <span class="mh-value"><span class="mh-coin-mark">&gt;S&lt;</span>&nbsp;0</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           MODERN · CLEAN
+           ═══════════════════════════════════════════════════════════════ -->
+      <div class="preview-cell" data-variant="Clean">
+        <p class="preview-label">Clean</p>
+        <div class="preview-frame">
+          <section class="mh-wrap mh--modern" aria-label="Billetera">
+            <div class="mh-title-wrap">
+              <svg class="mh-bracket-tl" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+              </svg>
+              <h4 class="mh-title">Billetera</h4>
+              <svg class="mh-bracket-br" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <div class="mh-rows">
+              <div class="mh-row">
+                <strong>Saldo:</strong>
+                <span class="mh-value">US$&nbsp;0</span>
+              </div>
+              <div class="mh-row">
+                <strong>SubasCoins:</strong>
+                <span class="mh-value"><span class="mh-coin-mark">&gt;S&lt;</span>&nbsp;0</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <script src="../../variant-filter.js"></script>
+</body>
+</html>

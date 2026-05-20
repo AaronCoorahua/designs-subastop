@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mobile · Historial de Transacciones — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Voyager DS — Mobile · Historial de Transacciones (390×236)
+   3 columnas: Fecha · Descripción · Monto (Documentos omitido por densidad).
+   2 variantes: Vault Gradient · Live Gradient — gradient horizontal en thead.
+   tabular-nums obligatorio en celdas de fecha y monto.
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:            oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:        oklch(0.30 0.20 285);
+  --voyager-color-live:             oklch(0.72 0.16 55);
+
+  --voyager-surface-card:           oklch(1 0 0);
+  --voyager-surface-section:        oklch(0.96 0.004 160);
+  --voyager-surface-page:           oklch(0.98 0.004 160);
+
+  --voyager-text-on-surface:        oklch(0.15 0.008 200);
+  --voyager-text-muted:             oklch(0.55 0.02 260);
+  --voyager-text-on-dark:           oklch(1 0 0);
+
+  --voyager-color-border-ghost:     oklch(0.22 0.18 285 / 10%);
+  --voyager-color-divider:          oklch(0.22 0.18 285 / 8%);
+
+  --voyager-gradient-vault-h:       linear-gradient(90deg, #200068 0%, #4E38AF 100%);
+  --voyager-gradient-live-h:        linear-gradient(90deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
+
+  --voyager-shadow-card:            0 8px 16px oklch(0.22 0.18 285 / 6%);
+
+  --voyager-radius-sm:              4px;
+  --voyager-radius-md:              10px;
+  --voyager-radius-lg:              8px;
+
+  --voyager-font-display:           "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:              "Roboto Mono", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+ul { list-style: none; }
+
+html, body {
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  min-height:      100vh;
+  padding:         32px 16px;
+  background:
+    radial-gradient(ellipse 70% 50% at top left,     oklch(0.22 0.18 285 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at bottom right, oklch(0.72 0.16 55 / 4%) 0%, transparent 55%),
+    var(--voyager-surface-page);
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  align-items: start;
+}
+.preview-cell { display: flex; flex-direction: column; align-items: center; }
+.preview-label {
+  font-family:    var(--voyager-font-display);
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--voyager-text-muted);
+  margin:         0 0 12px;
+}
+
+/* Frame fijo 390×236 */
+.preview-frame {
+  width:          390px;
+  height:         236px;
+  flex-shrink:    0;
+  overflow:       hidden;
+  border-radius:  var(--voyager-radius-md);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Card root — 390×236
+   ══════════════════════════════════════════════════════════════════════════ */
+.ht-wrap {
+  width:           100%;
+  height:          100%;
+  background:      var(--voyager-surface-card);
+  border-radius:   var(--voyager-radius-md);
+  box-shadow:      var(--voyager-shadow-card);
+  padding:         16px 18px 18px;
+  display:         flex;
+  flex-direction:  column;
+  gap:             14px;
+}
+
+/* Título con coral brackets */
+.ht-title-wrap {
+  position: relative;
+  display:  inline-block;
+  padding:  8px 14px;
+  align-self: flex-start;
+  color:    var(--voyager-color-live);
+}
+.ht-title-wrap svg {
+  position: absolute;
+  width:    12px;
+  height:   12px;
+  fill:     currentColor;
+  color:    var(--voyager-color-live);
+}
+.ht-title-wrap svg.ht-bracket-tl { top: 0;    left: 0; }
+.ht-title-wrap svg.ht-bracket-br { bottom: 0; right: 0; }
+.ht-title {
+  font-size:      14px;
+  font-weight:    700;
+  line-height:    1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color:          var(--voyager-color-vault);
+}
+
+/* ── Tabla ─────────────────────────────────────────────────────────────── */
+.ht-table-wrap {
+  flex:           1 1 auto;
+  border-radius:  var(--voyager-radius-lg);
+  overflow:       hidden;
+  border:         1px solid var(--voyager-color-border-ghost);
+}
+
+.ht-table {
+  width:           100%;
+  border-collapse: separate;
+  border-spacing:  0;
+  table-layout:    fixed;
+  background:      var(--voyager-surface-card);
+}
+
+.ht-table thead th {
+  padding:         8px 10px;
+  font-family:     var(--voyager-font-display);
+  font-size:       10px;
+  font-weight:     500;
+  letter-spacing:  0.06em;
+  line-height:     1.2;
+  text-transform:  uppercase;
+  color:           var(--voyager-text-on-dark);
+  text-align:      left;
+}
+.ht-table thead th:last-child { text-align: right; }
+
+.ht-table tbody td {
+  padding:         9px 10px;
+  font-family:     var(--voyager-font-display);
+  font-size:       12px;
+  line-height:     1.3;
+  color:           var(--voyager-text-on-surface);
+  border-bottom:   1px solid var(--voyager-color-divider);
+  background:      var(--voyager-surface-card);
+  white-space:     nowrap;
+  overflow:        hidden;
+  text-overflow:   ellipsis;
+}
+.ht-table tbody tr:last-child td { border-bottom: none; }
+
+/* Anchos fijos para columnas */
+.ht-col-fecha       { width: 86px; }
+.ht-col-desc        { width: auto; }
+.ht-col-monto       { width: 92px; text-align: right; }
+
+/* Date cell — Roboto Mono + tabular-nums */
+.ht-cell-date {
+  font-family:           var(--voyager-font-mono);
+  font-variant-numeric:  tabular-nums;
+  font-weight:           500;
+  color:                 var(--voyager-color-vault);
+  font-size:             11px;
+}
+
+/* Amount cell — Roboto Mono + tabular-nums */
+.ht-cell-amount {
+  font-family:           var(--voyager-font-mono);
+  font-variant-numeric:  tabular-nums;
+  font-weight:           700;
+  color:                 var(--voyager-color-vault);
+  text-align:            right;
+  letter-spacing:        0.01em;
+}
+
+.ht-sign {
+  font-weight:  800;
+  margin-right: 4px;
+}
+.ht-sign--plus  { color: var(--voyager-color-live); }
+.ht-sign--minus { color: var(--voyager-color-vault); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VARIANT 1 — VAULT · GRADIENT HORIZONTAL
+   ══════════════════════════════════════════════════════════════════════════ */
+.ht--vault-grad .ht-table thead tr { background: var(--voyager-gradient-vault-h); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VARIANT 2 — LIVE · GRADIENT HORIZONTAL
+   ══════════════════════════════════════════════════════════════════════════ */
+.ht--live-grad .ht-table thead tr { background: var(--voyager-gradient-live-h); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Historial de Transacciones">
+    <div class="preview-grid">
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           VAULT · GRADIENT HORIZONTAL
+           ═══════════════════════════════════════════════════════════════ -->
+      <div class="preview-cell" data-variant="Vault Gradient">
+        <p class="preview-label">Vault Gradient</p>
+        <div class="preview-frame">
+          <section class="ht-wrap ht--vault-grad" aria-label="Historial de transacciones">
+            <div class="ht-title-wrap">
+              <svg class="ht-bracket-tl" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+              </svg>
+              <h4 class="ht-title">Historial de transacciones</h4>
+              <svg class="ht-bracket-br" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <div class="ht-table-wrap">
+              <table class="ht-table">
+                <thead>
+                  <tr>
+                    <th class="ht-col-fecha">Fecha</th>
+                    <th class="ht-col-desc">Descripción</th>
+                    <th class="ht-col-monto">Monto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ht-cell-date">23-04-2024</td>
+                    <td>Compra de SubasCoins</td>
+                    <td class="ht-cell-amount"><span class="ht-sign ht-sign--minus">−</span>USD&nbsp;80</td>
+                  </tr>
+                  <tr>
+                    <td class="ht-cell-date">12-03-2024</td>
+                    <td>Devolución de consignación</td>
+                    <td class="ht-cell-amount"><span class="ht-sign ht-sign--plus">+</span>USD&nbsp;200</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════════════
+           LIVE · GRADIENT HORIZONTAL
+           ═══════════════════════════════════════════════════════════════ -->
+      <div class="preview-cell" data-variant="Live Gradient">
+        <p class="preview-label">Live Gradient</p>
+        <div class="preview-frame">
+          <section class="ht-wrap ht--live-grad" aria-label="Historial de transacciones">
+            <div class="ht-title-wrap">
+              <svg class="ht-bracket-tl" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+              </svg>
+              <h4 class="ht-title">Historial de transacciones</h4>
+              <svg class="ht-bracket-br" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <div class="ht-table-wrap">
+              <table class="ht-table">
+                <thead>
+                  <tr>
+                    <th class="ht-col-fecha">Fecha</th>
+                    <th class="ht-col-desc">Descripción</th>
+                    <th class="ht-col-monto">Monto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ht-cell-date">23-04-2024</td>
+                    <td>Compra de SubasCoins</td>
+                    <td class="ht-cell-amount"><span class="ht-sign ht-sign--minus">−</span>USD&nbsp;80</td>
+                  </tr>
+                  <tr>
+                    <td class="ht-cell-date">12-03-2024</td>
+                    <td>Devolución de consignación</td>
+                    <td class="ht-cell-amount"><span class="ht-sign ht-sign--plus">+</span>USD&nbsp;200</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <script src="../../variant-filter.js"></script>
+</body>
+</html>

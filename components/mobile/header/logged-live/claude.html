@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Mobile · Header · Logged · Live Gradient</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-text-on-dark: oklch(1 0 0);
+  --voyager-font-display:       "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:          "Roboto", system-ui, -apple-system, sans-serif;
+
+  --vmc-color-background-brand: var(--voyager-color-vault);
+  --vmc-radius-full:            9999px;
+  --vmc-font-display:           var(--voyager-font-display);
+  --vmc-color-base-white:       oklch(1 0 0);
+
+  /* Live gradient — solid orange (desktop btn-live parity, HEX from spec) */
+  --live-grad-default: linear-gradient(135deg, #F4AC59 0%, #ED8936 50%, #D07128 100%);
+  --live-grad-hover:   linear-gradient(135deg, #ED8936 0%, #D07128 50%, #B25614 100%);
+  --live-grad-pressed: linear-gradient(135deg, #B25614 0%, #93420A 100%);
+  --live-shadow:       0 2px 6px oklch(0.72 0.16 55 / 30%);
+  --live-shadow-hover: 0 6px 18px oklch(0.72 0.16 55 / 45%);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.preview-frame {
+  width: 430px;
+  height: 56px;
+  overflow: hidden;
+}
+
+/* ── lvbtn-sm — live solid gradient pill ─────────────────────────────── */
+.lvbtn-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px 0 4px;
+  border-radius: var(--vmc-radius-full);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  font-family: var(--vmc-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 2px oklch(0 0 0 / 20%);
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  background: var(--live-grad-default);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 25%),
+    var(--live-shadow);
+
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform  0.2s  cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateZ(0);
+}
+
+.lvbtn-sm .pvbtn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background: oklch(0 0 0 / 18%);
+  flex-shrink: 0;
+}
+.lvbtn-sm .pvbtn-icon svg { display: block; }
+
+.lvbtn-sm:hover {
+  background: var(--live-grad-hover);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 30%),
+    var(--live-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.lvbtn-sm:active {
+  background: var(--live-grad-pressed);
+  transform: scale(0.97) translateZ(0);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 18%),
+    0 1px 3px oklch(0.55 0.14 50 / 45%);
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Header · Logged · Live Gradient">
+    <div class="preview-frame">
+      <header style="width:100%;height:56px;background:var(--vmc-color-background-brand);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 11px 0 12px;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;overflow:hidden">
+          <button type="button" aria-label="Abrir menú" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:none;border-radius:9999px;background:transparent;cursor:pointer;flex-shrink:0;color:oklch(1 0 0 / 80%);padding:0">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.83" stroke-linecap="butt" aria-hidden="true">
+              <line x1="2.75" y1="6.42" x2="19.25" y2="6.42"></line>
+              <line x1="2.75" y1="11" x2="19.25" y2="11"></line>
+              <line x1="2.75" y1="15.58" x2="19.25" y2="15.58"></line>
+            </svg>
+          </button>
+          <img src="../../../../logo-preview.png" alt="VMC Subastas" style="width:140px;height:20px;display:block;flex-shrink:0">
+        </div>
+        <button type="button" class="lvbtn-sm">
+          <span class="pvbtn-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path>
+            </svg>
+          </span>
+          Bienvenido, ZAEX5G
+        </button>
+      </header>
+    </div>
+  </main>
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

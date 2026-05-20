@@ -151,6 +151,46 @@ html, body {
   border: 0;
   background: transparent;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ALL-VARIANTS GRID OVERRIDE
+   Muestra todas las variantes simultáneamente en columnas/filas (wrap).
+   ───────────────────────────────────────────────────────────────────────── */
+.page {
+  max-width: min(1600px, 100% - 48px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  column-gap: 32px;
+  row-gap: 48px;
+  align-items: start;
+  justify-items: center;
+}
+.breadcrumb,
+.page-title,
+.page-meta,
+.variant-tabs {
+  grid-column: 1 / -1;
+  justify-self: start;
+  width: 100%;
+}
+.variant-tabs { display: none; }
+.variant-panel,
+.variant-panel.is-active {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.variant-panel::before {
+  content: attr(data-variant);
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--voyager-text-secondary);
+}
 </style>
 </head>
 <body>

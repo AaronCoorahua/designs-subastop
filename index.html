@@ -65,7 +65,7 @@ h1 {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(2, 320px);
+  grid-template-columns: repeat(3, 280px);
   gap: 24px;
 }
 
@@ -150,6 +150,22 @@ footer {
   text-align: center;
 }
 
+.card.upgrade {
+  border-bottom-color: oklch(0.32 0.20 285);
+}
+.card.upgrade .card-icon {
+  background:
+    linear-gradient(135deg, oklch(0.15 0.27 278) 0%, oklch(0.38 0.21 282) 100%);
+}
+.card.upgrade .card-cta {
+  background: linear-gradient(135deg, oklch(0.22 0.18 285), oklch(0.38 0.20 285));
+  background-clip: text;
+  color: transparent;
+}
+
+@media (max-width: 980px) {
+  .cards { grid-template-columns: repeat(2, 280px); }
+}
 @media (max-width: 720px) {
   h1 { font-size: 36px; }
   .cards { grid-template-columns: 1fr; max-width: 360px; width: 100%; }
@@ -196,6 +212,21 @@ footer {
         <p class="card-desc">Páginas completas armadas con componentes. Consola de subasta y más.</p>
       </div>
       <span class="card-cta" aria-hidden="true">Ver previews →</span>
+    </a>
+
+    <a class="card upgrade" href="pages/upgrade/index.html">
+      <div class="card-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v18"/>
+          <path d="M6 9l6-6 6 6"/>
+          <path d="M5 21h14"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Upgrade Catalog</h2>
+        <p class="card-desc">Catálogo cinematic con scroll horizontal. Taxonomía iridiscente + vault cinematic.</p>
+      </div>
+      <span class="card-cta" aria-hidden="true">Ver upgrade →</span>
     </a>
 
   </nav>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Subastop Designs — Mobile · Offer Type · New Style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Offer Type · New Style — Cinematic card
+   Spec: src/app/preview/components/button-primary · sección OfferType
+   (.poftype) — 110 × 92, vault radius lg (16px), top 60 + bottom 32.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --voyager-color-vault:           oklch(0.22 0.18 285);
+  --voyager-color-live:            oklch(0.72 0.16 55);
+  --voyager-color-negotiable:      oklch(0.78 0.14 195);
+
+  --voyager-color-surface-card:    oklch(1 0 0);
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+
+  --voyager-duration-micro: 220ms;
+  --voyager-ease-default:   cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.preview-frame {
+  width: 100%;
+  max-width: 372px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Header — brackets hugging the title ─────────────────────────────────── */
+.preview-frame .head-info {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  padding: 8px 12px;
+  color: var(--voyager-color-live);
+}
+
+.preview-frame .head-info .bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  color: var(--voyager-color-live);
+  fill: var(--voyager-color-live);
+}
+
+.preview-frame .head-info .bracket-tl { top: 0; left: 0; }
+.preview-frame .head-info .bracket-br { bottom: 0; right: 0; }
+
+.preview-frame .head-title {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--voyager-color-vault);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── Cards row ───────────────────────────────────────────────────────────── */
+.preview-frame .row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+/* ── OfferType cinematic card ─────────────────────────────────────────────
+   Mapeo 1-a-1 con .poftype del preview button-primary.
+   ───────────────────────────────────────────────────────────────────────── */
+.poftype {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 160px;
+  border-radius: var(--voyager-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  box-shadow:
+    0 4px 16px oklch(0 0 0 / 0.12),
+    0 1px 4px  oklch(0 0 0 / 0.06);
+  transition:
+    transform  0.2s  var(--voyager-ease-default),
+    box-shadow 0.25s ease;
+  transform: translateZ(0);
+  outline: none;
+}
+
+/* Top colored section */
+.poftype-top {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: background var(--voyager-duration-micro) ease;
+}
+
+/* Inset shine — muy sutil */
+.poftype-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    oklch(1 0 0 / 0.07) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Bottom edge separator */
+.poftype-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(180deg, transparent 0%, oklch(0 0 0 / 0.08) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.poftype-label {
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: oklch(1 0 0);
+  text-shadow: 0 1px 3px oklch(0 0 0 / 0.25);
+  position: relative;
+  z-index: 2;
+}
+
+/* Bottom white section */
+.poftype-bottom {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: oklch(1 0 0);
+}
+
+.poftype-cta {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  transition: color var(--voyager-duration-micro) ease;
+}
+
+/* ── Variant: NEGOCIABLE ── */
+.poftype--negotiable .poftype-top {
+  background: linear-gradient(180deg,
+    oklch(0.84 0.13 195) 0%,
+    var(--voyager-color-negotiable) 100%
+  );
+}
+.poftype--negotiable .poftype-cta { color: oklch(0.62 0.16 195); }
+
+.poftype--negotiable:hover .poftype-top,
+.poftype--negotiable.poftype--hover .poftype-top {
+  background: linear-gradient(180deg,
+    oklch(0.90 0.11 195) 0%,
+    oklch(0.82 0.14 195) 100%
+  );
+}
+
+.poftype--negotiable:active .poftype-top,
+.poftype--negotiable.poftype--focus .poftype-top {
+  background: linear-gradient(180deg,
+    oklch(0.65 0.17 195) 0%,
+    oklch(0.55 0.16 195) 100%
+  );
+}
+
+/* ── Variant: EN VIVO ── */
+.poftype--live .poftype-top {
+  background: linear-gradient(180deg,
+    oklch(0.78 0.17 55) 0%,
+    var(--voyager-color-live) 100%
+  );
+}
+.poftype--live .poftype-cta { color: oklch(0.58 0.18 45); }
+
+.poftype--live:hover .poftype-top,
+.poftype--live.poftype--hover .poftype-top {
+  background: linear-gradient(180deg,
+    oklch(0.84 0.16 58) 0%,
+    oklch(0.76 0.17 55) 100%
+  );
+}
+
+.poftype--live:active .poftype-top,
+.poftype--live.poftype--focus .poftype-top {
+  background: linear-gradient(180deg,
+    oklch(0.58 0.19 48) 0%,
+    oklch(0.50 0.17 44) 100%
+  );
+}
+
+/* ── Shared hover lift ── */
+.poftype:hover,
+.poftype--hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px oklch(0 0 0 / 0.14),
+    0 2px 6px  oklch(0 0 0 / 0.08);
+}
+
+/* ── Focus / pressed ── */
+.poftype:active,
+.poftype--focus {
+  transform: scale(0.97);
+  box-shadow:
+    0 2px 8px oklch(0 0 0 / 0.10),
+    inset 0 2px 6px oklch(0 0 0 / 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager mobile preview — Offer Type · New Style">
+    <section class="preview-frame">
+
+      <div class="head-info">
+        <svg class="bracket bracket-tl" width="8" height="8" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+          <path d="M0 0H3.3V3.3H3.3V6.7H0V3.3H0V0ZM3.3 0H6.7 6.7 10V3.3H6.7 6.7 3.3V0ZM3.3 6.7H0V10H3.3V6.7Z" fill="currentColor"/>
+        </svg>
+        <h3 class="head-title">Tipo de oferta</h3>
+        <svg class="bracket bracket-br" width="8" height="8" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+          <path d="M10 10L6.7 10 6.7 6.7 6.7 3.3 10 3.3 10 6.7 10 10ZM6.7 10L3.3 10 0 10 0 6.7 3.3 6.7 6.7 6.7 6.7 10ZM6.7 3.3L10 3.3 10 0 6.7 0 6.7 3.3Z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="row">
+        <a href="#" class="poftype poftype--negotiable" data-status="negotiable">
+          <div class="poftype-top"><span class="poftype-label">Negociable</span></div>
+          <div class="poftype-bottom"><span class="poftype-cta">Ver todas</span></div>
+        </a>
+        <a href="#" class="poftype poftype--live" data-status="live">
+          <div class="poftype-top"><span class="poftype-label">En Vivo</span></div>
+          <div class="poftype-bottom"><span class="poftype-cta">Ver todas</span></div>
+        </a>
+      </div>
+
+    </section>
+  </main>
+<script src="../../../variant-filter.js"></script>
+</body>
+</html>

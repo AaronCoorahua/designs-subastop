@@ -47,6 +47,7 @@ html, body {
   color: var(--voyager-text-on-surface);
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
+  overflow-x: hidden;
 }
 
 /* ─── Scaffold catalog · compartido ─────────────────────────────── */
@@ -260,20 +261,10 @@ html, body {
   overflow-y: hidden;
   flex-shrink: 0;
   scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color:
-    color-mix(in oklch, var(--vmc-color-vault-800) 18%, transparent)
-    transparent;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / old Edge */
 }
-.dh-thumbs::-webkit-scrollbar { height: 6px; }
-.dh-thumbs::-webkit-scrollbar-track { background: transparent; }
-.dh-thumbs::-webkit-scrollbar-thumb {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 18%, transparent);
-  border-radius: 999px;
-}
-.dh-thumbs::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 32%, transparent);
-}
+.dh-thumbs::-webkit-scrollbar { display: none; }   /* WebKit / Chromium */
 .dh-thumb {
   position: relative;
   flex-shrink: 0;

@@ -160,15 +160,8 @@ html, body {
   background: oklch(0.58 0.17 195);
   color: var(--vmc-color-text-on-dark-muted);
 }
-.dh--variant-f .dh-back:hover  { background: var(--vmc-color-vault-500); }
-.dh--variant-f .dh-back:active {
-  background: var(--vmc-color-vault-700);
-  color: var(--vmc-color-text-on-dark-muted);
-}
-.dh-back--hover         { background: var(--vmc-color-orange-500) !important; }
-.dh-back--pressed       { background: var(--vmc-color-orange-600) !important; color: var(--vmc-color-text-on-dark-muted) !important; }
-.dh-back--hover-vault   { background: var(--vmc-color-vault-500) !important; }
-.dh-back--pressed-vault { background: var(--vmc-color-vault-700) !important; color: var(--vmc-color-text-on-dark-muted) !important; }
+.dh-back--hover              { background: var(--vmc-color-orange-500) !important; }
+.dh-back--pressed            { background: var(--vmc-color-orange-600) !important; color: var(--vmc-color-text-on-dark-muted) !important; }
 .dh-back--hover-negotiable   { background: var(--vmc-color-negotiable) !important; }
 .dh-back--pressed-negotiable { background: oklch(0.58 0.17 195) !important; color: var(--vmc-color-text-on-dark-muted) !important; }
 
@@ -291,38 +284,8 @@ html, body {
   z-index: 2;
   transition: box-shadow 200ms var(--voyager-ease-default);
 }
+/* V1 Default · gradient ring iridescent orange→vault (ex-variant-d) */
 .dh-thumb.is-active .dh-thumb-ring {
-  box-shadow:
-    inset 0 0 0 3px var(--vmc-color-orange-500),
-    inset 0 0 0 4px oklch(1 0 0 / 35%);
-}
-
-/* ▸ Hover preview ring · indica click sin competir con el activo */
-.dh-thumb:not(.is-active):hover .dh-thumb-ring {
-  box-shadow:
-    inset 0 0 0 2px oklch(0.72 0.16 55 / 45%),
-    inset 0 0 0 3px oklch(1 0 0 / 30%);
-}
-.dh--variant-d .dh-thumb:not(.is-active):hover .dh-thumb-ring {
-  box-shadow:
-    inset 0 0 0 2px oklch(0.66 0.17 50 / 45%),
-    inset 0 0 0 3px oklch(1 0 0 / 30%);
-}
-.dh--variant-e .dh-thumb:not(.is-active):hover .dh-thumb-ring {
-  box-shadow:
-    inset 0 0 0 2px oklch(0.78 0.14 195 / 45%),
-    inset 0 0 0 3px oklch(1 0 0 / 30%);
-}
-.dh--variant-f .dh-thumb:not(.is-active):hover .dh-thumb-ring {
-  box-shadow:
-    inset 0 0 0 2px oklch(0.45 0.20 285 / 45%),
-    inset 0 0 0 3px oklch(1 0 0 / 30%);
-}
-
-/* Gradient ring helper (mask-composite cutout) */
-.dh--variant-d .dh-thumb.is-active .dh-thumb-ring,
-.dh--variant-e .dh-thumb.is-active .dh-thumb-ring,
-.dh--variant-f .dh-thumb.is-active .dh-thumb-ring {
   box-shadow: none;
   border: 3px solid transparent;
   background-origin: border-box;
@@ -335,27 +298,6 @@ html, body {
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
-}
-
-/* Variant D · Primary Clone (orange → vault iridescent) */
-.dh--variant-d .dh-header {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-600) 0%,
-    var(--vmc-color-orange-600) 38%,
-    var(--vmc-color-vault-500) 100%);
-}
-.dh--variant-d .dh-action,
-.dh--variant-d .dh-counter {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-600) 0%,
-    var(--vmc-color-vault-500) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 28%),
-    0 4px 10px oklch(0.66 0.17 50 / 30%);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-.dh--variant-d .dh-thumb.is-active .dh-thumb-ring {
   background-image: linear-gradient(135deg,
     var(--vmc-color-base-white) 0%,
     var(--vmc-color-orange-400) 25%,
@@ -363,7 +305,19 @@ html, body {
     var(--vmc-color-base-white) 100%);
 }
 
-/* Variant E · Negociable (cyan/teal cinematic) */
+/* ▸ Hover preview ring · indica click sin competir con el activo */
+.dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.66 0.17 50 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
+}
+.dh--variant-e .dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.78 0.14 195 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
+}
+
+/* V2 (ex-V3) · Negociable cyan/teal cinematic */
 .dh--variant-e .dh-header {
   background: linear-gradient(135deg,
     oklch(0.84 0.13 195) 0%,
@@ -380,38 +334,14 @@ html, body {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
+/* Ring activo celeste-plateado · cyan ↔ silver shimmer */
 .dh--variant-e .dh-thumb.is-active .dh-thumb-ring {
   background-image: linear-gradient(135deg,
-    oklch(0.88 0.08 195) 0%,
-    var(--vmc-color-base-white) 40%,
-    oklch(0.72 0.14 195) 75%,
-    oklch(0.88 0.08 195) 100%);
-}
-
-/* Variant F · Vault Cinematic */
-.dh--variant-f .dh-header {
-  background: linear-gradient(160deg,
-    var(--vmc-color-vault-500) 0%,
-    var(--vmc-color-vault-700) 100%);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%);
-}
-.dh--variant-f .dh-action,
-.dh--variant-f .dh-counter {
-  background: linear-gradient(160deg,
-    var(--vmc-color-vault-500) 0%,
-    var(--vmc-color-vault-700) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 4px 10px oklch(0.32 0.20 285 / 32%);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-.dh--variant-f .dh-thumb.is-active .dh-thumb-ring {
-  background-image: linear-gradient(135deg,
-    var(--vmc-color-vault-300) 0%,
-    var(--vmc-color-base-white) 35%,
-    var(--vmc-color-vault-400) 65%,
-    var(--vmc-color-vault-300) 100%);
+    oklch(0.84 0.10 195) 0%,
+    oklch(0.96 0.005 220) 25%,
+    var(--vmc-color-base-white) 50%,
+    oklch(0.92 0.008 220) 70%,
+    oklch(0.78 0.12 195) 100%);
 }
 
 /* Back tile · holds a single back button over the default header gradient */
@@ -466,41 +396,10 @@ html, body {
     </article>
   </div>
 
-  <!-- ▸ VARIANT V2 · Primary Clone ────────────────────────── -->
-  <div class="variant-slot" data-variant="v2-primary-clone">
-    <span class="variant-label">V2 · Primary Clone</span>
-    <span class="variant-sublabel">orange → vault iridescent</span>
-    <article class="dh dh--variant-d">
-      <header class="dh-header">
-        <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
-      </header>
-      <div class="dh-image">
-        <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Volkswagen Gol 2015 — imagen activa">
-        <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
-        <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-        <span class="dh-counter">1 / 3</span>
-      </div>
-      <div class="dh-thumbs">
-        <div class="dh-thumb is-active"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- ▸ VARIANT V3 · Negociable (cyan/teal) ───────────────── -->
-  <div class="variant-slot" data-variant="v3-negociable">
-    <span class="variant-label">V3 · Negociable</span>
-    <span class="variant-sublabel">cyan/teal cinematic</span>
+  <!-- ▸ VARIANT V2 · Negociable (cyan/teal · ring celeste-plateado) ── -->
+  <div class="variant-slot" data-variant="v2-negociable">
+    <span class="variant-label">V2 · Negociable</span>
+    <span class="variant-sublabel">cyan/teal cinematic · ring celeste-plateado</span>
     <article class="dh dh--variant-e">
       <header class="dh-header">
         <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -528,36 +427,6 @@ html, body {
     </article>
   </div>
 
-  <!-- ▸ VARIANT V4 · Vault Cinematic ─────────────────────── -->
-  <div class="variant-slot" data-variant="v4-vault-cinematic">
-    <span class="variant-label">V4 · Vault Cinematic</span>
-    <span class="variant-sublabel">vault-500 → vault-700</span>
-    <article class="dh dh--variant-f">
-      <header class="dh-header">
-        <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
-      </header>
-      <div class="dh-image">
-        <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Volkswagen Gol 2015 — imagen activa">
-        <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
-        <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-        <span class="dh-counter">1 / 3</span>
-      </div>
-      <div class="dh-thumbs">
-        <div class="dh-thumb is-active"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
-      </div>
-    </article>
-  </div>
 
 </div>
 
@@ -571,34 +440,24 @@ html, body {
   </div>
   <div class="btn-row">
     <div class="btn-slot" data-state="back-hover">
-      <span class="btn-slot-label">Back · hover</span>
+      <span class="btn-slot-label">V1 · Back · hover</span>
       <button type="button" class="dh-back dh-back--hover" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <span class="btn-slot-sublabel">bg orange-500 · V1 · V2</span>
+      <span class="btn-slot-sublabel">bg orange-500</span>
     </div>
     <div class="btn-slot" data-state="back-pressed">
-      <span class="btn-slot-label">Back · pressed</span>
+      <span class="btn-slot-label">V1 · Back · pressed</span>
       <button type="button" class="dh-back dh-back--pressed" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <span class="btn-slot-sublabel">bg orange-600 · icon muted</span>
     </div>
     <div class="btn-slot" data-state="back-hover-negotiable">
-      <span class="btn-slot-label">V3 · Back · hover</span>
+      <span class="btn-slot-label">V2 · Back · hover</span>
       <button type="button" class="dh-back dh-back--hover-negotiable" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <span class="btn-slot-sublabel">bg negotiable</span>
     </div>
     <div class="btn-slot" data-state="back-pressed-negotiable">
-      <span class="btn-slot-label">V3 · Back · pressed</span>
+      <span class="btn-slot-label">V2 · Back · pressed</span>
       <button type="button" class="dh-back dh-back--pressed-negotiable" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <span class="btn-slot-sublabel">bg cyan-deep · icon muted</span>
-    </div>
-    <div class="btn-slot" data-state="back-hover-vault">
-      <span class="btn-slot-label">V4 · Back · hover</span>
-      <button type="button" class="dh-back dh-back--hover-vault" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <span class="btn-slot-sublabel">bg vault-500</span>
-    </div>
-    <div class="btn-slot" data-state="back-pressed-vault">
-      <span class="btn-slot-label">V4 · Back · pressed</span>
-      <button type="button" class="dh-back dh-back--pressed-vault" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <span class="btn-slot-sublabel">bg vault-700 · icon muted</span>
     </div>
   </div>
 </div>

@@ -170,6 +170,78 @@ html, body {
   pointer-events: none; z-index: 0;
 }
 .dc-header > * { position: relative; z-index: 1; }
+
+/* ─── Variantes del header del Detail Card ──────────────────────
+   V1 Iridescent · V2 Vault Cinematic · V3 Skeleton (desaturado)
+   Inspiradas en header.html y detail-header-images.html
+   ─────────────────────────────────────────────────────────────── */
+
+/* V1 · Iridescent — orange-700 → vault-600 diagonal con halos suaves */
+.dc--iridescent .dc-header {
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-700) 0%,
+    var(--vmc-color-orange-700) 28%,
+    var(--vmc-color-vault-600)  72%,
+    var(--vmc-color-vault-700) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 16%);
+  transition: box-shadow 380ms var(--voyager-ease-default);
+}
+/* Overlay del estado "liked" — gradient = btn-iridescent hover */
+.dc--iridescent .dc-header::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(220deg,
+    var(--vmc-color-orange-400) 0%,
+    var(--vmc-color-orange-400) 40%,
+    var(--vmc-color-vault-400)  100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 420ms var(--voyager-ease-default);
+}
+.dc--iridescent .dc-header::after {
+  background:
+    radial-gradient(ellipse 65% 55% at 15% 0%,   oklch(1 0 0 / 12%)              0%, transparent 65%),
+    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.66 0.17 50 / 18%)      0%, transparent 65%);
+  transition: background 420ms var(--voyager-ease-default);
+}
+.dc--iridescent.is-liked .dc-header::before { opacity: 1; }
+.dc--iridescent.is-liked .dc-header {
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 22%),
+    0 4px 14px oklch(0.66 0.17 50 / 18%);
+}
+.dc--iridescent.is-liked .dc-header::after {
+  background:
+    radial-gradient(ellipse 65% 55% at 15% 0%,   oklch(1 0 0 / 18%)             0%, transparent 65%),
+    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.55 0.20 285 / 22%)    0%, transparent 65%);
+}
+
+/* V2 · Vault Cinematic — matchea el hover del btn-cinematic (220deg vault-400 → vault-600) */
+.dc--cinematic .dc-header {
+  background: linear-gradient(220deg,
+    var(--vmc-color-vault-400) 0%,
+    var(--vmc-color-vault-600) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%);
+}
+.dc--cinematic .dc-header::after {
+  background:
+    radial-gradient(ellipse 65% 55% at 25% 0%,   oklch(1 0 0 / 14%)            0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, oklch(0.55 0.20 285 / 22%)   0%, transparent 65%);
+}
+
+/* V3 · Skeleton — matchea el hover del btn-iridescent (220deg orange-400 0–40% → vault-400) */
+.dc--skeleton .dc-header {
+  background: linear-gradient(220deg,
+    var(--vmc-color-orange-400) 0%,
+    var(--vmc-color-orange-400) 40%,
+    var(--vmc-color-vault-400)  100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%);
+}
+.dc--skeleton .dc-header::after {
+  background:
+    radial-gradient(ellipse 65% 55% at 15% 0%,   oklch(1 0 0 / 12%)             0%, transparent 65%),
+    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.66 0.17 50 / 18%)     0%, transparent 65%);
+}
 .dc-header-row1 {
   display: flex; padding: 12px 0;
   border-bottom: 1px solid oklch(1 0 0 / 14%);
@@ -639,8 +711,8 @@ html, body {
   <!-- ▸ VARIANT V1 · Iridescent (Default LikeButton) ───────── -->
   <div class="variant-slot" data-variant="v1-iridescent">
     <span class="variant-label">V1 · Iridescent</span>
-    <span class="variant-sublabel">LikeButton · Default</span>
-    <article class="dc">
+    <span class="variant-sublabel">header orange → vault iridescent</span>
+    <article class="dc dc--iridescent">
       <div class="dc-header">
         <div class="dc-header-row1">
           <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
@@ -681,8 +753,8 @@ html, body {
   <!-- ▸ VARIANT V2 · Vault Cinematic (Active LikeButton) ───── -->
   <div class="variant-slot" data-variant="v2-cinematic">
     <span class="variant-label">V2 · Vault Cinematic</span>
-    <span class="variant-sublabel">LikeButton · Active</span>
-    <article class="dc">
+    <span class="variant-sublabel">header = btn-cinematic hover (220deg vault-400 → vault-600)</span>
+    <article class="dc dc--cinematic">
       <div class="dc-header">
         <div class="dc-header-row1">
           <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
@@ -723,8 +795,8 @@ html, body {
   <!-- ▸ VARIANT V3 · Skeleton (loading) ───────────────────── -->
   <div class="variant-slot" data-variant="v3-skeleton">
     <span class="variant-label">V3 · Skeleton</span>
-    <span class="variant-sublabel">cargando — pi · skeleton</span>
-    <article class="dc">
+    <span class="variant-sublabel">header = btn-iridescent hover</span>
+    <article class="dc dc--skeleton">
       <div class="dc-header">
         <div class="dc-header-row1">
           <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
@@ -793,6 +865,41 @@ html, body {
   </div>
 </div>
 
+<script>
+  /* V1 · Iridescent — like toggle interactivo:
+     - corazón pasa a estado vault (.plike--active)
+     - card recibe .is-liked → header hace crossfade al gradient
+       del btn-iridescent hover */
+  (function initLikeToggle() {
+    document.querySelectorAll('.dc--iridescent .plike').forEach(function bindCard(btn) {
+      if (btn.classList.contains('plike--skeleton')) { return; }
+      var card    = btn.closest('.dc');
+      var countEl = card ? card.querySelector('.dc-like-count') : null;
+      var svg     = btn.querySelector('svg');
+
+      function setLiked(liked) {
+        btn.classList.toggle('plike--active', liked);
+        if (card) { card.classList.toggle('is-liked', liked); }
+        btn.setAttribute('aria-pressed', String(liked));
+        btn.setAttribute('aria-label', liked ? 'Quitar de favoritos' : 'Me gusta');
+        if (countEl) { countEl.textContent = liked ? '1' : '0'; }
+        if (svg) {
+          if (liked) {
+            svg.setAttribute('fill',   'rgb(100% 100% 100% / 92%)');
+            svg.setAttribute('stroke', 'none');
+          } else {
+            svg.setAttribute('fill',   'none');
+            svg.setAttribute('stroke', 'var(--vmc-color-vault-600)');
+          }
+        }
+      }
+
+      btn.addEventListener('click', function onClick() {
+        setLiked(!btn.classList.contains('plike--active'));
+      });
+    });
+  })();
+</script>
 <script src="_iframe-resize.js"></script>
 </body>
 </html>

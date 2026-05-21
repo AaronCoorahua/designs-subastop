@@ -183,7 +183,7 @@ html, body {
 
 .component-frame {
   width: 100%;
-  min-height: 600px;
+  min-height: 120px;        /* solo para evitar el flash inicial de 150px default */
   border: 0;
   display: block;
   background: transparent;
@@ -350,33 +350,27 @@ html, body {
       });
     })();
 
-    /* Auto-resize iframes — same-origin, mide scrollHeight tras load
-       y al cambiar el viewport. Evita scrollbars internas. */
+    /* Auto-resize de iframes vía postMessage — funciona en file:// y http(s).
+       Cada componente carga desktop/_iframe-resize.js y publica su altura;
+       este listener identifica el iframe emisor y le ajusta el height inline. */
     (function initFrameAutoResize() {
       var frames = document.querySelectorAll('iframe.component-frame');
-      function resizeFrame(frame) {
-        try {
-          var doc = frame.contentDocument;
-          if (!doc || !doc.body) { return; }
-          var h = Math.max(
-            doc.body.scrollHeight,
-            doc.documentElement ? doc.documentElement.scrollHeight : 0
-          );
-          if (h > 0) { frame.style.height = (h + 8) + 'px'; }
-        } catch (err) { /* cross-origin u otro — ignorar */ }
-      }
-      frames.forEach(function bindFrame(frame) {
-        frame.addEventListener('load', function onLoad() {
-          resizeFrame(frame);
-          var doc = frame.contentDocument;
-          if (doc && typeof ResizeObserver === 'function') {
-            var ro = new ResizeObserver(function onResize() { resizeFrame(frame); });
-            ro.observe(doc.body);
+
+      window.addEventListener('message', function (e) {
+        if (!e.data || e.data.type !== 'voyager-iframe-height') { return; }
+        var h = Number(e.data.height);
+        if (!h || h < 1) { return; }
+        for (var i = 0; i < frames.length; i++) {
+          if (frames[i].contentWindow === e.source) {
+            /* body.scrollHeight ya incluye el padding del body — +4 es
+               margen mínimo anti-subpixel, no buffer compounding. */
+            var target = (h + 4) + 'px';
+            if (frames[i].style.height !== target) {
+              frames[i].style.height = target;
+            }
+            return;
           }
-        });
-      });
-      window.addEventListener('resize', function onWindowResize() {
-        frames.forEach(resizeFrame);
+        }
       });
     })();
   </script>

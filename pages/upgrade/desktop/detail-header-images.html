@@ -213,8 +213,7 @@ html, body {
   object-fit: cover;
   display: block;
 }
-.dh-thumb { transition: transform 150ms var(--voyager-ease-default); }
-.dh-thumb:hover { transform: translateY(-1px); }
+/* sin translate ni scale en hover · solo el ring del :hover indica click */
 
 .dh-action {
   position: absolute;
@@ -296,6 +295,28 @@ html, body {
   box-shadow:
     inset 0 0 0 3px var(--vmc-color-orange-500),
     inset 0 0 0 4px oklch(1 0 0 / 35%);
+}
+
+/* ▸ Hover preview ring · indica click sin competir con el activo */
+.dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.72 0.16 55 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
+}
+.dh--variant-d .dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.66 0.17 50 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
+}
+.dh--variant-e .dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.78 0.14 195 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
+}
+.dh--variant-f .dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.45 0.20 285 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
 }
 
 /* Gradient ring helper (mask-composite cutout) */
@@ -631,6 +652,6 @@ html, body {
   document.querySelectorAll('.dh').forEach(initGallery);
 })();
 </script>
-
+<script src="_iframe-resize.js"></script>
 </body>
 </html>

@@ -9,47 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-  /* ── Voyager primitives ───────────────────────────────────────── */
-  --vmc-color-vault-200:   oklch(0.87 0.09 285);
-  --vmc-color-vault-300:   oklch(0.80 0.12 285);
-  --vmc-color-vault-400:   oklch(0.55 0.20 285);
-  --vmc-color-vault-500:   oklch(0.45 0.20 285);
-  --vmc-color-vault-600:   oklch(0.38 0.20 285);
-  --vmc-color-vault-700:   oklch(0.30 0.20 285);
-  --vmc-color-vault-800:   oklch(0.22 0.18 285);
-  --vmc-color-vault-900:   oklch(0.15 0.27 278);
-
-  --vmc-color-orange-400:  oklch(0.78 0.16 60);
-  --vmc-color-orange-500:  oklch(0.72 0.16 55);
-  --vmc-color-orange-600:  oklch(0.66 0.17 50);
-  --vmc-color-orange-700:  oklch(0.58 0.18 45);
-
-  --vmc-color-base-white:  oklch(1 0 0);
-  --vmc-color-negotiable:  oklch(0.78 0.14 195);
-  --vmc-color-background-disabled: oklch(0.88 0.01 220);
-  --vmc-color-text-inverse:        oklch(1 0 0);
-  --vmc-color-text-on-dark-muted:  oklch(1 0 0 / 60%);
-
-  --voyager-surface-page:    oklch(0.98 0.004 160);
-  --voyager-surface-card:    oklch(1 0 0);
-  --voyager-text-on-dark:    oklch(1 0 0);
+  --vmc-color-vault-500: oklch(0.45 0.20 285);
+  --vmc-color-vault-800: oklch(0.22 0.18 285);
+  --vmc-color-orange-500: oklch(0.72 0.16 55);
+  --voyager-surface-page: oklch(0.98 0.004 160);
+  --voyager-surface-card: oklch(1 0 0);
+  --voyager-text-on-dark: oklch(1 0 0);
   --voyager-text-on-surface: oklch(0.15 0.008 200);
-  --voyager-text-price:      oklch(0.53 0.13 193);
-
-  --voyager-gradient-vault2:
-    linear-gradient(135deg, var(--vmc-color-vault-900) 0%, oklch(0.38 0.21 282) 100%);
-
   --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-  --voyager-font-mono:    "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
-  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+  --voyager-font-mono: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 }
-
-@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
-@property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.66 0.17 50); }
-@property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.45 0.20 285); }
-@property --vsec-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
-@property --vsec-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.45 0.20 285); }
-@property --vsec-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.30 0.20 285); }
 
 * { box-sizing: border-box; }
 html, body {
@@ -177,8 +146,8 @@ html, body {
   color: color-mix(in oklch, var(--vmc-color-vault-800) 50%, transparent);
 }
 
-/* ── Component block (shared) ───────────────────────────────────── */
-.component-block { margin: 0 auto 72px; max-width: 1080px; }
+/* ── Component block — solo título + iframe ─────────────────────── */
+.component-block { margin: 0 auto 72px; max-width: 1200px; }
 .component-header {
   display: flex; align-items: baseline; justify-content: center;
   flex-wrap: wrap; gap: 16px;
@@ -201,1213 +170,23 @@ html, body {
   letter-spacing: 0.08em; text-transform: uppercase;
   color: color-mix(in oklch, var(--vmc-color-vault-800) 45%, transparent);
 }
-.catalog-row {
-  display: flex; flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px 32px;
-  padding: 16px 4px 32px;
-}
-.variant-slot {
-  flex: 0 0 auto;
-  display: flex; flex-direction: column; align-items: center;
-  gap: 14px;
-}
-.variant-label {
-  font-size: 10px; font-weight: 800;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
-  text-align: center;
-}
-.variant-sublabel {
-  font-family: var(--voyager-font-mono);
-  font-size: 10px; letter-spacing: 0.04em;
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
-}
-
-@keyframes skeletonSweep {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-@keyframes plike-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.40; }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   DETAIL CARD · 317 × 422 · NO rounded outer
-   ═══════════════════════════════════════════════════════════════ */
-.dc {
-  width: 317px;
-  height: 422px;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-  background: var(--voyager-surface-card);
-  box-shadow:
-    0 1px 2px  oklch(0.22 0.18 285 / 6%),
-    0 12px 32px oklch(0.22 0.18 285 / 10%);
-  user-select: none;
-}
-.dc-header {
-  position: relative;
-  padding: 0 20px;
-  color: var(--voyager-text-on-dark);
-  background: var(--voyager-gradient-vault2);
-  isolation: isolate;
-  flex-shrink: 0;
-}
-.dc-header::after {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 60% at 20% 0%,   oklch(1 0 0 / 8%)         0%, transparent 65%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, oklch(0.72 0.16 55 / 10%) 0%, transparent 60%);
-  pointer-events: none; z-index: 0;
-}
-.dc-header > * { position: relative; z-index: 1; }
-.dc-header-row1 {
-  display: flex; padding: 12px 0;
-  border-bottom: 1px solid oklch(1 0 0 / 14%);
-}
-.dc-h-left  { width: 50%; display: flex; align-items: center; }
-.dc-h-right {
-  width: 50%;
-  border-left: 1px solid oklch(1 0 0 / 18%);
-  padding-left: 20px;
-  display: flex; align-items: center; justify-content: flex-end;
-}
-.dc-h-label { display: block; font-size: 13px; font-weight: 400; line-height: 1.2; color: oklch(1 0 0 / 70%); }
-.dc-h-day   { display: block; font-size: 15px; font-weight: 700; text-transform: uppercase; line-height: 1; margin-top: 2px; }
-.dc-h-time  { font-size: 20px; font-weight: 700; line-height: 1; font-family: var(--voyager-font-mono); font-variant-numeric: tabular-nums; }
-.dc-header-row2 { display: flex; align-items: center; }
-.dc-h-stat { flex: 1; display: flex; align-items: center; gap: 8px; padding: 16px 0; }
-.dc-h-stat--right { justify-content: flex-end; }
-.dc-h-stat--left  { justify-content: flex-start; }
-.dc-h-stat-num { font-family: var(--voyager-font-mono); font-size: 13px; font-variant-numeric: tabular-nums; color: oklch(1 0 0 / 90%); }
-.dc-h-stat-icon {
-  width: 28px; height: 28px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 999px;
-  border: 1.5px solid oklch(1 0 0 / 28%);
-  color: oklch(1 0 0 / 80%);
-}
-.dc-like-slot { flex-shrink: 0; padding: 0 18px; margin-top: -22px; text-align: center; }
-.dc-like-count {
-  display: block; margin-top: 4px;
-  font-family: var(--voyager-font-mono);
-  font-size: 12px; font-weight: 700;
-  line-height: 1;
-  color: oklch(1 0 0 / 92%);
-  font-variant-numeric: tabular-nums;
-}
-
-.plike {
-  display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
-  position: relative; overflow: hidden;
-  background-image:
-    linear-gradient(180deg, rgb(100% 100% 100%) 0%, rgb(100% 100% 100%) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-vault-200) 0%,
-      rgb(100% 100% 100%) 40%,
-      var(--vmc-color-vault-300) 75%,
-      var(--vmc-color-vault-200) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-  box-shadow: 0 2px 8px oklch(0.45 0.20 285 / 14%);
-  transition: transform 0.2s var(--voyager-ease-default), box-shadow 0.25s ease;
-}
-.plike::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(180deg, oklch(1 0 0 / 55%) 0%, transparent 50%);
-  pointer-events: none; z-index: 1;
-}
-.plike::after {
-  content: ''; position: absolute; inset: -5px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--vmc-color-vault-400) 0%, transparent 70%);
-  filter: blur(10px); opacity: 0; z-index: -1;
-}
-.plike svg { position: relative; z-index: 2; }
-.plike--md { width: 44px; height: 44px; }
-.plike--active {
-  background-image:
-    linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-orange-400) 0%,
-      rgb(100% 100% 100%) 40%,
-      var(--vmc-color-vault-400) 75%,
-      var(--vmc-color-vault-300) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-  box-shadow: 0 3px 14px oklch(0.45 0.20 285 / 35%), inset 0 1px 0 oklch(1 0 0 / 22%);
-}
-.plike--active::before { background: linear-gradient(180deg, oklch(1 0 0 / 18%) 0%, transparent 50%); }
-.plike--active::after  { opacity: 0.35; }
-.plike--skeleton {
-  background-image: none;
-  background-color: var(--vmc-color-background-disabled);
-  border-color: transparent; box-shadow: none;
-  animation: plike-pulse 1.6s ease-in-out infinite;
-}
-.plike--skeleton::before, .plike--skeleton::after { display: none; }
-
-.dc-body {
-  position: relative;
-  flex: 1 1 auto;
-  background: var(--voyager-surface-card);
-  padding: 16px 20px;
-  display: flex; flex-direction: column;
-  align-items: stretch; justify-content: center;
-  gap: 14px;
-}
-.dc-opportunity {
-  margin: 0;
-  font-size: 13px; line-height: 1.2;
-  text-align: center;
-  color: var(--voyager-text-on-surface);
-  font-weight: 500;
-}
-
-/* Iridescent CTA */
-.btn-iridescent {
-  --vbtn-stop-a: var(--vmc-color-orange-600);
-  --vbtn-stop-b: var(--vmc-color-vault-500);
-  position: relative;
-  display: flex; align-items: center; justify-content: center;
-  width: 100%; height: 48px;
-  padding: 0 28px;
-  border-radius: 9999px;
-  border: 2.5px solid transparent;
-  cursor: pointer; overflow: hidden;
-  font-family: var(--voyager-font-display);
-  font-size: 15px; font-weight: 600;
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
-  background-image:
-    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-base-white) 0%,
-      var(--vmc-color-orange-400) 25%,
-      var(--vmc-color-vault-400)  75%,
-      var(--vmc-color-base-white) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 28%),
-    0 6px 18px oklch(0.66 0.17 50 / 30%),
-    0 2px 6px  oklch(0.45 0.20 285 / 18%);
-  transition:
-    --vbtn-angle 0.4s var(--voyager-ease-default),
-    --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease,
-    transform 0.2s var(--voyager-ease-default),
-    box-shadow 0.25s ease;
-}
-.btn-iridescent::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, oklch(1 0 0 / 18%) 0%, transparent 50%);
-  pointer-events: none; z-index: 1;
-}
-.btn-iridescent::after {
-  content: ''; position: absolute; inset: -4px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--vmc-color-orange-600), var(--vmc-color-vault-500));
-  filter: blur(14px); opacity: 0.25; z-index: -1;
-  transition: opacity 0.3s ease, filter 0.3s ease;
-}
-.btn-iridescent span { position: relative; z-index: 2; }
-.btn-iridescent:hover {
-  --vbtn-angle: 220deg;
-  --vbtn-stop-a: var(--vmc-color-orange-400);
-  --vbtn-stop-b: var(--vmc-color-vault-400);
-  transform: translateY(-2px) scale(1.01);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 10px 28px oklch(0.45 0.20 285 / 35%),
-    0 4px 10px  oklch(0.66 0.17 50 / 38%);
-}
-.btn-iridescent:hover::after { opacity: 0.45; filter: blur(18px); }
-.btn-iridescent:active {
-  --vbtn-angle: 135deg;
-  --vbtn-stop-a: var(--vmc-color-orange-700);
-  --vbtn-stop-b: var(--vmc-color-vault-600);
-  transform: scale(0.98) translateY(1px);
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 3px oklch(0 0 0 / 12%);
-}
-.btn-iridescent:active::after { opacity: 0; }
-.btn-iridescent--hover {
-  --vbtn-angle: 220deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-400) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-400)  !important;
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 10px 28px oklch(0.45 0.20 285 / 35%),
-    0 4px 10px  oklch(0.66 0.17 50 / 38%) !important;
-}
-.btn-iridescent--hover::after { opacity: 0.45 !important; filter: blur(18px) !important; }
-.btn-iridescent--pressed {
-  --vbtn-angle: 135deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-700) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-600)  !important;
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 3px oklch(0 0 0 / 12%) !important;
-}
-.btn-iridescent--pressed::after { opacity: 0 !important; }
-
-/* Vault Cinematic CTA */
-.btn-cinematic {
-  --vsec-stop-a: var(--vmc-color-vault-500);
-  --vsec-stop-b: var(--vmc-color-vault-700);
-  position: relative;
-  display: flex; align-items: center; justify-content: center;
-  width: 100%; height: 48px;
-  padding: 0 28px;
-  border-radius: 9999px;
-  border: 2.5px solid transparent;
-  cursor: pointer; overflow: hidden;
-  font-family: var(--voyager-font-display);
-  font-size: 15px; font-weight: 600;
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 3px oklch(0 0 0 / 30%);
-  background-image:
-    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-vault-300) 0%,
-      var(--vmc-color-base-white) 35%,
-      var(--vmc-color-vault-400) 65%,
-      var(--vmc-color-vault-300) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 6px 18px oklch(0.45 0.20 285 / 32%),
-    0 2px 6px  oklch(0.22 0.18 285 / 25%);
-  transition:
-    --vsec-angle 0.4s var(--voyager-ease-default),
-    --vsec-stop-a 0.35s ease, --vsec-stop-b 0.35s ease,
-    transform 0.2s var(--voyager-ease-default),
-    box-shadow 0.25s ease;
-}
-.btn-cinematic::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, oklch(1 0 0 / 16%) 0%, transparent 55%);
-  pointer-events: none; z-index: 1;
-}
-.btn-cinematic::after {
-  content: ''; position: absolute; inset: -4px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--vmc-color-vault-400), var(--vmc-color-vault-600));
-  filter: blur(14px); opacity: 0.25; z-index: -1;
-  transition: opacity 0.3s ease, filter 0.3s ease;
-}
-.btn-cinematic span { position: relative; z-index: 2; }
-.btn-cinematic:hover {
-  --vsec-angle: 220deg;
-  --vsec-stop-a: var(--vmc-color-vault-400);
-  --vsec-stop-b: var(--vmc-color-vault-600);
-  transform: translateY(-2px) scale(1.01);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 10px 28px oklch(0.45 0.20 285 / 40%),
-    0 4px 10px  oklch(0.45 0.20 285 / 25%);
-}
-.btn-cinematic:hover::after { opacity: 0.45; filter: blur(18px); }
-.btn-cinematic:active {
-  --vsec-angle: 160deg;
-  --vsec-stop-a: var(--vmc-color-vault-700);
-  --vsec-stop-b: var(--vmc-color-vault-900);
-  transform: scale(0.98) translateY(1px);
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 28%), 0 1px 3px oklch(0 0 0 / 14%);
-}
-.btn-cinematic:active::after { opacity: 0; }
-.btn-cinematic--hover {
-  --vsec-angle: 220deg !important;
-  --vsec-stop-a: var(--vmc-color-vault-400) !important;
-  --vsec-stop-b: var(--vmc-color-vault-600) !important;
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 10px 28px oklch(0.45 0.20 285 / 40%),
-    0 4px 10px  oklch(0.45 0.20 285 / 25%) !important;
-}
-.btn-cinematic--hover::after { opacity: 0.45 !important; filter: blur(18px) !important; }
-.btn-cinematic--pressed {
-  --vsec-angle: 160deg !important;
-  --vsec-stop-a: var(--vmc-color-vault-700) !important;
-  --vsec-stop-b: var(--vmc-color-vault-900) !important;
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 28%), 0 1px 3px oklch(0 0 0 / 14%) !important;
-}
-.btn-cinematic--pressed::after { opacity: 0 !important; }
-
-/* Ghost CTA */
-.btn-ghost {
-  display: inline-flex; align-items: center; justify-content: center;
-  height: 48px; padding: 0 28px;
-  border-radius: 9999px;
-  border: 2px solid oklch(1 0 0 / 75%);
-  cursor: pointer; position: relative; overflow: hidden;
-  font-family: var(--voyager-font-display);
-  font-size: 14px; font-weight: 600;
-  color: var(--vmc-color-base-white);
-  background: transparent;
-  text-shadow: 0 1px 3px oklch(0 0 0 / 18%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 0 0 1px oklch(1 0 0 / 15%);
-  transition:
-    background 0.25s ease, border-color 0.25s ease, color 0.25s ease,
-    transform 0.2s var(--voyager-ease-default), box-shadow 0.25s ease;
-}
-.btn-ghost::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: 9999px;
-  background: linear-gradient(180deg, oklch(1 0 0 / 10%) 0%, transparent 55%);
-  pointer-events: none; z-index: 1;
-}
-.btn-ghost::after {
-  content: ''; position: absolute; inset: -4px;
-  border-radius: 9999px;
-  background: oklch(1 0 0 / 60%);
-  filter: blur(14px); opacity: 0; z-index: -1;
-  transition: opacity 0.3s ease, filter 0.3s ease;
-}
-.btn-ghost span { position: relative; z-index: 2; }
-.btn-ghost:hover {
-  background: linear-gradient(135deg, oklch(1 0 0) 0%, oklch(0.97 0.03 55) 100%);
-  border-color: oklch(1 0 0);
-  color: var(--vmc-color-orange-600);
-  text-shadow: none;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 50%), 0 6px 20px oklch(0 0 0 / 20%);
-}
-.btn-ghost:hover::after { opacity: 0.40; filter: blur(18px); }
-.btn-ghost:active {
-  background: linear-gradient(135deg, var(--vmc-color-orange-700) 0%, oklch(0.52 0.18 45) 100%);
-  border-color: var(--vmc-color-orange-700);
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
-  transform: scale(0.97) translateY(1px);
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%);
-}
-.btn-ghost:active::after { opacity: 0; }
-.btn-ghost--hover {
-  background: linear-gradient(135deg, oklch(1 0 0) 0%, oklch(0.97 0.03 55) 100%) !important;
-  border-color: oklch(1 0 0) !important;
-  color: var(--vmc-color-orange-600) !important;
-  text-shadow: none !important;
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 50%), 0 6px 20px oklch(0 0 0 / 20%) !important;
-}
-.btn-ghost--hover::after { opacity: 0.40 !important; filter: blur(18px) !important; }
-.btn-ghost--pressed {
-  background: linear-gradient(135deg, var(--vmc-color-orange-700) 0%, oklch(0.52 0.18 45) 100%) !important;
-  border-color: var(--vmc-color-orange-700) !important;
-  color: var(--vmc-color-base-white) !important;
-  text-shadow: 0 1px 3px oklch(0 0 0 / 25%) !important;
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%) !important;
-}
-.btn-ghost--pressed::after { opacity: 0 !important; }
-
-.dc--closed {
-  position: relative;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 28px 24px;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, oklch(1 0 0 / 8%) 0%, transparent 65%),
-    linear-gradient(180deg,
-      var(--vmc-color-orange-400) 0%,
-      var(--vmc-color-orange-500) 55%,
-      var(--vmc-color-orange-600) 100%);
-  color: var(--vmc-color-base-white);
-  isolation: isolate;
-}
-.dc-closed-eyebrow {
-  margin: 0 0 6px;
-  font-size: 14px; font-weight: 400;
-  letter-spacing: 0.32em; text-transform: uppercase;
-  color: oklch(1 0 0 / 88%);
-}
-.dc-closed-title {
-  margin: 0 0 18px;
-  font-size: 48px; font-weight: 800;
-  letter-spacing: 0.04em; line-height: 1;
-  text-transform: uppercase;
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 2px 12px oklch(0 0 0 / 14%);
-}
-.dc-closed-divider {
-  width: 64%; height: 1px;
-  background: oklch(1 0 0 / 30%);
-  margin: 4px 0 22px;
-}
-.dc-closed-status { margin: 0 0 26px; font-size: 14px; font-weight: 400; color: oklch(1 0 0 / 92%); }
-
-.dc-price-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
-.dc-price-text { font-size: 16px; line-height: 1; color: var(--voyager-text-price); }
-.dc-price-text .lbl { font-weight: 300; }
-.dc-price-text .val { font-family: var(--voyager-font-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
-.dc-fee {
-  margin: -4px 0 0; text-align: center;
-  font-size: 10px; font-weight: 400; line-height: 1.3;
-  color: var(--voyager-text-on-surface);
-}
-.pprice-wrap { display: inline-flex; flex-direction: column; align-items: center; position: relative; }
-.pprice {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  position: relative; overflow: hidden;
-  background-image:
-    linear-gradient(135deg, var(--vmc-color-negotiable) 0%, oklch(0.65 0.16 195) 100%),
-    linear-gradient(135deg,
-      oklch(0.88 0.08 195) 0%,
-      rgb(100% 100% 100%) 40%,
-      oklch(0.72 0.14 195) 75%,
-      oklch(0.88 0.08 195) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-  box-shadow: 0 2px 8px oklch(0.78 0.14 195 / 25%);
-}
-.pprice::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(180deg, oklch(1 0 0 / 45%) 0%, transparent 50%);
-  pointer-events: none; z-index: 1;
-}
-.pprice svg { position: relative; z-index: 2; }
-.pprice-shelf {
-  width: 28px; height: 6px; margin-top: 4px;
-  border-radius: 50%;
-  background: oklch(0.62 0.15 195 / 50%);
-  filter: blur(4px);
-}
-.pprice-wrap--skeleton .pprice {
-  background-image: none;
-  background-color: var(--vmc-color-background-disabled);
-  border-color: transparent; box-shadow: none;
-  animation: plike-pulse 1.6s ease-in-out infinite;
-}
-.pprice-wrap--skeleton .pprice::before { display: none; }
-.pprice-wrap--skeleton .pprice svg     { display: none; }
-.pprice-wrap--skeleton .pprice-shelf   { display: none; }
-
-.sk-strip {
-  display: inline-block;
-  background: linear-gradient(110deg,
-    oklch(0.92 0.005 220) 0%,
-    oklch(0.96 0.004 220) 50%,
-    oklch(0.92 0.005 220) 100%);
-  background-size: 200% 100%;
-  border-radius: 4px;
-  color: transparent;
-  animation: skeletonSweep 1.6s linear infinite;
-}
-.sk-strip--opp   { width: 70%; height: 14px; margin: 0 auto; }
-.sk-strip--price { width: 168px; height: 14px; }
-.sk-strip--fee   { width: 60%; height: 9px; margin: 0 auto; }
-
-/* ═══════════════════════════════════════════════════════════════
-   DETAIL HEADER IMAGES · 443 × 521 · NO rounded outer
-   ═══════════════════════════════════════════════════════════════ */
-.dh {
-  width: 443px;
-  height: 521px;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-  background: var(--voyager-surface-card);
-  box-shadow:
-    0 1px 2px  oklch(0.22 0.18 285 / 6%),
-    0 12px 32px oklch(0.22 0.18 285 / 10%);
-  user-select: none;
-  isolation: isolate;
-}
-.dh-header {
-  position: relative;
-  height: 64px;
-  padding: 0 16px;
-  display: flex; align-items: center; gap: 12px;
-  color: var(--vmc-color-base-white);
-  isolation: isolate;
-  flex-shrink: 0;
-}
-.dh-header::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, oklch(1 0 0 / 14%) 0%, transparent 60%);
-  pointer-events: none; z-index: 0;
-}
-.dh-header::after {
-  content: ''; position: absolute;
-  left: 0; right: 0; bottom: 0; height: 3px;
-  background: linear-gradient(180deg, transparent 0%, oklch(0 0 0 / 12%) 100%);
-  pointer-events: none; z-index: 0;
-}
-.dh-header > * { position: relative; z-index: 1; }
-
-.dh-back {
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 999px;
-  border: 0; background: transparent;
-  color: var(--vmc-color-base-white);
-  cursor: pointer; flex-shrink: 0;
-  transition:
-    background 150ms var(--voyager-ease-default),
-    transform  150ms var(--voyager-ease-default);
-}
-.dh-back svg { width: 24px; height: 24px; stroke-width: 4; }
-.dh-back:hover  { background: var(--vmc-color-orange-500); }
-.dh-back:active {
-  background: var(--vmc-color-orange-600);
-  color: var(--vmc-color-text-on-dark-muted);
-}
-/* V3 · Negociable — back button live hover/pressed */
-.dh--variant-e .dh-back:hover  { background: var(--vmc-color-negotiable); }
-.dh--variant-e .dh-back:active {
-  background: oklch(0.58 0.17 195);
-  color: var(--vmc-color-text-on-dark-muted);
-}
-/* V4 · Vault Cinematic — back button live hover/pressed */
-.dh--variant-f .dh-back:hover  { background: var(--vmc-color-vault-500); }
-.dh--variant-f .dh-back:active {
-  background: var(--vmc-color-vault-700);
-  color: var(--vmc-color-text-on-dark-muted);
-}
-.dh-back--hover {
-  background: var(--vmc-color-orange-500) !important;
-}
-.dh-back--pressed {
-  background: var(--vmc-color-orange-600) !important;
-  color: var(--vmc-color-text-on-dark-muted) !important;
-}
-.dh-back--hover-vault {
-  background: var(--vmc-color-vault-500) !important;
-}
-.dh-back--pressed-vault {
-  background: var(--vmc-color-vault-700) !important;
-  color: var(--vmc-color-text-on-dark-muted) !important;
-}
-.dh-back--hover-negotiable {
-  background: var(--vmc-color-negotiable) !important;
-}
-.dh-back--pressed-negotiable {
-  background: oklch(0.58 0.17 195) !important;
-  color: var(--vmc-color-text-on-dark-muted) !important;
-}
-
-.dh-titleblock { display: flex; flex-direction: column; min-width: 0; gap: 0; }
-.dh-title {
-  font-family: var(--voyager-font-display);
-  font-size: 16px; font-weight: 500; line-height: 24px;
-  color: var(--vmc-color-text-inverse);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.dh-subtitle {
-  font-family: var(--voyager-font-display);
-  font-size: 12px; font-weight: 400; line-height: 16px;
-  color: var(--vmc-color-text-on-dark-muted);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-/* Default header · spec voyager-three-cyan/preview/detail-header-states */
-.dh-header {
-  background: linear-gradient(to right,
-    var(--vmc-color-orange-500) 0%,
-    var(--vmc-color-orange-600) 50%,
-    var(--vmc-color-orange-700) 100%);
-}
-.dh-header::before,
-.dh-header::after { display: none; }
-
-.dh-image {
-  position: relative;
-  flex: 1 1 auto;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.92 0.005 220) 0%, transparent 70%),
-    linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%);
-  overflow: hidden;
-}
-.dh-image-placeholder {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  color: oklch(0.62 0.01 220);
-}
-.dh-image-placeholder svg { width: 72px; height: 72px; }
-
-.dh-action {
-  position: absolute;
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 999px;
-  border: 0;
-  background: oklch(0.20 0.02 280 / 55%);
-  color: var(--vmc-color-base-white);
-  cursor: pointer;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  transition:
-    background 150ms var(--voyager-ease-default),
-    transform  150ms var(--voyager-ease-default),
-    box-shadow 150ms var(--voyager-ease-default);
-}
-.dh-action svg { width: 18px; height: 18px; }
-.dh-action--expand { top: 12px; right: 12px; }
-.dh-action--prev   { top: 50%; left: 12px;  transform: translateY(-50%); }
-.dh-action--next   { top: 50%; right: 12px; transform: translateY(-50%); }
-.dh-action:hover { background: oklch(0.20 0.02 280 / 75%); }
-.dh-action--expand:hover { transform: scale(1.05); }
-.dh-action--prev:hover   { transform: translateY(-50%) scale(1.05); }
-.dh-action--next:hover   { transform: translateY(-50%) scale(1.05); }
-.dh-counter {
-  position: absolute;
-  bottom: 12px; right: 12px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: oklch(0.20 0.02 280 / 55%);
-  color: var(--vmc-color-base-white);
-  font-family: var(--voyager-font-mono);
-  font-size: 12px; font-variant-numeric: tabular-nums;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-}
-
-.dh-thumbs {
-  display: flex; gap: 8px;
-  padding: 8px;
-  background: var(--voyager-surface-card);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.dh-thumb {
-  position: relative;
-  flex-shrink: 0;
-  width: 100px; height: 75px;
-  border-radius: 4px;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.92 0.005 220) 0%, transparent 70%),
-    linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%);
-  cursor: pointer;
-}
-.dh-thumb-icon {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 28px; height: 28px;
-  color: oklch(0.62 0.01 220);
-  pointer-events: none;
-  z-index: 1;
-}
-.dh-thumb-ring {
-  position: absolute; inset: 0;
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 2;
-  transition: box-shadow 200ms var(--voyager-ease-default);
-}
-.dh-thumb.is-active .dh-thumb-ring {
-  box-shadow:
-    inset 0 0 0 3px var(--vmc-color-orange-500),
-    inset 0 0 0 4px oklch(1 0 0 / 35%);
-}
-
-/* ── Gradient ring helper (mask-composite cutout) ───────────────── */
-.dh--variant-d .dh-thumb.is-active .dh-thumb-ring,
-.dh--variant-e .dh-thumb.is-active .dh-thumb-ring,
-.dh--variant-f .dh-thumb.is-active .dh-thumb-ring {
-  box-shadow: none;
-  border: 3px solid transparent;
-  background-origin: border-box;
-  background-clip: border-box;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-          mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-}
-
-/* ── Variant D · Primary Clone (orange → vault iridescent) ──────── */
-.dh--variant-d .dh-header {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-600) 0%,
-    var(--vmc-color-orange-600) 38%,
-    var(--vmc-color-vault-500) 100%);
-}
-.dh--variant-d .dh-action,
-.dh--variant-d .dh-counter {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-600) 0%,
-    var(--vmc-color-vault-500) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 28%),
-    0 4px 10px oklch(0.66 0.17 50 / 30%);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-.dh--variant-d .dh-thumb.is-active .dh-thumb-ring {
-  background-image: linear-gradient(135deg,
-    var(--vmc-color-base-white) 0%,
-    var(--vmc-color-orange-400) 25%,
-    var(--vmc-color-vault-400)  75%,
-    var(--vmc-color-base-white) 100%);
-}
-
-/* ── Variant E · Negociable (cyan/teal cinematic) ───────────────── */
-.dh--variant-e .dh-header {
-  background: linear-gradient(135deg,
-    oklch(0.84 0.13 195) 0%,
-    var(--vmc-color-negotiable) 100%);
-}
-.dh--variant-e .dh-action,
-.dh--variant-e .dh-counter {
-  background: linear-gradient(135deg,
-    oklch(0.84 0.13 195) 0%,
-    var(--vmc-color-negotiable) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 4px 10px oklch(0.65 0.16 195 / 32%);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-.dh--variant-e .dh-thumb.is-active .dh-thumb-ring {
-  background-image: linear-gradient(135deg,
-    oklch(0.88 0.08 195) 0%,
-    var(--vmc-color-base-white) 40%,
-    oklch(0.72 0.14 195) 75%,
-    oklch(0.88 0.08 195) 100%);
-}
-
-/* ── Variant F · Vault Cinematic (Secondary spec voyager-ds) ────── */
-.dh--variant-f .dh-header {
-  background: linear-gradient(160deg,
-    var(--vmc-color-vault-500) 0%,
-    var(--vmc-color-vault-700) 100%);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%);
-}
-.dh--variant-f .dh-action,
-.dh--variant-f .dh-counter {
-  background: linear-gradient(160deg,
-    var(--vmc-color-vault-500) 0%,
-    var(--vmc-color-vault-700) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 4px 10px oklch(0.32 0.20 285 / 32%);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-.dh--variant-f .dh-thumb.is-active .dh-thumb-ring {
-  background-image: linear-gradient(135deg,
-    var(--vmc-color-vault-300) 0%,
-    var(--vmc-color-base-white) 35%,
-    var(--vmc-color-vault-400) 65%,
-    var(--vmc-color-vault-300) 100%);
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   HEADER · 790 × 64 · vault background + auth button (4 variants)
-   ═══════════════════════════════════════════════════════════════ */
-.hd {
-  width: 790px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  background: var(--vmc-color-vault-800);
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  user-select: none;
-}
-.hd::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 80% at 0% 50%, oklch(1 0 0 / 6%) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 80% at 100% 50%, oklch(0.66 0.17 50 / 8%) 0%, transparent 60%);
-  pointer-events: none; z-index: 0;
-}
-.hd > * { position: relative; z-index: 1; }
-.hd-logo {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--voyager-font-display);
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--vmc-color-base-white);
-}
-.hd-logo-mark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--vmc-color-orange-500), var(--vmc-color-orange-700));
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 25%);
-  font-size: 14px; font-weight: 800;
-  color: var(--vmc-color-base-white);
-  letter-spacing: 0;
-}
-.hd-logo-text {
-  display: inline-flex; flex-direction: column;
-  line-height: 1; gap: 2px;
-}
-.hd-logo-text-main {
-  font-size: 16px; font-weight: 800;
-  letter-spacing: -0.3px;
-}
-.hd-logo-text-sub {
-  font-size: 9px; font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: oklch(1 0 0 / 60%);
-}
-
-/* ── HD · Auth button base ──────────────────────────────────────── */
-.hd-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding: 0 16px 0 4px;
-  border-radius: 9999px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  font-family: var(--voyager-font-display);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 2px oklch(0 0 0 / 22%);
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  transition:
-    --vbtn-angle 0.4s var(--voyager-ease-default),
-    --vbtn-stop-a 0.35s ease,
-    --vbtn-stop-b 0.35s ease,
-    transform 0.2s var(--voyager-ease-default),
-    box-shadow 0.25s ease;
-  transform: translateZ(0);
-}
-.hd-btn::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: 9999px;
-  background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%);
-  pointer-events: none; z-index: 1;
-}
-.hd-btn > *:not(.hd-btn-icon) { position: relative; z-index: 2; }
-.hd-btn-icon {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  position: relative; z-index: 2;
-}
-.hd-btn-icon svg { width: 18px; height: 18px; fill: currentColor; }
-.hd-btn-username { font-weight: 700; }
-.hd-btn-light { font-weight: 300; }
-
-/* ── V1 · SM Ingresa Guest (orange→vault iridescent) ────────────── */
-.hd-btn--sm {
-  --vbtn-stop-a: var(--vmc-color-orange-600);
-  --vbtn-stop-b: var(--vmc-color-vault-500);
-  background-image:
-    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-base-white) 0%,
-      var(--vmc-color-orange-400) 25%,
-      var(--vmc-color-vault-400) 75%,
-      var(--vmc-color-base-white) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 25%),
-    0 2px 6px oklch(0.66 0.17 50 / 25%);
-}
-.hd-btn--sm .hd-btn-icon {
-  background: oklch(0 0 0 / 18%);
-  color: var(--vmc-color-base-white);
-}
-.hd-btn--sm:hover {
-  --vbtn-angle: 220deg;
-  --vbtn-stop-a: var(--vmc-color-orange-400);
-  --vbtn-stop-b: var(--vmc-color-vault-400);
-  transform: translateY(-1px) scale(1.02);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 6px 18px oklch(0.45 0.20 285 / 30%),
-    0 3px 8px  oklch(0.66 0.17 50 / 35%);
-}
-.hd-btn--sm:active {
-  --vbtn-angle: 135deg;
-  --vbtn-stop-a: var(--vmc-color-orange-700);
-  --vbtn-stop-b: var(--vmc-color-vault-600);
-  transform: scale(0.97) translateY(1px);
-  box-shadow: inset 0 2px 4px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%);
-}
-.hd-btn--sm.hd-btn--hover {
-  --vbtn-angle: 220deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-400) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-400) !important;
-  transform: translateY(-1px) scale(1.02) !important;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 6px 18px oklch(0.45 0.20 285 / 30%),
-    0 3px 8px  oklch(0.66 0.17 50 / 35%) !important;
-}
-.hd-btn--sm.hd-btn--pressed {
-  --vbtn-angle: 135deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-700) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-600) !important;
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 4px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%) !important;
-}
-
-/* ── V2 · D Primary Clone (orange→vault iridescent · logged-in) ── */
-.hd-btn--d {
-  --vbtn-stop-a: var(--vmc-color-orange-600);
-  --vbtn-stop-b: var(--vmc-color-vault-500);
-  background-image:
-    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-base-white) 0%,
-      var(--vmc-color-orange-400) 25%,
-      var(--vmc-color-vault-400) 75%,
-      var(--vmc-color-base-white) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 28%),
-    0 2px 6px oklch(0.66 0.17 50 / 30%);
-}
-.hd-btn--d .hd-btn-icon {
-  background: oklch(0 0 0 / 18%);
-  color: var(--vmc-color-base-white);
-}
-.hd-btn--d:hover {
-  --vbtn-angle: 220deg;
-  --vbtn-stop-a: var(--vmc-color-orange-400);
-  --vbtn-stop-b: var(--vmc-color-vault-400);
-  transform: translateY(-1px) scale(1.02);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 8px 20px oklch(0.45 0.20 285 / 35%),
-    0 4px 10px oklch(0.66 0.17 50 / 40%);
-}
-.hd-btn--d:active {
-  --vbtn-angle: 135deg;
-  --vbtn-stop-a: var(--vmc-color-orange-700);
-  --vbtn-stop-b: var(--vmc-color-vault-600);
-  transform: scale(0.97) translateY(1px);
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%);
-}
-.hd-btn--d.hd-btn--hover {
-  --vbtn-angle: 220deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-400) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-400) !important;
-  transform: translateY(-1px) scale(1.02) !important;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 8px 20px oklch(0.45 0.20 285 / 35%),
-    0 4px 10px oklch(0.66 0.17 50 / 40%) !important;
-}
-.hd-btn--d.hd-btn--pressed {
-  --vbtn-angle: 135deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-700) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-600) !important;
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%) !important;
-}
-
-/* ── V3 · E Vault→Orange (vault izq · orange der) ───────────────── */
-.hd-btn--e {
-  background-image:
-    linear-gradient(135deg,
-      var(--vmc-color-vault-600) 0%,
-      var(--vmc-color-vault-500) 45%,
-      var(--vmc-color-orange-500) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-vault-400) 0%,
-      var(--vmc-color-base-white) 40%,
-      var(--vmc-color-orange-400) 75%,
-      var(--vmc-color-base-white) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 2px 8px oklch(0.45 0.20 285 / 35%);
-}
-.hd-btn--e .hd-btn-icon {
-  background: oklch(1 0 0 / 18%);
-  color: var(--vmc-color-base-white);
-}
-.hd-btn--e .hd-btn-username {
-  color: oklch(0.86 0.10 60);
-  text-shadow: 0 1px 2px oklch(0 0 0 / 25%);
-}
-.hd-btn--e:hover {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 8px 22px oklch(0.45 0.20 285 / 40%),
-    0 4px 10px oklch(0.66 0.17 50 / 35%);
-}
-.hd-btn--e:active {
-  transform: scale(0.97) translateY(1px);
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 25%), 0 1px 2px oklch(0 0 0 / 10%);
-}
-.hd-btn--e.hd-btn--hover {
-  transform: translateY(-1px) scale(1.02) !important;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 20%),
-    0 8px 22px oklch(0.45 0.20 285 / 40%),
-    0 4px 10px oklch(0.66 0.17 50 / 35%) !important;
-}
-.hd-btn--e.hd-btn--pressed {
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 25%), 0 1px 2px oklch(0 0 0 / 10%) !important;
-}
-
-/* ── V4 · A Cinematic Dark (vault dark · orange ring + glow) ────── */
-.hd-btn--a {
-  background-image:
-    linear-gradient(135deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-900) 100%),
-    linear-gradient(135deg,
-      var(--vmc-color-orange-600) 0%,
-      var(--vmc-color-orange-400) 45%,
-      var(--vmc-color-vault-400) 100%);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 15%),
-    0 0 16px oklch(0.66 0.17 50 / 25%);
-}
-.hd-btn--a .hd-btn-icon {
-  background: oklch(0.66 0.17 50 / 22%);
-  color: var(--vmc-color-base-white);
-}
-.hd-btn--a .hd-btn-username {
-  color: var(--vmc-color-orange-400);
-  text-shadow: 0 0 8px oklch(0.66 0.17 50 / 55%);
-}
-.hd-btn--a:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 18%),
-    0 0 24px oklch(0.66 0.17 50 / 40%),
-    0 4px 16px oklch(0.15 0.27 278 / 50%);
-}
-.hd-btn--a:active {
-  transform: scale(0.97) translateY(1px);
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 35%), 0 1px 2px oklch(0 0 0 / 15%);
-}
-.hd-btn--a.hd-btn--hover {
-  transform: translateY(-1px) !important;
-  box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 18%),
-    0 0 24px oklch(0.66 0.17 50 / 40%),
-    0 4px 16px oklch(0.15 0.27 278 / 50%) !important;
-}
-.hd-btn--a.hd-btn--pressed {
-  transform: scale(0.97) translateY(1px) !important;
-  box-shadow: inset 0 2px 5px oklch(0 0 0 / 35%), 0 1px 2px oklch(0 0 0 / 15%) !important;
-}
-
-/* ── Subrow + showcase slots (shared) ──────────────────────────── */
-.subrow {
-  margin-top: 40px; padding-top: 24px;
-  border-top: 1px dashed color-mix(in oklch, var(--vmc-color-vault-800) 12%, transparent);
-}
-.subrow-header {
-  display: flex; align-items: baseline;
-  justify-content: center; flex-wrap: wrap;
-  gap: 12px; margin-bottom: 20px;
-  text-align: center;
-}
-.subrow-title {
-  margin: 0;
-  font-size: 13px; font-weight: 800;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--vmc-color-vault-800);
-}
-.subrow-note {
+.component-source {
   font-family: var(--voyager-font-mono);
   font-size: 11px;
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 50%, transparent);
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 40%, transparent);
 }
-.btn-row {
-  display: flex; flex-wrap: wrap;
-  justify-content: center;
-  gap: 32px; padding: 8px 4px 24px;
+.component-source a {
+  color: inherit; text-decoration: none;
+  border-bottom: 1px dotted color-mix(in oklch, var(--vmc-color-vault-800) 25%, transparent);
 }
-.btn-slot {
-  flex: 0 0 auto;
-  display: flex; flex-direction: column;
-  align-items: center; gap: 12px;
-}
-.btn-slot-label {
-  font-size: 10px; font-weight: 800;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
-}
-.btn-slot-sublabel {
-  font-family: var(--voyager-font-mono);
-  font-size: 10px; letter-spacing: 0.04em;
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
-}
-.btn-iridescent.is-showcase,
-.btn-cinematic.is-showcase,
-.btn-ghost.is-showcase {
-  width: auto; min-width: 180px; padding: 0 56px;
-}
-.btn-slot--live {
-  padding: 18px 20px;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, oklch(1 0 0 / 8%) 0%, transparent 65%),
-    linear-gradient(180deg,
-      var(--vmc-color-orange-400) 0%,
-      var(--vmc-color-orange-500) 55%,
-      var(--vmc-color-orange-600) 100%);
-  box-shadow: 0 8px 20px oklch(0.66 0.17 50 / 18%);
-}
-.btn-slot--live .btn-slot-label,
-.btn-slot--live .btn-slot-sublabel { color: oklch(1 0 0 / 85%); }
+.component-source a:hover { color: var(--vmc-color-vault-500); }
 
-.dh-header-slot {
-  width: 360px;
-  overflow: hidden;
-  box-shadow:
-    0 1px 2px  oklch(0.22 0.18 285 / 6%),
-    0 6px 18px oklch(0.22 0.18 285 / 8%);
-}
-.dh-thumb-slot {
-  width: 120px;
-  display: flex; flex-direction: column; gap: 10px;
-  align-items: center;
-}
-.dh-thumb-slot .dh-thumb { width: 120px; height: 90px; }
-.action-tile {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 12px;
-  padding: 24px;
-  background: oklch(0.45 0.04 260);
-}
-.action-tile .dh-action { position: static; transform: none; }
-.action-tile .btn-slot-label,
-.action-tile .btn-slot-sublabel { color: oklch(1 0 0 / 85%); }
-
-/* Back tile · holds a single back button over the default header gradient */
-.back-tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 96px; height: 64px;
-  padding: 0 16px;
-  background: linear-gradient(to right,
-    var(--vmc-color-orange-500) 0%,
-    var(--vmc-color-orange-600) 50%,
-    var(--vmc-color-orange-700) 100%);
+.component-frame {
+  width: 100%;
+  min-height: 600px;
+  border: 0;
+  display: block;
+  background: transparent;
 }
 
 .page-footer {
@@ -1424,11 +203,11 @@ html, body {
     <a class="page-back" href="../../index.html">← Inicio</a>
     <p class="page-eyebrow">Voyager · UI Upgrade</p>
     <h1 class="page-title">Upgrade Catalog</h1>
-    <p class="page-subtitle">Catálogo cinematic de componentes — taxonomía iridiscente y vault cinematic. Todos los componentes apilados; sin esquinas redondeadas en sus contenedores.</p>
+    <p class="page-subtitle">Catálogo cinematic de componentes — taxonomía iridiscente y vault cinematic. Cada bloque vive en su propio archivo dentro de <code>desktop/</code>; este index solo orquesta títulos y embebe los componentes.</p>
 
     <nav class="platform-tabs" role="tablist" aria-label="Plataforma">
       <button class="platform-tab is-active" role="tab" aria-selected="true" data-platform="desktop" type="button" id="tabDesktop">
-        Desktop <span class="tab-count">3</span>
+        Desktop <span class="tab-count">5</span>
       </button>
       <button class="platform-tab" role="tab" aria-selected="false" data-platform="mobile" type="button" id="tabMobile">
         Mobile <span class="tab-count">0</span>
@@ -1438,438 +217,98 @@ html, body {
     <div class="platform-pane is-active" data-pane="desktop" role="tabpanel" aria-labelledby="tabDesktop">
 
       <!-- ════════════════════════════════════════════════════════
+           Conditions · 317 × 190
+           Fuente: desktop/conditions.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Conditions · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Conditions</h2>
+          <span class="component-size">317 × 190</span>
+          <span class="component-note">4 variantes · Gris Claro · Vault Cinematic · B Cinematic Dark · E Vault→Orange · Pill rounded · Sin estados estáticos</span>
+          <span class="component-source"><a href="desktop/conditions.html" target="_blank" rel="noopener">desktop/conditions.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="conditions"
+          src="desktop/conditions.html"
+          loading="lazy"
+          title="Conditions · variantes"></iframe>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           Conditions Offering · 437 · accordion
+           Fuente: desktop/conditions-offering.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Conditions Offering · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Conditions Offering</h2>
+          <span class="component-size">437 · accordion</span>
+          <span class="component-note">3 variantes · Default · Iridescent (silvery border) · Vault Cinematic · Sin brackets, line accent</span>
+          <span class="component-source"><a href="desktop/conditions-offering.html" target="_blank" rel="noopener">desktop/conditions-offering.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="conditions-offering"
+          src="desktop/conditions-offering.html"
+          loading="lazy"
+          title="Conditions Offering · variantes"></iframe>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
            Detail Card · 317 × 422
+           Fuente: desktop/detail-card.html
            ════════════════════════════════════════════════════════ -->
       <section class="component-block" aria-label="Detail Card · Upgrade">
         <header class="component-header">
           <h2 class="component-title">Detail Card</h2>
           <span class="component-size">317 × 422</span>
           <span class="component-note">4 variantes · Iridescent · Vault Cinematic · Skeleton · Oferta Cerrada</span>
+          <span class="component-source"><a href="desktop/detail-card.html" target="_blank" rel="noopener">desktop/detail-card.html ↗</a></span>
         </header>
-
-        <div class="catalog-row">
-
-          <div class="variant-slot">
-            <span class="variant-label">V1 · Iridescent</span>
-            <span class="variant-sublabel">LikeButton · Default</span>
-            <article class="dc">
-              <div class="dc-header">
-                <div class="dc-header-row1">
-                  <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
-                  <div class="dc-h-right"><span class="dc-h-time">12:30 pm</span></div>
-                </div>
-                <div class="dc-header-row2">
-                  <div class="dc-h-stat dc-h-stat--right">
-                    <span class="dc-h-stat-num">93</span>
-                    <div class="dc-h-stat-icon"><svg width="14" height="10" viewBox="0 0 13 9" fill="currentColor"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"/></svg></div>
-                  </div>
-                  <div class="dc-like-slot">
-                    <button type="button" class="plike plike--md" aria-label="Me gusta">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </button>
-                    <span class="dc-like-count">0</span>
-                  </div>
-                  <div class="dc-h-stat dc-h-stat--left">
-                    <div class="dc-h-stat-icon"><svg width="14" height="12" viewBox="0 0 13 11" fill="currentColor"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z"/><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z"/><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z"/><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z"/><path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z"/><path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z"/></svg></div>
-                    <span class="dc-h-stat-num">0</span>
-                  </div>
-                </div>
-              </div>
-              <div class="dc-body">
-                <p class="dc-opportunity">¡Oportunidad para el que sabe!</p>
-                <button type="button" class="btn-iridescent"><span>Participa</span></button>
-                <div class="dc-price-row">
-                  <div class="pprice-wrap" aria-hidden="true">
-                    <div class="pprice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(100% 100% 100% / 92%)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-                    <div class="pprice-shelf"></div>
-                  </div>
-                  <span class="dc-price-text"><span class="lbl">Precio Base:</span> <span class="val">US$ 62,999</span></span>
-                </div>
-                <p class="dc-fee">Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50</p>
-              </div>
-            </article>
-          </div>
-
-          <div class="variant-slot">
-            <span class="variant-label">V2 · Vault Cinematic</span>
-            <span class="variant-sublabel">LikeButton · Active</span>
-            <article class="dc">
-              <div class="dc-header">
-                <div class="dc-header-row1">
-                  <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
-                  <div class="dc-h-right"><span class="dc-h-time">12:30 pm</span></div>
-                </div>
-                <div class="dc-header-row2">
-                  <div class="dc-h-stat dc-h-stat--right">
-                    <span class="dc-h-stat-num">93</span>
-                    <div class="dc-h-stat-icon"><svg width="14" height="10" viewBox="0 0 13 9" fill="currentColor"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"/></svg></div>
-                  </div>
-                  <div class="dc-like-slot">
-                    <button type="button" class="plike plike--md plike--active" aria-label="Quitar de favoritos" aria-pressed="true">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="rgb(100% 100% 100% / 92%)" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </button>
-                    <span class="dc-like-count">1</span>
-                  </div>
-                  <div class="dc-h-stat dc-h-stat--left">
-                    <div class="dc-h-stat-icon"><svg width="14" height="12" viewBox="0 0 13 11" fill="currentColor"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z"/><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z"/><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z"/><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z"/></svg></div>
-                    <span class="dc-h-stat-num">0</span>
-                  </div>
-                </div>
-              </div>
-              <div class="dc-body">
-                <p class="dc-opportunity">¡Oportunidad para el que sabe!</p>
-                <button type="button" class="btn-cinematic"><span>Participa</span></button>
-                <div class="dc-price-row">
-                  <div class="pprice-wrap" aria-hidden="true">
-                    <div class="pprice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(100% 100% 100% / 92%)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-                    <div class="pprice-shelf"></div>
-                  </div>
-                  <span class="dc-price-text"><span class="lbl">Precio Base:</span> <span class="val">US$ 62,999</span></span>
-                </div>
-                <p class="dc-fee">Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50</p>
-              </div>
-            </article>
-          </div>
-
-          <div class="variant-slot">
-            <span class="variant-label">V3 · Skeleton</span>
-            <span class="variant-sublabel">cargando — pi · skeleton</span>
-            <article class="dc">
-              <div class="dc-header">
-                <div class="dc-header-row1">
-                  <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
-                  <div class="dc-h-right"><span class="dc-h-time">12:30 pm</span></div>
-                </div>
-                <div class="dc-header-row2">
-                  <div class="dc-h-stat dc-h-stat--right">
-                    <span class="dc-h-stat-num">93</span>
-                    <div class="dc-h-stat-icon"><svg width="14" height="10" viewBox="0 0 13 9" fill="currentColor"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"/></svg></div>
-                  </div>
-                  <div class="dc-like-slot">
-                    <button type="button" class="plike plike--md plike--skeleton" aria-label="cargando"></button>
-                    <span class="dc-like-count">0</span>
-                  </div>
-                  <div class="dc-h-stat dc-h-stat--left">
-                    <div class="dc-h-stat-icon"><svg width="14" height="12" viewBox="0 0 13 11" fill="currentColor"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z"/><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z"/></svg></div>
-                    <span class="dc-h-stat-num">0</span>
-                  </div>
-                </div>
-              </div>
-              <div class="dc-body">
-                <p class="dc-opportunity"><span class="sk-strip sk-strip--opp">_</span></p>
-                <button type="button" class="btn-cinematic" disabled style="opacity: 0.4; cursor: progress; filter: saturate(0.5);"><span>Cargando…</span></button>
-                <div class="dc-price-row">
-                  <div class="pprice-wrap pprice-wrap--skeleton" aria-hidden="true">
-                    <div class="pprice"></div>
-                    <div class="pprice-shelf"></div>
-                  </div>
-                  <span class="sk-strip sk-strip--price">_</span>
-                </div>
-                <p class="dc-fee"><span class="sk-strip sk-strip--fee">_</span></p>
-              </div>
-            </article>
-          </div>
-
-          <div class="variant-slot">
-            <span class="variant-label">V4 · Oferta Cerrada</span>
-            <span class="variant-sublabel">Ghost CTA · Default</span>
-            <article class="dc dc--closed">
-              <p class="dc-closed-eyebrow">Oferta</p>
-              <h3 class="dc-closed-title">Cerrada</h3>
-              <div class="dc-closed-divider" aria-hidden="true"></div>
-              <p class="dc-closed-status">En Consulta</p>
-              <button type="button" class="btn-ghost"><span>Ver ofertas relacionadas</span></button>
-            </article>
-          </div>
-
-        </div>
-
-        <div class="subrow">
-          <div class="subrow-header">
-            <h3 class="subrow-title">CTA · Estados estáticos</h3>
-            <span class="subrow-note">Hover · Pressed — el Default se observa dentro del card</span>
-          </div>
-          <div class="btn-row">
-            <div class="btn-slot"><span class="btn-slot-label">Iridescent</span><button type="button" class="btn-iridescent is-showcase btn-iridescent--hover"><span>Participa</span></button><span class="btn-slot-sublabel">hover</span></div>
-            <div class="btn-slot"><span class="btn-slot-label">Iridescent</span><button type="button" class="btn-iridescent is-showcase btn-iridescent--pressed"><span>Participa</span></button><span class="btn-slot-sublabel">pressed</span></div>
-            <div class="btn-slot"><span class="btn-slot-label">Vault Cinematic</span><button type="button" class="btn-cinematic is-showcase btn-cinematic--hover"><span>Participa</span></button><span class="btn-slot-sublabel">hover</span></div>
-            <div class="btn-slot"><span class="btn-slot-label">Vault Cinematic</span><button type="button" class="btn-cinematic is-showcase btn-cinematic--pressed"><span>Participa</span></button><span class="btn-slot-sublabel">pressed</span></div>
-            <div class="btn-slot"><span class="btn-slot-label">Ghost</span><button type="button" class="btn-ghost is-showcase btn-ghost--hover"><span>Ver ofertas relacionadas</span></button><span class="btn-slot-sublabel">hover</span></div>
-            <div class="btn-slot"><span class="btn-slot-label">Ghost</span><button type="button" class="btn-ghost is-showcase btn-ghost--pressed"><span>Ver ofertas relacionadas</span></button><span class="btn-slot-sublabel">pressed</span></div>
-          </div>
-        </div>
+        <iframe
+          class="component-frame"
+          data-component="detail-card"
+          src="desktop/detail-card.html"
+          loading="lazy"
+          title="Detail Card · variantes y estados estáticos"></iframe>
       </section>
 
       <!-- ════════════════════════════════════════════════════════
            Detail Header Images · 443 × 521
+           Fuente: desktop/detail-header-images.html
            ════════════════════════════════════════════════════════ -->
       <section class="component-block" aria-label="Detail Header Images · Upgrade">
         <header class="component-header">
           <h2 class="component-title">Detail Header Images</h2>
           <span class="component-size">443 × 521</span>
           <span class="component-note">4 variantes · V1 Default · V2 Primary Clone · V3 Negociable · V4 Vault Cinematic</span>
+          <span class="component-source"><a href="desktop/detail-header-images.html" target="_blank" rel="noopener">desktop/detail-header-images.html ↗</a></span>
         </header>
-
-        <div class="catalog-row">
-
-          <!-- V1 · Default · spec voyager-three-cyan -->
-          <div class="variant-slot">
-            <span class="variant-label">V1 · Default</span>
-            <span class="variant-sublabel">live horizontal gradient</span>
-            <article class="dh">
-              <header class="dh-header">
-                <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
-              </header>
-              <div class="dh-image">
-                <div class="dh-image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg></div>
-                <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
-                <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-                <span class="dh-counter">3 / 10</span>
-              </div>
-              <div class="dh-thumbs">
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb is-active"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-              </div>
-            </article>
-          </div>
-
-          <!-- V2 · Primary Clone -->
-          <div class="variant-slot">
-            <span class="variant-label">V2 · Primary Clone</span>
-            <span class="variant-sublabel">orange → vault iridescent</span>
-            <article class="dh dh--variant-d">
-              <header class="dh-header">
-                <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
-              </header>
-              <div class="dh-image">
-                <div class="dh-image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg></div>
-                <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
-                <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-                <span class="dh-counter">3 / 10</span>
-              </div>
-              <div class="dh-thumbs">
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb is-active"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-              </div>
-            </article>
-          </div>
-
-          <!-- V3 · Negociable -->
-          <div class="variant-slot">
-            <span class="variant-label">V3 · Negociable</span>
-            <span class="variant-sublabel">cyan/teal cinematic</span>
-            <article class="dh dh--variant-e">
-              <header class="dh-header">
-                <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
-              </header>
-              <div class="dh-image">
-                <div class="dh-image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg></div>
-                <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
-                <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-                <span class="dh-counter">3 / 10</span>
-              </div>
-              <div class="dh-thumbs">
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb is-active"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-              </div>
-            </article>
-          </div>
-
-          <!-- V4 · Vault Cinematic -->
-          <div class="variant-slot">
-            <span class="variant-label">V4 · Vault Cinematic</span>
-            <span class="variant-sublabel">vault-500 → vault-700</span>
-            <article class="dh dh--variant-f">
-              <header class="dh-header">
-                <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
-              </header>
-              <div class="dh-image">
-                <div class="dh-image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg></div>
-                <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
-                <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-                <span class="dh-counter">3 / 10</span>
-              </div>
-              <div class="dh-thumbs">
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb is-active"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><svg class="dh-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-9 8"/></svg><span class="dh-thumb-ring"></span></div>
-              </div>
-            </article>
-          </div>
-
-        </div>
-
-        <div class="subrow">
-          <div class="subrow-header">
-            <h3 class="subrow-title">Back Button · Estados estáticos</h3>
-            <span class="subrow-note">Hover · Pressed sobre header gradient</span>
-          </div>
-          <div class="btn-row">
-            <div class="btn-slot">
-              <span class="btn-slot-label">Back · hover</span>
-              <button type="button" class="dh-back dh-back--hover" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <span class="btn-slot-sublabel">bg orange-500 · V1 · V2</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">Back · pressed</span>
-              <button type="button" class="dh-back dh-back--pressed" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <span class="btn-slot-sublabel">bg orange-600 · icon muted</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V3 · Back · hover</span>
-              <button type="button" class="dh-back dh-back--hover-negotiable" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <span class="btn-slot-sublabel">bg negotiable</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V3 · Back · pressed</span>
-              <button type="button" class="dh-back dh-back--pressed-negotiable" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <span class="btn-slot-sublabel">bg cyan-deep · icon muted</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V4 · Back · hover</span>
-              <button type="button" class="dh-back dh-back--hover-vault" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <span class="btn-slot-sublabel">bg vault-500</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V4 · Back · pressed</span>
-              <button type="button" class="dh-back dh-back--pressed-vault" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <span class="btn-slot-sublabel">bg vault-700 · icon muted</span>
-            </div>
-          </div>
-        </div>
+        <iframe
+          class="component-frame"
+          data-component="detail-header-images"
+          src="desktop/detail-header-images.html"
+          loading="lazy"
+          title="Detail Header Images · variantes y estados estáticos"></iframe>
       </section>
 
       <!-- ════════════════════════════════════════════════════════
            Header · 790 × 64
+           Fuente: desktop/header.html
            ════════════════════════════════════════════════════════ -->
       <section class="component-block" aria-label="Header · Upgrade">
         <header class="component-header">
           <h2 class="component-title">Header</h2>
           <span class="component-size">790 × 64</span>
           <span class="component-note">4 variantes · V1 SM Guest · V2 Primary Clone · V3 Vault→Orange · V4 Cinematic Dark</span>
+          <span class="component-source"><a href="desktop/header.html" target="_blank" rel="noopener">desktop/header.html ↗</a></span>
         </header>
-
-        <div class="catalog-row">
-
-          <!-- V1 · SM Guest -->
-          <div class="variant-slot">
-            <span class="variant-label">V1 · SM Guest</span>
-            <span class="variant-sublabel">40px iridescent · "Ingresa"</span>
-            <article class="hd">
-              <span aria-hidden="true"></span>
-<button type="button" class="hd-btn hd-btn--sm" aria-label="Ingresa">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span>Ingresa</span>
-              </button>
-            </article>
-          </div>
-
-          <!-- V2 · D Primary Clone -->
-          <div class="variant-slot">
-            <span class="variant-label">V2 · D Primary Clone</span>
-            <span class="variant-sublabel">orange → vault · logged-in</span>
-            <article class="hd">
-              <span aria-hidden="true"></span>
-<button type="button" class="hd-btn hd-btn--d" aria-label="Mi cuenta">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span class="hd-btn-light">Bienvenido,</span>
-                <span class="hd-btn-username">COOT8R</span>
-              </button>
-            </article>
-          </div>
-
-          <!-- V3 · E Vault→Orange -->
-          <div class="variant-slot">
-            <span class="variant-label">V3 · E Vault → Orange</span>
-            <span class="variant-sublabel">vault izq · orange der · username orange</span>
-            <article class="hd">
-              <span aria-hidden="true"></span>
-<button type="button" class="hd-btn hd-btn--e" aria-label="Mi cuenta">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span class="hd-btn-light">Bienvenido,</span>
-                <span class="hd-btn-username">COOT8R</span>
-              </button>
-            </article>
-          </div>
-
-          <!-- V4 · A Cinematic Dark -->
-          <div class="variant-slot">
-            <span class="variant-label">V4 · A Cinematic Dark</span>
-            <span class="variant-sublabel">vault dark · orange ring + glow</span>
-            <article class="hd">
-              <span aria-hidden="true"></span>
-<button type="button" class="hd-btn hd-btn--a" aria-label="Mi cuenta">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span class="hd-btn-light">Bienvenido,</span>
-                <span class="hd-btn-username">COOT8R</span>
-              </button>
-            </article>
-          </div>
-
-        </div>
-
-        <div class="subrow">
-          <div class="subrow-header">
-            <h3 class="subrow-title">Auth button · Estados estáticos</h3>
-            <span class="subrow-note">Hover · Pressed por variante</span>
-          </div>
-
-          <div class="btn-row">
-            <div class="btn-slot">
-              <span class="btn-slot-label">V1 · hover</span>
-              <button type="button" class="hd-btn hd-btn--sm hd-btn--hover">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span>Ingresa</span>
-              </button>
-              <span class="btn-slot-sublabel">SM iridescent</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V1 · pressed</span>
-              <button type="button" class="hd-btn hd-btn--sm hd-btn--pressed">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span>Ingresa</span>
-              </button>
-              <span class="btn-slot-sublabel">SM iridescent</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V2 · hover</span>
-              <button type="button" class="hd-btn hd-btn--d hd-btn--hover">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span class="hd-btn-light">Bienvenido,</span>
-                <span class="hd-btn-username">COOT8R</span>
-              </button>
-              <span class="btn-slot-sublabel">primary clone</span>
-            </div>
-            <div class="btn-slot">
-              <span class="btn-slot-label">V2 · pressed</span>
-              <button type="button" class="hd-btn hd-btn--d hd-btn--pressed">
-                <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-                <span class="hd-btn-light">Bienvenido,</span>
-                <span class="hd-btn-username">COOT8R</span>
-              </button>
-              <span class="btn-slot-sublabel">primary clone</span>
-            </div>
-          </div>
-        </div>
+        <iframe
+          class="component-frame"
+          data-component="header"
+          src="desktop/header.html"
+          loading="lazy"
+          title="Header · variantes y estados estáticos"></iframe>
       </section>
 
     </div><!-- /platform-pane desktop -->
@@ -1908,6 +347,36 @@ html, body {
       }
       tabs.forEach(function bindTab(tab) {
         tab.addEventListener('click', function onClickTab() { activate(tab.dataset.platform); });
+      });
+    })();
+
+    /* Auto-resize iframes — same-origin, mide scrollHeight tras load
+       y al cambiar el viewport. Evita scrollbars internas. */
+    (function initFrameAutoResize() {
+      var frames = document.querySelectorAll('iframe.component-frame');
+      function resizeFrame(frame) {
+        try {
+          var doc = frame.contentDocument;
+          if (!doc || !doc.body) { return; }
+          var h = Math.max(
+            doc.body.scrollHeight,
+            doc.documentElement ? doc.documentElement.scrollHeight : 0
+          );
+          if (h > 0) { frame.style.height = (h + 8) + 'px'; }
+        } catch (err) { /* cross-origin u otro — ignorar */ }
+      }
+      frames.forEach(function bindFrame(frame) {
+        frame.addEventListener('load', function onLoad() {
+          resizeFrame(frame);
+          var doc = frame.contentDocument;
+          if (doc && typeof ResizeObserver === 'function') {
+            var ro = new ResizeObserver(function onResize() { resizeFrame(frame); });
+            ro.observe(doc.body);
+          }
+        });
+      });
+      window.addEventListener('resize', function onWindowResize() {
+        frames.forEach(resizeFrame);
       });
     })();
   </script>

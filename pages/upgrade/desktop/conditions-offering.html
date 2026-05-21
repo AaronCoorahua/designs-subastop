@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Conditions Offering · 437 · accordion — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─── Tokens base · compartido entre componentes desktop ────────── */
+:root {
+  --vmc-color-vault-200:   oklch(0.87 0.09 285);
+  --vmc-color-vault-300:   oklch(0.80 0.12 285);
+  --vmc-color-vault-400:   oklch(0.55 0.20 285);
+  --vmc-color-vault-500:   oklch(0.45 0.20 285);
+  --vmc-color-vault-600:   oklch(0.38 0.20 285);
+  --vmc-color-vault-700:   oklch(0.30 0.20 285);
+  --vmc-color-vault-800:   oklch(0.22 0.18 285);
+  --vmc-color-vault-900:   oklch(0.15 0.27 278);
+
+  --vmc-color-orange-400:  oklch(0.78 0.16 60);
+  --vmc-color-orange-500:  oklch(0.72 0.16 55);
+  --vmc-color-orange-600:  oklch(0.66 0.17 50);
+  --vmc-color-orange-700:  oklch(0.58 0.18 45);
+
+  --vmc-color-base-white:  oklch(1 0 0);
+  --vmc-color-status-success: oklch(0.70 0.20 145);
+  --vmc-color-skeleton:    oklch(0.85 0.008 220);
+
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-section: oklch(0.96 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-text-on-dark:    oklch(1 0 0);
+  --voyager-text-on-surface: oklch(0.15 0.008 200);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:    "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 24px 16px;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* ─── Scaffold catalog · compartido ─────────────────────────────── */
+.catalog-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: flex-start;
+  gap: 40px 32px; padding: 16px 4px 32px;
+}
+.variant-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.variant-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  text-align: center;
+}
+.variant-sublabel {
+  font-family: var(--voyager-font-mono);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONDITIONS OFFERING · accordion (default + 2 variantes)
+   ═══════════════════════════════════════════════════════════════ */
+.cof {
+  width: 437px;
+  position: relative;
+  isolation: isolate;
+  background: var(--voyager-surface-section);
+  border-radius: 4px;
+  box-shadow: 0 8px 16px oklch(0.22 0.18 285 / 6%);
+  overflow: hidden;
+  user-select: none;
+}
+.cof-header {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+  cursor: pointer;
+}
+.cof-title-wrap {
+  display: inline-flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  padding: 8px 24px;
+  max-width: calc(100% - 72px);
+  text-align: center;
+}
+.cof-title {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 700;
+  line-height: 1.15;
+  color: var(--vmc-color-vault-800);
+}
+/* ▸ Línea accent bajo título (reemplaza brackets · estilo QuickFilter) */
+.cof-line {
+  display: block;
+  width: 48px; height: 2px;
+  border-radius: 2px;
+  background: var(--vmc-color-orange-500);
+}
+.cof-chevron {
+  position: absolute;
+  right: 32px; top: 50%;
+  width: 24px; height: 24px;
+  transform: translateY(-50%);
+  color: var(--vmc-color-vault-300);
+  transition: transform var(--voyager-duration-standard) var(--voyager-ease-default),
+              color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.cof-chevron svg { width: 100%; height: 100%; fill: currentColor; }
+.cof.is-collapsed .cof-chevron { transform: translateY(-50%) rotate(-180deg); }
+
+.cof-body {
+  padding: 0 32px 32px;
+  font-family: var(--voyager-font-body);
+}
+.cof.is-collapsed .cof-body { display: none; }
+
+.cof-complexity-row {
+  display: flex; justify-content: center; width: 100%;
+  margin-bottom: 32px;
+}
+.cof-complexity {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--voyager-font-display);
+  font-size: 11px; font-weight: 300;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 65%, white);
+}
+.cof-complexity-dots {
+  display: inline-flex; gap: 4px;
+}
+.cof-dot {
+  display: block;
+  width: 12px; height: 12px;
+  border-radius: 9999px;
+  background: var(--vmc-color-skeleton);
+}
+.cof-dot--on { background: var(--vmc-color-status-success); }
+
+/* ─── Typography del cuerpo (sin hover line) ────────────────────── */
+.cof-typo {
+  font-family: var(--voyager-font-body);
+  font-size: 14px; line-height: 1.65;
+  color: var(--voyager-text-on-surface);
+}
+.cof-typo h3 {
+  font-family: var(--voyager-font-display);
+  font-size: 16px; font-weight: 700;
+  line-height: 1.25; letter-spacing: -0.01em;
+  color: var(--vmc-color-vault-800);
+  margin: 28px 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+}
+.cof-typo h3:first-child { margin-top: 0; }
+.cof-typo h4 {
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.03em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 70%, white);
+  margin: 20px 0 8px;
+}
+.cof-typo p {
+  margin: 0 0 12px;
+  padding-left: 12px;
+  font-size: 13.5px; line-height: 1.65;
+  color: var(--voyager-text-on-surface);
+}
+.cof-typo p > strong:first-child:last-child {
+  font-size: 13px; font-weight: 600;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 80%, white);
+  display: block; margin-bottom: 12px;
+}
+.cof-typo strong { font-weight: 700; color: inherit; }
+.cof-typo ul { margin: 0 0 16px; padding-left: 0; list-style: none; }
+.cof-typo ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 13.5px; line-height: 1.65;
+  color: var(--voyager-text-on-surface);
+}
+/* ▸ Único decorador: bullet · NO se inserta línea izquierda en hover */
+.cof-typo ul li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--vmc-color-orange-500);
+}
+.cof-typo ul ul { margin-top: 8px; margin-bottom: 0; padding-left: 12px; }
+.cof-typo ul ul li::before {
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 30%, white);
+  width: 4px; height: 4px; top: 10px;
+}
+.cof-typo a {
+  color: var(--vmc-color-vault-600);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--vmc-color-vault-600) 40%, transparent);
+  text-underline-offset: 2px;
+  transition: color var(--voyager-duration-micro) var(--voyager-ease-default),
+              text-decoration-color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.cof-typo a:hover {
+  color: var(--vmc-color-orange-500);
+  text-decoration-color: var(--vmc-color-orange-500);
+}
+.cof-typo a:focus-visible {
+  outline: 2px solid var(--vmc-color-vault-600);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   V1 · Default — variante limpia (sin brackets, line accent coral)
+   ═══════════════════════════════════════════════════════════════ */
+.cof--default {
+  background: var(--voyager-surface-section);
+}
+.cof--default .cof-line {
+  background: var(--vmc-color-orange-500);
+}
+.cof--default .cof-chevron { color: var(--vmc-color-vault-300); }
+
+/* ═══════════════════════════════════════════════════════════════
+   V2 · Iridescent — borde plateado (orange→white→vault) + línea iri
+   ═══════════════════════════════════════════════════════════════ */
+.cof--iridescent {
+  background: var(--voyager-surface-card);
+  border: 1.5px solid transparent;
+  background-image:
+    linear-gradient(var(--voyager-surface-card), var(--voyager-surface-card)),
+    linear-gradient(135deg,
+      var(--vmc-color-orange-400) 0%,
+      var(--vmc-color-base-white) 25%,
+      var(--vmc-color-vault-400)  55%,
+      var(--vmc-color-base-white) 80%,
+      var(--vmc-color-orange-400) 100%);
+  background-origin: padding-box, border-box;
+  background-clip:   padding-box, border-box;
+  box-shadow:
+    0 8px 20px oklch(0.66 0.17 50 / 12%),
+    0 2px 6px  oklch(0.45 0.20 285 / 10%);
+}
+.cof--iridescent .cof-title {
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-600) 0%,
+    var(--vmc-color-vault-500) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.cof--iridescent .cof-line {
+  width: 64px; height: 3px;
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-500) 0%,
+    var(--vmc-color-vault-500) 100%);
+  box-shadow: 0 1px 4px oklch(0.66 0.17 50 / 35%);
+}
+.cof--iridescent .cof-chevron {
+  color: var(--vmc-color-orange-500);
+  filter: drop-shadow(0 1px 2px oklch(0.66 0.17 50 / 25%));
+}
+.cof--iridescent .cof-typo ul li::before {
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-500),
+    var(--vmc-color-vault-500));
+}
+.cof--iridescent .cof-typo h3 {
+  border-bottom-color: color-mix(in oklch, var(--vmc-color-orange-500) 16%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   V3 · Vault Cinematic — borde plateado vault + línea vault
+   ═══════════════════════════════════════════════════════════════ */
+.cof--vault {
+  background: var(--voyager-surface-card);
+  border: 1.5px solid transparent;
+  background-image:
+    linear-gradient(var(--voyager-surface-card), var(--voyager-surface-card)),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-300) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      var(--vmc-color-vault-300) 100%);
+  background-origin: padding-box, border-box;
+  background-clip:   padding-box, border-box;
+  box-shadow:
+    0 8px 20px oklch(0.45 0.20 285 / 15%),
+    0 2px 6px  oklch(0.22 0.18 285 / 12%);
+}
+.cof--vault .cof-title {
+  background: linear-gradient(160deg,
+    var(--vmc-color-vault-500) 0%,
+    var(--vmc-color-vault-700) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.cof--vault .cof-line {
+  width: 64px; height: 3px;
+  background: linear-gradient(160deg,
+    var(--vmc-color-vault-500) 0%,
+    var(--vmc-color-vault-700) 100%);
+  box-shadow: 0 1px 4px oklch(0.45 0.20 285 / 35%);
+}
+.cof--vault .cof-chevron {
+  color: var(--vmc-color-vault-500);
+  filter: drop-shadow(0 1px 2px oklch(0.45 0.20 285 / 25%));
+}
+.cof--vault .cof-typo ul li::before {
+  background: linear-gradient(160deg,
+    var(--vmc-color-vault-500),
+    var(--vmc-color-vault-700));
+}
+.cof--vault .cof-typo h3 {
+  border-bottom-color: color-mix(in oklch, var(--vmc-color-vault-500) 18%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   V4 · Glass — inspirado en ButtonPrimary B—Glass
+   fill vault profundo semi-transparente · ring iridiscente naranja→vault
+   ═══════════════════════════════════════════════════════════════ */
+.cof--glass {
+  background: transparent;
+  background-image:
+    linear-gradient(135deg,
+      oklch(0.15 0.27 278 / 0.94) 0%,
+      oklch(0.22 0.18 285 / 0.97) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-orange-500) 0%,
+      var(--vmc-color-orange-400) 40%,
+      var(--vmc-color-vault-400) 100%);
+  background-origin: padding-box, border-box;
+  background-clip:   padding-box, border-box;
+  border: 1.5px solid transparent;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.12),
+    0 10px 28px oklch(0.22 0.18 285 / 0.32),
+    0 2px 6px  oklch(0 0 0 / 0.20);
+  color: oklch(1 0 0 / 0.92);
+}
+/* Glass top sheen — equivalente al ::before del pvbtn-auth-b */
+.cof--glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    oklch(1 0 0 / 0.08) 0%,
+    transparent 38%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+.cof--glass .cof-header,
+.cof--glass .cof-body { position: relative; z-index: 1; }
+
+.cof--glass .cof-title {
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-400) 0%,
+    var(--vmc-color-vault-200) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.cof--glass .cof-line {
+  width: 64px; height: 3px;
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-500) 0%,
+    var(--vmc-color-vault-400) 100%);
+  box-shadow: 0 1px 6px oklch(0.66 0.17 50 / 45%);
+}
+.cof--glass .cof-chevron {
+  color: var(--vmc-color-orange-400);
+  filter: drop-shadow(0 1px 4px oklch(0.66 0.17 50 / 35%));
+}
+.cof--glass .cof-complexity {
+  color: oklch(1 0 0 / 0.65);
+}
+.cof--glass .cof-dot {
+  background: oklch(1 0 0 / 0.18);
+}
+.cof--glass .cof-dot--on {
+  background: var(--vmc-color-orange-500);
+  box-shadow: 0 0 8px oklch(0.66 0.17 50 / 50%);
+}
+.cof--glass .cof-typo { color: oklch(1 0 0 / 0.86); }
+.cof--glass .cof-typo h3 {
+  color: oklch(1 0 0 / 0.96);
+  border-bottom-color: color-mix(in oklch, var(--vmc-color-orange-500) 28%, transparent);
+}
+.cof--glass .cof-typo h4 {
+  color: oklch(1 0 0 / 0.70);
+}
+.cof--glass .cof-typo p,
+.cof--glass .cof-typo ul li {
+  color: oklch(1 0 0 / 0.82);
+}
+.cof--glass .cof-typo p > strong:first-child:last-child {
+  color: oklch(1 0 0 / 0.72);
+}
+.cof--glass .cof-typo strong { color: oklch(1 0 0); }
+.cof--glass .cof-typo ul li::before {
+  background: linear-gradient(135deg,
+    var(--vmc-color-orange-500),
+    var(--vmc-color-orange-400));
+  box-shadow: 0 0 6px oklch(0.66 0.17 50 / 55%);
+}
+.cof--glass .cof-typo ul ul li::before {
+  background: var(--vmc-color-vault-300);
+  box-shadow: none;
+}
+.cof--glass .cof-typo a {
+  color: var(--vmc-color-orange-400);
+  text-decoration-color: color-mix(in oklch, var(--vmc-color-orange-400) 50%, transparent);
+}
+.cof--glass .cof-typo a:hover {
+  color: color-mix(in oklch, var(--vmc-color-orange-400) 70%, white);
+  text-decoration-color: color-mix(in oklch, var(--vmc-color-orange-400) 70%, white);
+}
+.cof--glass .cof-typo a:focus-visible {
+  outline: 2px solid var(--vmc-color-orange-400);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     Conditions Offering · variantes (sin estados estáticos)
+     V1 Default abierto · V2 / V3 cerrados (click para expandir)
+     ════════════════════════════════════════════════════════ -->
+<div class="catalog-row">
+
+  <!-- ▸ VARIANT V1 · Default ─────────────────────────────── -->
+  <div class="variant-slot" data-variant="v1-default">
+    <span class="variant-label">V1 · Default</span>
+    <span class="variant-sublabel">surface-section · line accent coral</span>
+    <section class="cof cof--default is-open" aria-label="Condiciones del ofrecimiento">
+      <div class="cof-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="cof-title-wrap">
+          <h2 class="cof-title">Condiciones del ofrecimiento</h2>
+          <span class="cof-line" aria-hidden="true"></span>
+        </div>
+        <span class="cof-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="cof-body">
+        <div class="cof-complexity-row">
+          <span class="cof-complexity">
+            Complejidad del ofrecimiento
+            <span class="cof-complexity-dots" aria-hidden="true">
+              <span class="cof-dot cof-dot--on"></span>
+              <span class="cof-dot"></span>
+              <span class="cof-dot"></span>
+            </span>
+          </span>
+        </div>
+        <div class="cof-typo">
+          <h3>1. Responsabilidades de los Participantes</h3>
+          <p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
+          <ul>
+            <li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso al consignar para participar en esta oferta.</li>
+            <li>Al hacer una consignación, todo usuario conoce y acepta que es su responsabilidad disponer de una conexión estable a internet con un ancho de banda de mínimo 5Mbps y contar con los equipos necesarios para asegurar el correcto funcionamiento de los servicios.</li>
+            <li>Es responsabilidad de cada participante acceder oportunamente a la sala y realizar por lo menos un bid válido.</li>
+            <li>El incumplimiento de las responsabilidades como participante resulta en:
+              <ul>
+                <li>La retención del monto consignado hasta las 23:59:59 horas del día del proceso "En Vivo".</li>
+                <li>La devolución de la consignación en SubasCoins.</li>
+                <li>La pérdida de 15 puntos VMC y correspondiente afectación al Riesgo Usuario.</li>
+              </ul>
+            </li>
+            <li>El Precio Reserva de la oferta podrá ser retirado durante el proceso "En Vivo".</li>
+            <li>Si el Precio Reserva es retirado en el proceso "En Vivo", el participante que envíe la mejor propuesta válida será declarado ganador directo.</li>
+          </ul>
+          <h3>2. Condiciones de Compra</h3>
+          <p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR (Ganador Directo o el Mejor Postor) al ser habilitado.</strong></p>
+          <h4>A. Responsabilidades del Vendedor</h4>
+          <ul>
+            <li>El vendedor tendrá 10 días hábiles para habilitar al ganador, pudiendo ocurrir la habilitación incluso el mismo día del proceso.</li>
+            <li>El vendedor se reserva el derecho de habilitación del ganador a libre discreción.</li>
+          </ul>
+          <h4>B. Habilitación del Ganador</h4>
+          <ul>
+            <li>El ganador deberá ser habilitado para poder iniciar el proceso de compra.</li>
+            <li>Es responsabilidad del ganador estar atento a su correo y, de ser necesario, verificar su bandeja de SPAM.</li>
+            <li>De ser habilitado, el ganador deberá pagar US$ 200 por concepto de Fee de habilitación previo a la validación de documentos.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ▸ VARIANT V2 · Iridescent ──────────────────────────── -->
+  <div class="variant-slot" data-variant="v2-iridescent">
+    <span class="variant-label">V2 · Iridescent</span>
+    <span class="variant-sublabel">silvery border orange→white→vault</span>
+    <section class="cof cof--iridescent is-collapsed" aria-label="Condiciones del ofrecimiento">
+      <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
+        <div class="cof-title-wrap">
+          <h2 class="cof-title">Condiciones del ofrecimiento</h2>
+          <span class="cof-line" aria-hidden="true"></span>
+        </div>
+        <span class="cof-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="cof-body">
+        <div class="cof-complexity-row">
+          <span class="cof-complexity">
+            Complejidad del ofrecimiento
+            <span class="cof-complexity-dots" aria-hidden="true">
+              <span class="cof-dot cof-dot--on"></span>
+              <span class="cof-dot"></span>
+              <span class="cof-dot"></span>
+            </span>
+          </span>
+        </div>
+        <div class="cof-typo">
+          <h3>1. Responsabilidades de los Participantes</h3>
+          <p><strong>Mismas condiciones que la variante Default. Foco visual aquí: el borde plateado iridiscente (orange → white → vault) y el line accent gradient.</strong></p>
+          <ul>
+            <li>El borde superior es la firma de la variante: degradado iridiscente.</li>
+            <li>El title queda con relleno gradient (orange → vault).</li>
+            <li>El bullet point también se vuelve gradiente.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ▸ VARIANT V3 · Vault Cinematic ─────────────────────── -->
+  <div class="variant-slot" data-variant="v3-vault-cinematic">
+    <span class="variant-label">V3 · Vault Cinematic</span>
+    <span class="variant-sublabel">silvery vault border · vault line</span>
+    <section class="cof cof--vault is-collapsed" aria-label="Condiciones del ofrecimiento">
+      <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
+        <div class="cof-title-wrap">
+          <h2 class="cof-title">Condiciones del ofrecimiento</h2>
+          <span class="cof-line" aria-hidden="true"></span>
+        </div>
+        <span class="cof-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="cof-body">
+        <div class="cof-complexity-row">
+          <span class="cof-complexity">
+            Complejidad del ofrecimiento
+            <span class="cof-complexity-dots" aria-hidden="true">
+              <span class="cof-dot cof-dot--on"></span>
+              <span class="cof-dot"></span>
+              <span class="cof-dot"></span>
+            </span>
+          </span>
+        </div>
+        <div class="cof-typo">
+          <h3>1. Responsabilidades de los Participantes</h3>
+          <p><strong>Mismas condiciones. La firma de esta variante es el borde plateado en gama vault y el line accent en gradient vault-500 → vault-700.</strong></p>
+          <ul>
+            <li>Borde plateado con halo vault.</li>
+            <li>Title relleno gradient vault.</li>
+            <li>Bullets gradient vault.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ▸ VARIANT V4 · Glass ───────────────────────────────── -->
+  <div class="variant-slot" data-variant="v4-glass">
+    <span class="variant-label">V4 · Glass</span>
+    <span class="variant-sublabel">vault dark fill · iridescent orange ring</span>
+    <section class="cof cof--glass is-collapsed" aria-label="Condiciones del ofrecimiento">
+      <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
+        <div class="cof-title-wrap">
+          <h2 class="cof-title">Condiciones del ofrecimiento</h2>
+          <span class="cof-line" aria-hidden="true"></span>
+        </div>
+        <span class="cof-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="cof-body">
+        <div class="cof-complexity-row">
+          <span class="cof-complexity">
+            Complejidad del ofrecimiento
+            <span class="cof-complexity-dots" aria-hidden="true">
+              <span class="cof-dot cof-dot--on"></span>
+              <span class="cof-dot"></span>
+              <span class="cof-dot"></span>
+            </span>
+          </span>
+        </div>
+        <div class="cof-typo">
+          <h3>1. Responsabilidades de los Participantes</h3>
+          <p><strong>Inspirado en ButtonPrimary B — Glass: fill vault profundo semi-transparente + ring iridiscente orange → vault.</strong></p>
+          <ul>
+            <li>Fill glass vault — la página tinta a través del 6 % de transparencia.</li>
+            <li>Border iridiscente orange-500 → vault-400 como firma del componente.</li>
+            <li>Title con relleno gradient orange-400 → vault-200 sobre fondo oscuro.</li>
+            <li>Bullets gradient naranja con halo cálido + tipografía blanca a 82 %.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<script>
+  /* Click + Enter/Space toggle por accordion · todos independientes */
+  document.querySelectorAll('.cof').forEach(function bindAccordion(node) {
+    var trigger = node.querySelector('.cof-header');
+    if (!trigger) { return; }
+    function setOpen(isOpen) {
+      node.classList.toggle('is-open', isOpen);
+      node.classList.toggle('is-collapsed', !isOpen);
+      trigger.setAttribute('aria-expanded', String(isOpen));
+    }
+    trigger.addEventListener('click', function onClick() {
+      setOpen(node.classList.contains('is-collapsed'));
+    });
+    trigger.addEventListener('keydown', function onKey(event) {
+      if (event.key !== 'Enter' && event.key !== ' ') { return; }
+      event.preventDefault();
+      setOpen(node.classList.contains('is-collapsed'));
+    });
+  });
+</script>
+</body>
+</html>

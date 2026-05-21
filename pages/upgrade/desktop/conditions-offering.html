@@ -243,32 +243,16 @@ html, body {
 .cof--default .cof-chevron { color: var(--vmc-color-vault-300); }
 
 /* ═══════════════════════════════════════════════════════════════
-   V2 · Iridescent — borde plateado (orange→white→vault) + línea iri
+   V2 · Iridescent — efecto silvery contenido al chevron SVG
    ═══════════════════════════════════════════════════════════════ */
 .cof--iridescent {
   background: var(--voyager-surface-card);
-  border: 1.5px solid transparent;
-  background-image:
-    linear-gradient(var(--voyager-surface-card), var(--voyager-surface-card)),
-    linear-gradient(135deg,
-      var(--vmc-color-orange-400) 0%,
-      var(--vmc-color-base-white) 25%,
-      var(--vmc-color-vault-400)  55%,
-      var(--vmc-color-base-white) 80%,
-      var(--vmc-color-orange-400) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
   box-shadow:
-    0 8px 20px oklch(0.66 0.17 50 / 12%),
-    0 2px 6px  oklch(0.45 0.20 285 / 10%);
+    0 8px 20px oklch(0 0 0 / 10%),
+    0 2px 6px  oklch(0 0 0 / 8%);
 }
 .cof--iridescent .cof-title {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-600) 0%,
-    var(--vmc-color-vault-500) 100%);
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--vmc-color-vault-800);
 }
 .cof--iridescent .cof-line {
   width: 64px; height: 3px;
@@ -278,8 +262,7 @@ html, body {
   box-shadow: 0 1px 4px oklch(0.66 0.17 50 / 35%);
 }
 .cof--iridescent .cof-chevron {
-  color: var(--vmc-color-orange-500);
-  filter: drop-shadow(0 1px 2px oklch(0.66 0.17 50 / 25%));
+  filter: drop-shadow(0 1px 2px oklch(0.22 0.18 285 / 20%));
 }
 .cof--iridescent .cof-typo ul li::before {
   background: linear-gradient(135deg,
@@ -291,31 +274,16 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   V3 · Vault Cinematic — borde plateado vault + línea vault
+   V3 · Vault Cinematic — efecto silvery contenido al chevron SVG
    ═══════════════════════════════════════════════════════════════ */
 .cof--vault {
   background: var(--voyager-surface-card);
-  border: 1.5px solid transparent;
-  background-image:
-    linear-gradient(var(--voyager-surface-card), var(--voyager-surface-card)),
-    linear-gradient(135deg,
-      var(--vmc-color-vault-300) 0%,
-      var(--vmc-color-base-white) 35%,
-      var(--vmc-color-vault-400) 65%,
-      var(--vmc-color-vault-300) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
   box-shadow:
-    0 8px 20px oklch(0.45 0.20 285 / 15%),
-    0 2px 6px  oklch(0.22 0.18 285 / 12%);
+    0 8px 20px oklch(0 0 0 / 10%),
+    0 2px 6px  oklch(0 0 0 / 8%);
 }
 .cof--vault .cof-title {
-  background: linear-gradient(160deg,
-    var(--vmc-color-vault-500) 0%,
-    var(--vmc-color-vault-700) 100%);
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--vmc-color-vault-800);
 }
 .cof--vault .cof-line {
   width: 64px; height: 3px;
@@ -325,7 +293,6 @@ html, body {
   box-shadow: 0 1px 4px oklch(0.45 0.20 285 / 35%);
 }
 .cof--vault .cof-chevron {
-  color: var(--vmc-color-vault-500);
   filter: drop-shadow(0 1px 2px oklch(0.45 0.20 285 / 25%));
 }
 .cof--vault .cof-typo ul li::before {
@@ -337,119 +304,37 @@ html, body {
   border-bottom-color: color-mix(in oklch, var(--vmc-color-vault-500) 18%, transparent);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   V4 · Glass — inspirado en ButtonPrimary B—Glass
-   fill vault profundo semi-transparente · ring iridiscente naranja→vault
-   ═══════════════════════════════════════════════════════════════ */
-.cof--glass {
-  background: transparent;
-  background-image:
-    linear-gradient(135deg,
-      rgb(13.33% 0% 36.08% / 0.35),
-      rgb(13.33% 0% 36.08% / 0.55)),
-    linear-gradient(135deg,
-      var(--vmc-color-orange-500) 0%,
-      var(--vmc-color-orange-400) 40%,
-      var(--vmc-color-vault-400) 100%);
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-  border: 2px solid transparent;
-  box-shadow: inset 0 1px 0 rgb(100% 100% 100% / 0.10);
-  color: var(--vmc-color-base-white);
-}
-.cof--glass .cof-header,
-.cof--glass .cof-body { position: relative; z-index: 1; }
-
-.cof--glass .cof-title {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-400) 0%,
-    var(--vmc-color-vault-200) 100%);
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-.cof--glass .cof-line {
-  width: 64px; height: 3px;
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-500) 0%,
-    var(--vmc-color-vault-400) 100%);
-  box-shadow: 0 1px 6px oklch(0.66 0.17 50 / 45%);
-}
-.cof--glass .cof-chevron {
-  color: var(--vmc-color-orange-400);
-  filter: drop-shadow(0 1px 4px oklch(0.66 0.17 50 / 35%));
-}
-.cof--glass .cof-complexity {
-  color: oklch(1 0 0 / 0.65);
-}
-.cof--glass .cof-dot {
-  background: oklch(1 0 0 / 0.18);
-}
-.cof--glass .cof-dot--on {
-  background: var(--vmc-color-orange-500);
-  box-shadow: 0 0 8px oklch(0.66 0.17 50 / 50%);
-}
-.cof--glass .cof-typo { color: oklch(1 0 0 / 0.86); }
-.cof--glass .cof-typo h3 {
-  color: oklch(1 0 0 / 0.96);
-  border-bottom-color: color-mix(in oklch, var(--vmc-color-orange-500) 28%, transparent);
-}
-.cof--glass .cof-typo h4 {
-  color: oklch(1 0 0 / 0.70);
-}
-.cof--glass .cof-typo p,
-.cof--glass .cof-typo ul li {
-  color: oklch(1 0 0 / 0.82);
-}
-.cof--glass .cof-typo p > strong:first-child:last-child {
-  color: oklch(1 0 0 / 0.72);
-}
-.cof--glass .cof-typo strong { color: oklch(1 0 0); }
-.cof--glass .cof-typo ul li::before {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-500),
-    var(--vmc-color-orange-400));
-  box-shadow: 0 0 6px oklch(0.66 0.17 50 / 55%);
-}
-.cof--glass .cof-typo ul ul li::before {
-  background: var(--vmc-color-vault-300);
-  box-shadow: none;
-}
-.cof--glass .cof-typo a {
-  color: var(--vmc-color-orange-400);
-  text-decoration-color: color-mix(in oklch, var(--vmc-color-orange-400) 50%, transparent);
-}
-.cof--glass .cof-typo a:hover {
-  color: color-mix(in oklch, var(--vmc-color-orange-400) 70%, white);
-  text-decoration-color: color-mix(in oklch, var(--vmc-color-orange-400) 70%, white);
-}
-.cof--glass .cof-typo a:focus-visible {
-  outline: 2px solid var(--vmc-color-orange-400);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
 </style>
 </head>
 <body>
 
 <!-- ════════════════════════════════════════════════════════
      Conditions Offering · variantes (sin estados estáticos)
-     V1 Default abierto · V2 / V3 cerrados (click para expandir)
+     Todas cerradas por defecto · click para expandir
      ════════════════════════════════════════════════════════ -->
 <div class="catalog-row">
 
-  <!-- ▸ VARIANT V1 · Default ─────────────────────────────── -->
-  <div class="variant-slot" data-variant="v1-default">
-    <span class="variant-label">V1 · Default</span>
-    <span class="variant-sublabel">surface-section · line accent coral</span>
-    <section class="cof cof--default is-open" aria-label="Condiciones del ofrecimiento">
-      <div class="cof-header" role="button" tabindex="0" aria-expanded="true">
+  <!-- ▸ VARIANT V1 · Iridescent ──────────────────────────── -->
+  <div class="variant-slot" data-variant="v1-iridescent">
+    <span class="variant-label">V1 · Iridescent</span>
+    <span class="variant-sublabel">silvery border orange→white→vault</span>
+    <section class="cof cof--iridescent is-collapsed" aria-label="Condiciones del ofrecimiento">
+      <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
         <div class="cof-title-wrap">
           <h2 class="cof-title">Condiciones del ofrecimiento</h2>
           <span class="cof-line" aria-hidden="true"></span>
         </div>
         <span class="cof-chevron" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="cof-grad-iri" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stop-color="oklch(0.78 0.16 60)"/>
+                <stop offset="100%" stop-color="oklch(0.58 0.18 45)"/>
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10.25" stroke="url(#cof-grad-iri)" stroke-width="1.5" fill="none"/>
+            <path d="M8 11l4 4 4-4" stroke="url(#cof-grad-iri)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
         </span>
       </div>
       <div class="cof-body">
@@ -498,47 +383,9 @@ html, body {
     </section>
   </div>
 
-  <!-- ▸ VARIANT V2 · Iridescent ──────────────────────────── -->
-  <div class="variant-slot" data-variant="v2-iridescent">
-    <span class="variant-label">V2 · Iridescent</span>
-    <span class="variant-sublabel">silvery border orange→white→vault</span>
-    <section class="cof cof--iridescent is-collapsed" aria-label="Condiciones del ofrecimiento">
-      <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
-        <div class="cof-title-wrap">
-          <h2 class="cof-title">Condiciones del ofrecimiento</h2>
-          <span class="cof-line" aria-hidden="true"></span>
-        </div>
-        <span class="cof-chevron" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-        </span>
-      </div>
-      <div class="cof-body">
-        <div class="cof-complexity-row">
-          <span class="cof-complexity">
-            Complejidad del ofrecimiento
-            <span class="cof-complexity-dots" aria-hidden="true">
-              <span class="cof-dot cof-dot--on"></span>
-              <span class="cof-dot"></span>
-              <span class="cof-dot"></span>
-            </span>
-          </span>
-        </div>
-        <div class="cof-typo">
-          <h3>1. Responsabilidades de los Participantes</h3>
-          <p><strong>Mismas condiciones que la variante Default. Foco visual aquí: el borde plateado iridiscente (orange → white → vault) y el line accent gradient.</strong></p>
-          <ul>
-            <li>El borde superior es la firma de la variante: degradado iridiscente.</li>
-            <li>El title queda con relleno gradient (orange → vault).</li>
-            <li>El bullet point también se vuelve gradiente.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ▸ VARIANT V3 · Vault Cinematic ─────────────────────── -->
-  <div class="variant-slot" data-variant="v3-vault-cinematic">
-    <span class="variant-label">V3 · Vault Cinematic</span>
+  <!-- ▸ VARIANT V2 · Vault Cinematic ─────────────────────── -->
+  <div class="variant-slot" data-variant="v2-vault-cinematic">
+    <span class="variant-label">V2 · Vault Cinematic</span>
     <span class="variant-sublabel">silvery vault border · vault line</span>
     <section class="cof cof--vault is-collapsed" aria-label="Condiciones del ofrecimiento">
       <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
@@ -547,7 +394,16 @@ html, body {
           <span class="cof-line" aria-hidden="true"></span>
         </div>
         <span class="cof-chevron" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="cof-grad-vault" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stop-color="oklch(0.45 0.20 285)"/>
+                <stop offset="100%" stop-color="oklch(0.22 0.18 285)"/>
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10.25" stroke="url(#cof-grad-vault)" stroke-width="1.5" fill="none"/>
+            <path d="M8 11l4 4 4-4" stroke="url(#cof-grad-vault)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
         </span>
       </div>
       <div class="cof-body">
@@ -563,50 +419,33 @@ html, body {
         </div>
         <div class="cof-typo">
           <h3>1. Responsabilidades de los Participantes</h3>
-          <p><strong>Mismas condiciones. La firma de esta variante es el borde plateado en gama vault y el line accent en gradient vault-500 → vault-700.</strong></p>
+          <p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
           <ul>
-            <li>Borde plateado con halo vault.</li>
-            <li>Title relleno gradient vault.</li>
-            <li>Bullets gradient vault.</li>
+            <li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso al consignar para participar en esta oferta.</li>
+            <li>Al hacer una consignación, todo usuario conoce y acepta que es su responsabilidad disponer de una conexión estable a internet con un ancho de banda de mínimo 5Mbps y contar con los equipos necesarios para asegurar el correcto funcionamiento de los servicios.</li>
+            <li>Es responsabilidad de cada participante acceder oportunamente a la sala y realizar por lo menos un bid válido.</li>
+            <li>El incumplimiento de las responsabilidades como participante resulta en:
+              <ul>
+                <li>La retención del monto consignado hasta las 23:59:59 horas del día del proceso "En Vivo".</li>
+                <li>La devolución de la consignación en SubasCoins.</li>
+                <li>La pérdida de 15 puntos VMC y correspondiente afectación al Riesgo Usuario.</li>
+              </ul>
+            </li>
+            <li>El Precio Reserva de la oferta podrá ser retirado durante el proceso "En Vivo".</li>
+            <li>Si el Precio Reserva es retirado en el proceso "En Vivo", el participante que envíe la mejor propuesta válida será declarado ganador directo.</li>
           </ul>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ▸ VARIANT V4 · Glass ───────────────────────────────── -->
-  <div class="variant-slot" data-variant="v4-glass">
-    <span class="variant-label">V4 · Glass</span>
-    <span class="variant-sublabel">vault dark fill · iridescent orange ring</span>
-    <section class="cof cof--glass is-collapsed" aria-label="Condiciones del ofrecimiento">
-      <div class="cof-header" role="button" tabindex="0" aria-expanded="false">
-        <div class="cof-title-wrap">
-          <h2 class="cof-title">Condiciones del ofrecimiento</h2>
-          <span class="cof-line" aria-hidden="true"></span>
-        </div>
-        <span class="cof-chevron" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-        </span>
-      </div>
-      <div class="cof-body">
-        <div class="cof-complexity-row">
-          <span class="cof-complexity">
-            Complejidad del ofrecimiento
-            <span class="cof-complexity-dots" aria-hidden="true">
-              <span class="cof-dot cof-dot--on"></span>
-              <span class="cof-dot"></span>
-              <span class="cof-dot"></span>
-            </span>
-          </span>
-        </div>
-        <div class="cof-typo">
-          <h3>1. Responsabilidades de los Participantes</h3>
-          <p><strong>Inspirado en ButtonPrimary B — Glass: fill vault profundo semi-transparente + ring iridiscente orange → vault.</strong></p>
+          <h3>2. Condiciones de Compra</h3>
+          <p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR (Ganador Directo o el Mejor Postor) al ser habilitado.</strong></p>
+          <h4>A. Responsabilidades del Vendedor</h4>
           <ul>
-            <li>Fill glass vault — la página tinta a través del 6 % de transparencia.</li>
-            <li>Border iridiscente orange-500 → vault-400 como firma del componente.</li>
-            <li>Title con relleno gradient orange-400 → vault-200 sobre fondo oscuro.</li>
-            <li>Bullets gradient naranja con halo cálido + tipografía blanca a 82 %.</li>
+            <li>El vendedor tendrá 10 días hábiles para habilitar al ganador, pudiendo ocurrir la habilitación incluso el mismo día del proceso.</li>
+            <li>El vendedor se reserva el derecho de habilitación del ganador a libre discreción.</li>
+          </ul>
+          <h4>B. Habilitación del Ganador</h4>
+          <ul>
+            <li>El ganador deberá ser habilitado para poder iniciar el proceso de compra.</li>
+            <li>Es responsabilidad del ganador estar atento a su correo y, de ser necesario, verificar su bandeja de SPAM.</li>
+            <li>De ser habilitado, el ganador deberá pagar US$ 200 por concepto de Fee de habilitación previo a la validación de documentos.</li>
           </ul>
         </div>
       </div>

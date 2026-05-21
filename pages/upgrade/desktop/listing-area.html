@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Listing Area · 718 × 302 — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --voyager-color-vault:        oklch(0.22 0.18 285);
+  --voyager-color-vault-mid:    oklch(0.30 0.20 285);
+  --voyager-color-live:         oklch(0.72 0.16 55);
+  --voyager-color-negotiable:   oklch(0.78 0.14 195);
+
+  --vmc-color-vault-200: oklch(0.87 0.09 285);
+  --vmc-color-vault-300: oklch(0.80 0.12 285);
+  --vmc-color-vault-400: oklch(0.55 0.20 285);
+  --vmc-color-vault-500: oklch(0.45 0.20 285);
+  --vmc-color-vault-600: oklch(0.38 0.20 285);
+  --vmc-color-vault-700: oklch(0.30 0.20 285);
+  --vmc-color-orange-400: oklch(0.78 0.16 60);
+
+  --voyager-color-orange-500:   oklch(0.78 0.16 60);
+  --voyager-color-orange-600:   oklch(0.72 0.16 55);
+  --voyager-color-orange-700:   oklch(0.62 0.18 45);
+  --voyager-color-cyan-500:     oklch(0.82 0.13 200);
+  --voyager-color-cyan-600:     oklch(0.78 0.14 195);
+  --voyager-color-cyan-700:     oklch(0.68 0.13 200);
+
+  --voyager-color-surface-page:    oklch(0.98 0.004 160);
+  --voyager-color-surface-card:    oklch(1 0 0);
+
+  --voyager-color-text-on-surface: oklch(0.15 0.008 200);
+  --voyager-color-text-muted:      color-mix(in oklch, oklch(0.38 0.04 280) 60%, transparent);
+  --voyager-color-text-on-dark:    oklch(1 0 0);
+
+  --voyager-tint-vault-soft:    color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  --voyager-radius-sm:   4px;
+  --voyager-radius-md:   8px;
+  --voyager-radius-lg:   16px;
+  --voyager-radius-pill: 9999px;
+
+  --voyager-shadow-card:     0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-shadow-sm:       0 2px 8px  oklch(0.22 0.18 285 / 8%);
+
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--voyager-font-body);
+  color: var(--voyager-color-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.preview-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ── Catalog scaffold · V1 + V2 stacked ─────────────────────────────── */
+.catalog-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+.variant-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.variant-label {
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--voyager-color-vault) 55%, transparent);
+}
+.variant-sublabel {
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--voyager-color-vault) 40%, transparent);
+}
+.variant-label-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+/* ── Frame fijo 718 × 302 · 1 fila × 4 columnas ─────────────────────── */
+.preview-frame {
+  width: 718px;
+  height: 302px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* ── Header — title + brackets · link "Ir al perfil" con flecha naranja ── */
+.preview-frame .head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0;
+  width: auto;
+}
+
+.preview-frame .head .head-info {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  flex: 0 0 auto;
+  width: fit-content;
+  padding: 8px 12px;
+  color: var(--voyager-color-live);
+}
+
+.preview-frame .head .bracket {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  color: var(--voyager-color-live);
+  fill: var(--voyager-color-live);
+}
+
+.preview-frame .head .bracket-tl { top: 0; left: 0; }
+.preview-frame .head .bracket-br { bottom: 0; right: 0; }
+
+.preview-frame .head-title {
+  font-family: var(--voyager-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--voyager-color-vault);
+  line-height: 20px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.preview-frame .head-sub {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--voyager-color-text-on-surface);
+  line-height: 20px;
+  margin: 0;
+}
+
+.preview-frame .head-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  font-family: var(--voyager-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--voyager-color-vault);
+  background: transparent;
+  border-radius: var(--voyager-radius-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .head-link svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--voyager-color-live);
+  transition: transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+
+.preview-frame .head-link:hover {
+  background-color: var(--voyager-tint-vault-soft);
+}
+
+.preview-frame .head-link:hover svg {
+  transform: translateX(2px);
+}
+
+/* ── Grid — 4 cols × 1 row · gap 12 · ocupa todo el alto restante ─── */
+.preview-frame .grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0;
+  min-height: 0;
+}
+
+/* ── Vehicle card — fill row height · imagen flex ───────────────────── */
+.preview-frame .vcard-simple {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--voyager-color-surface-card);
+  border-radius: var(--voyager-radius-sm);
+  box-shadow: var(--voyager-shadow-sm);
+  overflow: hidden;
+  padding-bottom: 6px;
+  min-height: 0;
+}
+
+.preview-frame .vcard-simple::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to right,
+    var(--voyager-color-orange-500) 0%,
+    var(--voyager-color-orange-600) 50%,
+    var(--voyager-color-orange-700) 100%);
+  z-index: 2;
+}
+
+.preview-frame .vcard-simple[data-status="negotiable"]::after {
+  background: linear-gradient(to right,
+    var(--voyager-color-cyan-500) 0%,
+    var(--voyager-color-cyan-600) 50%,
+    var(--voyager-color-cyan-700) 100%);
+}
+
+.preview-frame .vcard-simple .simple-image {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: linear-gradient(
+    145deg,
+    oklch(0.91 0.022 285) 0%,
+    oklch(0.94 0.010 220) 60%,
+    oklch(0.96 0.005 160) 100%);
+  overflow: hidden;
+}
+
+.preview-frame .vcard-simple .simple-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.preview-frame .vcard-simple .live-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-live);
+  box-shadow: 0 2px 6px color-mix(in oklch, var(--voyager-color-live) 40%, transparent);
+}
+
+.preview-frame .vcard-simple .live-dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--voyager-radius-pill);
+  background: var(--voyager-color-surface-card);
+}
+
+.preview-frame .vcard-simple .simple-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 4px;
+  flex-shrink: 0;
+}
+
+.preview-frame .vcard-simple .simple-title {
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--voyager-color-vault);
+  line-height: 1.1;
+}
+
+.preview-frame .vcard-simple .simple-year {
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--voyager-color-text-muted);
+  line-height: 1.2;
+}
+
+.preview-frame .vcard-simple .simple-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 12px;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.preview-frame .vcard-simple .simple-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.preview-frame .vcard-simple .price-text {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--voyager-color-vault);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── PriceIcon · Cinematic upgrade (teal $ + contact shadow) ───────── */
+.pprice-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.pprice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(135deg,
+      var(--voyager-color-negotiable) 0%,
+      oklch(0.65 0.16 195) 100%),
+    linear-gradient(135deg,
+      oklch(0.88 0.08 195) 0%,
+      oklch(1 0 0) 40%,
+      oklch(0.72 0.14 195) 75%,
+      oklch(0.88 0.08 195) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 2px 8px oklch(0.78 0.14 195 / 0.25);
+  transition:
+    transform  0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.25s ease;
+  transform: translateZ(0);
+}
+.pprice::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.45) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+.pprice::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--voyager-color-negotiable) 0%, transparent 70%);
+  filter: blur(10px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+.pprice svg {
+  position: relative;
+  z-index: 2;
+}
+.pprice-shelf {
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 5px;
+  border-radius: 50%;
+  background: oklch(0.62 0.15 195 / 0.50);
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* ── LikeButton · Cinematic upgrade (toggle + heart pop) ───────────── */
+.plike {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-image:
+    linear-gradient(180deg, oklch(1 0 0) 0%, oklch(1 0 0) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-200) 0%,
+      oklch(1 0 0) 40%,
+      var(--vmc-color-vault-300) 75%,
+      var(--vmc-color-vault-200) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 2px 8px oklch(0.52 0.18 285 / 0.14);
+  transition:
+    transform     0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow    0.25s ease,
+    background-image 0.25s ease;
+  transform: translateZ(0);
+}
+.plike::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.55) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+.plike::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--vmc-color-vault-400) 0%, transparent 70%);
+  filter: blur(10px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+.plike svg {
+  position: relative;
+  z-index: 2;
+}
+.plike:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow:
+    0 10px 18px oklch(0.22 0.18 285 / 0.22),
+    0  3px  6px oklch(0.22 0.18 285 / 0.12);
+}
+.plike:active { transform: scale(0.92); }
+
+.plike--active {
+  background-image:
+    linear-gradient(135deg,
+      var(--vmc-color-vault-500) 0%,
+      var(--vmc-color-vault-700) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-orange-400) 0%,
+      oklch(1 0 0) 40%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-vault-300) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 3px 14px oklch(0.52 0.18 285 / 0.35),
+    inset 0 1px 0 oklch(1 0 0 / 0.22);
+}
+.plike--active::before {
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.18) 0%, transparent 50%);
+}
+.plike--active::after { opacity: 0.35; }
+.plike--active:hover::after { opacity: 0.60; }
+
+.plike .like-filled { display: none; }
+.plike--active .like-outline { display: none; }
+.plike--active .like-filled { display: inline-block; }
+
+@keyframes plike-heart-pop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.40); }
+  65%  { transform: scale(0.85); }
+  85%  { transform: scale(1.10); }
+  100% { transform: scale(1); }
+}
+.plike--active svg {
+  animation: plike-heart-pop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   V2 · Cinematic — heading L-mark · live-pulse transmission · PriceTag
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Heading V2 — L-mark + texto inline (no brackets envolventes) ─── */
+.preview-frame--v2 .head .head-info {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  position: static;
+}
+.preview-frame--v2 .head .head-mark {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid var(--voyager-color-live);
+  border-left: 2px solid var(--voyager-color-live);
+  align-self: center;
+}
+.preview-frame--v2 .head .head-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ── Live pulse transmission — anillos expandiendo · core con shine ─ */
+.live-pulse {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.live-pulse::before,
+.live-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--voyager-color-live);
+  opacity: 0;
+  animation: live-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.live-pulse::after {
+  animation-delay: 0.9s;
+}
+.live-pulse-core {
+  position: relative;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%,
+    oklch(0.86 0.16 60) 0%,
+    var(--voyager-color-live) 60%,
+    oklch(0.58 0.18 45) 100%);
+  box-shadow:
+    0 0 8px var(--voyager-color-live),
+    0 0 3px oklch(1 0 0 / 0.6) inset;
+  animation: live-core-pulse 1.8s ease-in-out infinite;
+}
+@keyframes live-ping {
+  0%   { transform: scale(0.55); opacity: 0.9; }
+  60%  { opacity: 0.25; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+@keyframes live-core-pulse {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 10px var(--voyager-color-live), 0 0 3px oklch(1 0 0 / 0.6) inset; }
+  50%      { transform: scale(1.12); box-shadow: 0 0 18px var(--voyager-color-live), 0 0 3px oklch(1 0 0 / 0.6) inset; }
+}
+
+/* ── PriceTag · vault pill + teal $ icon + precio ──────────────────── */
+.ptag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  background-image:
+    linear-gradient(135deg,
+      oklch(0.48 0.24 285) 0%,
+      oklch(0.48 0.24 285) 30%,
+      oklch(0.20 0.17 285) 100%),
+    linear-gradient(135deg,
+      oklch(0.65 0.20 285) 0%,
+      oklch(1 0 0 / 0.40) 38%,
+      oklch(0.45 0.22 285) 68%,
+      oklch(0.65 0.20 285) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 3px 16px oklch(0.22 0.18 285 / 0.55),
+    inset 0 1px 0 oklch(1 0 0 / 0.10);
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+}
+.ptag::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.07) 0%, transparent 55%);
+  pointer-events: none;
+}
+.ptag--sm { height: 26px; padding: 0 10px 0 3px; gap: 5px; }
+.ptag-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1.5px solid transparent;
+  background-image:
+    linear-gradient(135deg,
+      var(--voyager-color-negotiable) 0%,
+      oklch(0.65 0.16 195) 100%),
+    linear-gradient(135deg,
+      oklch(0.88 0.08 195) 0%,
+      oklch(1 0 0) 40%,
+      oklch(0.72 0.14 195) 75%,
+      oklch(0.88 0.08 195) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 1px 8px oklch(0.78 0.14 195 / 0.45),
+    inset 0 1px 0 oklch(1 0 0 / 0.30);
+  position: relative;
+  overflow: hidden;
+}
+.ptag-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, oklch(1 0 0 / 0.40) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+.ptag-icon svg {
+  position: relative;
+  z-index: 2;
+}
+.ptag-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+.ptag-currency {
+  font-family: var(--voyager-font-display);
+  font-weight: 700;
+  font-size: 11px;
+  color: oklch(0.86 0.10 195);
+  line-height: 1;
+}
+.ptag-amount {
+  font-family: var(--voyager-font-display);
+  font-weight: 800;
+  font-size: 11px;
+  color: oklch(1 0 0);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-frame * { transition: none !important; transform: none !important; }
+  .live-pulse::before,
+  .live-pulse::after,
+  .live-pulse-core { animation: none !important; }
+}
+</style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="Voyager desktop preview — Listing Area">
+    <div class="catalog-stack">
+
+    <!-- ═════════ V1 · Default ═════════ -->
+    <div class="variant-slot">
+      <div class="variant-label-row">
+        <span class="variant-label">V1 · Default</span>
+        <span class="variant-sublabel">brackets envolventes · pprice + plike</span>
+      </div>
+    <div class="preview-frame preview-frame--v1">
+
+        <div class="head">
+          <div class="head-info">
+            <svg class="bracket bracket-tl" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+              <path d="M0 0H3.3V3.3H3.3V6.7H0V3.3H0V0ZM3.3 0H6.7 6.7 10V3.3H6.7 6.7 3.3V0ZM3.3 6.7H0V10H3.3V6.7Z" fill="currentColor"/>
+            </svg>
+            <p class="head-title">AUTOPLAN</p>
+            <p class="head-sub">5 Ofertas</p>
+            <svg class="bracket bracket-br" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+              <path d="M10 10L6.7 10 6.7 6.7 6.7 3.3 10 3.3 10 6.7 10 10ZM6.7 10L3.3 10 0 10 0 6.7 3.3 6.7 6.7 6.7 6.7 10ZM6.7 3.3L10 3.3 10 0 6.7 0 6.7 3.3Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <a href="#" class="head-link">
+            Ir al perfil
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+          </a>
+        </div>
+
+        <div class="grid">
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Chevrolet Joy Sedan</span>
+              <span class="simple-year">2021</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="pprice-wrap" aria-hidden="true">
+                  <span class="pprice">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0 / 0.92)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  <span class="pprice-shelf"></span>
+                </span>
+                <span class="price-text">US$ 5,699</span>
+              </div>
+              <button class="plike" type="button" aria-label="Me gusta">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
+              <span class="live-dot" aria-label="En vivo"></span>
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Chery Tiggo 2</span>
+              <span class="simple-year">2023</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="pprice-wrap" aria-hidden="true">
+                  <span class="pprice">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0 / 0.92)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  <span class="pprice-shelf"></span>
+                </span>
+                <span class="price-text">US$ 6,699</span>
+              </div>
+              <button class="plike plike--active" type="button" aria-label="Quitar like">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="negotiable">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Peugeot New 2008</span>
+              <span class="simple-year">2022</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price"></div>
+              <button class="plike" type="button" aria-label="Me gusta">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+              <span class="live-dot" aria-label="En vivo"></span>
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Nissan Xtrail</span>
+              <span class="simple-year">2022</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="pprice-wrap" aria-hidden="true">
+                  <span class="pprice">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0 / 0.92)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  <span class="pprice-shelf"></span>
+                </span>
+                <span class="price-text">US$ 20,999</span>
+              </div>
+              <button class="plike" type="button" aria-label="Me gusta">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+        </div>
+
+    </div>
+    </div><!-- /variant-slot V1 -->
+
+    <!-- ═════════ V2 · Cinematic ═════════ -->
+    <div class="variant-slot">
+      <div class="variant-label-row">
+        <span class="variant-label">V2 · Cinematic</span>
+        <span class="variant-sublabel">L-mark heading · live transmission · PriceTag pill</span>
+      </div>
+    <div class="preview-frame preview-frame--v2">
+
+        <div class="head">
+          <div class="head-info">
+            <span class="head-mark" aria-hidden="true"></span>
+            <div class="head-text">
+              <p class="head-title">AUTOPLAN</p>
+              <p class="head-sub">5 Ofertas</p>
+            </div>
+          </div>
+          <a href="#" class="head-link">
+            Ir al perfil
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+          </a>
+        </div>
+
+        <div class="grid">
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Chevrolet Joy Sedan</span>
+              <span class="simple-year">2021</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="ptag ptag--sm" aria-label="Precio US$ 5,699">
+                  <span class="ptag-icon" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0 / 0.92)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  <span class="ptag-text">
+                    <span class="ptag-currency">US$</span>
+                    <span class="ptag-amount">5,699</span>
+                  </span>
+                </span>
+              </div>
+              <button class="plike" type="button" aria-label="Me gusta">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
+              <span class="live-pulse" aria-label="En vivo">
+                <span class="live-pulse-core"></span>
+              </span>
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Chery Tiggo 2</span>
+              <span class="simple-year">2023</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="ptag ptag--sm" aria-label="Precio US$ 6,699">
+                  <span class="ptag-icon" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0 / 0.92)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  <span class="ptag-text">
+                    <span class="ptag-currency">US$</span>
+                    <span class="ptag-amount">6,699</span>
+                  </span>
+                </span>
+              </div>
+              <button class="plike" type="button" aria-label="Me gusta">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="negotiable">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Peugeot New 2008</span>
+              <span class="simple-year">2022</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price"></div>
+              <button class="plike plike--active" type="button" aria-label="Quitar like">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="vcard-simple" data-status="live">
+            <div class="simple-image">
+              <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+              <span class="live-pulse" aria-label="En vivo">
+                <span class="live-pulse-core"></span>
+              </span>
+            </div>
+            <div class="simple-info">
+              <span class="simple-title">Nissan Xtrail</span>
+              <span class="simple-year">2022</span>
+            </div>
+            <div class="simple-footer">
+              <div class="simple-price">
+                <span class="ptag ptag--sm" aria-label="Precio US$ 20,999">
+                  <span class="ptag-icon" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="oklch(1 0 0 / 0.92)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  <span class="ptag-text">
+                    <span class="ptag-currency">US$</span>
+                    <span class="ptag-amount">20,999</span>
+                  </span>
+                </span>
+              </div>
+              <button class="plike" type="button" aria-label="Me gusta">
+                <svg class="like-outline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--vmc-color-vault-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="like-filled" width="14" height="14" viewBox="0 0 24 24" fill="oklch(1 0 0 / 0.92)" stroke="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+          </article>
+        </div>
+
+    </div>
+    </div><!-- /variant-slot V2 -->
+
+    </div><!-- /catalog-stack -->
+  </main>
+<script>
+  /* LikeButton · toggle plike--active on click (heart pop via CSS keyframes) */
+  document.querySelectorAll('.plike').forEach(function bindLike(btn) {
+    btn.addEventListener('click', function onLikeClick() {
+      btn.classList.toggle('plike--active');
+      var isActive = btn.classList.contains('plike--active');
+      btn.setAttribute('aria-label', isActive ? 'Quitar like' : 'Me gusta');
+    });
+  });
+</script>
+<script src="_iframe-resize.js"></script>
+</body>
+</html>

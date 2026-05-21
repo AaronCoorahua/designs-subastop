@@ -172,75 +172,94 @@ html, body {
 .dc-header > * { position: relative; z-index: 1; }
 
 /* ─── Variantes del header del Detail Card ──────────────────────
-   V1 Iridescent · V2 Vault Cinematic · V3 Skeleton (desaturado)
-   Inspiradas en header.html y detail-header-images.html
+   V1 Vault Iridescent · V2 Vault Glow · V3 Skeleton · V4 Sunset
+   Inspiradas en referencia.tsx (pvbtn-cinematic / pvbtn-auth C/E)
    ─────────────────────────────────────────────────────────────── */
 
-/* V1 · Iridescent — orange-700 → vault-600 diagonal con halos suaves */
-.dc--iridescent .dc-header {
-  background: linear-gradient(135deg,
-    var(--vmc-color-orange-700) 0%,
-    var(--vmc-color-orange-700) 28%,
-    var(--vmc-color-vault-600)  72%,
-    var(--vmc-color-vault-700) 100%);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 16%);
+/* V1 · Vault Iridescent — vault brillante con dimensión: vault-300 top-left
+   (shimmer) → vault-500 mid → vault-700 bottom-right. Halo blanco top-left
+   y halo orange-sutil bottom-right que prefigura el botón Vault→Orange. */
+.dc--live .dc-header {
+  background: linear-gradient(220deg,
+    var(--vmc-color-vault-600) 0%,
+    var(--vmc-color-vault-700) 45%,
+    var(--vmc-color-vault-800) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 12%),
+    inset 0 0 0 1px oklch(1 0 0 / 4%);
   transition: box-shadow 380ms var(--voyager-ease-default);
 }
-/* Overlay del estado "liked" — gradient = btn-iridescent hover */
-.dc--iridescent .dc-header::before {
+/* Overlay del estado "liked" — sube un peldaño la luminosidad vault */
+.dc--live .dc-header::before {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(220deg,
-    var(--vmc-color-orange-400) 0%,
-    var(--vmc-color-orange-400) 40%,
-    var(--vmc-color-vault-400)  100%);
+    var(--vmc-color-vault-500) 0%,
+    var(--vmc-color-vault-600) 45%,
+    var(--vmc-color-vault-700) 100%);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
   transition: opacity 420ms var(--voyager-ease-default);
 }
-.dc--iridescent .dc-header::after {
+.dc--live .dc-header::after {
   background:
-    radial-gradient(ellipse 65% 55% at 15% 0%,   oklch(1 0 0 / 12%)              0%, transparent 65%),
-    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.66 0.17 50 / 18%)      0%, transparent 65%);
+    radial-gradient(ellipse 75% 65% at 15% 0%,    oklch(1 0 0 / 4%)               0%, transparent 70%),
+    radial-gradient(ellipse 65% 55% at 100% 100%, oklch(0.66 0.17 50 / 3%)        0%, transparent 75%);
   transition: background 420ms var(--voyager-ease-default);
 }
-.dc--iridescent.is-liked .dc-header::before { opacity: 1; }
-.dc--iridescent.is-liked .dc-header {
+.dc--live.is-liked .dc-header::before { opacity: 1; }
+.dc--live.is-liked .dc-header {
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 4px 14px oklch(0.66 0.17 50 / 18%);
+    inset 0 1px 0 oklch(1 0 0 / 18%),
+    inset 0 0 0 1px oklch(1 0 0 / 5%),
+    0 4px 14px oklch(0.45 0.20 285 / 14%);
 }
-.dc--iridescent.is-liked .dc-header::after {
+.dc--live.is-liked .dc-header::after {
   background:
-    radial-gradient(ellipse 65% 55% at 15% 0%,   oklch(1 0 0 / 18%)             0%, transparent 65%),
-    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.55 0.20 285 / 22%)    0%, transparent 65%);
+    radial-gradient(ellipse 75% 65% at 15% 0%,    oklch(1 0 0 / 7%)               0%, transparent 70%),
+    radial-gradient(ellipse 65% 55% at 100% 100%, oklch(0.66 0.17 50 / 6%)        0%, transparent 75%);
 }
 
-/* V2 · Vault Cinematic — matchea el hover del btn-cinematic (220deg vault-400 → vault-600) */
-.dc--cinematic .dc-header {
-  background: linear-gradient(220deg,
-    var(--vmc-color-vault-400) 0%,
-    var(--vmc-color-vault-600) 100%);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%);
+/* V2 · Vault Glow — vault profundo con halos cálidos en esquinas
+   Inspirado en pvbtn-auth-c "Warm Dark": fill 100% vault, naranja
+   solo aparece como atmósfera radial en la esquina top-left. */
+.dc--glow .dc-header {
+  background: linear-gradient(160deg,
+    var(--vmc-color-vault-500) 0%,
+    var(--vmc-color-vault-700) 55%,
+    var(--vmc-color-vault-900) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 20%);
 }
-.dc--cinematic .dc-header::after {
+.dc--glow .dc-header::after {
   background:
-    radial-gradient(ellipse 65% 55% at 25% 0%,   oklch(1 0 0 / 14%)            0%, transparent 65%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, oklch(0.55 0.20 285 / 22%)   0%, transparent 65%);
+    radial-gradient(ellipse 80% 70% at 0% 0%,    oklch(0.66 0.17 50 / 18%)   0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, oklch(0.45 0.20 285 / 22%) 0%, transparent 65%);
 }
 
-/* V3 · Skeleton — matchea el hover del btn-iridescent (220deg orange-400 0–40% → vault-400) */
+/* V3 · Skeleton — gradientdef-vault2 (token Figma):
+   linear-gradient(135deg, #200068 → #4E38AF) = vault-800 → vault-500 */
 .dc--skeleton .dc-header {
-  background: linear-gradient(220deg,
-    var(--vmc-color-orange-400) 0%,
-    var(--vmc-color-orange-400) 40%,
-    var(--vmc-color-vault-400)  100%);
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%);
+  background: linear-gradient(135deg,
+    var(--vmc-color-vault-800) 0%,
+    var(--vmc-color-vault-500) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 14%);
 }
-.dc--skeleton .dc-header::after {
+.dc--skeleton .dc-header::after { background: none; }
+
+/* V4 · Vault Sunset — vault dominante (75% del frame) con naranja
+   mezclado al final del diagonal. Inspirado en pvbtn-auth-e:
+   vault sky → orange horizon, sin chillar. */
+.dc--sunset .dc-header {
+  background: linear-gradient(135deg,
+    var(--vmc-color-vault-800) 0%,
+    var(--vmc-color-vault-700) 55%,
+    var(--vmc-color-vault-600) 85%,
+    color-mix(in oklch, var(--vmc-color-orange-500) 35%, var(--vmc-color-vault-600)) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 14%);
+}
+.dc--sunset .dc-header::after {
   background:
-    radial-gradient(ellipse 65% 55% at 15% 0%,   oklch(1 0 0 / 12%)             0%, transparent 65%),
-    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.66 0.17 50 / 18%)     0%, transparent 65%);
+    radial-gradient(ellipse 65% 50% at 100% 100%, oklch(0.66 0.17 50 / 10%)     0%, transparent 70%);
 }
 .dc-header-row1 {
   display: flex; padding: 12px 0;
@@ -435,6 +454,80 @@ html, body {
   box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 3px oklch(0 0 0 / 12%) !important;
 }
 .btn-iridescent--pressed::after { opacity: 0 !important; }
+
+/* Vault → Orange CTA — inspirado en pvbtn-auth-e de referencia.tsx:
+   fill diagonal vault-600 → vault-500 → orange-500 (¾ vault, ¼ orange)
+   con ring iridiscente vault → blanco → orange en padding/border box. */
+.btn-vault-orange {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 48px;
+  padding: 0 28px;
+  border-radius: 9999px;
+  border: 2.5px solid transparent;
+  cursor: pointer; overflow: hidden;
+  font-family: var(--voyager-font-display);
+  font-size: 15px; font-weight: 600;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
+  background-image:
+    linear-gradient(135deg,
+      var(--vmc-color-vault-600) 0%,
+      var(--vmc-color-vault-500) 45%,
+      var(--vmc-color-orange-500) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-400) 0%,
+      var(--vmc-color-base-white) 40%,
+      var(--vmc-color-orange-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  background-origin: padding-box, border-box;
+  background-clip:   padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 22%),
+    0 6px 18px oklch(0.45 0.20 285 / 32%),
+    0 2px 6px  oklch(0.66 0.17 50 / 18%);
+  transition: transform 0.2s var(--voyager-ease-default), box-shadow 0.25s ease;
+}
+.btn-vault-orange::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, oklch(1 0 0 / 18%) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.btn-vault-orange::after {
+  content: ''; position: absolute; inset: -4px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--vmc-color-vault-500), var(--vmc-color-orange-500));
+  filter: blur(14px); opacity: 0.25; z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.btn-vault-orange span { position: relative; z-index: 2; }
+.btn-vault-orange:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 20%),
+    0 10px 28px oklch(0.45 0.20 285 / 40%),
+    0 4px 10px  oklch(0.66 0.17 50 / 30%);
+}
+.btn-vault-orange:hover::after { opacity: 0.45; filter: blur(18px); }
+.btn-vault-orange:active {
+  transform: scale(0.98) translateY(1px);
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 25%), 0 1px 2px oklch(0 0 0 / 10%);
+}
+.btn-vault-orange:active::after { opacity: 0; }
+.btn-vault-orange--hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 20%),
+    0 10px 28px oklch(0.45 0.20 285 / 40%),
+    0 4px 10px  oklch(0.66 0.17 50 / 30%) !important;
+}
+.btn-vault-orange--hover::after { opacity: 0.45 !important; filter: blur(18px) !important; }
+.btn-vault-orange--pressed {
+  transform: scale(0.97) translateY(1px) !important;
+  box-shadow: inset 0 2px 5px oklch(0 0 0 / 25%), 0 1px 2px oklch(0 0 0 / 10%) !important;
+}
+.btn-vault-orange--pressed::after { opacity: 0 !important; }
 
 /* Vault Cinematic CTA */
 .btn-cinematic {
@@ -708,11 +801,11 @@ html, body {
      ════════════════════════════════════════════════════════ -->
 <div class="catalog-row">
 
-  <!-- ▸ VARIANT V1 · Iridescent (Default LikeButton) ───────── -->
-  <div class="variant-slot" data-variant="v1-iridescent">
-    <span class="variant-label">V1 · Iridescent</span>
-    <span class="variant-sublabel">header orange → vault iridescent</span>
-    <article class="dc dc--iridescent">
+  <!-- ▸ VARIANT V1 · Live (Default LikeButton) ─────────────── -->
+  <div class="variant-slot" data-variant="v1-live">
+    <span class="variant-label">V1 · Live</span>
+    <span class="variant-sublabel">naranja cinematic · halo vault sutil al fondo</span>
+    <article class="dc dc--live">
       <div class="dc-header">
         <div class="dc-header-row1">
           <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
@@ -750,11 +843,11 @@ html, body {
     </article>
   </div>
 
-  <!-- ▸ VARIANT V2 · Vault Cinematic (Active LikeButton) ───── -->
-  <div class="variant-slot" data-variant="v2-cinematic">
-    <span class="variant-label">V2 · Vault Cinematic</span>
-    <span class="variant-sublabel">header = btn-cinematic hover (220deg vault-400 → vault-600)</span>
-    <article class="dc dc--cinematic">
+  <!-- ▸ VARIANT V2 · Vault Glow (Active LikeButton) ───────── -->
+  <div class="variant-slot" data-variant="v2-vault-glow">
+    <span class="variant-label">V2 · Vault Glow</span>
+    <span class="variant-sublabel">vault profundo · halos cálidos en esquinas</span>
+    <article class="dc dc--glow">
       <div class="dc-header">
         <div class="dc-header-row1">
           <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
@@ -795,7 +888,7 @@ html, body {
   <!-- ▸ VARIANT V3 · Skeleton (loading) ───────────────────── -->
   <div class="variant-slot" data-variant="v3-skeleton">
     <span class="variant-label">V3 · Skeleton</span>
-    <span class="variant-sublabel">header = btn-iridescent hover</span>
+    <span class="variant-sublabel">header = vault cinematic</span>
     <article class="dc dc--skeleton">
       <div class="dc-header">
         <div class="dc-header-row1">
@@ -832,9 +925,51 @@ html, body {
     </article>
   </div>
 
-  <!-- ▸ VARIANT V4 · Oferta Cerrada (Ghost CTA) ──────────── -->
-  <div class="variant-slot" data-variant="v4-closed">
-    <span class="variant-label">V4 · Oferta Cerrada</span>
+  <!-- ▸ VARIANT V4 · Vault Sunset (Active LikeButton) ────── -->
+  <div class="variant-slot" data-variant="v4-sunset">
+    <span class="variant-label">V4 · Vault Sunset</span>
+    <span class="variant-sublabel">vault dominante · orange muteado al final del diagonal</span>
+    <article class="dc dc--sunset">
+      <div class="dc-header">
+        <div class="dc-header-row1">
+          <div class="dc-h-left"><div><span class="dc-h-label">Inicia</span><span class="dc-h-day">lunes 04</span></div></div>
+          <div class="dc-h-right"><span class="dc-h-time">12:30 pm</span></div>
+        </div>
+        <div class="dc-header-row2">
+          <div class="dc-h-stat dc-h-stat--right">
+            <span class="dc-h-stat-num">93</span>
+            <div class="dc-h-stat-icon"><svg width="14" height="10" viewBox="0 0 13 9" fill="currentColor"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z"/></svg></div>
+          </div>
+          <div class="dc-like-slot">
+            <button type="button" class="plike plike--md plike--active" aria-label="Quitar de favoritos" aria-pressed="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="rgb(100% 100% 100% / 92%)" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <span class="dc-like-count">1</span>
+          </div>
+          <div class="dc-h-stat dc-h-stat--left">
+            <div class="dc-h-stat-icon"><svg width="14" height="12" viewBox="0 0 13 11" fill="currentColor"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z"/><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z"/><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z"/><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z"/></svg></div>
+            <span class="dc-h-stat-num">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-body">
+        <p class="dc-opportunity">¡Oportunidad para el que sabe!</p>
+        <button type="button" class="btn-iridescent"><span>Participa</span></button>
+        <div class="dc-price-row">
+          <div class="pprice-wrap" aria-hidden="true">
+            <div class="pprice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(100% 100% 100% / 92%)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="pprice-shelf"></div>
+          </div>
+          <span class="dc-price-text"><span class="lbl">Precio Base:</span> <span class="val">US$ 62,999</span></span>
+        </div>
+        <p class="dc-fee">Comisión: 7.5% del valor de compra o mínimo &gt;S&lt; 50</p>
+      </div>
+    </article>
+  </div>
+
+  <!-- ▸ VARIANT V5 · Oferta Cerrada (Ghost CTA) ──────────── -->
+  <div class="variant-slot" data-variant="v5-closed">
+    <span class="variant-label">V5 · Oferta Cerrada</span>
     <span class="variant-sublabel">Ghost CTA · Default</span>
     <article class="dc dc--closed">
       <p class="dc-closed-eyebrow">Oferta</p>
@@ -871,7 +1006,7 @@ html, body {
      - card recibe .is-liked → header hace crossfade al gradient
        del btn-iridescent hover */
   (function initLikeToggle() {
-    document.querySelectorAll('.dc--iridescent .plike').forEach(function bindCard(btn) {
+    document.querySelectorAll('.dc--live .plike').forEach(function bindCard(btn) {
       if (btn.classList.contains('plike--skeleton')) { return; }
       var card    = btn.closest('.dc');
       var countEl = card ? card.querySelector('.dc-like-count') : null;

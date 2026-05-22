@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Register Form — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─── Tokens base · compartido entre componentes desktop ────────── */
+:root {
+  --vmc-color-vault-200:   oklch(0.87 0.09 285);
+  --vmc-color-vault-300:   oklch(0.80 0.12 285);
+  --vmc-color-vault-400:   oklch(0.55 0.20 285);
+  --vmc-color-vault-500:   oklch(0.45 0.20 285);
+  --vmc-color-vault-600:   oklch(0.38 0.20 285);
+  --vmc-color-vault-700:   oklch(0.30 0.20 285);
+  --vmc-color-vault-800:   oklch(0.22 0.18 285);
+  --vmc-color-vault-900:   oklch(0.15 0.27 278);
+
+  --vmc-color-orange-400:  oklch(0.78 0.16 60);
+  --vmc-color-orange-500:  oklch(0.72 0.16 55);
+  --vmc-color-orange-600:  oklch(0.66 0.17 50);
+  --vmc-color-orange-700:  oklch(0.58 0.18 45);
+
+  --vmc-color-base-white:  oklch(1 0 0);
+  --vmc-color-status-error: oklch(0.62 0.22 25);
+
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-input-bg:        oklch(0.94 0.006 285);
+  --voyager-text-on-dark:    oklch(1 0 0);
+  --voyager-text-on-surface: oklch(0.15 0.008 200);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  --vmc-radius-sm:   4px;
+  --vmc-radius-md:   8px;
+  --vmc-radius-full: 9999px;
+
+  --voyager-shadow-card: 0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 24px 16px;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow-x: hidden;
+}
+
+/* ─── Scaffold catalog · compartido ─────────────────────────────── */
+.catalog-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: flex-start;
+  gap: 40px 32px; padding: 16px 4px 32px;
+}
+.variant-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.variant-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  text-align: center;
+}
+.variant-sublabel {
+  font-family: var(--voyager-font-body);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REGISTER FORM · 766 wide · base shared
+   Spacing tipo legacy: header 40px → datos · datos 24px → divider
+   ═══════════════════════════════════════════════════════════════ */
+.rgf {
+  width: 766px;
+  background: var(--voyager-surface-card);
+  border-radius: var(--vmc-radius-md);
+  box-shadow: var(--voyager-shadow-card);
+  padding: 32px;
+  display: flex; flex-direction: column;
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.rgf-head { display: flex; flex-direction: column; gap: 6px; }
+.rgf-h1 {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 24px; font-weight: 800;
+  letter-spacing: -0.4px; line-height: 1.15;
+  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-500) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rgf-sub {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 14px; font-weight: 400;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  line-height: 1.45;
+}
+
+/* ── Section title ────────────────────────────────────────────── */
+.rgf-section-title {
+  margin: 0 0 16px;
+  font-family: var(--voyager-font-display);
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+
+/* ── Personal data section ────────────────────────────────────── */
+.rgf-personal { margin-top: 40px; }
+
+/* ── Field grid (3 columnas · 2 filas) ────────────────────────── */
+.rgf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px 24px;
+}
+.rgf-field { display: flex; flex-direction: column; gap: 6px; }
+.rgf-label {
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 400;
+  color: var(--vmc-color-vault-500);
+  display: inline-flex; align-items: center; gap: 3px;
+}
+.rgf-asterisk { color: var(--vmc-color-status-error); font-weight: 600; }
+.rgf-input-wrap { position: relative; }
+.rgf-input {
+  display: block; width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 14%, transparent);
+  border-radius: var(--vmc-radius-sm);
+  background: var(--voyager-input-bg);
+  font-family: var(--voyager-font-body);
+  font-size: 13px; font-weight: 400;
+  color: var(--voyager-text-on-surface);
+  outline: none;
+  transition: border-color 150ms var(--voyager-ease-default),
+              box-shadow 150ms var(--voyager-ease-default);
+}
+.rgf-input:focus {
+  border-color: var(--vmc-color-vault-500);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--vmc-color-vault-500) 18%, transparent);
+}
+.rgf-input--pwd { padding-right: 40px; }
+.rgf-eye {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 40%, transparent);
+  cursor: pointer;
+  background: transparent; border: 0; padding: 0;
+}
+.rgf-eye svg { width: 20px; height: 20px; fill: currentColor; }
+
+.rgf-required-note {
+  margin: 20px 0 0;
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 400;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+
+/* ── Divider ──────────────────────────────────────────────────── */
+.rgf-divider {
+  height: 1px; width: 100%;
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 10%, transparent);
+  margin: 24px 0;
+}
+
+/* ── Receipt row (Boleta/Factura · segment + RUC) ──────────────── */
+.rgf-receipt { display: flex; flex-direction: column; }
+.rgf-receipt-row {
+  margin-top: 4px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: center;
+}
+.rgf-segment {
+  display: inline-flex;
+  padding: 4px;
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 5%, transparent);
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 10%, transparent);
+  border-radius: var(--vmc-radius-full);
+  gap: 2px;
+}
+.rgf-segment-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 34px;
+  padding: 0 22px;
+  border: 0; background: transparent;
+  border-radius: var(--vmc-radius-full);
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 60%, transparent);
+  cursor: pointer;
+  transition: background 180ms var(--voyager-ease-default),
+              color 180ms var(--voyager-ease-default),
+              box-shadow 180ms var(--voyager-ease-default);
+}
+.rgf-segment-btn.is-active {
+  background: linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%);
+  color: var(--vmc-color-base-white);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
+    0 2px 6px rgb(51.76% 37.65% 89.8% / 0.30);
+}
+.rgf-ruc { position: relative; }
+.rgf-ruc .rgf-input { padding-left: 58px; }
+.rgf-ruc-prefix {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--voyager-font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  pointer-events: none;
+}
+.rgf-ruc--disabled .rgf-input {
+  opacity: 0.55; cursor: not-allowed;
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 4%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   V2 · PRIMARY — orange accents · black labels
+   ═══════════════════════════════════════════════════════════════ */
+[data-variant="v2-primary"] .rgf-label { color: var(--voyager-text-on-surface); }
+[data-variant="v2-primary"] .rgf-segment-btn.is-active {
+  background: linear-gradient(135deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-orange-700) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 2px 6px rgb(92.94% 53.73% 21.18% / 0.30);
+}
+[data-variant="v2-primary"] .rgf-input:focus {
+  border-color: var(--vmc-color-orange-500);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--vmc-color-orange-500) 18%, transparent);
+}
+</style>
+</head>
+<body>
+  <main class="catalog-row" aria-label="Register Form — Voyager upgrade">
+
+    <!-- ── V1 · Cinematic Vault ─────────────────────────────────── -->
+    <section class="variant-slot" data-variant="v1-cinematic">
+      <p class="variant-label">V1 · Cinematic Vault</p>
+      <p class="variant-sublabel">vault segment · accent vault-500</p>
+
+      <div class="rgf">
+        <header class="rgf-head">
+          <h1 class="rgf-h1">Aquí comienza tu experiencia</h1>
+          <p class="rgf-sub">Regístrate y descubre un nuevo mundo de oportunidades.</p>
+        </header>
+
+        <section class="rgf-personal">
+          <h2 class="rgf-section-title">Datos personales</h2>
+          <div class="rgf-grid">
+            <div class="rgf-field">
+              <label class="rgf-label" for="v1-firstname">Nombres <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v1-firstname" type="text" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v1-lastname">Apellidos <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v1-lastname" type="text" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v1-dni">DNI <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v1-dni" type="tel" maxlength="8" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v1-phone">Celular <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v1-phone" type="tel" maxlength="9" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v1-email">Correo electrónico <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v1-email" type="email" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v1-password">Contraseña <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap">
+                <input class="rgf-input rgf-input--pwd" id="v1-password" type="password" />
+                <button type="button" class="rgf-eye" data-target="v1-password" aria-label="Mostrar contraseña">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="rgf-required-note"><span class="rgf-asterisk">*</span> Campos obligatorios</p>
+        </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-receipt">
+          <h2 class="rgf-section-title">Quiero recibir</h2>
+          <div class="rgf-receipt-row">
+            <div class="rgf-segment" role="radiogroup" aria-label="Tipo de comprobante">
+              <button type="button" class="rgf-segment-btn is-active" data-receipt="boleta">Boleta</button>
+              <button type="button" class="rgf-segment-btn" data-receipt="factura">Factura</button>
+            </div>
+            <div class="rgf-ruc rgf-ruc--disabled">
+              <span class="rgf-ruc-prefix">RUC *</span>
+              <input class="rgf-input" type="tel" disabled />
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ── V2 · Primary (orange→vault) ──────────────────────────── -->
+    <section class="variant-slot" data-variant="v2-primary">
+      <p class="variant-label">V2 · Primary</p>
+      <p class="variant-sublabel">orange segment · black labels</p>
+
+      <div class="rgf">
+        <header class="rgf-head">
+          <h1 class="rgf-h1">Aquí comienza tu experiencia</h1>
+          <p class="rgf-sub">Regístrate y descubre un nuevo mundo de oportunidades.</p>
+        </header>
+
+        <section class="rgf-personal">
+          <h2 class="rgf-section-title">Datos personales</h2>
+          <div class="rgf-grid">
+            <div class="rgf-field">
+              <label class="rgf-label" for="v2-firstname">Nombres <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v2-firstname" type="text" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v2-lastname">Apellidos <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v2-lastname" type="text" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v2-dni">DNI <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v2-dni" type="tel" maxlength="8" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v2-phone">Celular <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v2-phone" type="tel" maxlength="9" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v2-email">Correo electrónico <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v2-email" type="email" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v2-password">Contraseña <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap">
+                <input class="rgf-input rgf-input--pwd" id="v2-password" type="password" />
+                <button type="button" class="rgf-eye" data-target="v2-password" aria-label="Mostrar contraseña">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="rgf-required-note"><span class="rgf-asterisk">*</span> Campos obligatorios</p>
+        </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-receipt">
+          <h2 class="rgf-section-title">Quiero recibir</h2>
+          <div class="rgf-receipt-row">
+            <div class="rgf-segment" role="radiogroup" aria-label="Tipo de comprobante">
+              <button type="button" class="rgf-segment-btn is-active" data-receipt="boleta">Boleta</button>
+              <button type="button" class="rgf-segment-btn" data-receipt="factura">Factura</button>
+            </div>
+            <div class="rgf-ruc rgf-ruc--disabled">
+              <span class="rgf-ruc-prefix">RUC *</span>
+              <input class="rgf-input" type="tel" disabled />
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function initEyeToggles() {
+      var eyes = document.querySelectorAll('.rgf-eye');
+      function bindEye(eye) {
+        var input = document.getElementById(eye.getAttribute('data-target'));
+        if (!input) return;
+        function handleToggle() {
+          var isPwd = input.type === 'password';
+          input.type = isPwd ? 'text' : 'password';
+          eye.setAttribute('aria-label', isPwd ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        }
+        eye.addEventListener('click', handleToggle);
+      }
+      eyes.forEach(bindEye);
+    })();
+
+    (function initSegments() {
+      var groups = document.querySelectorAll('.rgf-segment');
+      function bindGroup(group) {
+        var buttons = group.querySelectorAll('.rgf-segment-btn');
+        var ruc = group.parentElement.querySelector('.rgf-ruc');
+        var rucInput = ruc ? ruc.querySelector('.rgf-input') : null;
+        function handleClick(btn) {
+          buttons.forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          var isFactura = btn.getAttribute('data-receipt') === 'factura';
+          if (ruc) ruc.classList.toggle('rgf-ruc--disabled', !isFactura);
+          if (rucInput) rucInput.disabled = !isFactura;
+        }
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () { handleClick(btn); });
+        });
+      }
+      groups.forEach(bindGroup);
+    })();
+  </script>
+  <script src="variant-filter.js"></script>
+  <script src="_iframe-resize.js"></script>
+</body>
+</html>

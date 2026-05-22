@@ -69,212 +69,44 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   CONDITIONS · 317 × 190 · 5 chips · sin estados interactivos
+   CONDITIONS · 317 × 190 · list patterns (no pills · no buttons)
+   Foundation Definition Row + 5 iteraciones del UX research
    ═══════════════════════════════════════════════════════════════ */
 .cond {
   width: 317px;
   height: 190px;
-  padding: 16px;
-  display: flex; flex-wrap: wrap;
-  justify-content: center; align-content: center;
-  gap: 16px 8px;
   background: var(--voyager-surface-card);
   box-shadow:
     0 1px 2px  oklch(0.22 0.18 285 / 6%),
     0 12px 32px oklch(0.22 0.18 285 / 10%);
   user-select: none;
+  position: relative;
+  overflow: hidden;
 }
 .cond-chip {
-  width: calc(50% - 4px);
-  height: 42px;
-  display: flex; align-items: center; justify-content: center;
-  padding: 2px 12px;
-  text-align: center;
-  font-family: var(--voyager-font-display);
-  font-size: 12px; font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: 0;
-  border-radius: 9999px;
-  border: 1.5px solid transparent;
-  position: relative;
-  isolation: isolate;
-  background-origin: padding-box, border-box;
-  background-clip:   padding-box, border-box;
-}
-
-/* ── V1 · Edge Marker · data-row Bloomberg-style (research-aligned) ────
-   Cambios research: barra 4→2px · sin fondo casi-blanco · sin glow interior
-   Solo el bar 2px + color de texto marcan el estado. Sin contenedor visible. */
-.cond--marker .cond-chip {
-  width: calc(50% - 4px);
-  height: 42px;
-  padding: 0 12px 0 10px;
-  justify-content: flex-start;
-  text-align: left;
-  border-radius: 0;
-  border: none;
-  font-size: 11.5px;
-  line-height: 1.2;
-  position: relative;
-  overflow: hidden;
-  background-image: none;
-  background: transparent;
-}
-.cond--marker .cond-chip::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 4px;
-  bottom: 4px;
-  width: 2px;
-}
-.cond--marker .cond-chip--active {
-  color: var(--vmc-color-vault-800);
-  font-weight: 600;
-  text-shadow: none;
-  box-shadow: none;
-}
-.cond--marker .cond-chip--active::before {
-  background: var(--vmc-color-vault-500);
-}
-.cond--marker .cond-chip--inactive {
-  background: transparent;
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 42%, transparent);
-  font-weight: 500;
-  text-shadow: none;
-  box-shadow: none;
-}
-.cond--marker .cond-chip--inactive::before {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 14%, transparent);
-}
-
-/* ── V2 · Solid Vault Row · data row vault flat (research-aligned) ─────
-   Cambios research: sin barra naranja · sin gloss · sin drop shadow · flat
-   Identidad preservada (fila vault sólida) sin signifiers de AlertBanner */
-.cond--solid .cond-chip {
-  width: calc(50% - 4px);
-  height: 42px;
-  padding: 0 12px;
-  justify-content: flex-start;
-  text-align: left;
-  border-radius: 4px;
-  border: none;
-  font-size: 11.5px;
-  line-height: 1.2;
-  position: relative;
-  overflow: hidden;
-  background-image: none;
-}
-.cond--solid .cond-chip--active {
-  background: linear-gradient(135deg,
-    var(--vmc-color-vault-700) 0%,
-    var(--vmc-color-vault-800) 100%);
-  color: var(--vmc-color-base-white);
-  font-weight: 500;
-  text-shadow: none;
-  box-shadow: none;
-}
-.cond--solid .cond-chip--inactive {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 4%, transparent);
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 42%, transparent);
-  font-weight: 500;
-  text-shadow: none;
-  box-shadow: none;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   ANTI-BUTTON RESEARCH · V3 V4 V5 V6
-   Referencias: RM Sotheby's · Bring a Trailer · Hagerty · Apple HIG ·
-   IBM Carbon · Linear · Notion · Stripe · Material 3
-   Principio: ningún contenedor cerrado con fill ≠ surface base
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ── V3 · Inline Glyph List · RM Sotheby's + Apple HIG ─────────────
-   Una sola línea de texto fluyendo · cero contenedor · cero fill
-   Glifo Unicode + texto uppercase + separador `·` entre items
-   Activo = ✓ vault + texto vault · Inactivo = ✕ muted + texto muted */
-.cond--glyph {
-  display: block;
-  padding: 22px 18px;
-  text-align: left;
-  line-height: 1.55;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: 600;
-  word-spacing: 0.04em;
-}
-.cond--glyph .cond-chip {
-  display: inline;
-  width: auto;
-  height: auto;
-  padding: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
-  text-shadow: none;
-  border-radius: 0;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
-  line-height: inherit;
-  white-space: normal;
-}
-.cond--glyph .cond-chip::after {
-  content: "  ·  ";
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 20%, transparent);
-  font-weight: 400;
-}
-.cond--glyph .cond-chip:last-child::after { content: ""; }
-.cond--glyph .cond-chip--active {
-  color: var(--vmc-color-vault-800);
-}
-.cond--glyph .cond-chip--active::before {
-  content: "✓ ";
-  color: var(--vmc-color-vault-500);
-  font-weight: 800;
-  letter-spacing: 0;
-}
-.cond--glyph .cond-chip--inactive {
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
-}
-.cond--glyph .cond-chip--inactive::before {
-  content: "✕ ";
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 35%, transparent);
-  font-weight: 800;
-  letter-spacing: 0;
-}
-
-/* ── V4 · Definition Row · Stripe + IBM Carbon ─────────────────────
-   Tabla de 2 columnas · label a la izquierda · valor a la derecha
-   Divider 1px entre filas · cero radius · cero fill
-   Activo = texto vault + valor SÍ vault · Inactivo = texto muted + NO muted */
-.cond--def {
-  display: block;
-  padding: 16px 18px;
-}
-.cond--def .cond-chip {
   display: flex;
   align-items: center;
+  font-family: var(--voyager-font-display);
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0;
+  position: relative;
+}
+
+/* ── V1 · Definition Row · Stripe + IBM Carbon (foundation) ────────
+   Tabla 2-col · label izquierda + SÍ/NO derecha · divider 1px */
+.cond--def {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 18px;
+}
+.cond--def .cond-chip {
   justify-content: space-between;
   width: 100%;
-  height: auto;
   min-height: 28px;
-  padding: 4px 2px;
-  border-radius: 0;
-  border: none;
-  background: none;
-  background-image: none;
-  box-shadow: none;
-  text-shadow: none;
-  text-align: left;
-  font-family: var(--voyager-font-display);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1.25;
+  padding: 4px 0;
   border-bottom: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
 }
 .cond--def .cond-chip:last-child { border-bottom: none; }
@@ -283,8 +115,8 @@ html, body {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  flex-shrink: 0;
   margin-left: 8px;
+  flex-shrink: 0;
 }
 .cond--def .cond-chip--active {
   color: var(--vmc-color-vault-800);
@@ -296,193 +128,442 @@ html, body {
 }
 .cond--def .cond-chip--inactive {
   color: color-mix(in oklch, var(--vmc-color-vault-800) 42%, transparent);
-  font-weight: 500;
 }
 .cond--def .cond-chip--inactive::after {
   content: "NO";
   color: color-mix(in oklch, var(--vmc-color-vault-800) 32%, transparent);
 }
-
-/* ── V5 · Notion Tint · same-hue background ────────────────────────
-   Fondo 8% alpha del hue + texto del MISMO hue oscurecido + radius sm
-   El truco anti-botón: texto y fondo del mismo hue (no blanco sobre fill)
-   Activo = bg vault 8% + texto vault-700 · Inactivo = bg gray 4% + texto muted */
-.cond--tint .cond-chip {
-  width: calc(50% - 4px);
-  height: 38px;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: left;
-  gap: 8px;
-  font-size: 10.5px;
-  font-weight: 500;
-  line-height: 1.18;
-  border-radius: 4px;
-  border: none;
-  box-shadow: none;
-  text-shadow: none;
-  background-image: none;
-}
-.cond--tint .cond-chip::before {
-  content: "";
-  flex: 0 0 6px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-.cond--tint .cond-chip--active {
-  background: color-mix(in oklch, var(--vmc-color-vault-500) 9%, transparent);
+.cond--def .cond-chip[data-value]::after {
+  content: attr(data-value);
   color: var(--vmc-color-vault-700);
+}
+
+/* ── V2 · Check + Dash · iconos en lugar de SÍ/NO ──────────────────
+   Mismo layout que V1 · ✓ vault para activo · — muted para inactivo */
+.cond--check {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 18px;
+}
+.cond--check .cond-chip {
+  justify-content: space-between;
+  width: 100%;
+  min-height: 28px;
+  padding: 4px 0;
+  border-bottom: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+}
+.cond--check .cond-chip:last-child { border-bottom: none; }
+.cond--check .cond-chip::after {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.cond--check .cond-chip--active {
+  color: var(--vmc-color-vault-800);
   font-weight: 600;
 }
-.cond--tint .cond-chip--active::before {
-  background: var(--vmc-color-vault-500);
+.cond--check .cond-chip--active::after {
+  content: "✓";
+  color: var(--vmc-color-vault-500);
 }
-.cond--tint .cond-chip--inactive {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 4%, transparent);
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 42%, transparent);
-  font-weight: 500;
+.cond--check .cond-chip--inactive {
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 40%, transparent);
 }
-.cond--tint .cond-chip--inactive::before {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 28%, transparent);
+.cond--check .cond-chip--inactive::after {
+  content: "—";
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 30%, transparent);
+}
+.cond--check .cond-chip[data-value]::after {
+  content: attr(data-value);
+  font-family: var(--voyager-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--vmc-color-vault-700);
 }
 
-/* ── V6 · Linear Property Pill · gris neutro + dot color saturado ──
-   El truco anti-botón de Linear: el contenedor es gris NEUTRO (no del hue
-   de marca). La saturación de color vive SOLO en el dot 8px.
-   Resultado: lee "property tag" no "botón coloreado". Distinto de V5
-   (Notion Tint) que tiñe el fondo con el hue de marca. */
-.cond--linear .cond-chip {
-  width: calc(50% - 4px);
-  height: 36px;
-  padding: 0 10px;
+/* ── V3 · Solo Lo Que Aplica · Bring a Trailer ─────────────────────
+   Solo las propiedades activas se muestran arriba con icono + texto
+   Las inactivas viven en footer muted como lista inline · jerárquico */
+.cond--applies {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+}
+.cond--applies .applies-active {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cond--applies .applies-active .cond-chip {
+  width: 100%;
   align-items: center;
-  justify-content: flex-start;
-  text-align: left;
   gap: 8px;
+  padding: 2px 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--vmc-color-vault-800);
+}
+.cond--applies .applies-active .cond-chip::before {
+  content: "";
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--vmc-color-vault-500);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 13px 13px;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 13px 13px;
+}
+.cond--applies .cond-chip[data-icon="lock"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+}
+.cond--applies .cond-chip[data-icon="percent"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/></svg>");
+}
+.cond--applies .cond-chip[data-icon="users"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");
+}
+.cond--applies .cond-chip[data-icon="eye"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/></svg>");
+}
+.cond--applies .cond-chip[data-icon="money"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg>");
+}
+.cond--applies .applies-footer {
+  display: block;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+  font-size: 9.5px;
+  font-weight: 400;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 42%, transparent);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+.cond--applies .applies-footer .cond-chip {
+  display: inline;
+  width: auto;
+  background: transparent;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+  padding: 0;
+}
+.cond--applies .applies-footer .cond-chip::after {
+  content: " · ";
+  color: inherit;
+}
+.cond--applies .applies-footer .cond-chip:last-child::after { content: ""; }
+
+/* ── V4 · Stat Card · Stripe / Linear dashboard ────────────────────
+   Grid 2-col · label uppercase muted arriba + valor abajo · 3 filas */
+.cond--stat {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+  padding: 14px 16px;
+  align-content: center;
+}
+.cond--stat .cond-chip {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 38px;
+  padding: 2px 0;
+  text-align: left;
+}
+.cond--stat .stat-label {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 50%, transparent);
+}
+.cond--stat .stat-value {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.cond--stat .cond-chip--active .stat-value {
+  color: var(--vmc-color-vault-800);
+}
+.cond--stat .cond-chip--inactive .stat-value {
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+  font-weight: 500;
+}
+
+/* ── V5 · Icon Card · Airbnb amenities ─────────────────────────────
+   Grid 2-col · icono outline + texto · inactivas tachadas con opacidad */
+.cond--icon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  padding: 14px 16px;
+  align-content: center;
+}
+.cond--icon .cond-chip {
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 30px;
+  padding: 2px 0;
   font-size: 10.5px;
   font-weight: 500;
-  line-height: 1.18;
-  border-radius: 6px;
-  border: none;
-  box-shadow: none;
-  text-shadow: none;
-  background-image: none;
-  background: oklch(0.965 0.002 220);
+  text-align: left;
 }
-.cond--linear .cond-chip::before {
+.cond--icon .cond-chip::before {
   content: "";
-  flex: 0 0 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--vmc-color-vault-500);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 15px 15px;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 15px 15px;
 }
-.cond--linear .cond-chip--active {
+.cond--icon .cond-chip[data-icon="lock"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+}
+.cond--icon .cond-chip[data-icon="eye"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/></svg>");
+}
+.cond--icon .cond-chip[data-icon="percent"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/></svg>");
+}
+.cond--icon .cond-chip[data-icon="users"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");
+}
+.cond--icon .cond-chip[data-icon="money"]::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg>");
+}
+.cond--icon .cond-chip--active {
   color: var(--vmc-color-vault-800);
   font-weight: 500;
 }
-.cond--linear .cond-chip--active::before {
-  background: var(--vmc-color-vault-500);
+.cond--icon .cond-chip--inactive {
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 35%, transparent);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in oklch, var(--vmc-color-vault-800) 28%, transparent);
+  text-decoration-thickness: 1px;
 }
-.cond--linear .cond-chip--inactive {
-  color: color-mix(in oklch, var(--vmc-color-vault-800) 40%, transparent);
+.cond--icon .cond-chip--inactive::before {
+  background-color: color-mix(in oklch, var(--vmc-color-vault-800) 32%, transparent);
+}
+
+/* ── V6 · Cinematic Premium · Stat Card + vault/live gradient frame
+   Layout Stat Card · línea superior gradiente vault cinematic
+   Línea inferior gradiente live (vault→naranja) · firma de marca */
+.cond--premium {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+  padding: 14px 16px;
+  align-content: center;
+}
+.cond--premium .cond-chip {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 38px;
+  padding: 2px 0;
+  text-align: left;
+}
+.cond--premium .stat-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 50%, transparent);
+}
+.cond--premium .stat-label::before {
+  content: "";
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg,
+    var(--vmc-color-vault-500) 0%,
+    var(--vmc-color-vault-700) 60%,
+    var(--vmc-color-orange-500) 100%);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 12px 12px;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 12px 12px;
+}
+.cond--premium .cond-chip--inactive .stat-label::before {
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 32%, transparent);
+}
+.cond--premium .cond-chip[data-icon="lock"] .stat-label::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+}
+.cond--premium .cond-chip[data-icon="eye"] .stat-label::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/></svg>");
+}
+.cond--premium .cond-chip[data-icon="percent"] .stat-label::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/></svg>");
+}
+.cond--premium .cond-chip[data-icon="users"] .stat-label::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>");
+}
+.cond--premium .cond-chip[data-icon="money"] .stat-label::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg>");
+}
+.cond--premium .stat-value {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  padding-left: 16px;
+}
+.cond--premium .cond-chip--active .stat-value {
+  color: var(--vmc-color-vault-800);
+}
+.cond--premium .cond-chip--inactive .stat-value {
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
   font-weight: 500;
-}
-.cond--linear .cond-chip--inactive::before {
-  background: color-mix(in oklch, var(--vmc-color-vault-800) 22%, transparent);
 }
 </style>
 </head>
 <body>
 
 <!-- ════════════════════════════════════════════════════════
-     Conditions · variantes (sin estados estáticos · no interactivo)
+     Conditions · 6 variantes anti-button (UX research aplicado)
+     V1 foundation + V2-V5 iteraciones + V6 cinematic premium
      ════════════════════════════════════════════════════════ -->
 <div class="catalog-row">
 
-  <!-- ▸ VARIANT V1 · Edge Marker (research-aligned) ─────────── -->
-  <div class="variant-slot" data-variant="v1-marker">
-    <span class="variant-label">V1 · Edge Marker</span>
-    <span class="variant-sublabel">barra vault 2px · sin contenedor · Bloomberg data row</span>
-    <article class="cond cond--marker" aria-label="Condiciones de subasta">
-      <div class="cond-chip cond-chip--active">Con Precio Reserva</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Visitas</div>
-      <div class="cond-chip cond-chip--active">Con Comisión</div>
-      <div class="cond-chip cond-chip--active">Cuota mínima de participantes: 2</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Financiamiento</div>
+  <!-- ▸ VARIANT V1 · Check + Dash · iconos en lugar de SÍ/NO ─────── -->
+  <div class="variant-slot" data-variant="v1-check">
+    <span class="variant-label">V1 · Check + Dash</span>
+    <span class="variant-sublabel">✓ vault activo · — muted inactivo · nada parece tocable</span>
+    <article class="cond cond--check" aria-label="Condiciones de subasta">
+      <div class="cond-chip cond-chip--active">Precio reserva</div>
+      <div class="cond-chip cond-chip--inactive">Opción a visitas</div>
+      <div class="cond-chip cond-chip--active">Comisión</div>
+      <div class="cond-chip cond-chip--active" data-value="2">Cuota mínima participantes</div>
+      <div class="cond-chip cond-chip--inactive">Opción a financiamiento</div>
     </article>
   </div>
 
-  <!-- ▸ VARIANT V2 · Solid Vault Row (research-aligned) ───── -->
-  <div class="variant-slot" data-variant="v2-solid">
-    <span class="variant-label">V2 · Solid Vault Row</span>
-    <span class="variant-sublabel">vault fill flat · sin barra · sin gloss · data row dark</span>
-    <article class="cond cond--solid" aria-label="Condiciones de subasta">
-      <div class="cond-chip cond-chip--active">Con Precio Reserva</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Visitas</div>
-      <div class="cond-chip cond-chip--active">Con Comisión</div>
-      <div class="cond-chip cond-chip--active">Cuota mínima de participantes: 2</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Financiamiento</div>
+  <!-- ▸ VARIANT V2 · Solo Lo Que Aplica · Bring a Trailer ─────────── -->
+  <div class="variant-slot" data-variant="v2-applies">
+    <span class="variant-label">V2 · Solo Lo Que Aplica</span>
+    <span class="variant-sublabel">Bring a Trailer · activas con icono · ausentes en footer</span>
+    <article class="cond cond--applies" aria-label="Condiciones de subasta">
+      <div class="applies-active">
+        <div class="cond-chip cond-chip--active" data-icon="lock">Con precio reserva</div>
+        <div class="cond-chip cond-chip--active" data-icon="percent">Con comisión</div>
+        <div class="cond-chip cond-chip--active" data-icon="users">Cuota mínima · 2 participantes</div>
+      </div>
+      <div class="applies-footer">
+        <span class="cond-chip cond-chip--inactive">Sin opción a visitas</span>
+        <span class="cond-chip cond-chip--inactive">Sin financiamiento</span>
+      </div>
     </article>
   </div>
 
-  <!-- ▸ VARIANT V3 · Inline Glyph List · RM Sotheby's + Apple HIG ─── -->
-  <div class="variant-slot" data-variant="v3-glyph">
-    <span class="variant-label">V3 · Inline Glyph List</span>
-    <span class="variant-sublabel">RM Sotheby's · Apple HIG · pure typography · cero contenedor</span>
-    <article class="cond cond--glyph" aria-label="Condiciones de subasta">
-      <span class="cond-chip cond-chip--active">Con Precio Reserva</span>
-      <span class="cond-chip cond-chip--inactive">Sin Opción a Visitas</span>
-      <span class="cond-chip cond-chip--active">Con Comisión</span>
-      <span class="cond-chip cond-chip--active">Cuota mínima de participantes: 2</span>
-      <span class="cond-chip cond-chip--inactive">Sin Opción a Financiamiento</span>
+  <!-- ▸ VARIANT V3 · Stat Card · Stripe / Linear dashboard ────────── -->
+  <div class="variant-slot" data-variant="v3-stat">
+    <span class="variant-label">V3 · Stat Card</span>
+    <span class="variant-sublabel">Stripe · Linear dashboard · label muted arriba + valor abajo</span>
+    <article class="cond cond--stat" aria-label="Condiciones de subasta">
+      <div class="cond-chip cond-chip--active">
+        <span class="stat-label">Precio reserva</span>
+        <span class="stat-value">Con reserva</span>
+      </div>
+      <div class="cond-chip cond-chip--inactive">
+        <span class="stat-label">Opción a visitas</span>
+        <span class="stat-value">No disponible</span>
+      </div>
+      <div class="cond-chip cond-chip--active">
+        <span class="stat-label">Comisión</span>
+        <span class="stat-value">7.5%</span>
+      </div>
+      <div class="cond-chip cond-chip--active">
+        <span class="stat-label">Participantes</span>
+        <span class="stat-value">Mínimo 2</span>
+      </div>
+      <div class="cond-chip cond-chip--inactive">
+        <span class="stat-label">Financiamiento</span>
+        <span class="stat-value">No aplica</span>
+      </div>
     </article>
   </div>
 
-  <!-- ▸ VARIANT V4 · Definition Row · Stripe + IBM Carbon ────────── -->
-  <div class="variant-slot" data-variant="v4-def">
-    <span class="variant-label">V4 · Definition Row</span>
-    <span class="variant-sublabel">Stripe · Carbon · 2-col tabular · specs sheet</span>
-    <article class="cond cond--def" aria-label="Condiciones de subasta">
-      <div class="cond-chip cond-chip--active">Con Precio Reserva</div>
-      <div class="cond-chip cond-chip--inactive">Con Opción a Visitas</div>
-      <div class="cond-chip cond-chip--active">Con Comisión</div>
-      <div class="cond-chip cond-chip--active">Cuota mínima de participantes: 2</div>
-      <div class="cond-chip cond-chip--inactive">Con Opción a Financiamiento</div>
+  <!-- ▸ VARIANT V4 · Icon Card · Airbnb amenities ─────────────────── -->
+  <div class="variant-slot" data-variant="v4-icon">
+    <span class="variant-label">V4 · Icon Card</span>
+    <span class="variant-sublabel">Airbnb amenities · icono + texto · inactivas tachadas</span>
+    <article class="cond cond--icon" aria-label="Condiciones de subasta">
+      <div class="cond-chip cond-chip--active" data-icon="lock">Con precio reserva</div>
+      <div class="cond-chip cond-chip--inactive" data-icon="eye">Opción a visitas</div>
+      <div class="cond-chip cond-chip--active" data-icon="percent">Con comisión</div>
+      <div class="cond-chip cond-chip--active" data-icon="users">Mín. 2 participantes</div>
+      <div class="cond-chip cond-chip--inactive" data-icon="money">Financiamiento</div>
     </article>
   </div>
 
-  <!-- ▸ VARIANT V5 · Notion Tint · same-hue tint ─────────────────── -->
-  <div class="variant-slot" data-variant="v5-tint">
-    <span class="variant-label">V5 · Notion Tint</span>
-    <span class="variant-sublabel">Notion · same-hue tint · radius sm · texto y fondo mismo hue</span>
-    <article class="cond cond--tint" aria-label="Condiciones de subasta">
-      <div class="cond-chip cond-chip--active">Con Precio Reserva</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Visitas</div>
-      <div class="cond-chip cond-chip--active">Con Comisión</div>
-      <div class="cond-chip cond-chip--active">Cuota mínima de participantes: 2</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Financiamiento</div>
-    </article>
-  </div>
-
-  <!-- ▸ VARIANT V6 · Linear Property Pill · gris neutro + dot saturado -->
-  <div class="variant-slot" data-variant="v6-linear">
-    <span class="variant-label">V6 · Linear Property Pill</span>
-    <span class="variant-sublabel">Linear · gris neutro · color saturado solo en el dot 8px</span>
-    <article class="cond cond--linear" aria-label="Condiciones de subasta">
-      <div class="cond-chip cond-chip--active">Con Precio Reserva</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Visitas</div>
-      <div class="cond-chip cond-chip--active">Con Comisión</div>
-      <div class="cond-chip cond-chip--active">Cuota mínima de participantes: 2</div>
-      <div class="cond-chip cond-chip--inactive">Sin Opción a Financiamiento</div>
+  <!-- ▸ VARIANT V5 · Cinematic Premium · vault + live gradient frame -->
+  <div class="variant-slot" data-variant="v5-premium">
+    <span class="variant-label">V5 · Cinematic Premium</span>
+    <span class="variant-sublabel">Stat Card + iconos con gradiente cinematic vault → live</span>
+    <article class="cond cond--premium" aria-label="Condiciones de subasta">
+      <div class="cond-chip cond-chip--active" data-icon="lock">
+        <span class="stat-label">Precio reserva</span>
+        <span class="stat-value">Con reserva</span>
+      </div>
+      <div class="cond-chip cond-chip--inactive" data-icon="eye">
+        <span class="stat-label">Opción a visitas</span>
+        <span class="stat-value">No disponible</span>
+      </div>
+      <div class="cond-chip cond-chip--active" data-icon="percent">
+        <span class="stat-label">Comisión</span>
+        <span class="stat-value">7.5%</span>
+      </div>
+      <div class="cond-chip cond-chip--active" data-icon="users">
+        <span class="stat-label">Participantes</span>
+        <span class="stat-value">Mínimo 2</span>
+      </div>
+      <div class="cond-chip cond-chip--inactive" data-icon="money">
+        <span class="stat-label">Financiamiento</span>
+        <span class="stat-value">No aplica</span>
+      </div>
     </article>
   </div>
 
 </div>
 
+<script src="variant-filter.js"></script>
 <script src="_iframe-resize.js"></script>
 </body>
 </html>

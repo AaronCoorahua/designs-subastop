@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sidebar · 226 × 441 — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─── Tokens base · compartido entre componentes desktop ────────── */
+:root {
+  --vmc-color-vault-200:   oklch(0.87 0.09 285);
+  --vmc-color-vault-300:   oklch(0.80 0.12 285);
+  --vmc-color-vault-400:   oklch(0.55 0.20 285);
+  --vmc-color-vault-500:   oklch(0.45 0.20 285);
+  --vmc-color-vault-600:   oklch(0.38 0.20 285);
+  --vmc-color-vault-700:   oklch(0.30 0.20 285);
+  --vmc-color-vault-800:   oklch(0.22 0.18 285);
+  --vmc-color-vault-900:   oklch(0.15 0.27 278);
+
+  --vmc-color-orange-400:  oklch(0.78 0.16 60);
+  --vmc-color-orange-500:  oklch(0.72 0.16 55);
+  --vmc-color-orange-600:  oklch(0.66 0.17 50);
+
+  --vmc-color-base-white:  oklch(1 0 0);
+
+  --voyager-text-on-dark:    oklch(1 0 0);
+  --voyager-text-on-surface: oklch(0.15 0.008 200);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  --vmc-radius-sm:   4px;
+  --vmc-radius-md:   8px;
+
+  --voyager-duration-micro:    150ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 24px 16px;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow-x: hidden;
+}
+
+/* ─── Scaffold catalog · compartido ─────────────────────────────── */
+.catalog-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: flex-start;
+  gap: 40px 32px; padding: 16px 4px 32px;
+}
+.variant-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.variant-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  text-align: center;
+}
+.variant-sublabel {
+  font-family: var(--voyager-font-body);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR · Cinematic Vault
+   Brand area  226 × 80   (logo)
+   Nav area    226 × 361  (hug)
+   ═══════════════════════════════════════════════════════════════ */
+.sbr {
+  width: 226px;
+  background: linear-gradient(180deg,
+    var(--vmc-color-vault-900) 0%,
+    var(--vmc-color-vault-800) 100%);
+  display: flex; flex-direction: column;
+  box-shadow:
+    0 12px 32px oklch(0.15 0.27 278 / 22%),
+    inset 0 1px 0 oklch(1 0 0 / 6%);
+}
+
+/* ── Brand area · 226 × 80 ─────────────────────────────────────── */
+.sbr-brand {
+  width: 100%;
+  height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 16px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%,
+      oklch(0.30 0.20 285 / 35%) 0%,
+      transparent 70%);
+}
+.sbr-brand::after {
+  content: '';
+  position: absolute;
+  left: 16px; right: 16px; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    oklch(1 0 0 / 10%) 50%,
+    transparent 100%);
+}
+.sbr-brand img {
+  display: block;
+  max-width: 100%;
+  max-height: 48px;
+  height: auto;
+  width: auto;
+  filter: drop-shadow(0 2px 6px oklch(0 0 0 / 30%));
+}
+
+/* ── Nav area · 226 × 361 (hug) ────────────────────────────────── */
+.sbr-nav {
+  display: flex; flex-direction: column;
+  padding: 18px 0 22px;
+  gap: 2px;
+}
+
+.sbr-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 88%, transparent);
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  position: relative;
+  cursor: pointer;
+  transition:
+    background var(--voyager-duration-micro) var(--voyager-ease-default),
+    color var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.sbr-item:hover {
+  background: oklch(1 0 0 / 6%);
+  color: var(--vmc-color-base-white);
+}
+
+.sbr-item.is-active {
+  background: oklch(1 0 0 / 8%);
+  color: var(--vmc-color-base-white);
+}
+
+.sbr-item-icon {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 80%, transparent);
+}
+.sbr-item-icon svg {
+  width: 22px; height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sbr-item:hover .sbr-item-icon,
+.sbr-item.is-active .sbr-item-icon {
+  color: var(--vmc-color-base-white);
+}
+
+.sbr-item-label {
+  flex: 1 1 auto;
+}
+
+.sbr-item-chevron {
+  width: 16px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 45%, transparent);
+  transition: color var(--voyager-duration-micro) var(--voyager-ease-default),
+              transform var(--voyager-duration-micro) var(--voyager-ease-default);
+}
+.sbr-item-chevron svg {
+  width: 14px; height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sbr-item:hover .sbr-item-chevron {
+  color: color-mix(in oklch, var(--vmc-color-base-white) 75%, transparent);
+  transform: translateX(2px);
+}
+
+/* ── Section divider (SOPORTE) ─────────────────────────────────── */
+.sbr-section {
+  margin: 16px 18px 6px;
+  font-family: var(--voyager-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 38%, transparent);
+}
+</style>
+</head>
+<body>
+  <main class="catalog-row" aria-label="Sidebar — Voyager upgrade">
+
+    <!-- ── V1 · Cinematic Vault ─────────────────────────────────── -->
+    <section class="variant-slot" data-variant="v1-cinematic">
+      <p class="variant-label">V1 · Cinematic Vault</p>
+      <p class="variant-sublabel">brand 226×80 · nav 226×361 hug</p>
+
+      <aside class="sbr" aria-label="Navegación principal">
+
+        <!-- Brand · 226 × 80 -->
+        <div class="sbr-brand">
+          <img src="../../../logo-preview.png" alt="VMC Subastas — Powered by Subastop.Co" />
+        </div>
+
+        <!-- Nav · 226 × 361 hug -->
+        <nav class="sbr-nav" aria-label="Secciones">
+
+          <a href="#" class="sbr-item is-active">
+            <span class="sbr-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg>
+            </span>
+            <span class="sbr-item-label">Hoy</span>
+            <span class="sbr-item-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <a href="#" class="sbr-item">
+            <span class="sbr-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M16.5 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H7"/></svg>
+            </span>
+            <span class="sbr-item-label">Tipo de oferta</span>
+            <span class="sbr-item-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <a href="#" class="sbr-item">
+            <span class="sbr-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3.5l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1L3.2 9.9l6.1-.9L12 3.5z"/></svg>
+            </span>
+            <span class="sbr-item-label">Categorías</span>
+            <span class="sbr-item-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <a href="#" class="sbr-item">
+            <span class="sbr-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+            </span>
+            <span class="sbr-item-label">Empresas</span>
+            <span class="sbr-item-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <p class="sbr-section">Soporte</p>
+
+          <a href="#" class="sbr-item">
+            <span class="sbr-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="sbr-item-label">Centro de ayuda</span>
+            <span class="sbr-item-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+
+        </nav>
+
+      </aside>
+    </section>
+
+  </main>
+
+  <script src="variant-filter.js"></script>
+  <script src="_iframe-resize.js"></script>
+</body>
+</html>

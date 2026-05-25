@@ -418,15 +418,18 @@ html, body {
 .btn-iridescent span { position: relative; z-index: 2; }
 .btn-iridescent:hover {
   --vbtn-angle: 220deg;
-  --vbtn-stop-a: var(--vmc-color-orange-400);
-  --vbtn-stop-b: var(--vmc-color-vault-400);
+  --vbtn-stop-a: oklch(0.84 0.11 70);   /* #FBC47D · light peach (Figma hover) */
+  --vbtn-stop-b: oklch(0.70 0.16 290);  /* #AE8FFF · light vault (Figma hover) */
   transform: translateY(-2px) scale(1.01);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 10px 28px oklch(0.45 0.20 285 / 35%),
-    0 4px 10px  oklch(0.66 0.17 50 / 38%);
+    inset 0 1px 0 oklch(1 0 0 / 30%),
+    0 4px 10px oklch(0.66 0.17 50  / 0.40),
+    0 8px 24px oklch(0.55 0.20 285 / 0.35);
 }
-.btn-iridescent:hover::after { opacity: 0.45; filter: blur(18px); }
+.btn-iridescent:hover::after {
+  background: linear-gradient(135deg, oklch(0.84 0.11 70), oklch(0.70 0.16 290));
+  opacity: 0.55; filter: blur(20px);
+}
 .btn-iridescent:active {
   --vbtn-angle: 135deg;
   --vbtn-stop-a: var(--vmc-color-orange-700);
@@ -437,15 +440,18 @@ html, body {
 .btn-iridescent:active::after { opacity: 0; }
 .btn-iridescent--hover {
   --vbtn-angle: 220deg !important;
-  --vbtn-stop-a: var(--vmc-color-orange-400) !important;
-  --vbtn-stop-b: var(--vmc-color-vault-400)  !important;
+  --vbtn-stop-a: oklch(0.84 0.11 70)  !important;  /* #FBC47D · light peach */
+  --vbtn-stop-b: oklch(0.70 0.16 290) !important;  /* #AE8FFF · light vault */
   transform: translateY(-2px) scale(1.02) !important;
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 22%),
-    0 10px 28px oklch(0.45 0.20 285 / 35%),
-    0 4px 10px  oklch(0.66 0.17 50 / 38%) !important;
+    inset 0 1px 0 oklch(1 0 0 / 30%),
+    0 4px 10px oklch(0.66 0.17 50  / 0.40),
+    0 8px 24px oklch(0.55 0.20 285 / 0.35) !important;
 }
-.btn-iridescent--hover::after { opacity: 0.45 !important; filter: blur(18px) !important; }
+.btn-iridescent--hover::after {
+  background: linear-gradient(135deg, oklch(0.84 0.11 70), oklch(0.70 0.16 290)) !important;
+  opacity: 0.55 !important; filter: blur(20px) !important;
+}
 .btn-iridescent--pressed {
   --vbtn-angle: 135deg !important;
   --vbtn-stop-a: var(--vmc-color-orange-700) !important;

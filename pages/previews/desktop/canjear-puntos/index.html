@@ -92,43 +92,29 @@ html, body {
   font-weight: 500;
 }
 
-/* ── Tab bar ─────────────────────────────────────────────────────────────── */
-.tabbar {
+/* ── Catalog stack — 1 columna, variantes apiladas ──────────────────────── */
+.viewer {
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin: 0 0 32px;
-  border-radius: 8px;
-  background: var(--voyager-surface-section);
-  border: 1px solid var(--voyager-divider-section);
-  width: fit-content;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
 }
 
-.tab {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 10px 20px;
-  border-radius: 6px;
-  color: var(--voyager-text-secondary);
-  font-family: var(--voyager-font-ui);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
+.variant {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.tab:hover {
-  background: rgba(34, 0, 92, 0.06);
+
+.variant-label {
+  margin: 0;
   color: var(--voyager-color-vault);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
-.tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
-.tab[aria-selected="true"] {
-  color: var(--voyager-text-on-dark);
-  background: var(--voyager-color-vault);
-  box-shadow: 0 4px 8px rgba(34, 0, 92, 0.24);
-}
-
-.viewer { display: flex; justify-content: center; }
 
 /* ══════════════════════════════════════════════════════════════════════════
    Canvas 790 × 775.1 — corresponde al rect del wireframe original
@@ -142,7 +128,6 @@ html, body {
   background: var(--voyager-surface-section);
   box-shadow: var(--voyager-shadow-card);
 }
-.canvas[hidden] { display: none; }
 
 /* ── Outer card (bg-coral-100 reemplazo · 40px padding) ─────────────────── */
 .ec-outer {
@@ -256,20 +241,16 @@ html, body {
   <h1 class="page-title">Canjear Puntos</h1>
   <p class="page-meta">790 × 775.1 · 3 variantes · reutiliza canje-info + seleccionar-canje</p>
 
-  <div class="tabbar" role="tablist" aria-label="Variantes de canjear puntos">
-    <button type="button" class="tab" role="tab" id="tab-live"   aria-selected="true"  data-target="canvas-live">Live</button>
-    <button type="button" class="tab" role="tab" id="tab-vault"  aria-selected="false" data-target="canvas-vault">Vault</button>
-    <button type="button" class="tab" role="tab" id="tab-modern" aria-selected="false" data-target="canvas-modern">Modern</button>
-  </div>
-
   <div class="viewer">
 
     <!-- ════════════════════════════════════════════════════════════════════
          VARIANT 1 — LIVE
          Fondo gradiente live · header con text-shadow
          ═══════════════════════════════════════════════════════════════ -->
-    <div class="canvas" id="canvas-live" role="tabpanel" aria-labelledby="tab-live">
-      <div class="ec-outer ec-outer--live">
+    <div class="variant">
+      <p class="variant-label">Live</p>
+      <div class="canvas" id="canvas-live">
+        <div class="ec-outer ec-outer--live">
 
         <div class="ec-header">
           <p class="ec-header-text">
@@ -296,6 +277,7 @@ html, body {
           </div>
 
         </div>
+        </div>
       </div>
     </div>
 
@@ -303,33 +285,36 @@ html, body {
          VARIANT 2 — VAULT
          Fondo gradiente vault
          ═══════════════════════════════════════════════════════════════ -->
-    <div class="canvas" id="canvas-vault" role="tabpanel" aria-labelledby="tab-vault" hidden>
-      <div class="ec-outer ec-outer--vault">
+    <div class="variant">
+      <p class="variant-label">Vault</p>
+      <div class="canvas" id="canvas-vault">
+        <div class="ec-outer ec-outer--vault">
 
-        <div class="ec-header">
-          <p class="ec-header-text">
-            ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
-          </p>
-        </div>
-
-        <div class="ec-card">
-
-          <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
-            <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
-                 alt="subaspass">
-          </a>
-
-          <div class="ec-grid">
-            <div class="ec-zone">
-              <iframe src="../../../../components/desktop/canje-info/claude.html?embed=1&variant=Vault"
-                      scrolling="no" loading="lazy" title="Canje Info — Vault"></iframe>
-            </div>
-            <div class="ec-zone">
-              <iframe src="../../../../components/desktop/seleccionar-canje/claude.html?embed=1&variant=Vault"
-                      scrolling="no" loading="lazy" title="Seleccionar Canje — Vault"></iframe>
-            </div>
+          <div class="ec-header">
+            <p class="ec-header-text">
+              ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
+            </p>
           </div>
 
+          <div class="ec-card">
+
+            <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
+              <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
+                   alt="subaspass">
+            </a>
+
+            <div class="ec-grid">
+              <div class="ec-zone">
+                <iframe src="../../../../components/desktop/canje-info/claude.html?embed=1&variant=Vault"
+                        scrolling="no" loading="lazy" title="Canje Info — Vault"></iframe>
+              </div>
+              <div class="ec-zone">
+                <iframe src="../../../../components/desktop/seleccionar-canje/claude.html?embed=1&variant=Vault"
+                        scrolling="no" loading="lazy" title="Seleccionar Canje — Vault"></iframe>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -338,33 +323,36 @@ html, body {
          VARIANT 3 — MODERN
          Fondo transparente + delineado vault · header texto vault
          ═══════════════════════════════════════════════════════════════ -->
-    <div class="canvas" id="canvas-modern" role="tabpanel" aria-labelledby="tab-modern" hidden>
-      <div class="ec-outer ec-outer--modern">
+    <div class="variant">
+      <p class="variant-label">Modern</p>
+      <div class="canvas" id="canvas-modern">
+        <div class="ec-outer ec-outer--modern">
 
-        <div class="ec-header">
-          <p class="ec-header-text">
-            ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
-          </p>
-        </div>
-
-        <div class="ec-card">
-
-          <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
-            <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
-                 alt="subaspass">
-          </a>
-
-          <div class="ec-grid">
-            <div class="ec-zone">
-              <iframe src="../../../../components/desktop/canje-info/claude.html?embed=1&variant=Modern"
-                      scrolling="no" loading="lazy" title="Canje Info — Modern"></iframe>
-            </div>
-            <div class="ec-zone">
-              <iframe src="../../../../components/desktop/seleccionar-canje/claude.html?embed=1&variant=Modern"
-                      scrolling="no" loading="lazy" title="Seleccionar Canje — Modern"></iframe>
-            </div>
+          <div class="ec-header">
+            <p class="ec-header-text">
+              ¡Canjea <span class="ec-header-text-bold">Puntos VMC</span> usando tus <span class="ec-header-text-bold">SubasCoins!</span>
+            </p>
           </div>
 
+          <div class="ec-card">
+
+            <a href="https://www.vmcsubastas.com/subaspass" class="ec-banner" target="_blank" rel="noopener">
+              <img src="https://www.vmcsubastas.com/4app/assets/images/frontend/banner/canje-banner-subaspass-desktop.png"
+                   alt="subaspass">
+            </a>
+
+            <div class="ec-grid">
+              <div class="ec-zone">
+                <iframe src="../../../../components/desktop/canje-info/claude.html?embed=1&variant=Modern"
+                        scrolling="no" loading="lazy" title="Canje Info — Modern"></iframe>
+              </div>
+              <div class="ec-zone">
+                <iframe src="../../../../components/desktop/seleccionar-canje/claude.html?embed=1&variant=Modern"
+                        scrolling="no" loading="lazy" title="Seleccionar Canje — Modern"></iframe>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -372,27 +360,5 @@ html, body {
   </div>
 
 </main>
-
-<script>
-(function () {
-  const tabs    = document.querySelectorAll('[role="tab"]');
-  const panels  = document.querySelectorAll('[role="tabpanel"]');
-
-  function activate(targetId) {
-    tabs.forEach(function (t) {
-      const isActive = t.getAttribute('data-target') === targetId;
-      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-    });
-    panels.forEach(function (p) {
-      if (p.id === targetId) { p.removeAttribute('hidden'); }
-      else { p.setAttribute('hidden', ''); }
-    });
-  }
-
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () { activate(tab.getAttribute('data-target')); });
-  });
-})();
-</script>
 </body>
 </html>

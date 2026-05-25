@@ -79,47 +79,28 @@ html, body {
   font-weight: 500;
 }
 
-.tabbar {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin: 0 0 32px;
-  border-radius: 4px;
-  background: var(--voyager-surface-section);
-  border: 1px solid var(--voyager-divider-section);
-  width: fit-content;
-}
-
-.tab {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: var(--voyager-text-secondary);
-  font-family: var(--voyager-font-ui);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 150ms cubic-bezier(0.3,0,0,1), color 150ms cubic-bezier(0.3,0,0,1);
-}
-
-.tab:hover {
-  background: color-mix(in srgb, var(--voyager-color-vault) 6%, transparent);
-  color: var(--voyager-color-vault);
-}
-
-.tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
-
-.tab[aria-selected="true"] {
-  color: var(--voyager-text-on-dark);
-  background: var(--voyager-color-vault);
-  box-shadow: 0 4px 8px color-mix(in srgb, var(--voyager-color-vault) 24%, transparent);
-}
-
+/* ── Catalog stack — 1 columna, variantes apiladas ──────────────────────── */
 .viewer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.variant {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.variant-label {
+  margin: 0;
+  color: var(--voyager-color-vault);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 /* ===== Canvas — composición de claude.html existentes ===== */
@@ -691,16 +672,12 @@ html, body {
     <h1 class="page-title">Zona</h1>
     <p class="page-meta">3 variantes</p>
 
-    <div class="tabbar" role="tablist" aria-label="Variantes de la zona">
-      <button type="button" class="tab" role="tab" id="tab-1" aria-selected="true"  data-target="canvas-1">Default</button>
-      <button type="button" class="tab" role="tab" id="tab-2" aria-selected="false" data-target="canvas-2">Hover</button>
-      <button type="button" class="tab" role="tab" id="tab-3" aria-selected="false" data-target="canvas-3">Ancho</button>
-    </div>
-
     <div class="viewer">
 
       <!-- ====================== VARIANTE 1 — DEFAULT ====================== -->
-      <div class="canvas" id="canvas-1" role="tabpanel" aria-labelledby="tab-1">
+      <div class="variant">
+      <p class="variant-label">Default</p>
+      <div class="canvas" id="canvas-1">
         <div class="zone zone-profile">
           <iframe src="../../../../components/desktop/user-profile-card/claude.html?embed=1&variant=Default" scrolling="no" loading="lazy" title="User Profile Card"></iframe>
         </div>
@@ -721,8 +698,12 @@ html, body {
         </div>
       </div>
 
+      </div>
+
       <!-- ====================== VARIANTE 2 — HOVER ====================== -->
-      <div class="canvas" id="canvas-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+      <div class="variant">
+      <p class="variant-label">Hover</p>
+      <div class="canvas" id="canvas-2">
         <div class="zone zone-profile">
           <iframe src="../../../../components/desktop/user-profile-card/claude.html?embed=1&variant=Hover" scrolling="no" loading="lazy" title="User Profile Card"></iframe>
         </div>
@@ -743,8 +724,12 @@ html, body {
         </div>
       </div>
 
+      </div>
+
       <!-- ====================== VARIANTE 3 — ANCHO ====================== -->
-      <div class="canvas canvas--ancho" id="canvas-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+      <div class="variant">
+      <p class="variant-label">Ancho</p>
+      <div class="canvas canvas--ancho" id="canvas-3">
         <div class="zone zone-profile-v2">
           <iframe src="../../../../components/desktop/user-profile-card-v2/claude.html?embed=1&variant=Default" scrolling="no" loading="lazy" title="User Profile Card v2"></iframe>
         </div>
@@ -990,36 +975,9 @@ html, body {
           </div>
         </div>
       </div>
+      </div>
 
     </div>
   </main>
-
-<script>
-function handleTabClick(event) {
-  var clicked = event.currentTarget;
-  var tabs = document.querySelectorAll('.tab');
-  var canvases = document.querySelectorAll('.canvas');
-  var targetId = clicked.getAttribute('data-target');
-  var i = 0;
-  for (i = 0; i < tabs.length; i++) {
-    tabs[i].setAttribute('aria-selected', tabs[i] === clicked ? 'true' : 'false');
-  }
-  for (i = 0; i < canvases.length; i++) {
-    if (canvases[i].id === targetId) {
-      canvases[i].removeAttribute('hidden');
-    } else {
-      canvases[i].setAttribute('hidden', '');
-    }
-  }
-}
-
-(function bindTabs() {
-  var tabs = document.querySelectorAll('.tab');
-  var i = 0;
-  for (i = 0; i < tabs.length; i++) {
-    tabs[i].addEventListener('click', handleTabClick);
-  }
-})();
-</script>
 </body>
 </html>

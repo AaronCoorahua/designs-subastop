@@ -68,45 +68,29 @@ html, body {
   font-weight: 500;
 }
 
-/* ── Variant tabs ─────────────────────────────────────────────────────── */
-.variant-tabs {
+/* ── Catalog stack — 1 columna, variantes apiladas ──────────────────────── */
+.viewer {
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin: 0 0 32px;
-  border-radius: 4px;
-  background: var(--voyager-surface-section);
-  border: 1px solid var(--voyager-divider-section);
-  width: fit-content;
-}
-.variant-tab {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: var(--voyager-text-secondary);
-  font-family: var(--voyager-font-display);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 150ms cubic-bezier(0.3,0,0,1),
-    color      150ms cubic-bezier(0.3,0,0,1);
-}
-.variant-tab:hover:not(.is-active) {
-  background: color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
-  color: var(--voyager-color-vault);
-}
-.variant-tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
-.variant-tab.is-active {
-  color: var(--voyager-text-on-dark);
-  background: var(--voyager-color-vault);
-  box-shadow: 0 4px 8px color-mix(in oklch, var(--voyager-color-vault) 24%, transparent);
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
 }
 
-.variant-panel { display: none; }
-.variant-panel.is-active { display: flex; justify-content: center; }
+.variant {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.variant-label {
+  margin: 0;
+  color: var(--voyager-color-vault);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
 /* ── Mobile frame — 430 wide, centered ───────────────────────────────── */
 .mobile-frame {
@@ -137,45 +121,6 @@ html, body {
   background: transparent;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   ALL-VARIANTS GRID OVERRIDE
-   Muestra todas las variantes simultáneamente en columnas/filas (wrap).
-   ───────────────────────────────────────────────────────────────────────── */
-.page {
-  max-width: min(1600px, 100% - 48px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
-  column-gap: 32px;
-  row-gap: 48px;
-  align-items: start;
-  justify-items: center;
-}
-.breadcrumb,
-.page-title,
-.page-meta,
-.variant-tabs {
-  grid-column: 1 / -1;
-  justify-self: start;
-  width: 100%;
-}
-.variant-tabs { display: none; }
-.variant-panel,
-.variant-panel.is-active {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-.variant-panel::before {
-  content: attr(data-variant);
-  font-family: var(--voyager-font-display);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--voyager-text-secondary);
-}
 </style>
 </head>
 <body>
@@ -188,14 +133,11 @@ html, body {
     <h1 class="page-title">Editar Perfil</h1>
     <p class="page-meta">430 wide · Header · Your Profile Info (390×468) · Your Contact Info (390×220.5) · Logout (200×52) · Footer · 3 variantes (Vault Normal · New Style · Vault New Style)</p>
 
-    <nav class="variant-tabs" role="tablist" aria-label="Variantes">
-      <button class="variant-tab is-active" role="tab" aria-selected="true" data-variant="vault-normal" type="button">Vault Normal</button>
-      <button class="variant-tab" role="tab" aria-selected="false" data-variant="new-style" type="button">New Style</button>
-      <button class="variant-tab" role="tab" aria-selected="false" data-variant="vault-new-style" type="button">Vault New Style</button>
-    </nav>
+    <div class="viewer">
 
     <!-- ── Variante 1: Vault Normal ───────────────────────────────────── -->
-    <section class="variant-panel is-active" data-variant="vault-normal">
+    <section class="variant">
+      <p class="variant-label">Vault Normal</p>
       <div class="mobile-frame" aria-label="Editar Perfil · Vault Normal">
 
         <iframe
@@ -229,7 +171,8 @@ html, body {
     </section>
 
     <!-- ── Variante 2: New Style ──────────────────────────────────────── -->
-    <section class="variant-panel" data-variant="new-style">
+    <section class="variant">
+      <p class="variant-label">New Style</p>
       <div class="mobile-frame" aria-label="Editar Perfil · New Style">
 
         <iframe
@@ -263,7 +206,8 @@ html, body {
     </section>
 
     <!-- ── Variante 3: Vault New Style (psec cinematic vault) ─────────── -->
-    <section class="variant-panel" data-variant="vault-new-style">
+    <section class="variant">
+      <p class="variant-label">Vault New Style</p>
       <div class="mobile-frame" aria-label="Editar Perfil · Vault New Style">
 
         <iframe
@@ -295,26 +239,8 @@ html, body {
 
       </div>
     </section>
+
+    </div>
   </main>
-
-  <script>
-    const tabs = Array.from(document.querySelectorAll(".variant-tab"));
-    const panels = Array.from(document.querySelectorAll(".variant-panel"));
-
-    function activate(variant) {
-      tabs.forEach(function (tab) {
-        const isActive = tab.dataset.variant === variant;
-        tab.classList.toggle("is-active", isActive);
-        tab.setAttribute("aria-selected", String(isActive));
-      });
-      panels.forEach(function (panel) {
-        panel.classList.toggle("is-active", panel.dataset.variant === variant);
-      });
-    }
-
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () { activate(tab.dataset.variant); });
-    });
-  </script>
 </body>
 </html>

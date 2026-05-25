@@ -120,7 +120,6 @@ html, body {
 /* ============================================================
    MOBILE FRAME — 430px contenedor
    ============================================================ */
-.preview-panel { display: flex; justify-content: center; }
 
 .mobile-frame {
   width: 430px;
@@ -197,14 +196,14 @@ html, body {
 }
 
 /* ============================================================
-   New Style — toggle via body.is-new-style
+   New Style — toggle via .is-new-style
    ============================================================ */
 @property --vbtn-angle {
   syntax: '<angle>';
   inherits: false;
   initial-value: 90deg;
 }
-body.is-new-style .mf-header-cta {
+.is-new-style .mf-header-cta {
   --vbtn-angle:  90deg;
   --vbtn-stop-a: oklch(0.72 0.16 55);
   --vbtn-stop-b: oklch(0.30 0.20 285);
@@ -235,7 +234,7 @@ body.is-new-style .mf-header-cta {
     transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
     box-shadow 0.25s ease;
 }
-body.is-new-style .mf-header-cta::after {
+.is-new-style .mf-header-cta::after {
   content: '';
   position: absolute;
   inset: -4px;
@@ -247,10 +246,10 @@ body.is-new-style .mf-header-cta::after {
   pointer-events: none;
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
-body.is-new-style .mf-header-cta .avatar {
+.is-new-style .mf-header-cta .avatar {
   background: oklch(0 0 0 / 18%);
 }
-body.is-new-style .mf-header-cta:hover {
+.is-new-style .mf-header-cta:hover {
   --vbtn-angle:  135deg;
   --vbtn-stop-a: oklch(0.80 0.13 65);
   --vbtn-stop-b: oklch(0.44 0.18 285);
@@ -258,11 +257,11 @@ body.is-new-style .mf-header-cta:hover {
     inset 0 1px 0 oklch(1 0 0 / 36%),
     0 6px 16px oklch(0.72 0.16 55 / 36%);
 }
-body.is-new-style .mf-header-cta:hover::after {
+.is-new-style .mf-header-cta:hover::after {
   opacity: 1;
   filter: blur(18px);
 }
-body.is-new-style .mf-header-cta:active {
+.is-new-style .mf-header-cta:active {
   --vbtn-angle:  180deg;
   --vbtn-stop-a: oklch(0.55 0.18 35);
   --vbtn-stop-b: oklch(0.72 0.16 55);
@@ -271,37 +270,33 @@ body.is-new-style .mf-header-cta:active {
     inset 0 1px 0 oklch(1 0 0 / 18%),
     0 1px 3px oklch(0.55 0.18 35 / 45%);
 }
-body.is-new-style .mf-header-cta:active::after {
+.is-new-style .mf-header-cta:active::after {
   opacity: 0.5;
   filter: blur(8px);
 }
 
-.style-toggle {
+/* ── Catalog stack — 1 columna, variantes apiladas ──────────────────────── */
+.viewer {
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin: 0 auto 32px;
-  border-radius: 4px;
-  background: var(--voyager-color-surface-section);
-  border: 1px solid color-mix(in oklch, var(--voyager-color-vault) 8%, transparent);
-  width: fit-content;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
 }
-.style-toggle button {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: var(--voyager-text-secondary);
-  font-family: var(--voyager-font-display);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+
+.variant {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.style-toggle button.is-active {
-  color: var(--voyager-color-text-on-dark);
-  background: var(--voyager-color-vault);
-  box-shadow: 0 4px 8px color-mix(in oklch, var(--voyager-color-vault) 24%, transparent);
+
+.variant-label {
+  margin: 0;
+  color: var(--voyager-color-vault);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 /* ============================================================
@@ -1140,13 +1135,11 @@ body.is-new-style .mf-header-cta:active::after {
     <h1 class="page-title">Detalle V2</h1>
     <p class="page-meta">430 wide · hardcoded · sin iframes</p>
 
-    <div class="style-toggle" role="tablist" aria-label="Header style">
-      <button class="is-active" type="button" data-style="default" role="tab" aria-selected="true">Default</button>
-      <button type="button" data-style="new-style" role="tab" aria-selected="false">New Style</button>
-    </div>
+    <div class="viewer">
 
-    <div class="preview-panel">
-      <div class="mobile-frame" aria-label="Mobile preview — Detalle En Vivo V2">
+    <div class="variant">
+      <p class="variant-label">Default</p>
+      <div class="mobile-frame" aria-label="Mobile preview — Detalle En Vivo V2 · Default" data-style="default">
 
         <!-- 1 · HEADER -->
         <header class="mf-header">
@@ -1463,39 +1456,351 @@ body.is-new-style .mf-header-cta:active::after {
 
       </div>
     </div>
+
+    <div class="variant">
+      <p class="variant-label">New Style</p>
+      <div class="mobile-frame is-new-style" aria-label="Mobile preview — Detalle En Vivo V2 · New Style" data-style="new">
+
+        <!-- 1 · HEADER -->
+        <header class="mf-header">
+          <div class="header-left">
+            <button type="button" class="menu-btn" aria-label="Abrir menú">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.83" stroke-linecap="butt" aria-hidden="true">
+                <line x1="2.75" y1="6.42" x2="19.25" y2="6.42"></line>
+                <line x1="2.75" y1="11" x2="19.25" y2="11"></line>
+                <line x1="2.75" y1="15.58" x2="19.25" y2="15.58"></line>
+              </svg>
+            </button>
+            <img src="../../../../logo-preview.png" alt="VMC Subastas" class="brand-logo">
+          </div>
+          <button type="button" class="mf-header-cta">
+            <span class="avatar">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 12C14.7 12 17 9.8 17 7S14.7 2 12 2 7 4.2 7 7s2.3 5 5 5Zm0 2C8.7 14 2 15.7 2 19v1h20v-1c0-3.3-6.7-5-10-5Z"/>
+              </svg>
+            </span>
+            <span class="label">Ingresa</span>
+          </button>
+        </header>
+
+        <!-- 2 · IMAGE HEADER -->
+        <section class="mf-image-header" aria-label="Image Header">
+          <a href="#" class="back-btn" aria-label="Volver">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+              <path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <h1>Volkswagen Gol 2015</h1>
+          <p>Vendedor: SubasCars</p>
+        </section>
+
+        <div class="stack-body">
+
+          <!-- 3 · IMAGE SKELETON -->
+          <div class="skeleton-image" role="img" aria-label="Foto principal">
+            <p>Imagen</p>
+          </div>
+
+          <!-- 4 · DETAIL CARD · En Vivo -->
+          <article class="detail-card" aria-label="Detail Card En Vivo">
+            <div class="dc-header">
+              <div class="dc-header-top">
+                <div class="col left">
+                  <div>
+                    <span class="label-sm">Inicia</span>
+                    <span class="label-lg">miércoles 13</span>
+                  </div>
+                </div>
+                <div class="col right">
+                  <span class="time">01:35 pm</span>
+                </div>
+              </div>
+              <div class="dc-header-mid">
+                <div class="dc-indicators right">
+                  <span class="count">264</span>
+                  <span class="dc-icon-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none"><path d="M6.5 0C3.5 0 1 1.9 0 4.5 1 7.1 3.5 9 6.5 9 9.5 9 12 7.1 13 4.5 12 1.9 9.5 0 6.5 0ZM6.5 7.5C4.9 7.5 3.5 6.2 3.5 4.5 3.5 2.8 4.9 1.5 6.5 1.5 8.1 1.5 9.5 2.8 9.5 4.5 9.5 6.2 8.1 7.5 6.5 7.5ZM6.5 2.7C5.5 2.7 4.7 3.5 4.7 4.5 4.7 5.5 5.5 6.3 6.5 6.3 7.5 6.3 8.3 5.5 8.3 4.5 8.3 3.5 7.5 2.7 6.5 2.7Z" fill="currentColor"/></svg>
+                  </span>
+                </div>
+                <div class="dc-like-wrap">
+                  <button type="button" class="dc-like-btn" aria-label="Me interesa">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3ZM12.1 18.3L12 18.4 11.9 18.3C7.1 14 4 11.2 4 8.4 4 6.4 5.5 5 7.5 5 9 5 10.5 5.9 11.1 7.3H12.9C13.5 5.9 15 5 16.5 5 18.5 5 20 6.4 20 8.4 20 11.2 16.9 14 12.1 18.3Z" fill="currentColor"/></svg>
+                  </button>
+                  <span class="dc-like-count">1</span>
+                </div>
+                <div class="dc-indicators">
+                  <span class="dc-icon-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none"><path d="M11.1 5.9H10.1C10.2 6.2 10.3 6.5 10.3 6.8V10.6C10.3 10.8 10.3 10.9 10.2 11H11.9C12.5 11 13 10.5 13 9.9V7.8C13 6.8 12.2 5.9 11.1 5.9Z" fill="currentColor"/><path d="M2.7 6.8C2.7 6.5 2.8 6.2 2.9 5.9H1.9C0.8 5.9 0 6.8 0 7.8V9.9C0 10.5 0.5 11 1.1 11H2.8C2.7 10.9 2.7 10.8 2.7 10.6V6.8Z" fill="currentColor"/><path d="M7.6 5H5.4C4.3 5 3.5 5.8 3.5 6.8V10.6C3.5 10.8 3.6 11 3.8 11H9.2C9.4 11 9.5 10.8 9.5 10.6V6.8C9.5 5.8 8.7 5 7.6 5Z" fill="currentColor"/><path d="M6.5 0C5.3 0 4.2 1 4.2 2.3 4.2 3.1 4.7 3.8 5.4 4.2 5.7 4.4 6.1 4.5 6.5 4.5 6.9 4.5 7.3 4.4 7.6 4.2 8.3 3.8 8.8 3.1 8.8 2.3 8.8 1 7.7 0 6.5 0Z" fill="currentColor"/><path d="M2.5 2.1C1.6 2.1 0.8 2.9 0.8 3.8 0.8 4.7 1.6 5.5 2.5 5.5 2.8 5.5 3 5.4 3.2 5.3 3.6 5.2 3.8 4.9 4 4.6 4.2 4.3 4.2 4.1 4.2 3.8 4.2 2.9 3.5 2.1 2.5 2.1Z" fill="currentColor"/><path d="M10.5 2.1C9.5 2.1 8.8 2.9 8.8 3.8 8.8 4.1 8.8 4.3 9 4.6 9.2 4.9 9.4 5.2 9.8 5.3 10 5.4 10.2 5.5 10.5 5.5 11.4 5.5 12.2 4.7 12.2 3.8 12.2 2.9 11.4 2.1 10.5 2.1Z" fill="currentColor"/></svg>
+                  </span>
+                  <span class="count">0</span>
+                </div>
+              </div>
+            </div>
+            <div class="dc-body">
+              <p class="dc-tagline">¡Oportunidad para el que sabe!</p>
+              <button type="button" class="dc-cta">Participa</button>
+              <div class="dc-price">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 23" fill="none" aria-hidden="true">
+                  <path d="M11.3 21.8L1.9 17.8C0.4 17.1 0.4 15.1 1.9 14.5L11.3 10.4C11.8 10.2 12.3 10.2 12.8 10.4L22.2 14.5C23.7 15.1 23.7 17.1 22.2 17.8L12.8 21.8C12.3 22 11.8 22 11.3 21.8Z" fill="#9AFCF4"/>
+                  <path d="M12 23C11.7 23 11.3 22.9 11 22.8L1.5 18.6C0.6 18.2 0 17.4 0 16.4 0 15.4 0.6 14.5 1.5 14.2L11 10C11.7 9.7 12.4 9.7 13 10L22.6 14.2C23.4 14.5 24 15.4 24 16.4 24 17.4 23.4 18.2 22.6 18.6L13 22.8C12.7 22.9 12.3 23 12 23ZM12 11C11.8 11 11.7 11 11.5 11.1L1.9 15.3C1.5 15.5 1.2 15.9 1.2 16.4 1.2 16.9 1.5 17.3 1.9 17.5L11.5 21.7C11.8 21.8 12.2 21.8 12.5 21.7L22.1 17.5C22.5 17.3 22.8 16.9 22.8 16.4 22.8 15.9 22.5 15.5 22.1 15.3L12.5 11.1C12.3 11 12.2 11 12 11Z" fill="#367976"/>
+                  <path d="M12 0C7.1 0 3 4 3 8.8 3 13.6 7.1 17.7 12 17.7 17 17.7 21 13.6 21 8.8 21 4 17 0 12 0Z" fill="#367976"/>
+                  <path d="M14.9 10.6C14.9 9 13.6 8.6 12.5 8.3L12.5 8.3V6.5C12.9 6.6 13.4 6.8 13.7 7.2L14.8 6C14.2 5.3 13.3 4.9 12.5 4.8V3.5H11.8V4.8C10.4 5 9.2 5.9 9.2 7.4 9.2 9 10.5 9.5 11.6 9.8 11.7 9.8 11.7 9.8 11.8 9.8V11.5C11.2 11.4 10.6 11.1 10.2 10.6L9.1 11.8C9.8 12.7 10.8 13.1 11.8 13.2V14.5H12.5V13.2C13.8 13 14.9 12.2 14.9 10.6ZM11 7.2C11 6.8 11.3 6.5 11.8 6.5V8.1C11.3 7.9 11 7.7 11 7.2ZM12.5 11.5V10C12.9 10.2 13.2 10.4 13.2 10.8 13.2 11.2 12.9 11.5 12.5 11.5Z" fill="white"/>
+                </svg>
+                <span class="price-text"><span class="light">Precio Base:</span> <span class="strong">US$ 54,999</span></span>
+              </div>
+              <p class="dc-commission">Comisión: &gt;S&lt; 0</p>
+            </div>
+          </article>
+
+          <!-- 5 · AUCTION CONDITIONS · pills -->
+          <section class="auction-cond" aria-label="Auction Conditions">
+            <div class="pill active">Con Fee de Habilitacion</div>
+            <div class="pill active">Con Precio Reserva</div>
+            <div class="pill ghost">Sin Opción a Visitas</div>
+            <div class="pill ghost">Sin Comisión</div>
+            <div class="pill active">Cuota mínima de participantes: 2</div>
+          </section>
+
+          <!-- 6 · CONDICIONES DEL OFRECIMIENTO -->
+          <section class="cond-ofr is-open" aria-label="Condiciones del ofrecimiento">
+            <div class="cond-ofr-head" role="button" tabindex="0" aria-expanded="true">
+              <div class="cond-ofr-title-wrap">
+                <svg class="bracket tl" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M11 1H1v10"/></svg>
+                <h2>Condiciones del ofrecimiento</h2>
+                <svg class="bracket br" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M1 11h10V1"/></svg>
+              </div>
+              <span class="cond-ofr-chevron">
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </div>
+            <div class="cond-ofr-body">
+              <div class="cond-ofr-complexity">
+                <span class="label">
+                  Complejidad del ofrecimiento
+                  <span class="dots">
+                    <span class="dot on" aria-label="Fácil"></span>
+                    <span class="dot" aria-label="Regular"></span>
+                    <span class="dot" aria-label="Experto"></span>
+                  </span>
+                </span>
+              </div>
+              <div class="cond-typo">
+                <h3>1. Responsabilidades de los Participantes</h3>
+                <p><strong>Se detallan las responsabilidades que asumen los usuarios al consignar para participar en una oferta.</strong></p>
+                <ul>
+                  <li>Todo usuario confirma que ha leído y aceptado la última versión de nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos.html">Condiciones y Términos</a> de uso al consignar para participar en esta oferta.</li>
+                  <li>Al hacer una consignación, todo usuario conoce y acepta que es su responsabilidad disponer de una conexión estable a internet con un ancho de banda de mínimo 5Mbps.</li>
+                  <li>Es responsabilidad de cada participante acceder oportunamente a la sala y realizar por lo menos un bid válido.</li>
+                  <li>El incumplimiento de las responsabilidades como participante resulta en:
+                    <ul>
+                      <li>La retención del monto consignado hasta las 23:59:59 horas del día del proceso "En Vivo".</li>
+                      <li>La devolución de la consignación en SubasCoins.</li>
+                      <li>La pérdida de 15 puntos VMC y correspondiente afectación al Riesgo Usuario.</li>
+                    </ul>
+                  </li>
+                  <li>El Precio Reserva de la oferta podrá ser retirado durante el proceso "En Vivo".</li>
+                </ul>
+                <h3>2. Condiciones de Compra</h3>
+                <p><strong>Contemplan las responsabilidades del VENDEDOR y el GANADOR al ser habilitado.</strong></p>
+                <h4>A. Responsabilidades del Vendedor</h4>
+                <ul>
+                  <li>El vendedor tendrá 10 días hábiles para habilitar al ganador.</li>
+                  <li>El vendedor se reserva el derecho de habilitación del ganador a libre discreción.</li>
+                </ul>
+                <h4>B. Habilitación del Ganador</h4>
+                <ul>
+                  <li>El ganador deberá ser habilitado para poder iniciar el proceso de compra.</li>
+                  <li>De ser habilitado, el ganador deberá pagar US$ 200 por concepto de Fee de habilitación previo a la validación de documentos.</li>
+                </ul>
+                <h3>3. Condiciones generales</h3>
+                <p><strong>Contemplan las condiciones aplicables a todos los ofrecimientos de la plataforma.</strong></p>
+                <ul>
+                  <li>El vendedor ofrece el o los bienes como están y donde están.</li>
+                  <li>Todas las imágenes y características publicadas han sido remitidas por el vendedor.</li>
+                  <li>El o los bienes ofrecidos pueden presentar daños y/o faltantes.</li>
+                  <li>VMC Subastas nunca interviene en el proceso de compraventa ni en el de entrega de las ofertas.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7 · OFERTAS RELACIONADAS -->
+          <section class="related" aria-label="Ofertas Relacionadas">
+            <div class="related-head">
+              <div class="related-head-info">
+                <svg class="bracket bracket-tl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5.75 22C7.82107 22 9.5 20.3211 9.5 18.25L9.5 9.5H18.25C20.3211 9.5 22 7.82107 22 5.75C22 3.67893 20.3211 2 18.25 2L7 2C4.23858 2 2 4.23858 2 7L2 18.25C2 20.3211 3.67893 22 5.75 22Z" fill="currentColor"/>
+                </svg>
+                <span class="title">Ofertas Relacionadas</span>
+                <span class="sub">4 Ofertas</span>
+                <svg class="bracket bracket-br" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M18.25 2C16.1789 2 14.5 3.67893 14.5 5.75V14.5L5.75 14.5C3.67893 14.5 2 16.1789 2 18.25C2 20.3211 3.67893 22 5.75 22H17C19.7614 22 22 19.7614 22 17V5.75C22 3.67893 20.3211 2 18.25 2Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <a href="#" class="related-link">
+                Ver más
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 17.4L13.6 12 8 6.6 9.7 5 17 12 9.7 19 8 17.4Z" fill="currentColor"/></svg>
+              </a>
+            </div>
+
+            <div class="related-grid">
+              <article class="vcard" data-status="live">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price">
+                    <span class="shield" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                    </span>
+                    <span class="price-text">US$ 9,999</span>
+                  </div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="vcard" data-status="live">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61638/s_69fba8699bb0f.jpg" alt="" loading="lazy" />
+                  <span class="live-dot" aria-label="En vivo"></span>
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price">
+                    <span class="shield" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                    </span>
+                    <span class="price-text">US$ 9,999</span>
+                  </div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="vcard" data-status="negotiable">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61548/s_69f23d3851973.jpg" alt="" loading="lazy" />
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price"></div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="vcard" data-status="live">
+                <div class="img-wrap">
+                  <img src="https://cdn.vmcsubastas.com/images/auction/61628/s_69fb738dd9e0e.png" alt="" loading="lazy" />
+                  <span class="live-dot" aria-label="En vivo"></span>
+                </div>
+                <div class="info">
+                  <span class="title">Audi Q3</span>
+                  <span class="year">2026</span>
+                </div>
+                <div class="footer">
+                  <div class="price">
+                    <span class="shield" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 17l-4-4 1.41-1.41L11 15.17l5.59-5.59L18 11l-7 7z" fill="currentColor"/></svg>
+                    </span>
+                    <span class="price-text">US$ 9,999</span>
+                  </div>
+                  <button class="heart" aria-label="me interesa">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M16.5 3C14.8 3 13.1 3.8 12 5.1 10.9 3.8 9.2 3 7.5 3 4.4 3 2 5.4 2 8.4 2 12.1 5.4 15.1 10.6 19.7L12 21 13.5 19.7C18.6 15.1 22 12.1 22 8.4 22 5.4 19.6 3 16.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- 8 · FOOTER -->
+        <footer class="mf-footer">
+          <img class="brand" src="https://www.figma.com/api/mcp/asset/5cbcd9a7-5eb0-4533-a732-de72391440f9" alt="VMC Subastas" />
+          <div class="col">
+            <p class="col-head">Plataforma</p>
+            <ul>
+              <li><a href="#">SubasCars</a></li>
+              <li><a href="#">SubasBlog</a></li>
+              <li><a href="#">¿Quiénes somos?</a></li>
+              <li><a href="#">¿Cómo vender?</a></li>
+              <li><a href="#">Subaspass</a></li>
+              <li><a href="#">BlackSheep Nation</a></li>
+            </ul>
+          </div>
+          <div class="col">
+            <p class="col-head">Legal &amp; Compliance</p>
+            <ul>
+              <li><a href="#">Condiciones y Términos</a></li>
+              <li><a href="#">Política de Protección de Datos Personales</a></li>
+              <li><a href="#">Política de privacidad General</a></li>
+              <li><a href="#">Testimonios</a></li>
+              <li><a href="#">Canal de denuncias</a></li>
+            </ul>
+          </div>
+          <div class="col">
+            <p class="col-head">Contacto</p>
+            <a href="#" class="single-link">Contáctanos</a>
+          </div>
+          <div class="col">
+            <p class="col-head">Encuéntranos en</p>
+            <div class="social">
+              <a href="#" aria-label="Facebook"><img src="https://www.figma.com/api/mcp/asset/8915e61d-9d9a-4ba0-a7e2-43117817b13c" alt="Facebook"></a>
+              <a href="#" aria-label="Instagram"><img src="https://www.figma.com/api/mcp/asset/2f92cfc2-1f01-4963-a6e4-068fdd6c94ff" alt="Instagram"></a>
+              <a href="#" aria-label="YouTube"><img src="https://www.figma.com/api/mcp/asset/616532dd-e802-4718-8d41-3f72e8631522" alt="YouTube"></a>
+              <a href="#" aria-label="X"><img src="https://www.figma.com/api/mcp/asset/c8e77c67-871c-4ec8-ac5e-bcebd0bc2b7e" alt="X"></a>
+            </div>
+          </div>
+          <div class="libro">
+            <img src="https://www.figma.com/api/mcp/asset/36a6ae2d-5b34-448e-9812-9c2fe907d004" alt="Libro de reclamaciones">
+            <p>Libros de reclamaciones</p>
+          </div>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="copy">© VMC Subastas es una marca registrada de Subastop S.A.C.<br>Todos los derechos reservados 2026</p>
+        </footer>
+
+      </div>
+    </div>
+
+    </div>
   </main>
 
   <script>
-    document.querySelectorAll('.style-toggle button').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var style = btn.dataset.style;
-        document.body.classList.toggle('is-new-style', style === 'new-style');
-        document.querySelectorAll('.style-toggle button').forEach(function (b) {
-          var isActive = b.dataset.style === style;
-          b.classList.toggle('is-active', isActive);
-          b.setAttribute('aria-selected', String(isActive));
-        });
-      });
-    });
-
     (function () {
-      var accordion = document.querySelector('.cond-ofr');
-      if (!accordion) return;
-      var trigger = accordion.querySelector('.cond-ofr-head');
-      function setOpen(isOpen) {
-        accordion.classList.toggle('is-open', isOpen);
-        accordion.classList.toggle('is-collapsed', !isOpen);
-        if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
-      }
-      function toggle() { setOpen(accordion.classList.contains('is-collapsed')); }
-      if (trigger) {
-        trigger.addEventListener('click', toggle);
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key !== 'Enter' && e.key !== ' ') return;
-          e.preventDefault();
-          toggle();
-        });
-      }
+      var accordions = document.querySelectorAll('.cond-ofr');
+      if (!accordions.length) return;
+      accordions.forEach(function (accordion) {
+        var trigger = accordion.querySelector('.cond-ofr-head');
+        function setOpen(isOpen) {
+          accordion.classList.toggle('is-open', isOpen);
+          accordion.classList.toggle('is-collapsed', !isOpen);
+          if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
+        }
+        function toggle() { setOpen(accordion.classList.contains('is-collapsed')); }
+        if (trigger) {
+          trigger.addEventListener('click', toggle);
+          trigger.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            toggle();
+          });
+        }
+      });
     })();
   </script>
 </body>

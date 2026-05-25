@@ -68,69 +68,28 @@ html, body {
   font-weight: 500;
 }
 
-/* ── Variant tabs ─────────────────────────────────────────────────────── */
-.variant-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin: 0 0 32px;
-  border-radius: 4px;
-  background: var(--voyager-surface-section);
-  border: 1px solid var(--voyager-divider-section);
-  width: fit-content;
-}
-.variant-tab {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: var(--voyager-text-secondary);
-  font-family: var(--voyager-font-display);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 150ms cubic-bezier(0.3,0,0,1),
-    color      150ms cubic-bezier(0.3,0,0,1);
-}
-.variant-tab:hover:not(.is-active) {
-  background: color-mix(in oklch, var(--voyager-color-vault) 6%, transparent);
-  color: var(--voyager-color-vault);
-}
-.variant-tab:focus-visible { outline: 2px solid var(--voyager-color-live); outline-offset: 2px; }
-.variant-tab.is-active {
-  color: var(--voyager-text-on-dark);
-  background: var(--voyager-color-vault);
-  box-shadow: 0 4px 8px color-mix(in oklch, var(--voyager-color-vault) 24%, transparent);
-}
-
-.variant-panel { display: none; }
-.variant-panel.is-active {
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  flex-wrap: wrap;
-}
-
-/* ── Mobile column wrapper ────────────────────────────────────────────── */
-.mobile-column {
+/* ── Catalog stack — 1 columna, variantes apiladas ──────────────────────── */
+.viewer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 48px;
+}
+
+.variant {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
-.mobile-column-label {
-  font-family: var(--voyager-font-display);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+
+.variant-label {
+  margin: 0;
   color: var(--voyager-color-vault);
-  padding: 6px 14px;
-  border: 1px solid var(--voyager-divider-section);
-  border-radius: 9999px;
-  background: var(--voyager-surface-section);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .mobile-frame {
@@ -161,45 +120,6 @@ html, body {
   background: transparent;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   ALL-VARIANTS GRID OVERRIDE
-   Muestra todas las variantes simultáneamente en columnas/filas (wrap).
-   ───────────────────────────────────────────────────────────────────────── */
-.page {
-  max-width: min(1600px, 100% - 48px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
-  column-gap: 32px;
-  row-gap: 48px;
-  align-items: start;
-  justify-items: center;
-}
-.breadcrumb,
-.page-title,
-.page-meta,
-.variant-tabs {
-  grid-column: 1 / -1;
-  justify-self: start;
-  width: 100%;
-}
-.variant-tabs { display: none; }
-.variant-panel,
-.variant-panel.is-active {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-.variant-panel::before {
-  content: attr(data-variant);
-  font-family: var(--voyager-font-display);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--voyager-text-secondary);
-}
 </style>
 </head>
 <body>
@@ -212,20 +132,12 @@ html, body {
     <h1 class="page-title">Movimientos</h1>
     <p class="page-meta">430 wide · Header Logged · Movimientos Header (390×168) · Banner Movimientos (390×253.25) · Historial Transacciones (390×236) · Footer · 2 tabs (Gradients · New Styles)</p>
 
-    <nav class="variant-tabs" role="tablist" aria-label="Variantes">
-      <button class="variant-tab is-active" role="tab" aria-selected="true" data-variant="gradients" type="button">Gradients</button>
-      <button class="variant-tab" role="tab" aria-selected="false" data-variant="new-styles" type="button">New Styles</button>
-    </nav>
+    <div class="viewer">
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         TAB 1 — GRADIENTS · Vault Gradient + Live Gradient
-         ══════════════════════════════════════════════════════════════════ -->
-    <section class="variant-panel is-active" data-variant="gradients">
-
-      <!-- ── Columna A · Vault Gradient ───────────────────────────────── -->
-      <div class="mobile-column">
-        <span class="mobile-column-label">Vault Gradient</span>
-        <div class="mobile-frame" aria-label="Movimientos · Vault Gradient">
+    <!-- ── Variante · Gradients · Vault Gradient ────────────────────────── -->
+    <section class="variant">
+      <p class="variant-label">Gradients · Vault Gradient</p>
+      <div class="mobile-frame" aria-label="Movimientos · Vault Gradient">
 
           <iframe
             src="../../../../components/mobile/header/logged-live/claude.html"
@@ -254,13 +166,13 @@ html, body {
             title="Footer" scrolling="no" loading="lazy"
             style="height:870.63px"></iframe>
 
-        </div>
       </div>
+    </section>
 
-      <!-- ── Columna B · Live Gradient ────────────────────────────────── -->
-      <div class="mobile-column">
-        <span class="mobile-column-label">Live Gradient</span>
-        <div class="mobile-frame" aria-label="Movimientos · Live Gradient">
+    <!-- ── Variante · Gradients · Live Gradient ─────────────────────────── -->
+    <section class="variant">
+      <p class="variant-label">Gradients · Live Gradient</p>
+      <div class="mobile-frame" aria-label="Movimientos · Live Gradient">
 
           <iframe
             src="../../../../components/mobile/header/logged-live/claude.html"
@@ -289,20 +201,13 @@ html, body {
             title="Footer" scrolling="no" loading="lazy"
             style="height:870.63px"></iframe>
 
-        </div>
       </div>
-
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         TAB 2 — NEW STYLES · Iridescent + Cinematic Vault
-         ══════════════════════════════════════════════════════════════════ -->
-    <section class="variant-panel" data-variant="new-styles">
-
-      <!-- ── Columna A · Iridescent (.pvbtn) ─────────────────────────── -->
-      <div class="mobile-column">
-        <span class="mobile-column-label">Iridescent</span>
-        <div class="mobile-frame" aria-label="Movimientos · Iridescent">
+    <!-- ── Variante · New Styles · Iridescent ───────────────────────────── -->
+    <section class="variant">
+      <p class="variant-label">New Styles · Iridescent</p>
+      <div class="mobile-frame" aria-label="Movimientos · Iridescent">
 
           <iframe
             src="../../../../components/mobile/header/logged-iridescent/claude.html"
@@ -331,13 +236,13 @@ html, body {
             title="Footer" scrolling="no" loading="lazy"
             style="height:870.63px"></iframe>
 
-        </div>
       </div>
+    </section>
 
-      <!-- ── Columna B · Cinematic Vault (.psec) ────────────────────── -->
-      <div class="mobile-column">
-        <span class="mobile-column-label">Cinematic Vault</span>
-        <div class="mobile-frame" aria-label="Movimientos · Cinematic Vault">
+    <!-- ── Variante · New Styles · Cinematic Vault ──────────────────────── -->
+    <section class="variant">
+      <p class="variant-label">New Styles · Cinematic Vault</p>
+      <div class="mobile-frame" aria-label="Movimientos · Cinematic Vault">
 
           <iframe
             src="../../../../components/mobile/header/logged-iridescent/claude.html"
@@ -366,30 +271,10 @@ html, body {
             title="Footer" scrolling="no" loading="lazy"
             style="height:870.63px"></iframe>
 
-        </div>
       </div>
-
     </section>
+
+    </div>
   </main>
-
-  <script>
-    const tabs = Array.from(document.querySelectorAll(".variant-tab"));
-    const panels = Array.from(document.querySelectorAll(".variant-panel"));
-
-    function activate(variant) {
-      tabs.forEach(function (tab) {
-        const isActive = tab.dataset.variant === variant;
-        tab.classList.toggle("is-active", isActive);
-        tab.setAttribute("aria-selected", String(isActive));
-      });
-      panels.forEach(function (panel) {
-        panel.classList.toggle("is-active", panel.dataset.variant === variant);
-      });
-    }
-
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () { activate(tab.dataset.variant); });
-    });
-  </script>
 </body>
 </html>

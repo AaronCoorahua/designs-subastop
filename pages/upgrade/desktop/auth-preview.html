@@ -12,9 +12,12 @@
   --vmc-color-vault-500: oklch(0.45 0.20 285);
   --vmc-color-vault-700: oklch(0.30 0.20 285);
   --vmc-color-vault-800: oklch(0.22 0.18 285);
+  --vmc-color-base-white: oklch(1 0 0);
   --voyager-surface-page: oklch(0.98 0.004 160);
+  --voyager-surface-card: oklch(1 0 0);
   --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --voyager-font-mono: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
 }
 * { box-sizing: border-box; }
 html, body {
@@ -33,14 +36,13 @@ html, body {
   padding: 32px 16px 64px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
 }
 .auth-page-header {
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: 8px;
 }
 .auth-page-h1 {
   margin: 0;
@@ -59,6 +61,57 @@ html, body {
   font-size: 12px;
   letter-spacing: 0.04em;
   color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+
+/* ─── Platform tabs (Desktop / Mobile) ─────────────────────────── */
+.auth-page-tabs {
+  display: flex; justify-content: center; gap: 8px;
+  margin: 0 auto;
+  padding: 6px;
+  background: var(--voyager-surface-card);
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  border-radius: 9999px;
+  width: fit-content;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+}
+.auth-page-tab {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  padding: 10px 22px;
+  border-radius: 9999px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 250ms var(--voyager-ease-default),
+              color 250ms var(--voyager-ease-default),
+              box-shadow 250ms var(--voyager-ease-default);
+}
+.auth-page-tab svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.auth-page-tab:hover {
+  color: var(--vmc-color-vault-800);
+  background: color-mix(in oklch, var(--vmc-color-vault-500) 6%, transparent);
+}
+.auth-page-tab.is-active {
+  background: linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%);
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 4px 12px color-mix(in oklch, var(--vmc-color-vault-500) 35%, transparent);
+}
+
+.auth-pane[hidden] { display: none !important; }
+.auth-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 }
 
 .auth-section {
@@ -114,78 +167,128 @@ html, body {
     <p class="auth-page-sub">login · olvidé contraseña · registro — todas las variantes</p>
   </header>
 
-  <!-- Login · Live Preview (V9 de login-form.html) -->
-  <section class="auth-section" aria-label="Login · Live Preview">
-    <header class="auth-section-header">
-      <h2 class="auth-section-title">Login · 9 variantes</h2>
-      <span class="auth-section-source">
-        <a href="login-form.html" target="_blank" rel="noopener">login-form.html ↗</a>
-      </span>
-    </header>
-    <iframe
-      class="auth-frame"
-      id="auth-frame-login"
-      src="login-form.html"
-      loading="lazy"
-      title="Login — todas las variantes"></iframe>
+  <nav class="auth-page-tabs" role="tablist" aria-label="Plataforma">
+    <button class="auth-page-tab is-active" type="button" role="tab" data-tab="desktop" aria-selected="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
+      Desktop
+    </button>
+    <button class="auth-page-tab" type="button" role="tab" data-tab="mobile" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+      Mobile
+    </button>
+  </nav>
+
+  <!-- ═════════════════════════════════════════════════════════════
+       DESKTOP
+       ═════════════════════════════════════════════════════════════ -->
+  <section class="auth-pane" data-pane="desktop" role="tabpanel" aria-label="Desktop flows">
+
+    <section class="auth-section" aria-label="Login Desktop">
+      <header class="auth-section-header">
+        <h2 class="auth-section-title">Login · 9 variantes</h2>
+        <span class="auth-section-source">
+          <a href="login-form.html" target="_blank" rel="noopener">login-form.html ↗</a>
+        </span>
+      </header>
+      <iframe class="auth-frame" src="login-form.html" loading="lazy" title="Login Desktop — todas las variantes"></iframe>
+    </section>
+
+    <section class="auth-section" aria-label="Forgot Password Desktop">
+      <header class="auth-section-header">
+        <h2 class="auth-section-title">Olvidé mi contraseña · 10 variantes</h2>
+        <span class="auth-section-source">
+          <a href="forgot-password.html" target="_blank" rel="noopener">forgot-password.html ↗</a>
+        </span>
+      </header>
+      <iframe class="auth-frame" src="forgot-password.html" loading="lazy" title="Forgot Password Desktop — todas las variantes"></iframe>
+    </section>
+
+    <section class="auth-section" aria-label="Register Desktop">
+      <header class="auth-section-header">
+        <h2 class="auth-section-title">Registro · 5 variantes</h2>
+        <span class="auth-section-source">
+          <a href="register-form.html" target="_blank" rel="noopener">register-form.html ↗</a>
+        </span>
+      </header>
+      <iframe class="auth-frame" src="register-form.html" loading="lazy" title="Register Desktop — todas las variantes"></iframe>
+    </section>
+
   </section>
 
-  <!-- Forgot Password · Live Preview (V10 de forgot-password.html) -->
-  <section class="auth-section" aria-label="Forgot Password · Live Preview">
-    <header class="auth-section-header">
-      <h2 class="auth-section-title">Olvidé mi contraseña · 10 variantes</h2>
-      <span class="auth-section-source">
-        <a href="forgot-password.html" target="_blank" rel="noopener">forgot-password.html ↗</a>
-      </span>
-    </header>
-    <iframe
-      class="auth-frame"
-      id="auth-frame-forgot"
-      src="forgot-password.html"
-      loading="lazy"
-      title="Forgot Password — todas las variantes"></iframe>
+  <!-- ═════════════════════════════════════════════════════════════
+       MOBILE
+       ═════════════════════════════════════════════════════════════ -->
+  <section class="auth-pane" data-pane="mobile" role="tabpanel" aria-label="Mobile flows" hidden>
+
+    <section class="auth-section" aria-label="Login Mobile">
+      <header class="auth-section-header">
+        <h2 class="auth-section-title">Login Mobile · 9 variantes</h2>
+        <span class="auth-section-source">
+          <a href="../mobile/login-form.html" target="_blank" rel="noopener">mobile/login-form.html ↗</a>
+        </span>
+      </header>
+      <iframe class="auth-frame" src="../mobile/login-form.html" loading="lazy" title="Login Mobile — todas las variantes"></iframe>
+    </section>
+
+    <section class="auth-section" aria-label="Forgot Password Mobile">
+      <header class="auth-section-header">
+        <h2 class="auth-section-title">Olvidé mi contraseña Mobile · 11 variantes</h2>
+        <span class="auth-section-source">
+          <a href="../mobile/forgot-password.html" target="_blank" rel="noopener">mobile/forgot-password.html ↗</a>
+        </span>
+      </header>
+      <iframe class="auth-frame" src="../mobile/forgot-password.html" loading="lazy" title="Forgot Password Mobile — todas las variantes"></iframe>
+    </section>
+
+    <section class="auth-section" aria-label="Register Mobile">
+      <header class="auth-section-header">
+        <h2 class="auth-section-title">Registro Mobile · 5 variantes</h2>
+        <span class="auth-section-source">
+          <a href="../mobile/register-form.html" target="_blank" rel="noopener">mobile/register-form.html ↗</a>
+        </span>
+      </header>
+      <iframe class="auth-frame" src="../mobile/register-form.html" loading="lazy" title="Register Mobile — todas las variantes"></iframe>
+    </section>
+
   </section>
 
-  <!-- Register · Live Preview (V5 de register-form.html) -->
-  <section class="auth-section" aria-label="Register · Live Preview">
-    <header class="auth-section-header">
-      <h2 class="auth-section-title">Registro · 5 variantes</h2>
-      <span class="auth-section-source">
-        <a href="register-form.html" target="_blank" rel="noopener">register-form.html ↗</a>
-      </span>
-    </header>
-    <iframe
-      class="auth-frame"
-      id="auth-frame-register"
-      src="register-form.html"
-      loading="lazy"
-      title="Register — todas las variantes"></iframe>
-  </section>
+  <header class="auth-page-header" style="margin-top: 24px;">
+    <p class="auth-page-sub">desktop / mobile — todos los componentes auth en un solo preview</p>
+  </header>
 
 </main>
 
 <script>
-  (function autoResizeFrames() {
-    var frameMap = {};
-    document.querySelectorAll('iframe.auth-frame').forEach(function (frame) {
-      try {
-        var url = new URL(frame.src, window.location.href);
-        frameMap[url.pathname] = frame;
-      } catch (err) {}
+  (function initPlatformTabs() {
+    var tabs  = document.querySelectorAll('.auth-page-tab');
+    var panes = document.querySelectorAll('.auth-pane');
+    function activate(name) {
+      tabs.forEach(function (t) {
+        var is = t.getAttribute('data-tab') === name;
+        t.classList.toggle('is-active', is);
+        t.setAttribute('aria-selected', is ? 'true' : 'false');
+      });
+      panes.forEach(function (p) {
+        p.hidden = p.getAttribute('data-pane') !== name;
+      });
+    }
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { activate(t.getAttribute('data-tab')); });
     });
+  })();
 
+  (function autoResizeFrames() {
     window.addEventListener('message', function (event) {
       var data = event.data;
       if (!data || data.type !== 'subastop:variant-height') return;
-      var frame = frameMap[data.path];
-      if (!frame) {
-        Object.keys(frameMap).forEach(function (key) {
-          if (data.path && data.path.indexOf(key) !== -1) frame = frameMap[key];
-        });
-      }
-      if (frame && typeof data.height === 'number') {
-        frame.style.height = (data.height + 16) + 'px';
-      }
+      document.querySelectorAll('iframe.auth-frame').forEach(function (frame) {
+        try {
+          var url = new URL(frame.src, window.location.href);
+          if (data.path && (url.pathname === data.path || url.pathname.indexOf(data.path) !== -1 || (data.path || '').indexOf(url.pathname) !== -1)) {
+            frame.style.height = (data.height + 16) + 'px';
+          }
+        } catch (err) {}
+      });
     });
   })();
 </script>

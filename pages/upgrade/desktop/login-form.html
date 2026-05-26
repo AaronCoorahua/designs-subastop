@@ -1024,6 +1024,137 @@ html, body {
 </style>
 </head>
 <body>
+  <main class="catalog-row" aria-label="Login Form — Live Preview">
+
+    <!-- ── V9 · Live Preview (interactive · header + sidebar + login + banner) ── -->
+    <section class="variant-slot" data-variant="v9-live-preview">
+      <p class="variant-label">V9 · Live Preview</p>
+      <p class="variant-sublabel">header V1 + sidebar V1 + login interactivo + banner skeleton</p>
+
+      <div class="lfm-live">
+
+        <!-- Sidebar V1 -->
+        <aside class="sbr" aria-label="Navegación principal">
+          <div class="sbr-brand">
+            <img src="../../../logo-preview.png" alt="VMC Subastas — Powered by Subastop.Co" />
+          </div>
+          <nav class="sbr-nav" aria-label="Secciones">
+            <a href="#" class="sbr-item is-active">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg>
+              </span>
+              <span class="sbr-item-label">Hoy</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M16.5 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H7"/></svg>
+              </span>
+              <span class="sbr-item-label">Tipo de oferta</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3.5l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1L3.2 9.9l6.1-.9L12 3.5z"/></svg>
+              </span>
+              <span class="sbr-item-label">Categorías</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+              </span>
+              <span class="sbr-item-label">Empresas</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <p class="sbr-section">Soporte</p>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <span class="sbr-item-label">Centro de ayuda</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+          </nav>
+        </aside>
+
+        <!-- Right column -->
+        <div class="lfm-live-right">
+
+          <!-- Header V1 -->
+          <article class="hd">
+            <span aria-hidden="true"></span>
+            <button type="button" class="hd-btn hd-btn--sm" aria-label="Ingresa">
+              <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+              <span>Ingresa</span>
+            </button>
+          </article>
+
+          <!-- Login container · 790 × 639 -->
+          <div class="lfm-live-container">
+            <div class="lfm">
+              <header class="lfm-welcome">
+                <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+                <p class="lfm-welcome-sub">Cazador de ofertas</p>
+              </header>
+
+              <form class="lfm-form" id="lfm-form-v9" novalidate>
+                <div class="lfm-field" data-required>
+                  <label class="lfm-label" for="lfm-email-v9">Correo electrónico</label>
+                  <div class="lfm-input-wrap">
+                    <input class="lfm-input" id="lfm-email-v9" type="email" name="email" autocomplete="email" />
+                  </div>
+                  <p class="lfm-helper">Campo requerido</p>
+                </div>
+
+                <div class="lfm-field" data-required>
+                  <label class="lfm-label" for="lfm-password-v9">Contraseña</label>
+                  <div class="lfm-input-wrap">
+                    <input class="lfm-input lfm-input--pwd" id="lfm-password-v9" type="password" name="password" autocomplete="current-password" />
+                    <button type="button" class="lfm-eye" data-target="lfm-password-v9" aria-label="Mostrar contraseña">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                    </button>
+                  </div>
+                  <p class="lfm-helper">Campo requerido</p>
+                </div>
+
+                <div class="lfm-forgot">
+                  <a href="#">¿Olvidaste tu contraseña?</a>
+                  <p class="lfm-invalid" id="lfm-invalid-v9" role="alert"></p>
+                </div>
+
+                <div class="lfm-submit-wrap">
+                  <button type="submit" class="lfm-submit lfm-submit--primary lfm-submit--inactive" id="lfm-submit-v9" aria-disabled="true">Ingresa</button>
+                  <span class="lfm-spinner lfm-spinner--linear" id="lfm-spinner-v9" aria-hidden="true" hidden></span>
+                </div>
+              </form>
+
+              <div class="lfm-divider"><span>ó</span></div>
+
+              <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
+            </div>
+          </div>
+
+          <!-- Banner placeholder · 790 × 138 -->
+          <div class="lfm-live-banner">Banner</div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
   <main class="catalog-row" aria-label="Login Form — Voyager upgrade">
 
     <!-- ── V1 · Cinematic Vault ─────────────────────────────────── -->
@@ -1386,137 +1517,6 @@ html, body {
         <div class="lfm-divider"><span>ó</span></div>
 
         <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
-      </div>
-    </section>
-
-  </main>
-
-  <main class="catalog-row" aria-label="Login Form — Live Preview">
-
-    <!-- ── V9 · Live Preview (interactive · header + sidebar + login + banner) ── -->
-    <section class="variant-slot" data-variant="v9-live-preview">
-      <p class="variant-label">V9 · Live Preview</p>
-      <p class="variant-sublabel">header V1 + sidebar V1 + login interactivo + banner skeleton</p>
-
-      <div class="lfm-live">
-
-        <!-- Sidebar V1 -->
-        <aside class="sbr" aria-label="Navegación principal">
-          <div class="sbr-brand">
-            <img src="../../../logo-preview.png" alt="VMC Subastas — Powered by Subastop.Co" />
-          </div>
-          <nav class="sbr-nav" aria-label="Secciones">
-            <a href="#" class="sbr-item is-active">
-              <span class="sbr-item-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg>
-              </span>
-              <span class="sbr-item-label">Hoy</span>
-              <span class="sbr-item-chevron" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-              </span>
-            </a>
-            <a href="#" class="sbr-item">
-              <span class="sbr-item-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M16.5 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H7"/></svg>
-              </span>
-              <span class="sbr-item-label">Tipo de oferta</span>
-              <span class="sbr-item-chevron" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-              </span>
-            </a>
-            <a href="#" class="sbr-item">
-              <span class="sbr-item-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 3.5l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1L3.2 9.9l6.1-.9L12 3.5z"/></svg>
-              </span>
-              <span class="sbr-item-label">Categorías</span>
-              <span class="sbr-item-chevron" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-              </span>
-            </a>
-            <a href="#" class="sbr-item">
-              <span class="sbr-item-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
-              </span>
-              <span class="sbr-item-label">Empresas</span>
-              <span class="sbr-item-chevron" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-              </span>
-            </a>
-            <p class="sbr-section">Soporte</p>
-            <a href="#" class="sbr-item">
-              <span class="sbr-item-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
-              </span>
-              <span class="sbr-item-label">Centro de ayuda</span>
-              <span class="sbr-item-chevron" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-              </span>
-            </a>
-          </nav>
-        </aside>
-
-        <!-- Right column -->
-        <div class="lfm-live-right">
-
-          <!-- Header V1 -->
-          <article class="hd">
-            <span aria-hidden="true"></span>
-            <button type="button" class="hd-btn hd-btn--sm" aria-label="Ingresa">
-              <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-              <span>Ingresa</span>
-            </button>
-          </article>
-
-          <!-- Login container · 790 × 639 -->
-          <div class="lfm-live-container">
-            <div class="lfm">
-              <header class="lfm-welcome">
-                <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
-                <p class="lfm-welcome-sub">Cazador de ofertas</p>
-              </header>
-
-              <form class="lfm-form" id="lfm-form-v9" novalidate>
-                <div class="lfm-field" data-required>
-                  <label class="lfm-label" for="lfm-email-v9">Correo electrónico</label>
-                  <div class="lfm-input-wrap">
-                    <input class="lfm-input" id="lfm-email-v9" type="email" name="email" autocomplete="email" />
-                  </div>
-                  <p class="lfm-helper">Campo requerido</p>
-                </div>
-
-                <div class="lfm-field" data-required>
-                  <label class="lfm-label" for="lfm-password-v9">Contraseña</label>
-                  <div class="lfm-input-wrap">
-                    <input class="lfm-input lfm-input--pwd" id="lfm-password-v9" type="password" name="password" autocomplete="current-password" />
-                    <button type="button" class="lfm-eye" data-target="lfm-password-v9" aria-label="Mostrar contraseña">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
-                    </button>
-                  </div>
-                  <p class="lfm-helper">Campo requerido</p>
-                </div>
-
-                <div class="lfm-forgot">
-                  <a href="#">¿Olvidaste tu contraseña?</a>
-                  <p class="lfm-invalid" id="lfm-invalid-v9" role="alert"></p>
-                </div>
-
-                <div class="lfm-submit-wrap">
-                  <button type="submit" class="lfm-submit lfm-submit--primary lfm-submit--inactive" id="lfm-submit-v9" aria-disabled="true">Ingresa</button>
-                  <span class="lfm-spinner lfm-spinner--linear" id="lfm-spinner-v9" aria-hidden="true" hidden></span>
-                </div>
-              </form>
-
-              <div class="lfm-divider"><span>ó</span></div>
-
-              <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
-            </div>
-          </div>
-
-          <!-- Banner placeholder · 790 × 138 -->
-          <div class="lfm-live-banner">Banner</div>
-
-        </div>
-
       </div>
     </section>
 

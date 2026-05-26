@@ -210,7 +210,7 @@ html, body {
         Desktop <span class="tab-count">12</span>
       </button>
       <button class="platform-tab" role="tab" aria-selected="false" data-platform="mobile" type="button" id="tabMobile">
-        Mobile <span class="tab-count">0</span>
+        Mobile <span class="tab-count">4</span>
       </button>
     </nav>
 
@@ -447,17 +447,83 @@ html, body {
     </div><!-- /platform-pane desktop -->
 
     <div class="platform-pane" data-pane="mobile" role="tabpanel" aria-labelledby="tabMobile" hidden>
-      <div class="pane-empty">
-        <div class="pane-empty-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="6" y="2" width="12" height="20" rx="2.5"/>
-            <line x1="12" y1="18" x2="12" y2="18"/>
-          </svg>
-        </div>
-        <h3 class="pane-empty-title">Mobile · sin componentes aún</h3>
-        <p class="pane-empty-desc">El catálogo cinematic mobile vive en su propia carpeta. Cuando se construyan las variantes mobile aparecerán aquí.</p>
-        <p class="pane-empty-path">designs-subastop/pages/upgrade/mobile/</p>
-      </div>
+
+      <!-- ════════════════════════════════════════════════════════
+           Header Mobile · 420 × 56 · auth
+           Fuente: mobile/header.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Header Mobile · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Header Mobile</h2>
+          <span class="component-size">420 × 56 · auth</span>
+          <span class="component-note">4 variantes · V1 SM Guest (Ingresa) · V2-V4 logged-in (icon-only) · hamburguesa + logo + auth button</span>
+          <span class="component-source"><a href="mobile/header.html" target="_blank" rel="noopener">mobile/header.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="header-mobile"
+          src="mobile/header.html"
+          loading="lazy"
+          title="Header Mobile · vault iridescent"></iframe>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           Login Form Mobile · 390 × 573 · auth
+           Fuente: mobile/login-form.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Login Form Mobile · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Login Form Mobile</h2>
+          <span class="component-size">390 × 573 · auth</span>
+          <span class="component-note">9 variantes · V1-V2 default · V3-V4 empty/required · V5-V6 credenciales inválidas · V7-V8 loading · V9 live preview (header mobile + login + banner)</span>
+          <span class="component-source"><a href="mobile/login-form.html" target="_blank" rel="noopener">mobile/login-form.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="login-form-mobile"
+          src="mobile/login-form.html"
+          loading="lazy"
+          title="Login Form Mobile · cinematic vault"></iframe>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           Register Form Mobile · 390 × 1546 · auth
+           Fuente: mobile/register-form.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Register Form Mobile · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Register Form Mobile</h2>
+          <span class="component-size">390 × 1546 · auth</span>
+          <span class="component-note">5 variantes · single-column · V1-V2 default · V3-V4 errors + loading dots · V5 live preview (header mobile + register interactivo + banner 430×230)</span>
+          <span class="component-source"><a href="mobile/register-form.html" target="_blank" rel="noopener">mobile/register-form.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="register-form-mobile"
+          src="mobile/register-form.html"
+          loading="lazy"
+          title="Register Form Mobile · cinematic vault"></iframe>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           Forgot Password Mobile · 390 × 530 · auth
+           Fuente: mobile/forgot-password.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Forgot Password Mobile · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Forgot Password Mobile</h2>
+          <span class="component-size">390 × 530 · auth</span>
+          <span class="component-note">11 variantes · V1-V2 default · V3-V4 empty/required · V5-V6 not found · V7-V8 invalid email · V9 sent cinematic vault (CTA Ir al inicio) · V10 sent primary (CTA orange) · V11 live preview (header mobile + forgot interactivo + banner 430×230)</span>
+          <span class="component-source"><a href="mobile/forgot-password.html" target="_blank" rel="noopener">mobile/forgot-password.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="forgot-password-mobile"
+          src="mobile/forgot-password.html"
+          loading="lazy"
+          title="Forgot Password Mobile · cinematic vault"></iframe>
+      </section>
+
     </div>
   </main>
 

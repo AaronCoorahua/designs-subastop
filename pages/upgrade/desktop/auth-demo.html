@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auth Demo · Login + Register + Forgot — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --vmc-color-vault-400: oklch(0.55 0.20 285);
+  --vmc-color-vault-500: oklch(0.45 0.20 285);
+  --vmc-color-vault-600: oklch(0.38 0.20 285);
+  --vmc-color-vault-700: oklch(0.30 0.20 285);
+  --vmc-color-vault-800: oklch(0.22 0.18 285);
+  --vmc-color-base-white: oklch(1 0 0);
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-section: oklch(0.96 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:    "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--voyager-surface-page);
+  font-family: var(--voyager-font-display);
+  color: var(--vmc-color-vault-800);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.auth-demo {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.auth-demo-header {
+  text-align: center;
+  display: flex; flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.auth-demo-h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-500) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.auth-demo-sub {
+  margin: 0;
+  font-family: var(--voyager-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+
+/* ─── Controls bar (tabs + mobile toggle) ───────────────────────── */
+.auth-demo-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+  margin: 0 0 32px;
+}
+
+.auth-demo-tabs {
+  display: flex; gap: 8px;
+  padding: 6px;
+  background: var(--voyager-surface-card);
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  border-radius: 9999px;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+}
+.auth-demo-tab {
+  appearance: none; -webkit-appearance: none;
+  border: 0; background: transparent; cursor: pointer;
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  padding: 12px 24px;
+  border-radius: 9999px;
+  transition: background 250ms var(--voyager-ease-default),
+              color 250ms var(--voyager-ease-default),
+              box-shadow 250ms var(--voyager-ease-default);
+}
+.auth-demo-tab:hover {
+  color: var(--vmc-color-vault-800);
+  background: color-mix(in oklch, var(--vmc-color-vault-500) 6%, transparent);
+}
+.auth-demo-tab.is-active {
+  background: linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%);
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 4px 12px color-mix(in oklch, var(--vmc-color-vault-500) 35%, transparent);
+}
+
+.auth-demo-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 14px 8px 8px;
+  background: var(--voyager-surface-card);
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  border-radius: 9999px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 60%, transparent);
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+  transition: color 200ms var(--voyager-ease-default);
+}
+.auth-demo-toggle:hover { color: var(--vmc-color-vault-800); }
+.auth-demo-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.auth-demo-toggle-track {
+  position: relative;
+  width: 38px; height: 22px;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 14%, transparent);
+  transition: background 250ms var(--voyager-ease-default);
+}
+.auth-demo-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--vmc-color-base-white);
+  box-shadow: 0 2px 6px rgb(0% 0% 0% / 0.18);
+  transition: transform 250ms var(--voyager-ease-default);
+}
+.auth-demo-toggle input:checked ~ .auth-demo-toggle-track {
+  background: linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%);
+}
+.auth-demo-toggle input:checked ~ .auth-demo-toggle-track::after {
+  transform: translateX(16px);
+}
+.auth-demo-toggle-label {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.auth-demo-toggle-label svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── Pane ──────────────────────────────────────────────────────── */
+.auth-demo-pane[hidden] { display: none !important; }
+.auth-demo-pane {
+  display: flex; flex-direction: column; gap: 40px;
+}
+
+.auth-demo-block {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.auth-demo-pane-title {
+  margin: 0;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 65%, transparent);
+  padding: 0 4px;
+}
+
+.auth-demo-frame-wrap {
+  background: var(--voyager-surface-section);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  overflow: hidden;
+  text-align: center;
+}
+.auth-demo-frame {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  border: 0;
+  background: transparent;
+}
+.auth-demo[data-platform="mobile"] .auth-demo-frame {
+  width: 430px;
+  max-width: 100%;
+}
+</style>
+</head>
+<body>
+
+<main class="auth-demo" id="auth-demo" data-platform="desktop" aria-label="Auth flows demo — Voyager Upgrade">
+
+  <header class="auth-demo-header">
+    <h1 class="auth-demo-h1">Auth Demo · Voyager</h1>
+    <p class="auth-demo-sub">demos interactivos · toggle mobile para cambiar el viewport</p>
+  </header>
+
+  <nav class="auth-demo-controls" aria-label="Controles">
+    <div class="auth-demo-tabs" role="tablist" aria-label="Componente auth">
+      <button class="auth-demo-tab is-active" type="button" role="tab" data-tab="login" aria-selected="true">Login</button>
+      <button class="auth-demo-tab" type="button" role="tab" data-tab="register" aria-selected="false">Registro</button>
+      <button class="auth-demo-tab" type="button" role="tab" data-tab="forgot" aria-selected="false">Olvidé contraseña</button>
+    </div>
+
+    <label class="auth-demo-toggle" for="auth-demo-mobile-toggle">
+      <input type="checkbox" id="auth-demo-mobile-toggle" />
+      <span class="auth-demo-toggle-track" aria-hidden="true"></span>
+      <span class="auth-demo-toggle-label">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+        Mobile
+      </span>
+    </label>
+  </nav>
+
+  <!-- LOGIN ─────────────────────────────────────────────────────── -->
+  <section class="auth-demo-pane" data-pane="login" role="tabpanel" aria-label="Login flow"
+           data-all-desktop="login-form.html"
+           data-all-mobile="../mobile/login-form.html">
+    <div class="auth-demo-block">
+      <h2 class="auth-demo-pane-title">Login · Todas las variantes</h2>
+      <div class="auth-demo-frame-wrap">
+        <iframe class="auth-demo-frame" data-role="all" loading="lazy" title="Login · Todas las variantes"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTER ──────────────────────────────────────────────────── -->
+  <section class="auth-demo-pane" data-pane="register" role="tabpanel" aria-label="Register flow" hidden
+           data-all-desktop="register-form.html"
+           data-all-mobile="../mobile/register-form.html">
+    <div class="auth-demo-block">
+      <h2 class="auth-demo-pane-title">Registro · Todas las variantes</h2>
+      <div class="auth-demo-frame-wrap">
+        <iframe class="auth-demo-frame" data-role="all" loading="lazy" title="Registro · Todas las variantes"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORGOT ────────────────────────────────────────────────────── -->
+  <section class="auth-demo-pane" data-pane="forgot" role="tabpanel" aria-label="Forgot password flow" hidden
+           data-all-desktop="forgot-password.html"
+           data-all-mobile="../mobile/forgot-password.html">
+    <div class="auth-demo-block">
+      <h2 class="auth-demo-pane-title">Olvidé contraseña · Todas las variantes</h2>
+      <div class="auth-demo-frame-wrap">
+        <iframe class="auth-demo-frame" data-role="all" loading="lazy" title="Olvidé contraseña · Todas las variantes"></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function initAuthDemo() {
+    var root    = document.getElementById('auth-demo');
+    var tabs    = document.querySelectorAll('.auth-demo-tab');
+    var panes   = document.querySelectorAll('.auth-demo-pane');
+    var toggle  = document.getElementById('auth-demo-mobile-toggle');
+
+    function platform() { return toggle.checked ? 'mobile' : 'desktop'; }
+
+    function injectCenterStyle(frame) {
+      try {
+        var doc = frame.contentDocument;
+        if (!doc || !doc.head) return;
+        if (doc.getElementById('auth-demo-center-fix')) return;
+        var style = doc.createElement('style');
+        style.id = 'auth-demo-center-fix';
+        style.textContent = '.catalog-row { justify-content: center !important; }';
+        doc.head.appendChild(style);
+      } catch (e) {}
+    }
+    function bindCenterFix(frame) {
+      if (frame.getAttribute('data-center-bound') === '1') return;
+      frame.setAttribute('data-center-bound', '1');
+      frame.addEventListener('load', function () { injectCenterStyle(frame); });
+    }
+
+    function applyPlatformToPane(pane) {
+      var plat = platform();
+      var allFrame = pane.querySelector('iframe[data-role="all"]');
+      var allSrc   = pane.getAttribute('data-all-' + plat);
+      if (allFrame && allSrc && allFrame.getAttribute('data-current-src') !== allSrc) {
+        allFrame.setAttribute('data-current-src', allSrc);
+        allFrame.src = allSrc;
+        allFrame.style.height = '';
+        bindCenterFix(allFrame);
+      }
+    }
+
+    function activateTab(name) {
+      tabs.forEach(function (t) {
+        var is = t.getAttribute('data-tab') === name;
+        t.classList.toggle('is-active', is);
+        t.setAttribute('aria-selected', is ? 'true' : 'false');
+      });
+      panes.forEach(function (p) {
+        var is = p.getAttribute('data-pane') === name;
+        p.hidden = !is;
+        if (is) applyPlatformToPane(p);
+      });
+    }
+
+    function syncPlatform() {
+      root.setAttribute('data-platform', platform());
+      panes.forEach(function (p) {
+        if (!p.hidden) applyPlatformToPane(p);
+        else {
+          p.querySelectorAll('iframe.auth-demo-frame').forEach(function (f) {
+            f.removeAttribute('data-current-src');
+          });
+        }
+      });
+    }
+
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { activateTab(t.getAttribute('data-tab')); });
+    });
+    toggle.addEventListener('change', syncPlatform);
+
+    var initial = document.querySelector('.auth-demo-tab.is-active');
+    activateTab(initial ? initial.getAttribute('data-tab') : 'login');
+  })();
+
+  (function autoResizeFrames() {
+    window.addEventListener('message', function (event) {
+      var data = event.data;
+      if (!data || data.type !== 'subastop:variant-height') return;
+      document.querySelectorAll('iframe.auth-demo-frame').forEach(function (frame) {
+        if (frame.contentWindow === event.source && typeof data.height === 'number') {
+          frame.style.height = (data.height + 16) + 'px';
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

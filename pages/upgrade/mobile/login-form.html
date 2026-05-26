@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Login Form Mobile · 390 × 573 — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─── Tokens ────────────────────────────────────────────────────── */
+:root {
+  --vmc-color-vault-200:   oklch(0.87 0.09 285);
+  --vmc-color-vault-300:   oklch(0.80 0.12 285);
+  --vmc-color-vault-400:   oklch(0.55 0.20 285);
+  --vmc-color-vault-500:   oklch(0.45 0.20 285);
+  --vmc-color-vault-600:   oklch(0.38 0.20 285);
+  --vmc-color-vault-700:   oklch(0.30 0.20 285);
+  --vmc-color-vault-800:   oklch(0.22 0.18 285);
+  --vmc-color-vault-900:   oklch(0.15 0.27 278);
+
+  --vmc-color-orange-400:  oklch(0.78 0.16 60);
+  --vmc-color-orange-500:  oklch(0.72 0.16 55);
+  --vmc-color-orange-600:  oklch(0.66 0.17 50);
+  --vmc-color-orange-700:  oklch(0.58 0.18 45);
+
+  --vmc-color-base-white:  oklch(1 0 0);
+  --vmc-color-neutral-700: oklch(0.45 0.008 220);
+  --vmc-color-background-disabled: oklch(0.91 0.004 160);
+
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-section: oklch(0.96 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-input-bg:        oklch(0.94 0.006 285);
+  --voyager-text-on-dark:    oklch(1 0 0);
+  --voyager-text-on-surface: oklch(0.15 0.008 200);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+
+  --vmc-radius-sm:   4px;
+  --vmc-radius-md:   8px;
+  --vmc-radius-full: 9999px;
+
+  --voyager-shadow-card: 0 8px 16px oklch(0.22 0.18 285 / 6%);
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 24px 16px;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow-x: hidden;
+}
+
+/* ─── Scaffold catalog ──────────────────────────────────────────── */
+.catalog-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: flex-start;
+  gap: 40px 24px; padding: 16px 4px 32px;
+}
+.variant-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.variant-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  text-align: center;
+}
+.variant-sublabel {
+  font-family: var(--voyager-font-body);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOGIN FORM MOBILE · 390 × 573
+   ═══════════════════════════════════════════════════════════════ */
+.lfm {
+  width: 390px;
+  min-height: 573px;
+  background: var(--voyager-surface-card);
+  border-radius: var(--vmc-radius-md);
+  box-shadow: var(--voyager-shadow-card);
+  padding: 44px 28px 32px;
+  display: flex; flex-direction: column;
+}
+
+.lfm-welcome {
+  margin: 0 0 36px;
+  text-align: center;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+}
+.lfm-welcome-h1 {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.05;
+  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-500) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lfm-welcome-sub {
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 70%, transparent);
+  letter-spacing: -0.1px;
+}
+
+.lfm-form { display: flex; flex-direction: column; gap: 18px; }
+.lfm-field { display: flex; flex-direction: column; gap: 6px; position: relative; }
+.lfm-label {
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 400;
+  color: var(--vmc-color-vault-500);
+}
+[data-variant="v2-primary"] .lfm-label,
+[data-variant="v4-primary-empty"] .lfm-label,
+[data-variant="v6-primary-invalid"] .lfm-label,
+[data-variant="v8-primary-loading"] .lfm-label {
+  color: var(--voyager-text-on-surface);
+}
+.lfm-input-wrap { position: relative; }
+.lfm-input {
+  display: block; width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 14%, transparent);
+  border-radius: var(--vmc-radius-sm);
+  background: var(--voyager-input-bg);
+  font-family: var(--voyager-font-body);
+  font-size: 14px; font-weight: 400;
+  color: var(--voyager-text-on-surface);
+  outline: none;
+  transition: border-color 150ms var(--voyager-ease-default),
+              box-shadow 150ms var(--voyager-ease-default);
+}
+.lfm-input:focus {
+  border-color: var(--vmc-color-vault-500);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--vmc-color-vault-500) 20%, transparent);
+}
+.lfm-input--pwd { padding-right: 40px; }
+.lfm-eye {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 40%, transparent);
+  cursor: pointer;
+  background: transparent;
+  border: 0; padding: 0;
+}
+.lfm-eye svg { width: 20px; height: 20px; fill: currentColor; }
+
+.lfm-forgot {
+  margin-top: 4px;
+  text-align: center;
+  position: relative;
+}
+.lfm-forgot a {
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  color: var(--vmc-color-vault-500);
+  text-decoration: none;
+}
+.lfm-forgot a:hover { color: var(--vmc-color-vault-700); }
+
+/* ── Required-state helper ──────────────────────────────────── */
+.lfm-field--error .lfm-input {
+  border-color: color-mix(in oklch, var(--vmc-color-orange-600) 55%, transparent);
+  background: color-mix(in oklch, var(--vmc-color-orange-500) 6%, var(--voyager-input-bg));
+}
+.lfm-field--error .lfm-input:focus {
+  border-color: var(--vmc-color-orange-600);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--vmc-color-orange-500) 18%, transparent);
+}
+.lfm-helper {
+  position: absolute;
+  right: 0;
+  bottom: -16px;
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 500;
+  background: linear-gradient(95deg,
+    var(--vmc-color-orange-600) 0%,
+    oklch(0.66 0.22 25) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+.lfm-field--error .lfm-helper { opacity: 1; }
+
+.lfm-invalid {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 6px 0 0;
+  text-align: center;
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 600;
+  background: linear-gradient(95deg,
+    var(--vmc-color-orange-600) 0%,
+    oklch(0.66 0.22 25) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─── Cinematic Vault Button (psec) ───────────────────────────── */
+@property --lfm-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
+@property --lfm-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.45 0.20 285); }
+@property --lfm-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.30 0.20 285); }
+
+.lfm-submit {
+  margin-top: 22px;
+  --lfm-stop-a: var(--vmc-color-vault-500);
+  --lfm-stop-b: var(--vmc-color-vault-700);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--vmc-radius-full);
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.30);
+  background-image:
+    linear-gradient(var(--lfm-angle), var(--lfm-stop-a) 0%, var(--lfm-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-300) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      var(--vmc-color-vault-300) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30);
+  transition:
+    --lfm-angle 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    --lfm-stop-a 0.35s ease, --lfm-stop-b 0.35s ease,
+    transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.25s ease;
+  transform: translateZ(0);
+}
+.lfm-submit::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.16) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.lfm-submit::after {
+  content: ''; position: absolute; inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(135deg, var(--vmc-color-vault-400), var(--vmc-color-vault-600));
+  filter: blur(14px); opacity: 0; z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.lfm-submit:hover {
+  --lfm-angle: 220deg;
+  --lfm-stop-a: var(--vmc-color-vault-400);
+  --lfm-stop-b: var(--vmc-color-vault-600);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
+    0 8px 24px rgb(51.76% 37.65% 89.8% / 0.40),
+    0 4px 10px rgb(51.76% 37.65% 89.8% / 0.25);
+}
+.lfm-submit:hover::after { opacity: 0.45; filter: blur(18px); }
+.lfm-submit:active {
+  --lfm-angle: 160deg;
+  --lfm-stop-a: var(--vmc-color-vault-700);
+  --lfm-stop-b: var(--vmc-color-vault-900);
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px rgb(0% 0% 0% / 0.28), 0 1px 3px rgb(0% 0% 0% / 0.14);
+}
+.lfm-submit:active::after { opacity: 0; }
+.lfm-submit:disabled {
+  background-image: none;
+  background-color: var(--vmc-color-background-disabled);
+  color: var(--vmc-color-neutral-700);
+  text-shadow: none; box-shadow: none;
+  cursor: not-allowed; transform: none; border-color: transparent;
+}
+.lfm-submit:disabled::before,
+.lfm-submit:disabled::after { display: none; }
+
+.lfm-submit.lfm-submit--loading {
+  --lfm-angle: 160deg;
+  --lfm-stop-a: var(--vmc-color-vault-700);
+  --lfm-stop-b: var(--vmc-color-vault-900);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.28),
+    0 1px 3px rgb(0% 0% 0% / 0.14);
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.lfm-submit.lfm-submit--loading::after { opacity: 0; }
+
+/* ─── Primary Iridescent Button (pvbtn) ───────────────────────── */
+@property --lfm2-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
+@property --lfm2-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.72 0.16 55); }
+@property --lfm2-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.55 0.22 285); }
+
+.lfm-submit--primary {
+  margin-top: 22px;
+  --lfm2-stop-a: var(--vmc-color-orange-600);
+  --lfm2-stop-b: var(--vmc-color-vault-500);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  background-image:
+    linear-gradient(var(--lfm2-angle), var(--lfm2-stop-a) 0%, var(--lfm2-stop-a) 40%, var(--lfm2-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.28),
+    0 2px 6px rgb(92.94% 53.73% 21.18% / 0.30);
+  transition:
+    --lfm2-angle 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    --lfm2-stop-a 0.35s ease, --lfm2-stop-b 0.35s ease,
+    transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.25s ease;
+}
+.lfm-submit--primary::after {
+  background: linear-gradient(135deg, var(--vmc-color-orange-600), var(--vmc-color-vault-500));
+}
+.lfm-submit--primary:hover {
+  --lfm2-angle: 220deg;
+  --lfm2-stop-a: oklch(0.84 0.11 70);
+  --lfm2-stop-b: oklch(0.70 0.16 290);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.30),
+    0 4px 10px oklch(0.66 0.17 50  / 0.40),
+    0 8px 24px oklch(0.55 0.20 285 / 0.35);
+}
+.lfm-submit--primary:hover::after {
+  background: linear-gradient(135deg, oklch(0.84 0.11 70), oklch(0.70 0.16 290));
+  opacity: 0.55; filter: blur(20px);
+}
+.lfm-submit--primary:active {
+  --lfm2-angle: 135deg;
+  --lfm2-stop-a: var(--vmc-color-orange-700);
+  --lfm2-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px rgb(0% 0% 0% / 0.22), 0 1px 3px rgb(0% 0% 0% / 0.12);
+}
+.lfm-submit--primary:active::after { opacity: 0; }
+.lfm-submit--primary:disabled {
+  background-image: none;
+  background-color: var(--vmc-color-background-disabled);
+  color: var(--vmc-color-neutral-700);
+  text-shadow: none; box-shadow: none;
+  cursor: not-allowed; transform: none; border-color: transparent;
+}
+.lfm-submit--primary:disabled::before,
+.lfm-submit--primary:disabled::after { display: none; }
+
+.lfm-submit--primary.lfm-submit--loading {
+  --lfm2-angle: 135deg;
+  --lfm2-stop-a: var(--vmc-color-orange-700);
+  --lfm2-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.22),
+    0 1px 3px rgb(0% 0% 0% / 0.12);
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.lfm-submit--primary.lfm-submit--loading::after { opacity: 0; }
+
+/* ─── Submit wrap + Spinners (V7 / V8) ────────────────────────── */
+.lfm-submit-wrap {
+  position: relative;
+  margin-top: 22px;
+}
+.lfm-submit-wrap .lfm-submit { margin-top: 0; }
+
+.lfm-spinner {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  margin-top: -11px;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 2;
+}
+.lfm-spinner--linear {
+  border: 2.5px solid rgb(100% 100% 100% / 0.30);
+  border-top-color: rgb(100% 100% 100% / 1);
+  border-radius: 50%;
+  animation: lfm-spin 0.8s linear infinite;
+}
+@keyframes lfm-spin { to { transform: rotate(360deg); } }
+
+.lfm-spinner--dots span {
+  position: absolute; inset: 0; display: block;
+}
+.lfm-spinner--dots span::before {
+  content: ''; position: absolute;
+  left: 50%; top: 0;
+  width: 4px; height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: rgb(100% 100% 100% / 1);
+  animation: lfm-dot-fade 0.96s linear infinite;
+}
+.lfm-spinner--dots span:nth-child(1) { transform: rotate(0deg); }
+.lfm-spinner--dots span:nth-child(1)::before { animation-delay: 0s; }
+.lfm-spinner--dots span:nth-child(2) { transform: rotate(45deg); }
+.lfm-spinner--dots span:nth-child(2)::before { animation-delay: -0.12s; }
+.lfm-spinner--dots span:nth-child(3) { transform: rotate(90deg); }
+.lfm-spinner--dots span:nth-child(3)::before { animation-delay: -0.24s; }
+.lfm-spinner--dots span:nth-child(4) { transform: rotate(135deg); }
+.lfm-spinner--dots span:nth-child(4)::before { animation-delay: -0.36s; }
+.lfm-spinner--dots span:nth-child(5) { transform: rotate(180deg); }
+.lfm-spinner--dots span:nth-child(5)::before { animation-delay: -0.48s; }
+.lfm-spinner--dots span:nth-child(6) { transform: rotate(225deg); }
+.lfm-spinner--dots span:nth-child(6)::before { animation-delay: -0.60s; }
+.lfm-spinner--dots span:nth-child(7) { transform: rotate(270deg); }
+.lfm-spinner--dots span:nth-child(7)::before { animation-delay: -0.72s; }
+.lfm-spinner--dots span:nth-child(8) { transform: rotate(315deg); }
+.lfm-spinner--dots span:nth-child(8)::before { animation-delay: -0.84s; }
+@keyframes lfm-dot-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
+/* ── Inactive (clickable but visually disabled) ─────────────── */
+.lfm-submit--inactive {
+  background-image: none !important;
+  background-color: var(--vmc-color-background-disabled) !important;
+  color: var(--vmc-color-neutral-700) !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: transparent !important;
+  cursor: not-allowed;
+}
+.lfm-submit--inactive::before,
+.lfm-submit--inactive::after { display: none !important; }
+
+/* ─── Divider ─────────────────────────────────────────────────── */
+.lfm-divider {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  margin: 22px 0 16px;
+}
+.lfm-divider::before {
+  content: '';
+  position: absolute; inset: 50% 0 auto 0;
+  height: 1px;
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 12%, transparent);
+}
+.lfm-divider span {
+  position: relative;
+  padding: 0 14px;
+  background: var(--voyager-surface-card);
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 45%, transparent);
+}
+
+/* ─── Register link (vault ghost) ─────────────────────────────── */
+.lfm-register {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 100%;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: var(--vmc-radius-full);
+  border: 1.5px solid color-mix(in oklch, var(--vmc-color-vault-800) 35%, transparent);
+  background: transparent;
+  color: var(--vmc-color-vault-700);
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none;
+  transition: background 250ms var(--voyager-ease-default),
+              border-color 250ms var(--voyager-ease-default),
+              color 250ms var(--voyager-ease-default),
+              transform 200ms cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 250ms var(--voyager-ease-default);
+  transform: translateZ(0);
+}
+.lfm-register:hover {
+  background: color-mix(in oklch, var(--vmc-color-vault-500) 8%, transparent);
+  border-color: var(--vmc-color-vault-500);
+  color: var(--vmc-color-vault-800);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 6px 20px color-mix(in oklch, var(--vmc-color-vault-500) 22%, transparent);
+}
+.lfm-register:active {
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px rgb(0% 0% 0% / 0.10);
+}
+
+/* ─── Register orange ghost (pghost invertido) ────────────────── */
+.lfm-register--ghost {
+  height: 48px;
+  padding: 0 28px;
+  border: 2px solid color-mix(in oklch, var(--vmc-color-orange-600) 75%, transparent);
+  position: relative;
+  overflow: hidden;
+  color: var(--vmc-color-orange-600);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.50),
+    0 0 0 1px color-mix(in oklch, var(--vmc-color-orange-600) 10%, transparent);
+}
+.lfm-register--ghost::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.30) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.lfm-register--ghost::after {
+  content: ''; position: absolute; inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: color-mix(in oklch, var(--vmc-color-orange-500) 55%, transparent);
+  filter: blur(14px);
+  opacity: 0; z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.lfm-register--ghost:hover {
+  background: linear-gradient(135deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-orange-700) 100%);
+  border-color: var(--vmc-color-orange-700);
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 6px 20px rgb(92.94% 53.73% 21.18% / 0.30);
+}
+.lfm-register--ghost:hover::after { opacity: 0.40; filter: blur(18px); }
+.lfm-register--ghost:active {
+  background: linear-gradient(135deg, var(--vmc-color-orange-700) 0%, oklch(0.52 0.18 45) 100%);
+  border-color: var(--vmc-color-orange-700);
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  transform: scale(0.97) translateY(1px);
+  box-shadow: inset 0 2px 5px rgb(0% 0% 0% / 0.22);
+}
+.lfm-register--ghost:active::after { opacity: 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LIVE PREVIEW (V9 mobile) — header mobile + login + banner
+   ═══════════════════════════════════════════════════════════════ */
+@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
+@property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.66 0.17 50); }
+@property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.45 0.20 285); }
+
+.lfm-live {
+  width: 430px;
+  display: flex; flex-direction: column;
+  isolation: isolate;
+}
+
+/* Mobile header (430 × 56) — live preview */
+.hd {
+  width: 430px; height: 56px;
+  display: flex;
+  align-items: center; gap: 10px;
+  padding: 0 16px;
+  background: var(--vmc-color-vault-800);
+  position: relative; isolation: isolate; overflow: hidden;
+  user-select: none; flex-shrink: 0;
+}
+.hd-btn { margin-left: auto; }
+.hd::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, oklch(1 0 0 / 6%) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 80% at 100% 50%, oklch(0.66 0.17 50 / 8%) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.hd > * { position: relative; z-index: 1; }
+.hd-menu {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; padding: 0;
+  border-radius: 8px; cursor: pointer;
+  color: var(--vmc-color-base-white);
+  transition: background 150ms var(--voyager-ease-default);
+}
+.hd-menu:hover { background: oklch(1 0 0 / 8%); }
+.hd-menu svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+.hd-brand { display: flex; align-items: center; height: 100%; }
+.hd-brand img { display: block; width: 140px; height: 20px; object-fit: contain; filter: drop-shadow(0 1px 3px oklch(0 0 0 / 25%)); }
+
+.hd-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px 0 4px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  cursor: pointer; position: relative; overflow: hidden;
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 500;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 2px oklch(0 0 0 / 22%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  transition:
+    --vbtn-angle 0.4s var(--voyager-ease-default),
+    --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease,
+    transform 0.2s var(--voyager-ease-default), box-shadow 0.25s ease;
+  transform: translateZ(0);
+}
+.hd-btn::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.hd-btn > *:not(.hd-btn-icon) { position: relative; z-index: 2; }
+.hd-btn-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; z-index: 2;
+}
+.hd-btn-icon svg { width: 16px; height: 16px; fill: currentColor; }
+.hd-btn--sm {
+  --vbtn-stop-a: var(--vmc-color-orange-600);
+  --vbtn-stop-b: var(--vmc-color-vault-500);
+  background-image:
+    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 25%),
+    0 2px 6px oklch(0.66 0.17 50 / 25%);
+}
+.hd-btn--sm .hd-btn-icon { background: oklch(0 0 0 / 18%); color: var(--vmc-color-base-white); }
+.hd-btn--sm:hover {
+  --vbtn-angle: 220deg;
+  --vbtn-stop-a: oklch(0.84 0.11 70);
+  --vbtn-stop-b: oklch(0.70 0.16 290);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 30%),
+    0 4px 10px oklch(0.66 0.17 50  / 0.40),
+    0 8px 24px oklch(0.55 0.20 285 / 0.35);
+}
+
+.lfm-live-container {
+  width: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--voyager-surface-section);
+  padding: 16px 0;
+  flex-shrink: 0;
+}
+.lfm-live-container > .lfm { width: 390px; min-height: 540px; box-shadow: var(--voyager-shadow-card); }
+
+.lfm-live-banner {
+  width: 430px; height: 230px;
+  display: flex; align-items: center; justify-content: center;
+  background: oklch(0.94 0.004 220);
+  border: 1px solid oklch(0.88 0.006 220);
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 35%, transparent);
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+  <main class="catalog-row" aria-label="Login Form Mobile — Live Preview">
+
+    <!-- ── V9 · Live Preview (header mobile + login + banner) ───── -->
+    <section class="variant-slot" data-variant="v9-live-preview">
+      <p class="variant-label">V9 · Live Preview Mobile</p>
+      <p class="variant-sublabel">header mobile + login V1 interactivo + banner</p>
+
+      <div class="lfm-live">
+        <!-- Mobile header V1 -->
+        <article class="hd">
+          <button type="button" class="hd-menu" aria-label="Abrir menú">
+            <svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          </button>
+          <div class="hd-brand">
+            <img src="../../../logo-preview.png" alt="VMC Subastas — Powered by Subastop.Co" />
+          </div>
+          <button type="button" class="hd-btn hd-btn--sm" aria-label="Ingresa">
+            <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span>Ingresa</span>
+          </button>
+        </article>
+
+        <!-- Login container -->
+        <div class="lfm-live-container">
+          <div class="lfm">
+            <header class="lfm-welcome">
+              <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+              <p class="lfm-welcome-sub">Cazador de ofertas</p>
+            </header>
+            <form class="lfm-form" id="m-lfm-form-v9" novalidate>
+              <div class="lfm-field">
+                <label class="lfm-label" for="m-lfm-email-v9">Correo electrónico</label>
+                <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v9" type="email" /></div>
+              </div>
+              <div class="lfm-field">
+                <label class="lfm-label" for="m-lfm-password-v9">Contraseña</label>
+                <div class="lfm-input-wrap">
+                  <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v9" type="password" />
+                  <button type="button" class="lfm-eye" data-target="m-lfm-password-v9" aria-label="Mostrar contraseña">
+                    <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="lfm-forgot">
+                <a href="#">¿Olvidaste tu contraseña?</a>
+                <p class="lfm-invalid" id="m-lfm-invalid-v9" role="alert"></p>
+              </div>
+              <div class="lfm-submit-wrap">
+                <button type="submit" class="lfm-submit lfm-submit--inactive" id="m-lfm-submit-v9" aria-disabled="true">Ingresa</button>
+              </div>
+            </form>
+            <div class="lfm-divider"><span>ó</span></div>
+            <a href="#" class="lfm-register">Regístrate</a>
+          </div>
+        </div>
+
+        <!-- Banner placeholder -->
+        <div class="lfm-live-banner">Banner</div>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="catalog-row" aria-label="Login Form Mobile — Default">
+
+    <!-- ── V1 · Cinematic Vault ─────────────────────────────────── -->
+    <section class="variant-slot" data-variant="v1-cinematic">
+      <p class="variant-label">V1 · Cinematic Vault</p>
+      <p class="variant-sublabel">welcome XL · psec button</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-email-v1">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v1" type="email" /></div>
+          </div>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-password-v1">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v1" type="password" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v1" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="lfm-forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+          <button type="submit" class="lfm-submit">Ingresa</button>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register">Regístrate</a>
+      </div>
+    </section>
+
+    <!-- ── V2 · Primary (orange→vault) ──────────────────────────── -->
+    <section class="variant-slot" data-variant="v2-primary">
+      <p class="variant-label">V2 · Primary</p>
+      <p class="variant-sublabel">welcome XL · pvbtn button</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-email-v2">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v2" type="email" /></div>
+          </div>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-password-v2">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v2" type="password" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v2" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="lfm-forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+          <button type="submit" class="lfm-submit lfm-submit--primary">Ingresa</button>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="catalog-row" aria-label="Login Form Mobile — Empty / Required state">
+
+    <!-- ── V3 · Cinematic Vault · Empty ──────────────────────────── -->
+    <section class="variant-slot" data-variant="v3-cinematic-empty">
+      <p class="variant-label">V3 · Cinematic Vault · Empty</p>
+      <p class="variant-sublabel">required · live gradient</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field lfm-field--error">
+            <label class="lfm-label" for="m-lfm-email-v3">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v3" type="email" aria-invalid="true" /></div>
+            <p class="lfm-helper">Campo requerido</p>
+          </div>
+          <div class="lfm-field lfm-field--error">
+            <label class="lfm-label" for="m-lfm-password-v3">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v3" type="password" aria-invalid="true" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v3" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+            <p class="lfm-helper">Campo requerido</p>
+          </div>
+          <div class="lfm-forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+          <button type="submit" class="lfm-submit" disabled>Ingresa</button>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register">Regístrate</a>
+      </div>
+    </section>
+
+    <!-- ── V4 · Primary · Empty ─────────────────────────────────── -->
+    <section class="variant-slot" data-variant="v4-primary-empty">
+      <p class="variant-label">V4 · Primary · Empty</p>
+      <p class="variant-sublabel">required · live gradient</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field lfm-field--error">
+            <label class="lfm-label" for="m-lfm-email-v4">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v4" type="email" aria-invalid="true" /></div>
+            <p class="lfm-helper">Campo requerido</p>
+          </div>
+          <div class="lfm-field lfm-field--error">
+            <label class="lfm-label" for="m-lfm-password-v4">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v4" type="password" aria-invalid="true" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v4" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+            <p class="lfm-helper">Campo requerido</p>
+          </div>
+          <div class="lfm-forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+          <button type="submit" class="lfm-submit lfm-submit--primary" disabled>Ingresa</button>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="catalog-row" aria-label="Login Form Mobile — Invalid credentials">
+
+    <!-- ── V5 · Cinematic Vault · Invalid ───────────────────────── -->
+    <section class="variant-slot" data-variant="v5-cinematic-invalid">
+      <p class="variant-label">V5 · Cinematic Vault · Invalid</p>
+      <p class="variant-sublabel">filled · credenciales inválidas</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-email-v5">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v5" type="email" value="example@gmail.com" /></div>
+          </div>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-password-v5">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v5" type="password" value="12345689" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v5" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="lfm-forgot">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+            <p class="lfm-invalid" role="alert">Credenciales inválidas</p>
+          </div>
+          <button type="submit" class="lfm-submit">Ingresa</button>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register">Regístrate</a>
+      </div>
+    </section>
+
+    <!-- ── V6 · Primary · Invalid ───────────────────────────────── -->
+    <section class="variant-slot" data-variant="v6-primary-invalid">
+      <p class="variant-label">V6 · Primary · Invalid</p>
+      <p class="variant-sublabel">filled · credenciales inválidas</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-email-v6">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v6" type="email" value="example@gmail.com" /></div>
+          </div>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-password-v6">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v6" type="password" value="12345689" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v6" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="lfm-forgot">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+            <p class="lfm-invalid" role="alert">Credenciales inválidas</p>
+          </div>
+          <button type="submit" class="lfm-submit lfm-submit--primary">Ingresa</button>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="catalog-row" aria-label="Login Form Mobile — Loading state">
+
+    <!-- ── V7 · Cinematic Vault · Loading (linear) ──────────────── -->
+    <section class="variant-slot" data-variant="v7-cinematic-loading">
+      <p class="variant-label">V7 · Cinematic Vault · Loading</p>
+      <p class="variant-sublabel">spinner lineal · pressed</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-email-v7">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v7" type="email" value="example@gmail.com" /></div>
+          </div>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-password-v7">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v7" type="password" value="12345689" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v7" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="lfm-forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+          <div class="lfm-submit-wrap">
+            <button type="submit" class="lfm-submit lfm-submit--loading" aria-busy="true">Ingresa</button>
+            <span class="lfm-spinner lfm-spinner--linear" aria-hidden="true"></span>
+          </div>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register">Regístrate</a>
+      </div>
+    </section>
+
+    <!-- ── V8 · Primary · Loading (dots) ────────────────────────── -->
+    <section class="variant-slot" data-variant="v8-primary-loading">
+      <p class="variant-label">V8 · Primary · Loading</p>
+      <p class="variant-sublabel">spinner dots · pressed</p>
+      <div class="lfm">
+        <header class="lfm-welcome">
+          <h1 class="lfm-welcome-h1">¡Bienvenido!</h1>
+          <p class="lfm-welcome-sub">Cazador de ofertas</p>
+        </header>
+        <form class="lfm-form" novalidate>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-email-v8">Correo electrónico</label>
+            <div class="lfm-input-wrap"><input class="lfm-input" id="m-lfm-email-v8" type="email" value="example@gmail.com" /></div>
+          </div>
+          <div class="lfm-field">
+            <label class="lfm-label" for="m-lfm-password-v8">Contraseña</label>
+            <div class="lfm-input-wrap">
+              <input class="lfm-input lfm-input--pwd" id="m-lfm-password-v8" type="password" value="12345689" />
+              <button type="button" class="lfm-eye" data-target="m-lfm-password-v8" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="lfm-forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
+          <div class="lfm-submit-wrap">
+            <button type="submit" class="lfm-submit lfm-submit--primary lfm-submit--loading" aria-busy="true">Ingresa</button>
+            <span class="lfm-spinner lfm-spinner--dots" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </span>
+          </div>
+        </form>
+        <div class="lfm-divider"><span>ó</span></div>
+        <a href="#" class="lfm-register lfm-register--ghost">Regístrate</a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function initEyeToggles() {
+      var eyes = document.querySelectorAll('.lfm-eye');
+      function bindEye(eye) {
+        var input = document.getElementById(eye.getAttribute('data-target'));
+        if (!input) return;
+        function handleToggle() {
+          var isPwd = input.type === 'password';
+          input.type = isPwd ? 'text' : 'password';
+          eye.setAttribute('aria-label', isPwd ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        }
+        eye.addEventListener('click', handleToggle);
+      }
+      eyes.forEach(bindEye);
+    })();
+
+    (function disableRedirects() {
+      function handleSubmit(event) { event.preventDefault(); }
+      document.querySelectorAll('.lfm-form').forEach(function bindForm(form) {
+        form.addEventListener('submit', handleSubmit);
+      });
+      function handleLinkClick(event) { event.preventDefault(); }
+      document.querySelectorAll('.lfm-register, .lfm-forgot a').forEach(function bindLink(link) {
+        link.addEventListener('click', handleLinkClick);
+      });
+    })();
+
+    (function initLivePreviewV9Mobile() {
+      var form = document.getElementById('m-lfm-form-v9');
+      if (!form) return;
+      var email   = document.getElementById('m-lfm-email-v9');
+      var pwd     = document.getElementById('m-lfm-password-v9');
+      var submit  = document.getElementById('m-lfm-submit-v9');
+      var invalid = document.getElementById('m-lfm-invalid-v9');
+      var isLoading = false;
+
+      function isFilled() { return email.value.trim().length > 0 && pwd.value.trim().length > 0; }
+      function setInactive(flag) {
+        if (flag) { submit.classList.add('lfm-submit--inactive'); submit.setAttribute('aria-disabled', 'true'); }
+        else { submit.classList.remove('lfm-submit--inactive'); submit.setAttribute('aria-disabled', 'false'); }
+      }
+      function showMessage(text) { invalid.textContent = text; }
+      function clearMessage() { invalid.textContent = ''; }
+      function syncState() { if (!isLoading) setInactive(!isFilled()); }
+      function handleInput() { clearMessage(); syncState(); }
+      email.addEventListener('input', handleInput);
+      pwd.addEventListener('input', handleInput);
+
+      submit.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (isLoading) return;
+        if (!isFilled()) { showMessage('Completa todos los campos'); return; }
+        isLoading = true;
+        clearMessage();
+        submit.classList.remove('lfm-submit--inactive');
+        submit.classList.add('lfm-submit--loading');
+        submit.setAttribute('aria-busy', 'true');
+        window.setTimeout(function () {
+          isLoading = false;
+          submit.classList.remove('lfm-submit--loading');
+          submit.removeAttribute('aria-busy');
+          showMessage('Credenciales inválidas');
+          syncState();
+        }, 3000);
+      });
+      syncState();
+    })();
+  </script>
+  <script src="../desktop/variant-filter.js"></script>
+  <script src="../desktop/_iframe-resize.js"></script>
+</body>
+</html>

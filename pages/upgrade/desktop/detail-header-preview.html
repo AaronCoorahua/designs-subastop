@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Detail Header Preview · V1 — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ─── Tokens base · compartido entre componentes desktop ────────── */
+:root {
+  --vmc-color-vault-200:   oklch(0.87 0.09 285);
+  --vmc-color-vault-300:   oklch(0.80 0.12 285);
+  --vmc-color-vault-400:   oklch(0.55 0.20 285);
+  --vmc-color-vault-500:   oklch(0.45 0.20 285);
+  --vmc-color-vault-600:   oklch(0.38 0.20 285);
+  --vmc-color-vault-700:   oklch(0.30 0.20 285);
+  --vmc-color-vault-800:   oklch(0.22 0.18 285);
+  --vmc-color-vault-900:   oklch(0.15 0.27 278);
+
+  --vmc-color-orange-400:  oklch(0.78 0.16 60);
+  --vmc-color-orange-500:  oklch(0.72 0.16 55);
+  --vmc-color-orange-600:  oklch(0.66 0.17 50);
+  --vmc-color-orange-700:  oklch(0.58 0.18 45);
+
+  --vmc-color-base-white:  oklch(1 0 0);
+  --vmc-color-text-inverse:        oklch(1 0 0);
+  --vmc-color-text-on-dark-muted:  oklch(1 0 0 / 60%);
+
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-text-on-dark:    oklch(1 0 0);
+  --voyager-text-on-surface: oklch(0.15 0.008 200);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:    "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 24px 16px;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow-x: hidden;
+}
+
+/* ─── Scaffold catalog · compartido ─────────────────────────────── */
+.catalog-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 40px 32px; padding: 16px 4px 32px;
+}
+.variant-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.variant-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  text-align: center;
+}
+.variant-sublabel {
+  font-family: var(--voyager-font-mono);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+.subrow {
+  margin-top: 40px; padding-top: 24px;
+  border-top: 1px dashed color-mix(in oklch, var(--vmc-color-vault-800) 12%, transparent);
+}
+.subrow-header {
+  display: flex; align-items: baseline; justify-content: center;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 20px; text-align: center;
+}
+.subrow-title {
+  margin: 0;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--vmc-color-vault-800);
+}
+.subrow-note {
+  font-family: var(--voyager-font-mono);
+  font-size: 11px;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 50%, transparent);
+}
+.btn-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 32px; padding: 8px 4px 24px;
+}
+.btn-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.btn-slot-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+.btn-slot-sublabel {
+  font-family: var(--voyager-font-mono);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DETAIL HEADER IMAGES · 443 × 521 · NO rounded outer · V1 only
+   ═══════════════════════════════════════════════════════════════ */
+.dh {
+  width: 443px;
+  height: 521px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  background: var(--voyager-surface-card);
+  box-shadow:
+    0 1px 2px  oklch(0.22 0.18 285 / 6%),
+    0 12px 32px oklch(0.22 0.18 285 / 10%);
+  user-select: none;
+  isolation: isolate;
+}
+.dh-header {
+  position: relative;
+  height: 64px;
+  padding: 0 16px;
+  display: flex; align-items: center; gap: 12px;
+  color: var(--vmc-color-base-white);
+  isolation: isolate;
+  flex-shrink: 0;
+  background: linear-gradient(to right,
+    var(--vmc-color-orange-500) 0%,
+    var(--vmc-color-orange-600) 50%,
+    var(--vmc-color-orange-700) 100%);
+}
+.dh-header > * { position: relative; z-index: 1; }
+
+.dh-back {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  border: 0; background: transparent;
+  color: var(--vmc-color-base-white);
+  cursor: pointer; flex-shrink: 0;
+  transition:
+    background 150ms var(--voyager-ease-default),
+    transform  150ms var(--voyager-ease-default);
+}
+.dh-back svg { width: 24px; height: 24px; stroke-width: 4; }
+.dh-back:hover  { background: var(--vmc-color-orange-500); }
+.dh-back:active {
+  background: var(--vmc-color-orange-600);
+  color: var(--vmc-color-text-on-dark-muted);
+}
+.dh-back--hover   { background: var(--vmc-color-orange-500) !important; }
+.dh-back--pressed { background: var(--vmc-color-orange-600) !important; color: var(--vmc-color-text-on-dark-muted) !important; }
+
+.dh-titleblock { display: flex; flex-direction: column; min-width: 0; gap: 0; }
+.dh-title {
+  font-family: var(--voyager-font-display);
+  font-size: 16px; font-weight: 500; line-height: 24px;
+  color: var(--vmc-color-text-inverse);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dh-subtitle {
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 400; line-height: 16px;
+  color: var(--vmc-color-text-on-dark-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.dh-image {
+  position: relative;
+  flex: 1 1 auto;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.92 0.005 220) 0%, transparent 70%),
+    linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%);
+  overflow: hidden;
+}
+.dh-image-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: oklch(0.62 0.01 220);
+}
+.dh-image-placeholder svg { width: 72px; height: 72px; }
+.dh-image-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 180ms var(--voyager-ease-default);
+}
+.dh-thumb-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dh-action {
+  position: absolute;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  border: 0;
+  background: oklch(0.20 0.02 280 / 55%);
+  color: var(--vmc-color-base-white);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition:
+    background 150ms var(--voyager-ease-default),
+    transform  150ms var(--voyager-ease-default),
+    box-shadow 150ms var(--voyager-ease-default);
+}
+.dh-action svg { width: 18px; height: 18px; }
+.dh-action--expand { top: 12px; right: 12px; }
+.dh-action--prev   { top: 50%; left: 12px;  transform: translateY(-50%); }
+.dh-action--next   { top: 50%; right: 12px; transform: translateY(-50%); }
+.dh-action:hover { background: oklch(0.20 0.02 280 / 75%); }
+.dh-action--expand:hover { transform: scale(1.05); }
+.dh-action--prev:hover   { transform: translateY(-50%) scale(1.05); }
+.dh-action--next:hover   { transform: translateY(-50%) scale(1.05); }
+.dh-counter {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: oklch(0.20 0.02 280 / 55%);
+  color: var(--vmc-color-base-white);
+  font-family: var(--voyager-font-mono);
+  font-size: 12px; font-variant-numeric: tabular-nums;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.dh-thumbs {
+  display: flex; gap: 8px;
+  padding: 8px;
+  background: var(--voyager-surface-card);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.dh-thumbs::-webkit-scrollbar { display: none; }
+.dh-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 100px; height: 75px;
+  border-radius: 4px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.92 0.005 220) 0%, transparent 70%),
+    linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%);
+  cursor: pointer;
+}
+.dh-thumb-icon {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px; height: 28px;
+  color: oklch(0.62 0.01 220);
+  pointer-events: none;
+  z-index: 1;
+}
+.dh-thumb-ring {
+  position: absolute; inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 2;
+  transition: box-shadow 200ms var(--voyager-ease-default);
+}
+/* V1 Default · gradient ring iridescent orange→vault */
+.dh-thumb.is-active .dh-thumb-ring {
+  box-shadow: none;
+  border: 3px solid transparent;
+  background-origin: border-box;
+  background-clip: border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+          mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  background-image: linear-gradient(135deg,
+    var(--vmc-color-base-white) 0%,
+    var(--vmc-color-orange-400) 25%,
+    var(--vmc-color-vault-400)  75%,
+    var(--vmc-color-base-white) 100%);
+}
+
+/* ▸ Hover preview ring · indica click sin competir con el activo */
+.dh-thumb:not(.is-active):hover .dh-thumb-ring {
+  box-shadow:
+    inset 0 0 0 2px oklch(0.66 0.17 50 / 45%),
+    inset 0 0 0 3px oklch(1 0 0 / 30%);
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     Detail Header Images · V1 Default
+     ════════════════════════════════════════════════════════ -->
+<div class="catalog-row">
+
+  <!-- ▸ VARIANT V1 · Default · spec voyager-three-cyan ────── -->
+  <div class="variant-slot" data-variant="v1-default">
+    <span class="variant-label">V1 · Default</span>
+    <span class="variant-sublabel">live horizontal gradient</span>
+    <article class="dh">
+      <header class="dh-header">
+        <button type="button" class="dh-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="dh-titleblock"><span class="dh-title">Volkswagen Gol 2015</span><span class="dh-subtitle">Vendedor: SubasCars</span></div>
+      </header>
+      <div class="dh-image">
+        <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Volkswagen Gol 2015 — imagen activa">
+        <button type="button" class="dh-action dh-action--expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 5 5 9 5"/><polyline points="15 5 19 5 19 9"/><polyline points="5 15 5 19 9 19"/><polyline points="15 19 19 19 19 15"/></svg></button>
+        <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+        <span class="dh-counter">1 / 3</span>
+      </div>
+      <div class="dh-thumbs">
+        <div class="dh-thumb is-active"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
+        <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg"  alt=""><span class="dh-thumb-ring"></span></div>
+      </div>
+    </article>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     Back Button · Estados estáticos V1 (hover · pressed)
+     ════════════════════════════════════════════════════════ -->
+<div class="subrow">
+  <div class="subrow-header">
+    <h3 class="subrow-title">Back Button · Estados estáticos</h3>
+    <span class="subrow-note">Hover · Pressed sobre header gradient</span>
+  </div>
+  <div class="btn-row">
+    <div class="btn-slot" data-state="back-hover">
+      <span class="btn-slot-label">V1 · Back · hover</span>
+      <button type="button" class="dh-back dh-back--hover" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="btn-slot-sublabel">bg orange-500</span>
+    </div>
+    <div class="btn-slot" data-state="back-pressed">
+      <span class="btn-slot-label">V1 · Back · pressed</span>
+      <button type="button" class="dh-back dh-back--pressed" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="btn-slot-sublabel">bg orange-600 · icon muted</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  function initGallery(dh) {
+    var thumbs = Array.prototype.slice.call(dh.querySelectorAll('.dh-thumb'));
+    if (!thumbs.length) return;
+    var mainImg = dh.querySelector('.dh-image-photo');
+    var counter = dh.querySelector('.dh-counter');
+    var prev    = dh.querySelector('.dh-action--prev');
+    var next    = dh.querySelector('.dh-action--next');
+    var total   = thumbs.length;
+    var current = 0;
+
+    function activate(index) {
+      if (index < 0) index = total - 1;
+      if (index >= total) index = 0;
+      current = index;
+      thumbs.forEach(function (t, i) {
+        t.classList.toggle('is-active', i === index);
+      });
+      var thumbImg = thumbs[index].querySelector('.dh-thumb-photo');
+      if (mainImg && thumbImg) mainImg.src = thumbImg.src;
+      if (counter) counter.textContent = (index + 1) + ' / ' + total;
+
+      var rail = thumbs[index].parentElement;
+      if (rail) {
+        var t = thumbs[index];
+        var railRect = rail.getBoundingClientRect();
+        var tRect = t.getBoundingClientRect();
+        if (tRect.left < railRect.left) {
+          rail.scrollLeft += tRect.left - railRect.left - 8;
+        } else if (tRect.right > railRect.right) {
+          rail.scrollLeft += tRect.right - railRect.right + 8;
+        }
+      }
+    }
+
+    thumbs.forEach(function (thumb, i) {
+      thumb.addEventListener('click', function () { activate(i); });
+    });
+    if (prev) prev.addEventListener('click', function () { activate(current - 1); });
+    if (next) next.addEventListener('click', function () { activate(current + 1); });
+
+    var initial = thumbs.findIndex(function (t) { return t.classList.contains('is-active'); });
+    activate(initial >= 0 ? initial : 0);
+  }
+
+  document.querySelectorAll('.dh').forEach(initGallery);
+})();
+</script>
+<script src="variant-filter.js"></script>
+<script src="_iframe-resize.js"></script>
+</body>
+</html>

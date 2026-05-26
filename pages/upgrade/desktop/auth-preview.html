@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auth Preview · Login + Forgot + Register — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --vmc-color-vault-500: oklch(0.45 0.20 285);
+  --vmc-color-vault-700: oklch(0.30 0.20 285);
+  --vmc-color-vault-800: oklch(0.22 0.18 285);
+  --voyager-surface-page: oklch(0.98 0.004 160);
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono: "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--voyager-surface-page);
+  font-family: var(--voyager-font-display);
+  color: var(--vmc-color-vault-800);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.auth-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.auth-page-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.auth-page-h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-500) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.auth-page-sub {
+  margin: 0;
+  font-family: var(--voyager-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+
+.auth-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.auth-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 4px;
+}
+.auth-section-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 65%, transparent);
+}
+.auth-section-source {
+  font-family: var(--voyager-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+.auth-section-source a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed color-mix(in oklch, var(--vmc-color-vault-800) 30%, transparent);
+}
+.auth-section-source a:hover {
+  color: var(--vmc-color-vault-700);
+  border-bottom-color: var(--vmc-color-vault-700);
+}
+
+.auth-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+</style>
+</head>
+<body>
+
+<main class="auth-page" aria-label="Auth flows preview — Voyager Upgrade">
+
+  <header class="auth-page-header">
+    <h1 class="auth-page-h1">Auth Preview · Voyager</h1>
+    <p class="auth-page-sub">login · olvidé contraseña · registro — todas las variantes</p>
+  </header>
+
+  <!-- Login · Live Preview (V9 de login-form.html) -->
+  <section class="auth-section" aria-label="Login · Live Preview">
+    <header class="auth-section-header">
+      <h2 class="auth-section-title">Login · 9 variantes</h2>
+      <span class="auth-section-source">
+        <a href="login-form.html" target="_blank" rel="noopener">login-form.html ↗</a>
+      </span>
+    </header>
+    <iframe
+      class="auth-frame"
+      id="auth-frame-login"
+      src="login-form.html"
+      loading="lazy"
+      title="Login — todas las variantes"></iframe>
+  </section>
+
+  <!-- Forgot Password · Live Preview (V10 de forgot-password.html) -->
+  <section class="auth-section" aria-label="Forgot Password · Live Preview">
+    <header class="auth-section-header">
+      <h2 class="auth-section-title">Olvidé mi contraseña · 10 variantes</h2>
+      <span class="auth-section-source">
+        <a href="forgot-password.html" target="_blank" rel="noopener">forgot-password.html ↗</a>
+      </span>
+    </header>
+    <iframe
+      class="auth-frame"
+      id="auth-frame-forgot"
+      src="forgot-password.html"
+      loading="lazy"
+      title="Forgot Password — todas las variantes"></iframe>
+  </section>
+
+  <!-- Register · Live Preview (V5 de register-form.html) -->
+  <section class="auth-section" aria-label="Register · Live Preview">
+    <header class="auth-section-header">
+      <h2 class="auth-section-title">Registro · 5 variantes</h2>
+      <span class="auth-section-source">
+        <a href="register-form.html" target="_blank" rel="noopener">register-form.html ↗</a>
+      </span>
+    </header>
+    <iframe
+      class="auth-frame"
+      id="auth-frame-register"
+      src="register-form.html"
+      loading="lazy"
+      title="Register — todas las variantes"></iframe>
+  </section>
+
+</main>
+
+<script>
+  (function autoResizeFrames() {
+    var frameMap = {};
+    document.querySelectorAll('iframe.auth-frame').forEach(function (frame) {
+      try {
+        var url = new URL(frame.src, window.location.href);
+        frameMap[url.pathname] = frame;
+      } catch (err) {}
+    });
+
+    window.addEventListener('message', function (event) {
+      var data = event.data;
+      if (!data || data.type !== 'subastop:variant-height') return;
+      var frame = frameMap[data.path];
+      if (!frame) {
+        Object.keys(frameMap).forEach(function (key) {
+          if (data.path && data.path.indexOf(key) !== -1) frame = frameMap[key];
+        });
+      }
+      if (frame && typeof data.height === 'number') {
+        frame.style.height = (data.height + 16) + 'px';
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

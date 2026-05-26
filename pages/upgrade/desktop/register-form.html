@@ -25,6 +25,8 @@
   --vmc-color-orange-700:  oklch(0.58 0.18 45);
 
   --vmc-color-base-white:  oklch(1 0 0);
+  --vmc-color-neutral-700: oklch(0.45 0.008 220);
+  --vmc-color-background-disabled: oklch(0.91 0.004 160);
   --vmc-color-status-error: oklch(0.62 0.22 25);
 
   --voyager-surface-page:    oklch(0.98 0.004 160);
@@ -127,9 +129,38 @@ html, body {
 .rgf-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px 24px;
+  gap: 30px 24px;
 }
-.rgf-field { display: flex; flex-direction: column; gap: 6px; }
+.rgf-field { display: flex; flex-direction: column; gap: 6px; position: relative; }
+.rgf-field--error .rgf-input {
+  border-color: color-mix(in oklch, var(--vmc-color-orange-600) 55%, transparent);
+  background: color-mix(in oklch, var(--vmc-color-orange-500) 6%, var(--voyager-input-bg));
+}
+.rgf-field--error .rgf-input:focus {
+  border-color: var(--vmc-color-orange-600);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--vmc-color-orange-500) 18%, transparent);
+}
+.rgf-helper {
+  position: absolute;
+  right: 0;
+  bottom: -18px;
+  margin: 0;
+  font-family: var(--voyager-font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  background: linear-gradient(95deg,
+    var(--vmc-color-orange-600) 0%,
+    oklch(0.66 0.22 25) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+.rgf-field--error .rgf-helper { opacity: 1; }
 .rgf-label {
   font-family: var(--voyager-font-display);
   font-size: 12px; font-weight: 400;
@@ -170,7 +201,7 @@ html, body {
 .rgf-eye svg { width: 20px; height: 20px; fill: currentColor; }
 
 .rgf-required-note {
-  margin: 20px 0 0;
+  margin: 32px 0 0;
   font-family: var(--voyager-font-display);
   font-size: 12px; font-weight: 400;
   color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
@@ -253,6 +284,599 @@ html, body {
   border-color: var(--vmc-color-orange-500);
   box-shadow: 0 0 0 3px color-mix(in oklch, var(--vmc-color-orange-500) 18%, transparent);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Importante · bullets coral/orange
+   ═══════════════════════════════════════════════════════════════ */
+.rgf-important { margin-top: 28px; }
+.rgf-divider + .rgf-important { margin-top: 0; }
+.rgf-important-title {
+  margin: 0 0 8px;
+  font-family: var(--voyager-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--vmc-color-orange-600);
+}
+.rgf-important-list {
+  margin: 0; padding: 0;
+  list-style: none;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.rgf-important-item {
+  position: relative;
+  padding-left: 16px;
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--vmc-color-vault-800);
+}
+.rgf-important-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px;
+  width: 4px; height: 4px;
+  background: var(--vmc-color-orange-500);
+  border-radius: 50%;
+}
+.rgf-important-item a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+.rgf-important-item a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Terms iframe · gray skeleton placeholder (100% × 288)
+   ═══════════════════════════════════════════════════════════════ */
+.rgf-terms-skeleton {
+  position: relative;
+  margin-top: 24px;
+  width: 100%;
+  height: 288px;
+  border-radius: var(--vmc-radius-md);
+  background: oklch(0.94 0.004 220);
+  border: 1px solid oklch(0.88 0.006 220);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rgf-terms-skeleton::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    oklch(1 0 0 / 50%) 50%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: rgf-shimmer 1.8s linear infinite;
+  pointer-events: none;
+}
+.rgf-terms-skeleton-label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 35%, transparent);
+}
+@keyframes rgf-shimmer {
+  to { background-position: -200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Checkboxes · acceptance group
+   ═══════════════════════════════════════════════════════════════ */
+.rgf-checks {
+  margin-top: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.rgf-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.rgf-check input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 16px; height: 16px;
+  margin: 0;
+  accent-color: var(--vmc-color-vault-500);
+  cursor: pointer;
+}
+[data-variant="v2-primary"] .rgf-check input[type="checkbox"] {
+  accent-color: var(--vmc-color-orange-600);
+}
+.rgf-check-label {
+  font-family: var(--voyager-font-display);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--vmc-color-vault-500);
+}
+.rgf-check-label a {
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+.rgf-check-label a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Submit · SIGAMOS · cinematic vault (V1) / iridescent (V2)
+   ═══════════════════════════════════════════════════════════════ */
+@property --rgf-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
+@property --rgf-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.45 0.20 285); }
+@property --rgf-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.30 0.20 285); }
+@property --rgf2-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
+@property --rgf2-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.72 0.16 55); }
+@property --rgf2-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.55 0.22 285); }
+
+.rgf-submit-wrap {
+  margin-top: 32px;
+  align-self: center;
+  position: relative;
+  display: inline-flex;
+}
+.rgf-submit {
+  --rgf-stop-a: var(--vmc-color-vault-500);
+  --rgf-stop-b: var(--vmc-color-vault-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+  height: 48px;
+  padding: 0 32px;
+  border-radius: var(--vmc-radius-full);
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--voyager-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.30);
+  background-image:
+    linear-gradient(var(--rgf-angle), var(--rgf-stop-a) 0%, var(--rgf-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-vault-300) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      var(--vmc-color-vault-300) 100%
+    );
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30);
+  transition:
+    --rgf-angle  0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    --rgf-stop-a 0.35s ease,
+    --rgf-stop-b 0.35s ease,
+    transform    0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow   0.25s ease;
+  transform: translateZ(0);
+}
+.rgf-submit::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.16) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.rgf-submit::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: var(--vmc-radius-full);
+  background: linear-gradient(135deg, var(--vmc-color-vault-400), var(--vmc-color-vault-600));
+  filter: blur(14px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.rgf-submit:hover {
+  --rgf-angle:  220deg;
+  --rgf-stop-a: var(--vmc-color-vault-400);
+  --rgf-stop-b: var(--vmc-color-vault-600);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.20),
+    0 8px 24px rgb(51.76% 37.65% 89.8% / 0.40),
+    0 4px 10px rgb(51.76% 37.65% 89.8% / 0.25);
+}
+.rgf-submit:hover::after { opacity: 0.45; filter: blur(18px); }
+.rgf-submit:active {
+  --rgf-angle:  160deg;
+  --rgf-stop-a: var(--vmc-color-vault-700);
+  --rgf-stop-b: var(--vmc-color-vault-900);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.28),
+    0 1px 3px rgb(0% 0% 0% / 0.14);
+}
+.rgf-submit:active::after { opacity: 0; }
+.rgf-submit:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--vmc-color-base-white),
+    0 0 0 5px var(--vmc-color-vault-400),
+    0 8px 16px -4px rgb(51.76% 37.65% 89.8% / 0.35);
+}
+.rgf-submit:disabled {
+  background-image: none;
+  background-color: var(--vmc-color-background-disabled);
+  color: var(--vmc-color-neutral-700);
+  text-shadow: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+  border-color: transparent;
+}
+.rgf-submit:disabled::before,
+.rgf-submit:disabled::after { display: none; }
+
+/* Loading state — Cinematic Vault · pressed + translucent */
+.rgf-submit.rgf-submit--loading:not(.rgf-submit--primary) {
+  --rgf-angle: 160deg;
+  --rgf-stop-a: var(--vmc-color-vault-700);
+  --rgf-stop-b: var(--vmc-color-vault-900);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.28),
+    0 1px 3px rgb(0% 0% 0% / 0.14);
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.rgf-submit.rgf-submit--loading:not(.rgf-submit--primary)::after { opacity: 0; }
+
+/* V2 · iridescent orange→vault */
+.rgf-submit--primary {
+  --rgf2-stop-a: var(--vmc-color-orange-600);
+  --rgf2-stop-b: var(--vmc-color-vault-500);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  background-image:
+    linear-gradient(var(--rgf2-angle), var(--rgf2-stop-a) 0%, var(--rgf2-stop-a) 40%, var(--rgf2-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.28),
+    0 2px 6px rgb(92.94% 53.73% 21.18% / 0.30);
+  transition:
+    --rgf2-angle  0.4s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    --rgf2-stop-a 0.35s ease,
+    --rgf2-stop-b 0.35s ease,
+    transform     0.2s  cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow    0.25s ease;
+}
+.rgf-submit--primary::after {
+  background: linear-gradient(135deg, var(--vmc-color-orange-600), var(--vmc-color-vault-500));
+}
+.rgf-submit--primary:hover {
+  --rgf2-angle:  220deg;
+  --rgf2-stop-a: oklch(0.84 0.11 70);
+  --rgf2-stop-b: oklch(0.70 0.16 290);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.30),
+    0 4px 10px oklch(0.66 0.17 50  / 0.40),
+    0 8px 24px oklch(0.55 0.20 285 / 0.35);
+}
+.rgf-submit--primary:hover::after {
+  background: linear-gradient(135deg, oklch(0.84 0.11 70), oklch(0.70 0.16 290));
+  opacity: 0.55; filter: blur(20px);
+}
+.rgf-submit--primary:active {
+  --rgf2-angle:  135deg;
+  --rgf2-stop-a: var(--vmc-color-orange-700);
+  --rgf2-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.22),
+    0 1px 3px rgb(0% 0% 0% / 0.12);
+}
+.rgf-submit--primary:active::after { opacity: 0; }
+.rgf-submit--primary:focus-visible {
+  outline: none;
+  transform: scale(0.98);
+  box-shadow:
+    0 0 0 2px var(--vmc-color-base-white),
+    0 0 0 5px var(--vmc-color-vault-500),
+    0 8px 16px -4px rgb(51.76% 37.65% 89.8% / 0.30);
+}
+.rgf-submit--primary:disabled {
+  background-image: none;
+  background-color: var(--vmc-color-background-disabled);
+  color: var(--vmc-color-neutral-700);
+  text-shadow: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+  border-color: transparent;
+}
+.rgf-submit--primary:disabled::before,
+.rgf-submit--primary:disabled::after { display: none; }
+
+/* Loading state — Primary iridescent · pressed + translucent */
+.rgf-submit--primary.rgf-submit--loading {
+  --rgf2-angle: 135deg;
+  --rgf2-stop-a: var(--vmc-color-orange-700);
+  --rgf2-stop-b: var(--vmc-color-vault-600);
+  transform: scale(0.97) translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0% 0% 0% / 0.22),
+    0 1px 3px rgb(0% 0% 0% / 0.12);
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.rgf-submit--primary.rgf-submit--loading::after { opacity: 0; }
+
+/* Spinner · 8 dots circle (V8-style) — sibling sin opacity inherit */
+.rgf-spinner {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  margin-top: -11px;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 2;
+}
+.rgf-spinner span {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.rgf-spinner span::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: rgb(100% 100% 100% / 1);
+  animation: rgf-dot-fade 0.96s linear infinite;
+}
+.rgf-spinner span:nth-child(1) { transform: rotate(0deg); }
+.rgf-spinner span:nth-child(1)::before { animation-delay: 0s; }
+.rgf-spinner span:nth-child(2) { transform: rotate(45deg); }
+.rgf-spinner span:nth-child(2)::before { animation-delay: -0.12s; }
+.rgf-spinner span:nth-child(3) { transform: rotate(90deg); }
+.rgf-spinner span:nth-child(3)::before { animation-delay: -0.24s; }
+.rgf-spinner span:nth-child(4) { transform: rotate(135deg); }
+.rgf-spinner span:nth-child(4)::before { animation-delay: -0.36s; }
+.rgf-spinner span:nth-child(5) { transform: rotate(180deg); }
+.rgf-spinner span:nth-child(5)::before { animation-delay: -0.48s; }
+.rgf-spinner span:nth-child(6) { transform: rotate(225deg); }
+.rgf-spinner span:nth-child(6)::before { animation-delay: -0.60s; }
+.rgf-spinner span:nth-child(7) { transform: rotate(270deg); }
+.rgf-spinner span:nth-child(7)::before { animation-delay: -0.72s; }
+.rgf-spinner span:nth-child(8) { transform: rotate(315deg); }
+.rgf-spinner span:nth-child(8)::before { animation-delay: -0.84s; }
+@keyframes rgf-dot-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
+/* Inactive (clickable but visually disabled) */
+.rgf-submit--inactive {
+  background-image: none !important;
+  background-color: var(--vmc-color-background-disabled) !important;
+  color: var(--vmc-color-neutral-700) !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: transparent !important;
+  cursor: not-allowed;
+}
+.rgf-submit--inactive::before,
+.rgf-submit--inactive::after { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LIVE PREVIEW (V5) — sidebar V1 + header V1 + register interactivo + banner
+   ═══════════════════════════════════════════════════════════════ */
+@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 160deg; }
+@property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.66 0.17 50); }
+@property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.45 0.20 285); }
+
+.rgf-live {
+  display: grid;
+  grid-template-columns: 226px 798px;
+  isolation: isolate;
+}
+.rgf-live-right {
+  display: flex; flex-direction: column;
+  background: var(--voyager-surface-page);
+  min-width: 0;
+}
+
+/* Header V1 (798 × 64) */
+.hd {
+  width: 798px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  background: var(--vmc-color-vault-800);
+  position: relative; isolation: isolate; overflow: hidden;
+  user-select: none; flex-shrink: 0;
+}
+.hd::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, oklch(1 0 0 / 6%) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 80% at 100% 50%, oklch(0.66 0.17 50 / 8%) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.hd > * { position: relative; z-index: 1; }
+.hd-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 40px; padding: 0 16px 0 4px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  cursor: pointer; position: relative; overflow: hidden;
+  font-family: var(--voyager-font-display);
+  font-size: 14px; font-weight: 500;
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 2px oklch(0 0 0 / 22%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  transition:
+    --vbtn-angle 0.4s var(--voyager-ease-default),
+    --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease,
+    transform 0.2s var(--voyager-ease-default), box-shadow 0.25s ease;
+  transform: translateZ(0);
+}
+.hd-btn::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+.hd-btn > *:not(.hd-btn-icon) { position: relative; z-index: 2; }
+.hd-btn-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; z-index: 2;
+}
+.hd-btn-icon svg { width: 18px; height: 18px; fill: currentColor; }
+.hd-btn--sm {
+  --vbtn-stop-a: var(--vmc-color-orange-600);
+  --vbtn-stop-b: var(--vmc-color-vault-500);
+  background-image:
+    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
+    linear-gradient(135deg,
+      var(--vmc-color-base-white) 0%,
+      var(--vmc-color-orange-400) 25%,
+      var(--vmc-color-vault-400) 75%,
+      var(--vmc-color-base-white) 100%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 25%),
+    0 2px 6px oklch(0.66 0.17 50 / 25%);
+}
+.hd-btn--sm .hd-btn-icon {
+  background: oklch(0 0 0 / 18%);
+  color: var(--vmc-color-base-white);
+}
+.hd-btn--sm:hover {
+  --vbtn-angle: 220deg;
+  --vbtn-stop-a: oklch(0.84 0.11 70);
+  --vbtn-stop-b: oklch(0.70 0.16 290);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 30%),
+    0 4px 10px oklch(0.66 0.17 50  / 0.40),
+    0 8px 24px oklch(0.55 0.20 285 / 0.35);
+}
+
+/* Sidebar V1 */
+.sbr {
+  width: 226px;
+  background: var(--vmc-color-vault-800);
+  display: flex; flex-direction: column;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 6%);
+}
+.sbr-brand {
+  width: 100%; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 16px; position: relative;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, oklch(0.30 0.20 285 / 35%) 0%, transparent 70%);
+  flex-shrink: 0;
+}
+.sbr-brand::after {
+  content: ''; position: absolute;
+  left: 16px; right: 16px; bottom: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, oklch(1 0 0 / 10%) 50%, transparent 100%);
+}
+.sbr-brand img {
+  display: block; max-width: 100%; max-height: 48px;
+  height: auto; width: auto;
+  filter: drop-shadow(0 2px 6px oklch(0 0 0 / 30%));
+}
+.sbr-nav { display: flex; flex-direction: column; padding: 18px 0 22px; gap: 2px; }
+.sbr-item {
+  display: flex; align-items: center; gap: 14px; padding: 12px 18px;
+  text-decoration: none;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 88%, transparent);
+  font-family: var(--voyager-font-display);
+  font-size: 14px; font-weight: 500; letter-spacing: -0.1px;
+  position: relative; cursor: pointer;
+  transition: background 150ms var(--voyager-ease-default), color 150ms var(--voyager-ease-default);
+}
+.sbr-item:hover { background: oklch(1 0 0 / 6%); color: var(--vmc-color-base-white); }
+.sbr-item.is-active { background: oklch(1 0 0 / 8%); color: var(--vmc-color-base-white); }
+.sbr-item-icon {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 80%, transparent);
+}
+.sbr-item-icon svg {
+  width: 22px; height: 22px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.sbr-item:hover .sbr-item-icon,
+.sbr-item.is-active .sbr-item-icon { color: var(--vmc-color-base-white); }
+.sbr-item-label { flex: 1 1 auto; }
+.sbr-item-chevron {
+  width: 16px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 45%, transparent);
+  transition: color 150ms var(--voyager-ease-default), transform 150ms var(--voyager-ease-default);
+}
+.sbr-item-chevron svg {
+  width: 14px; height: 14px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.sbr-item:hover .sbr-item-chevron {
+  color: color-mix(in oklch, var(--vmc-color-base-white) 75%, transparent);
+  transform: translateX(2px);
+}
+.sbr-section {
+  margin: 16px 18px 6px;
+  font-family: var(--voyager-font-display);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-base-white) 38%, transparent);
+}
+
+/* Live container · dynamic height (matches register card) */
+.rgf-live-container {
+  width: 798px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--voyager-surface-section);
+  padding: 32px 16px;
+  flex-shrink: 0;
+}
+
+/* Banner placeholder · 798 × 138 */
+.rgf-live-banner {
+  width: 798px; height: 138px;
+  display: flex; align-items: center; justify-content: center;
+  background: oklch(0.94 0.004 220);
+  border: 1px solid oklch(0.88 0.006 220);
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 35%, transparent);
+  flex-shrink: 0;
+}
 </style>
 </head>
 <body>
@@ -320,6 +944,43 @@ html, body {
             </div>
           </div>
         </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-important">
+          <h3 class="rgf-important-title">Importante:</h3>
+          <ul class="rgf-important-list">
+            <li class="rgf-important-item">
+              Debes leer nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> antes de registrarte.
+            </li>
+            <li class="rgf-important-item">
+              Tu DNI es obligatorio en todo proceso de compra - venta.
+            </li>
+          </ul>
+        </section>
+
+        <div class="rgf-terms-skeleton" aria-hidden="true">
+          <span class="rgf-terms-skeleton-label">Términos y Condiciones</span>
+        </div>
+
+        <div class="rgf-checks">
+          <label class="rgf-check">
+            <input type="checkbox" name="terms" />
+            <span class="rgf-check-label">He leído y acepto las <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> de uso del servicio.</span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="personalDataProcessingPolicy" />
+            <span class="rgf-check-label">Acepto <a href="https://www.vmcsubastas.com/politica-datos-personales" target="_blank" rel="noopener">Política de privacidad y protección de Datos Personales.</a></span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="canReceivePublicity" />
+            <span class="rgf-check-label">Acepto que VMC SUBASTAS pueda remitirme promociones y publicidad de acuerdo con la Política de Privacidad.</span>
+          </label>
+        </div>
+
+        <div class="rgf-submit-wrap">
+          <button type="submit" class="rgf-submit" disabled>Sigamos</button>
+        </div>
       </div>
     </section>
 
@@ -385,6 +1046,462 @@ html, body {
             </div>
           </div>
         </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-important">
+          <h3 class="rgf-important-title">Importante:</h3>
+          <ul class="rgf-important-list">
+            <li class="rgf-important-item">
+              Debes leer nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> antes de registrarte.
+            </li>
+            <li class="rgf-important-item">
+              Tu DNI es obligatorio en todo proceso de compra - venta.
+            </li>
+          </ul>
+        </section>
+
+        <div class="rgf-terms-skeleton" aria-hidden="true">
+          <span class="rgf-terms-skeleton-label">Términos y Condiciones</span>
+        </div>
+
+        <div class="rgf-checks">
+          <label class="rgf-check">
+            <input type="checkbox" name="terms" />
+            <span class="rgf-check-label">He leído y acepto las <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> de uso del servicio.</span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="personalDataProcessingPolicy" />
+            <span class="rgf-check-label">Acepto <a href="https://www.vmcsubastas.com/politica-datos-personales" target="_blank" rel="noopener">Política de privacidad y protección de Datos Personales.</a></span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="canReceivePublicity" />
+            <span class="rgf-check-label">Acepto que VMC SUBASTAS pueda remitirme promociones y publicidad de acuerdo con la Política de Privacidad.</span>
+          </label>
+        </div>
+
+        <div class="rgf-submit-wrap">
+          <button type="submit" class="rgf-submit rgf-submit--primary" disabled>Sigamos</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="catalog-row" aria-label="Register Form — Errors state">
+
+    <!-- ── V3 · Cinematic Vault · Errors ────────────────────────── -->
+    <section class="variant-slot" data-variant="v3-cinematic-errors">
+      <p class="variant-label">V3 · Cinematic Vault · Errors</p>
+      <p class="variant-sublabel">filled · 4 errores · botón disabled</p>
+
+      <div class="rgf">
+        <header class="rgf-head">
+          <h1 class="rgf-h1">Aquí comienza tu experiencia</h1>
+          <p class="rgf-sub">Regístrate y descubre un nuevo mundo de oportunidades.</p>
+        </header>
+
+        <section class="rgf-personal">
+          <h2 class="rgf-section-title">Datos personales</h2>
+          <div class="rgf-grid">
+            <div class="rgf-field">
+              <label class="rgf-label" for="v3-firstname">Nombres <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v3-firstname" type="text" value="Aaron" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v3-lastname">Apellidos <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v3-lastname" type="text" value="Coorahua" /></div>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v3-dni">DNI <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v3-dni" type="tel" maxlength="8" value="60195079" aria-invalid="true" /></div>
+              <p class="rgf-helper">el DNI ya ha sido registrado</p>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v3-phone">Celular <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v3-phone" type="tel" maxlength="9" value="933077865" aria-invalid="true" /></div>
+              <p class="rgf-helper">El celular ya está registrado</p>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v3-email">Correo electrónico <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v3-email" type="email" value="rubenacoorahua@gmail.com" aria-invalid="true" /></div>
+              <p class="rgf-helper">el email ya ha sido registrado</p>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v3-password">Contraseña <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap">
+                <input class="rgf-input rgf-input--pwd" id="v3-password" type="password" value="1234567" aria-invalid="true" />
+                <button type="button" class="rgf-eye" data-target="v3-password" aria-label="Mostrar contraseña">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                </button>
+              </div>
+              <p class="rgf-helper">Ingresa un mínimo de 8 dígitos</p>
+            </div>
+          </div>
+          <p class="rgf-required-note"><span class="rgf-asterisk">*</span> Campos obligatorios</p>
+        </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-receipt">
+          <h2 class="rgf-section-title">Quiero recibir</h2>
+          <div class="rgf-receipt-row">
+            <div class="rgf-segment" role="radiogroup" aria-label="Tipo de comprobante">
+              <button type="button" class="rgf-segment-btn is-active" data-receipt="boleta">Boleta</button>
+              <button type="button" class="rgf-segment-btn" data-receipt="factura">Factura</button>
+            </div>
+            <div class="rgf-ruc rgf-ruc--disabled">
+              <span class="rgf-ruc-prefix">RUC *</span>
+              <input class="rgf-input" type="tel" disabled />
+            </div>
+          </div>
+        </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-important">
+          <h3 class="rgf-important-title">Importante:</h3>
+          <ul class="rgf-important-list">
+            <li class="rgf-important-item">
+              Debes leer nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> antes de registrarte.
+            </li>
+            <li class="rgf-important-item">
+              Tu DNI es obligatorio en todo proceso de compra - venta.
+            </li>
+          </ul>
+        </section>
+
+        <div class="rgf-terms-skeleton" aria-hidden="true">
+          <span class="rgf-terms-skeleton-label">Términos y Condiciones</span>
+        </div>
+
+        <div class="rgf-checks">
+          <label class="rgf-check">
+            <input type="checkbox" name="terms" checked />
+            <span class="rgf-check-label">He leído y acepto las <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> de uso del servicio.</span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="personalDataProcessingPolicy" checked />
+            <span class="rgf-check-label">Acepto <a href="https://www.vmcsubastas.com/politica-datos-personales" target="_blank" rel="noopener">Política de privacidad y protección de Datos Personales.</a></span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="canReceivePublicity" checked />
+            <span class="rgf-check-label">Acepto que VMC SUBASTAS pueda remitirme promociones y publicidad de acuerdo con la Política de Privacidad.</span>
+          </label>
+        </div>
+
+        <div class="rgf-submit-wrap">
+          <button type="submit" class="rgf-submit rgf-submit--loading" aria-busy="true" aria-disabled="true">Sigamos</button>
+          <span class="rgf-spinner" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── V4 · Primary · Errors ────────────────────────────────── -->
+    <section class="variant-slot" data-variant="v4-primary-errors">
+      <p class="variant-label">V4 · Primary · Errors</p>
+      <p class="variant-sublabel">filled · 4 errores · botón disabled</p>
+
+      <div class="rgf">
+        <header class="rgf-head">
+          <h1 class="rgf-h1">Aquí comienza tu experiencia</h1>
+          <p class="rgf-sub">Regístrate y descubre un nuevo mundo de oportunidades.</p>
+        </header>
+
+        <section class="rgf-personal">
+          <h2 class="rgf-section-title">Datos personales</h2>
+          <div class="rgf-grid">
+            <div class="rgf-field">
+              <label class="rgf-label" for="v4-firstname">Nombres <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v4-firstname" type="text" value="Aaron" /></div>
+            </div>
+            <div class="rgf-field">
+              <label class="rgf-label" for="v4-lastname">Apellidos <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v4-lastname" type="text" value="Coorahua" /></div>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v4-dni">DNI <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v4-dni" type="tel" maxlength="8" value="60195079" aria-invalid="true" /></div>
+              <p class="rgf-helper">el DNI ya ha sido registrado</p>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v4-phone">Celular <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v4-phone" type="tel" maxlength="9" value="933077865" aria-invalid="true" /></div>
+              <p class="rgf-helper">El celular ya está registrado</p>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v4-email">Correo electrónico <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap"><input class="rgf-input" id="v4-email" type="email" value="rubenacoorahua@gmail.com" aria-invalid="true" /></div>
+              <p class="rgf-helper">el email ya ha sido registrado</p>
+            </div>
+            <div class="rgf-field rgf-field--error">
+              <label class="rgf-label" for="v4-password">Contraseña <span class="rgf-asterisk">*</span></label>
+              <div class="rgf-input-wrap">
+                <input class="rgf-input rgf-input--pwd" id="v4-password" type="password" value="1234567" aria-invalid="true" />
+                <button type="button" class="rgf-eye" data-target="v4-password" aria-label="Mostrar contraseña">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                </button>
+              </div>
+              <p class="rgf-helper">Ingresa un mínimo de 8 dígitos</p>
+            </div>
+          </div>
+          <p class="rgf-required-note"><span class="rgf-asterisk">*</span> Campos obligatorios</p>
+        </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-receipt">
+          <h2 class="rgf-section-title">Quiero recibir</h2>
+          <div class="rgf-receipt-row">
+            <div class="rgf-segment" role="radiogroup" aria-label="Tipo de comprobante">
+              <button type="button" class="rgf-segment-btn is-active" data-receipt="boleta">Boleta</button>
+              <button type="button" class="rgf-segment-btn" data-receipt="factura">Factura</button>
+            </div>
+            <div class="rgf-ruc rgf-ruc--disabled">
+              <span class="rgf-ruc-prefix">RUC *</span>
+              <input class="rgf-input" type="tel" disabled />
+            </div>
+          </div>
+        </section>
+
+        <div class="rgf-divider"></div>
+
+        <section class="rgf-important">
+          <h3 class="rgf-important-title">Importante:</h3>
+          <ul class="rgf-important-list">
+            <li class="rgf-important-item">
+              Debes leer nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> antes de registrarte.
+            </li>
+            <li class="rgf-important-item">
+              Tu DNI es obligatorio en todo proceso de compra - venta.
+            </li>
+          </ul>
+        </section>
+
+        <div class="rgf-terms-skeleton" aria-hidden="true">
+          <span class="rgf-terms-skeleton-label">Términos y Condiciones</span>
+        </div>
+
+        <div class="rgf-checks">
+          <label class="rgf-check">
+            <input type="checkbox" name="terms" checked />
+            <span class="rgf-check-label">He leído y acepto las <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> de uso del servicio.</span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="personalDataProcessingPolicy" checked />
+            <span class="rgf-check-label">Acepto <a href="https://www.vmcsubastas.com/politica-datos-personales" target="_blank" rel="noopener">Política de privacidad y protección de Datos Personales.</a></span>
+          </label>
+          <label class="rgf-check">
+            <input type="checkbox" name="canReceivePublicity" checked />
+            <span class="rgf-check-label">Acepto que VMC SUBASTAS pueda remitirme promociones y publicidad de acuerdo con la Política de Privacidad.</span>
+          </label>
+        </div>
+
+        <div class="rgf-submit-wrap">
+          <button type="submit" class="rgf-submit rgf-submit--primary rgf-submit--loading" aria-busy="true" aria-disabled="true">Sigamos</button>
+          <span class="rgf-spinner" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="catalog-row" aria-label="Register Form — Live Preview">
+
+    <!-- ── V5 · Live Preview (interactive · sidebar + header + register + banner) ── -->
+    <section class="variant-slot" data-variant="v5-live-preview">
+      <p class="variant-label">V5 · Live Preview</p>
+      <p class="variant-sublabel">header V1 + sidebar V1 + register V1 interactivo · 3s loading → errores · banner</p>
+
+      <div class="rgf-live">
+
+        <!-- Sidebar V1 -->
+        <aside class="sbr" aria-label="Navegación principal">
+          <div class="sbr-brand">
+            <img src="../../../logo-preview.png" alt="VMC Subastas — Powered by Subastop.Co" />
+          </div>
+          <nav class="sbr-nav" aria-label="Secciones">
+            <a href="#" class="sbr-item is-active">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg>
+              </span>
+              <span class="sbr-item-label">Hoy</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M16.5 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H7"/></svg>
+              </span>
+              <span class="sbr-item-label">Tipo de oferta</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3.5l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1L3.2 9.9l6.1-.9L12 3.5z"/></svg>
+              </span>
+              <span class="sbr-item-label">Categorías</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+              </span>
+              <span class="sbr-item-label">Empresas</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+            <p class="sbr-section">Soporte</p>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <span class="sbr-item-label">Centro de ayuda</span>
+              <span class="sbr-item-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </a>
+          </nav>
+        </aside>
+
+        <!-- Right column -->
+        <div class="rgf-live-right">
+
+          <!-- Header V1 -->
+          <article class="hd">
+            <span aria-hidden="true"></span>
+            <button type="button" class="hd-btn hd-btn--sm" aria-label="Ingresa">
+              <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+              <span>Ingresa</span>
+            </button>
+          </article>
+
+          <!-- Register container (interactive form) -->
+          <div class="rgf-live-container">
+            <div class="rgf" id="rgf-live-card-v5">
+              <header class="rgf-head">
+                <h1 class="rgf-h1">Aquí comienza tu experiencia</h1>
+                <p class="rgf-sub">Regístrate y descubre un nuevo mundo de oportunidades.</p>
+              </header>
+
+              <section class="rgf-personal">
+                <h2 class="rgf-section-title">Datos personales</h2>
+                <div class="rgf-grid" id="rgf-grid-v5">
+                  <div class="rgf-field" data-required>
+                    <label class="rgf-label" for="v5-firstname">Nombres <span class="rgf-asterisk">*</span></label>
+                    <div class="rgf-input-wrap"><input class="rgf-input" id="v5-firstname" type="text" /></div>
+                    <p class="rgf-helper" data-default-msg="Campo obligatorio">Campo obligatorio</p>
+                  </div>
+                  <div class="rgf-field" data-required>
+                    <label class="rgf-label" for="v5-lastname">Apellidos <span class="rgf-asterisk">*</span></label>
+                    <div class="rgf-input-wrap"><input class="rgf-input" id="v5-lastname" type="text" /></div>
+                    <p class="rgf-helper" data-default-msg="Campo obligatorio">Campo obligatorio</p>
+                  </div>
+                  <div class="rgf-field" data-required data-error-msg="el DNI ya ha sido registrado">
+                    <label class="rgf-label" for="v5-dni">DNI <span class="rgf-asterisk">*</span></label>
+                    <div class="rgf-input-wrap"><input class="rgf-input" id="v5-dni" type="tel" maxlength="8" /></div>
+                    <p class="rgf-helper" data-default-msg="Campo obligatorio">Campo obligatorio</p>
+                  </div>
+                  <div class="rgf-field" data-required data-error-msg="El celular ya está registrado">
+                    <label class="rgf-label" for="v5-phone">Celular <span class="rgf-asterisk">*</span></label>
+                    <div class="rgf-input-wrap"><input class="rgf-input" id="v5-phone" type="tel" maxlength="9" /></div>
+                    <p class="rgf-helper" data-default-msg="Campo obligatorio">Campo obligatorio</p>
+                  </div>
+                  <div class="rgf-field" data-required data-error-msg="el email ya ha sido registrado">
+                    <label class="rgf-label" for="v5-email">Correo electrónico <span class="rgf-asterisk">*</span></label>
+                    <div class="rgf-input-wrap"><input class="rgf-input" id="v5-email" type="email" /></div>
+                    <p class="rgf-helper" data-default-msg="Campo obligatorio">Campo obligatorio</p>
+                  </div>
+                  <div class="rgf-field" data-required data-error-msg="Ingresa un mínimo de 8 dígitos">
+                    <label class="rgf-label" for="v5-password">Contraseña <span class="rgf-asterisk">*</span></label>
+                    <div class="rgf-input-wrap">
+                      <input class="rgf-input rgf-input--pwd" id="v5-password" type="password" />
+                      <button type="button" class="rgf-eye" data-target="v5-password" aria-label="Mostrar contraseña">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.1 5.1C7.5 5.1 3.7 8 2.1 12 3.7 16 7.5 18.9 12.1 18.9 16.6 18.9 20.4 16 22 12 20.4 8 16.6 5.1 12.1 5.1ZM12.1 16.6C9.6 16.6 7.5 14.5 7.5 12 7.5 9.5 9.6 7.4 12.1 7.4 14.6 7.4 16.6 9.5 16.6 12 16.6 14.5 14.6 16.6 12.1 16.6ZM12.1 9.2C10.6 9.2 9.3 10.5 9.3 12 9.3 13.5 10.6 14.8 12.1 14.8 13.6 14.8 14.8 13.5 14.8 12 14.8 10.5 13.6 9.2 12.1 9.2Z"/></svg>
+                      </button>
+                    </div>
+                    <p class="rgf-helper" data-default-msg="Campo obligatorio">Campo obligatorio</p>
+                  </div>
+                </div>
+                <p class="rgf-required-note"><span class="rgf-asterisk">*</span> Campos obligatorios</p>
+              </section>
+
+              <div class="rgf-divider"></div>
+
+              <section class="rgf-receipt">
+                <h2 class="rgf-section-title">Quiero recibir</h2>
+                <div class="rgf-receipt-row">
+                  <div class="rgf-segment" role="radiogroup" aria-label="Tipo de comprobante">
+                    <button type="button" class="rgf-segment-btn is-active" data-receipt="boleta">Boleta</button>
+                    <button type="button" class="rgf-segment-btn" data-receipt="factura">Factura</button>
+                  </div>
+                  <div class="rgf-ruc rgf-ruc--disabled">
+                    <span class="rgf-ruc-prefix">RUC *</span>
+                    <input class="rgf-input" type="tel" disabled />
+                  </div>
+                </div>
+              </section>
+
+              <div class="rgf-divider"></div>
+
+              <section class="rgf-important">
+                <h3 class="rgf-important-title">Importante:</h3>
+                <ul class="rgf-important-list">
+                  <li class="rgf-important-item">
+                    Debes leer nuestras <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> antes de registrarte.
+                  </li>
+                  <li class="rgf-important-item">
+                    Tu DNI es obligatorio en todo proceso de compra - venta.
+                  </li>
+                </ul>
+              </section>
+
+              <div class="rgf-terms-skeleton" aria-hidden="true">
+                <span class="rgf-terms-skeleton-label">Términos y Condiciones</span>
+              </div>
+
+              <div class="rgf-checks" id="rgf-checks-v5">
+                <label class="rgf-check">
+                  <input type="checkbox" name="terms" data-required-check />
+                  <span class="rgf-check-label">He leído y acepto las <a href="https://www.vmcsubastas.com/condiciones-y-terminos" target="_blank" rel="noopener">Condiciones y Términos</a> de uso del servicio.</span>
+                </label>
+                <label class="rgf-check">
+                  <input type="checkbox" name="personalDataProcessingPolicy" data-required-check />
+                  <span class="rgf-check-label">Acepto <a href="https://www.vmcsubastas.com/politica-datos-personales" target="_blank" rel="noopener">Política de privacidad y protección de Datos Personales.</a></span>
+                </label>
+                <label class="rgf-check">
+                  <input type="checkbox" name="canReceivePublicity" data-required-check />
+                  <span class="rgf-check-label">Acepto que VMC SUBASTAS pueda remitirme promociones y publicidad de acuerdo con la Política de Privacidad.</span>
+                </label>
+              </div>
+
+              <div class="rgf-submit-wrap">
+                <button type="submit" class="rgf-submit rgf-submit--inactive" id="rgf-submit-v5" aria-disabled="true">Sigamos</button>
+                <span class="rgf-spinner" id="rgf-spinner-v5" aria-hidden="true" hidden>
+                  <span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Banner placeholder · 798 × 138 -->
+          <div class="rgf-live-banner">Banner</div>
+
+        </div>
+
       </div>
     </section>
 
@@ -424,6 +1541,132 @@ html, body {
         });
       }
       groups.forEach(bindGroup);
+    })();
+
+    (function initLivePreviewV5() {
+      var card = document.getElementById('rgf-live-card-v5');
+      if (!card) return;
+      var grid    = document.getElementById('rgf-grid-v5');
+      var checks  = document.getElementById('rgf-checks-v5');
+      var submit  = document.getElementById('rgf-submit-v5');
+      var spinner = document.getElementById('rgf-spinner-v5');
+      var fields  = grid.querySelectorAll('.rgf-field[data-required]');
+      var checkInputs = checks.querySelectorAll('input[type="checkbox"][data-required-check]');
+      var loadingTimer = null;
+      var isLoading = false;
+
+      function isValidEmail(value) {
+        return /^\S+@\S+\.\S+$/.test(value);
+      }
+      function getFieldStatus(field) {
+        var input = field.querySelector('.rgf-input');
+        if (!input) return { valid: true };
+        var trimmed = input.value.trim();
+        if (trimmed.length === 0) return { valid: false, msg: 'Campo obligatorio' };
+        if (input.id === 'v5-email' && !isValidEmail(trimmed)) {
+          return { valid: false, msg: 'El email es inválido' };
+        }
+        if (input.id === 'v5-password' && input.value.length < 8) {
+          return { valid: false, msg: 'Ingresa un mínimo de 8 dígitos' };
+        }
+        return { valid: true };
+      }
+      function allFieldsValid() {
+        var ok = true;
+        fields.forEach(function (f) {
+          if (!getFieldStatus(f).valid) ok = false;
+        });
+        return ok;
+      }
+      function allChecksMarked() {
+        var ok = true;
+        checkInputs.forEach(function (c) { if (!c.checked) ok = false; });
+        return ok;
+      }
+      function setHelper(field, msg) {
+        var h = field.querySelector('.rgf-helper');
+        if (h) h.textContent = msg;
+      }
+      function applyStatus(field) {
+        var status = getFieldStatus(field);
+        if (status.valid) {
+          field.classList.remove('rgf-field--error');
+        } else {
+          setHelper(field, status.msg);
+          field.classList.add('rgf-field--error');
+        }
+      }
+      function setInactive(flag) {
+        if (flag) {
+          submit.classList.add('rgf-submit--inactive');
+          submit.setAttribute('aria-disabled', 'true');
+        } else {
+          submit.classList.remove('rgf-submit--inactive');
+          submit.setAttribute('aria-disabled', 'false');
+        }
+      }
+      function syncState() {
+        if (isLoading) return;
+        var ready = allFieldsValid() && allChecksMarked();
+        setInactive(!ready);
+      }
+
+      fields.forEach(function (field) {
+        var input = field.querySelector('.rgf-input');
+        if (!input) return;
+        input.addEventListener('focus', function () {
+          applyStatus(field);
+        });
+        input.addEventListener('input', function () {
+          applyStatus(field);
+          syncState();
+        });
+        input.addEventListener('blur', function () {
+          var status = getFieldStatus(field);
+          if (status.valid) field.classList.remove('rgf-field--error');
+        });
+      });
+      checkInputs.forEach(function (c) {
+        c.addEventListener('change', syncState);
+      });
+
+      function showServerErrors() {
+        fields.forEach(function (field) {
+          var errMsg = field.getAttribute('data-error-msg');
+          if (!errMsg) return;
+          var status = getFieldStatus(field);
+          if (!status.valid) return;
+          setHelper(field, errMsg);
+          field.classList.add('rgf-field--error');
+        });
+      }
+
+      function handleSubmitClick(event) {
+        event.preventDefault();
+        if (isLoading) return;
+        var ready = allFieldsValid() && allChecksMarked();
+        if (!ready) {
+          fields.forEach(function (field) { applyStatus(field); });
+          return;
+        }
+        isLoading = true;
+        submit.classList.remove('rgf-submit--inactive');
+        submit.classList.add('rgf-submit--loading');
+        submit.setAttribute('aria-busy', 'true');
+        spinner.hidden = false;
+        loadingTimer = window.setTimeout(function finishLoading() {
+          isLoading = false;
+          loadingTimer = null;
+          submit.classList.remove('rgf-submit--loading');
+          submit.removeAttribute('aria-busy');
+          spinner.hidden = true;
+          showServerErrors();
+          syncState();
+        }, 3000);
+      }
+      submit.addEventListener('click', handleSubmitClick);
+
+      syncState();
     })();
   </script>
   <script src="variant-filter.js"></script>

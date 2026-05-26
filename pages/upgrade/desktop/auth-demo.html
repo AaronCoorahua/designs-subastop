@@ -179,7 +179,11 @@ html, body {
   margin: 0 auto;
   border: 0;
   background: transparent;
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.auth-demo-frame::-webkit-scrollbar { width: 0; height: 0; display: none; }
 .auth-demo[data-platform="mobile"] .auth-demo-frame {
   width: 462px;
   max-width: 100%;
@@ -219,7 +223,7 @@ html, body {
     <div class="auth-demo-block">
       <h2 class="auth-demo-pane-title">Login · Todas las variantes</h2>
       <div class="auth-demo-frame-wrap">
-        <iframe class="auth-demo-frame" data-role="all" loading="lazy" title="Login · Todas las variantes"></iframe>
+        <iframe class="auth-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Login · Todas las variantes"></iframe>
       </div>
     </div>
   </section>
@@ -231,7 +235,7 @@ html, body {
     <div class="auth-demo-block">
       <h2 class="auth-demo-pane-title">Registro · Todas las variantes</h2>
       <div class="auth-demo-frame-wrap">
-        <iframe class="auth-demo-frame" data-role="all" loading="lazy" title="Registro · Todas las variantes"></iframe>
+        <iframe class="auth-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Registro · Todas las variantes"></iframe>
       </div>
     </div>
   </section>
@@ -243,7 +247,7 @@ html, body {
     <div class="auth-demo-block">
       <h2 class="auth-demo-pane-title">Olvidé contraseña · Todas las variantes</h2>
       <div class="auth-demo-frame-wrap">
-        <iframe class="auth-demo-frame" data-role="all" loading="lazy" title="Olvidé contraseña · Todas las variantes"></iframe>
+        <iframe class="auth-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Olvidé contraseña · Todas las variantes"></iframe>
       </div>
     </div>
   </section>
@@ -266,7 +270,10 @@ html, body {
         if (doc.getElementById('auth-demo-center-fix')) return;
         var style = doc.createElement('style');
         style.id = 'auth-demo-center-fix';
-        style.textContent = '.catalog-row { justify-content: center !important; }';
+        style.textContent =
+          '.catalog-row { justify-content: center !important; }' +
+          'html, body { scrollbar-width: none !important; -ms-overflow-style: none !important; overflow: hidden !important; }' +
+          'html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }';
         doc.head.appendChild(style);
       } catch (e) {}
     }

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>User Profile Card · 310 × 147 — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --vmc-color-vault-200:   oklch(0.87 0.09 285);
+  --vmc-color-vault-300:   oklch(0.80 0.12 285);
+  --vmc-color-vault-400:   oklch(0.55 0.20 285);
+  --vmc-color-vault-500:   oklch(0.45 0.20 285);
+  --vmc-color-vault-600:   oklch(0.38 0.20 285);
+  --vmc-color-vault-700:   oklch(0.30 0.20 285);
+  --vmc-color-vault-800:   oklch(0.22 0.18 285);
+  --vmc-color-vault-900:   oklch(0.15 0.27 278);
+
+  --vmc-color-orange-400:  oklch(0.78 0.16 60);
+  --vmc-color-orange-500:  oklch(0.72 0.16 55);
+  --vmc-color-orange-600:  oklch(0.66 0.17 50);
+  --vmc-color-orange-700:  oklch(0.58 0.18 45);
+
+  --vmc-color-base-white:  oklch(1 0 0);
+  --vmc-color-skeleton:    oklch(0.85 0.008 220);
+
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-section: oklch(0.96 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-text-on-dark:    oklch(1 0 0);
+  --voyager-text-on-surface: oklch(0.15 0.008 200);
+
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-body:    "Roboto", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:    "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --voyager-duration-micro:    150ms;
+  --voyager-duration-standard: 300ms;
+  --voyager-ease-default:      cubic-bezier(0.3, 0, 0, 1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 24px 16px;
+  background: transparent;
+  font-family: var(--voyager-font-display);
+  color: var(--voyager-text-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow-x: hidden;
+}
+
+/* ─── Scaffold catalog ─────────────────────────────────────────── */
+.catalog-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: flex-start;
+  gap: 40px 48px; padding: 16px 4px 32px;
+}
+.variant-slot {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.variant-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  text-align: center;
+}
+.variant-sublabel {
+  font-family: var(--voyager-font-mono);
+  font-size: 10px; letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   USER PROFILE CARD · 310 × 147 · 2 variantes
+   ═══════════════════════════════════════════════════════════════ */
+.upc {
+  width: 310px;
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ─── Inner layout (frozen outerHTML structure) ────────────────── */
+.upc .p-4         { padding: 16px; }
+.upc .mt-3        { margin-top: 12px; }
+.upc .ml-1        { margin-left: 4px; }
+.upc .flex        { display: flex; }
+.upc .inline-flex { display: inline-flex; }
+.upc .items-center{ align-items: center; }
+.upc .justify-center { justify-content: center; }
+.upc .flex-1      { flex: 1 1 0%; }
+.upc .flex-grow   { flex-grow: 1; }
+.upc .flex-shrink-0 { flex-shrink: 0; }
+.upc .block       { display: block; }
+.upc .space-x-1 > * + * { margin-left: 4px; }
+
+.upc .w-4 { width: 16px; }
+.upc .h-4 { height: 16px; }
+.upc .w-5 { width: 20px; }
+.upc .h-5 { height: 20px; }
+
+.upc .font-display      { font-family: var(--voyager-font-display); }
+.upc .text-base         { font-size: 16px; letter-spacing: 0.04em; }
+.upc .text-xl           { font-size: 22px; letter-spacing: -0.01em; }
+.upc .text-xs           { font-size: 11px; letter-spacing: 0.06em; }
+.upc .text-sm           { font-size: 13px; letter-spacing: 0; }
+.upc .font-light        { font-weight: 400; }
+.upc .font-normal       { font-weight: 500; }
+.upc .font-bold         { font-weight: 700; }
+.upc .leading-tight     { line-height: 1.1; }
+.upc .leading-6         { line-height: 24px; }
+.upc .uppercase         { text-transform: uppercase; }
+
+.upc svg { display: inline-block; vertical-align: middle; }
+.upc .fill-current { fill: currentColor; }
+
+/* Remove ALL hover/active effects — static only */
+.upc a,
+.upc button.button {
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+  font: inherit;
+  pointer-events: none;
+}
+.upc a:focus-visible,
+.upc button.button:focus-visible {
+  outline: none;
+}
+
+/* Hidden portal */
+.upc .v-portal { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   V1 · CINEMATIC VAULT
+   Deep purple atmosphere, vault gradient signature, monochrome text
+   ═══════════════════════════════════════════════════════════════ */
+.upc--vault .rounded {
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  background: var(--voyager-surface-card);
+  box-shadow:
+    0 8px 20px oklch(0.22 0.18 285 / 10%),
+    0 2px 6px  oklch(0.22 0.18 285 / 6%);
+}
+.upc--vault .rounded::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background: linear-gradient(90deg,
+    var(--vmc-color-vault-800) 0%,
+    var(--vmc-color-vault-500) 100%);
+}
+
+.upc--vault .text-purple-500 { color: var(--vmc-color-vault-800); }
+.upc--vault .text-purple-900 { color: var(--vmc-color-vault-700); }
+.upc--vault .text-coral-500  { color: var(--vmc-color-vault-500); }
+.upc--vault .text-gray-300   { color: var(--vmc-color-vault-300); }
+.upc--vault .bg-coral-100    { background: var(--voyager-surface-card); }
+
+.upc--vault .text-xl.font-bold {
+  background: linear-gradient(135deg, var(--vmc-color-vault-800), var(--vmc-color-vault-500));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Star icon — vault tinted */
+.upc--vault .text-gray-300 svg {
+  color: var(--vmc-color-vault-300);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   V2 · IRIDESCENT
+   Silvery shimmer, orange→vault gradient accents, warm glow
+   ═══════════════════════════════════════════════════════════════ */
+.upc--iridescent .rounded {
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  background: var(--voyager-surface-card);
+  box-shadow:
+    0 8px 20px oklch(0 0 0 / 10%),
+    0 2px 6px  oklch(0 0 0 / 6%);
+}
+.upc--iridescent .rounded::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background: linear-gradient(90deg,
+    var(--vmc-color-orange-500) 0%,
+    var(--vmc-color-vault-500) 100%);
+  box-shadow: 0 -1px 6px oklch(0.72 0.16 55 / 25%);
+}
+
+.upc--iridescent .text-purple-500 { color: var(--vmc-color-vault-800); }
+.upc--iridescent .text-purple-900 { color: var(--vmc-color-vault-700); }
+.upc--iridescent .text-coral-500  { color: var(--vmc-color-orange-500); }
+.upc--iridescent .text-gray-300   { color: var(--vmc-color-skeleton); }
+.upc--iridescent .bg-coral-100    { background: var(--voyager-surface-card); }
+
+.upc--iridescent .text-xl.font-bold {
+  background: linear-gradient(135deg, var(--vmc-color-orange-500), var(--vmc-color-vault-500));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Star icon — iridescent shimmer */
+.upc--iridescent .text-gray-300 svg {
+  color: var(--vmc-color-skeleton);
+  filter: drop-shadow(0 1px 2px oklch(0.72 0.16 55 / 20%));
+}
+
+/* Chevron accents */
+.upc--iridescent .text-coral-500 svg {
+  filter: drop-shadow(0 1px 2px oklch(0.72 0.16 55 / 30%));
+}
+</style>
+</head>
+<body>
+  <div class="catalog-row">
+
+    <!-- ═══ V1 · Cinematic Vault ═══ -->
+    <div class="variant-slot" data-variant="cinematic-vault">
+      <span class="variant-label">V1 · Cinematic Vault<br><span class="variant-sublabel">310 × 147</span></span>
+      <div class="upc upc--vault">
+        <div class="p-4 rounded shadow-lg bg-coral-100">
+          <div class="flex items-center">
+            <div class="flex-1 text-purple-500 uppercase font-display">
+              <span class="block text-base font-light leading-tight">Hola,</span>
+              <span class="block text-xl font-bold leading-tight">COOT8R</span>
+            </div>
+            <div class="flex-shrink-0">
+              <a href="#" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 font-display">
+                Tu perfil
+                <svg class="w-5 h-5 ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="lgV1a" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3B1782"/><stop offset="100%" stop-color="#22005C"/></linearGradient></defs><circle cx="12" cy="12" r="10.5" stroke="url(#lgV1a)" stroke-width="2" fill="none"/><path d="M10 7.5L14.5 12 10 16.5" stroke="url(#lgV1a)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </a>
+            </div>
+          </div>
+          <div id="quality-user" class="mt-3"><div><div class="flex items-center font-display"><div class="flex-grow text-sm font-light text-purple-500">
+            Riesgo: <span class="font-bold">Regular</span></div> <div class="flex-shrink-0"><div class="flex items-center"><span class="text-sm font-light text-purple-500">Puntos VMC:</span> <div class="flex items-center ml-1 space-x-1"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" class="w-5 h-5"><defs><linearGradient id="starV1" x1="11" y1="1" x2="11" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#3B1782"/><stop offset="1" stop-color="#22005C"/></linearGradient></defs><path d="M11 1L14.09 7.58254L21 8.64458L16 13.7655L17.18 21L11 17.5825L4.82 21L6 13.7655L1 8.64458L7.91 7.58254L11 1Z" stroke="url(#starV1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> <span class="text-sm font-bold leading-tight text-purple-500">0</span> <button type="button" aria-label="leyenda" title="Más información" class="flex items-center justify-center w-5 h-5 button focus:outline-none"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="w-4 h-4"><defs><linearGradient id="infoV1fill" x1="0" y1="1" x2="20" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#3B1782"/><stop offset="1" stop-color="#22005C"/></linearGradient><linearGradient id="infoV1stroke" x1="1.75" y1="3.75" x2="20" y2="18.5" gradientUnits="userSpaceOnUse"><stop stop-color="#8460E5"/><stop offset="0.5" stop-color="#3B1782"/><stop offset="1" stop-color="#8460E5"/></linearGradient></defs><clipPath id="infoV1clip"><circle cx="10" cy="10" r="10" fill="white"/></clipPath><g clip-path="url(#infoV1clip)"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 10C20 12.6522 18.9464 15.1957 17.0711 17.0711C15.1957 18.9464 12.6522 20 10 20C7.34784 20 4.8043 18.9464 2.92893 17.0711C1.05357 15.1957 0 12.6522 0 10C0 7.34784 1.05357 4.8043 2.92893 2.92893C4.8043 1.05357 7.34784 0 10 0C12.6522 0 15.1957 1.05357 17.0711 2.92893C18.9464 4.8043 20 7.34784 20 10ZM11.4286 5.71429C11.4286 6.09317 11.2781 6.45655 11.0102 6.72446C10.7422 6.99237 10.3789 7.14286 10 7.14286C9.62112 7.14286 9.25776 6.99237 8.9898 6.72446C8.72189 6.45655 8.57143 6.09317 8.57143 5.71429C8.57143 5.3354 8.72189 4.97204 8.9898 4.70411C9.25776 4.43622 9.62112 4.28571 10 4.28571C10.3789 4.28571 10.7422 4.43622 11.0102 4.70411C11.2781 4.97204 11.4286 5.3354 11.4286 5.71429ZM8.21429 10C7.93013 10 7.65761 10.1129 7.45668 10.3138C7.25574 10.5147 7.14286 10.7873 7.14286 11.0714C7.14286 11.3556 7.25574 11.6281 7.45668 11.829C7.65761 12.03 7.93013 12.1429 8.21429 12.1429H9.28571V14.6429C9.28571 14.927 9.39862 15.1995 9.59953 15.4005C9.80047 15.6014 10.073 15.7143 10.3571 15.7143C10.6413 15.7143 10.9138 15.6014 11.1148 15.4005C11.3157 15.1995 11.4286 14.927 11.4286 14.6429V11.0714C11.4286 10.7873 11.3157 10.5147 11.1148 10.3138C10.9138 10.1129 10.6413 10 10.3571 10H8.21429Z" fill="url(#infoV1fill)"/></g><circle cx="10" cy="10" r="9" stroke="url(#infoV1stroke)" stroke-width="1" fill="none"/></svg></button></div></div></div></div></div></div>
+          <div id="your-history" class="mt-3"><div><button type="button" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 button font-display focus:outline-none"><span>Historial</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-5 h-5 ml-1"><defs><linearGradient id="lgV1b" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3B1782"/><stop offset="100%" stop-color="#22005C"/></linearGradient></defs><circle cx="12" cy="12" r="10.5" stroke="url(#lgV1b)" stroke-width="2" fill="none"/><path d="M10 7.5L14.5 12 10 16.5" stroke="url(#lgV1b)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ V2 · Iridescent ═══ -->
+    <div class="variant-slot" data-variant="iridescent">
+      <span class="variant-label">V2 · Iridescent<br><span class="variant-sublabel">310 × 147</span></span>
+      <div class="upc upc--iridescent">
+        <div class="p-4 rounded shadow-lg bg-coral-100">
+          <div class="flex items-center">
+            <div class="flex-1 text-purple-500 uppercase font-display">
+              <span class="block text-base font-light leading-tight">Hola,</span>
+              <span class="block text-xl font-bold leading-tight">COOT8R</span>
+            </div>
+            <div class="flex-shrink-0">
+              <a href="#" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 font-display">
+                Tu perfil
+                <svg class="w-5 h-5 ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="lgV2a" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#FF9C3B"/><stop offset="50%" stop-color="#EF852E"/><stop offset="100%" stop-color="#BE3D00"/></linearGradient></defs><circle cx="12" cy="12" r="10.5" stroke="url(#lgV2a)" stroke-width="2" fill="none"/><path d="M10 7.5L14.5 12 10 16.5" stroke="url(#lgV2a)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </a>
+            </div>
+          </div>
+          <div id="quality-user-v2" class="mt-3"><div><div class="flex items-center font-display"><div class="flex-grow text-sm font-light text-purple-500">
+            Riesgo: <span class="font-bold">Regular</span></div> <div class="flex-shrink-0"><div class="flex items-center"><span class="text-sm font-light text-purple-500">Puntos VMC:</span> <div class="flex items-center ml-1 space-x-1"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="w-5 h-5"><defs><linearGradient id="starV2fill" x1="10" y1="0" x2="10" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#ED8936"/><stop offset="1" stop-color="#8460E5"/></linearGradient><linearGradient id="starV2stroke" x1="10" y1="0" x2="10" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="0.25" stop-color="#FBC47D"/><stop offset="0.75" stop-color="#AE8EFF"/><stop offset="1" stop-color="white"/></linearGradient></defs><path d="M10 1C10.0604 1 10.1169 1.01744 10.1631 1.04785C10.2052 1.07565 10.2556 1.1253 10.2939 1.22168L12.3955 6.49805L12.625 7.07324L13.2412 7.125L18.6953 7.58203H18.6963C18.8185 7.59238 18.9269 7.66812 18.9785 7.83398C19.0242 7.98097 18.9985 8.12214 18.9102 8.22754L18.8682 8.26953L14.7129 11.9873L14.2734 12.3809L14.4043 12.9551L15.6738 18.5137C15.7177 18.7056 15.6441 18.8511 15.5342 18.9346C15.4781 18.9772 15.421 18.9958 15.374 18.999C15.3334 19.0018 15.2792 18.9955 15.208 18.9502L10.5381 15.9717L10 15.6279L9.46191 15.9717L4.79199 18.9502C4.72088 18.9954 4.66651 19.0018 4.62598 18.999C4.57912 18.9958 4.52195 18.9772 4.46582 18.9346C4.36922 18.8612 4.30143 18.7403 4.31543 18.583L4.32617 18.5137L5.5957 12.9551L5.72656 12.3809L5.28711 11.9873L1.13184 8.26953C1.01107 8.16131 0.969293 8.00181 1.02148 7.83398C1.0731 7.66812 1.18145 7.59238 1.30371 7.58203H1.30469L6.75879 7.125L7.375 7.07324L7.60449 6.49805L9.70605 1.22168C9.74444 1.1253 9.79475 1.07565 9.83691 1.04785C9.88312 1.01743 9.93961 1 10 1Z" fill="url(#starV2fill)" stroke="url(#starV2stroke)" stroke-width="2"/></svg> <span class="text-sm font-bold leading-tight text-purple-500">0</span> <button type="button" aria-label="leyenda" title="Más información" class="flex items-center justify-center w-5 h-5 button focus:outline-none"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="w-4 h-4"><defs><linearGradient id="infoV2fill" x1="0" y1="1" x2="20" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#ED8936"/><stop offset="0.4" stop-color="#ED8936"/><stop offset="1" stop-color="#8460E5"/></linearGradient><linearGradient id="infoV2stroke" x1="1.75" y1="3.75" x2="20" y2="18.5" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="0.25" stop-color="#FBC47D"/><stop offset="0.75" stop-color="#AE8EFF"/><stop offset="1" stop-color="white"/></linearGradient></defs><clipPath id="infoV2clip"><circle cx="10" cy="10" r="10" fill="white"/></clipPath><g clip-path="url(#infoV2clip)"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 10C20 12.6522 18.9464 15.1957 17.0711 17.0711C15.1957 18.9464 12.6522 20 10 20C7.34784 20 4.8043 18.9464 2.92893 17.0711C1.05357 15.1957 0 12.6522 0 10C0 7.34784 1.05357 4.8043 2.92893 2.92893C4.8043 1.05357 7.34784 0 10 0C12.6522 0 15.1957 1.05357 17.0711 2.92893C18.9464 4.8043 20 7.34784 20 10ZM11.4286 5.71429C11.4286 6.09317 11.2781 6.45655 11.0102 6.72446C10.7422 6.99237 10.3789 7.14286 10 7.14286C9.62112 7.14286 9.25776 6.99237 8.9898 6.72446C8.72189 6.45655 8.57143 6.09317 8.57143 5.71429C8.57143 5.3354 8.72189 4.97204 8.9898 4.70411C9.25776 4.43622 9.62112 4.28571 10 4.28571C10.3789 4.28571 10.7422 4.43622 11.0102 4.70411C11.2781 4.97204 11.4286 5.3354 11.4286 5.71429ZM8.21429 10C7.93013 10 7.65761 10.1129 7.45668 10.3138C7.25574 10.5147 7.14286 10.7873 7.14286 11.0714C7.14286 11.3556 7.25574 11.6281 7.45668 11.829C7.65761 12.03 7.93013 12.1429 8.21429 12.1429H9.28571V14.6429C9.28571 14.927 9.39862 15.1995 9.59953 15.4005C9.80047 15.6014 10.073 15.7143 10.3571 15.7143C10.6413 15.7143 10.9138 15.6014 11.1148 15.4005C11.3157 15.1995 11.4286 14.927 11.4286 14.6429V11.0714C11.4286 10.7873 11.3157 10.5147 11.1148 10.3138C10.9138 10.1129 10.6413 10 10.3571 10H8.21429Z" fill="url(#infoV2fill)"/></g><circle cx="10" cy="10" r="9" stroke="url(#infoV2stroke)" stroke-width="1" fill="none"/></svg></button></div></div></div></div></div></div>
+          <div id="your-history-v2" class="mt-3"><div><button type="button" class="inline-flex items-center text-xs font-normal leading-6 text-purple-500 button font-display focus:outline-none"><span>Historial</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="w-5 h-5 ml-1"><defs><linearGradient id="lgV2b" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#FF9C3B"/><stop offset="50%" stop-color="#EF852E"/><stop offset="100%" stop-color="#BE3D00"/></linearGradient></defs><circle cx="12" cy="12" r="10.5" stroke="url(#lgV2b)" stroke-width="2" fill="none"/><path d="M10 7.5L14.5 12 10 16.5" stroke="url(#lgV2b)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="_iframe-resize.js"></script>
+</body>
+</html>

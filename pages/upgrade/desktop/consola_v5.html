@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Consola V4 · Reserve Unlock (Cards) — Voyager Upgrade</title>
+<title>Consola V5 · Card Dashboard — Voyager Upgrade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -147,7 +147,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .hal-timer-label { font-size: 11px; font-weight: 600; font-style: italic; color: oklch(1 0 0 / 55%); white-space: nowrap; }
 .hal-timer-value { font-family: var(--font-mono); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-/* ═══ BODY ═══ */
+/* ═══ BODY: 2 columns of cards ═══ */
 .dash-body { display: flex; gap: 12px; align-items: stretch; }
 .dash-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .dash-col--left { flex: 0 0 416px; }
@@ -155,7 +155,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* Gallery card */
 .dh { display: flex; flex-direction: column; background: oklch(1 0 0); user-select: none; isolation: isolate; }
-.dh-image { position: relative; height: 320px; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); overflow: hidden; }
+.dh-image {
+  position: relative; height: 320px;
+  background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%);
+  overflow: hidden;
+}
 .dh-image-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .dh-action { position: absolute; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 0; background: oklch(0.20 0.02 280 / 55%); color: var(--vmc-color-base-white); cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 150ms var(--ease); }
 .dh-action svg { width: 17px; height: 17px; }
@@ -183,51 +187,61 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   -webkit-mask-composite: xor; mask-composite: exclude;
   background-image: linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
 }
+.dh-pricebar {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  height: 36px; background: oklch(1 0 0); border-top: 1px solid oklch(0.22 0.18 285 / 6%);
+  font-size: 13px; font-weight: 500; color: var(--vmc-color-vault-800);
+}
+.dh-pricebar svg { width: 18px; height: 19px; flex-shrink: 0; }
+.dh-pricebar strong { font-family: var(--font-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
 
-/* Users card — tabla estilo v2 (Consola Users) */
-.cu {
-  width: 100%; padding: 14px 18px;
-  background:
-    radial-gradient(ellipse 85% 52% at 50% -18%, oklch(0.55 0.20 285 / 34%) 0%, transparent 70%),
-    linear-gradient(180deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-800) 100%);
+/* Users card */
+.lb {
+  padding: 12px 16px 14px;
+  background: radial-gradient(ellipse 90% 60% at 50% -10%, oklch(0.55 0.20 285 / 28%) 0%, transparent 70%), linear-gradient(180deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-800) 100%);
   color: var(--vmc-color-base-white);
 }
-.cu-table { width: 100%; }
-/* Header = label subordinado: plano, sin borde brillante, no compite con el líder */
-.cu-hdr-row {
-  display: grid; grid-template-columns: 78px 1fr 58px; align-items: center;
-  height: 26px;
-  background: transparent;
-  border-bottom: 1px solid oklch(1 0 0 / 12%);
-}
-.cu-hdr-row .cu-cell {
-  color: oklch(1 0 0 / 50%); font-weight: 700;
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-}
-.cu-body { width: 100%; margin-top: 10px; overflow: hidden; }
-.cu-row {
-  display: grid; grid-template-columns: 78px 1fr 58px; align-items: center;
-  height: 28px; margin-top: 2px; border-radius: 4px;
-  border: 1px solid oklch(1 0 0 / 7%); color: var(--vmc-color-base-white);
-}
-.cu-row:first-child { margin-top: 0; }
-.cu-row--rest { background: oklch(0.28 0.18 285); }
-.cu-row--alt { background: oklch(0.24 0.19 285); }
-.cu-row--user {
+.lb-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.lb-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(1 0 0 / 60%); }
+.lb-count { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: oklch(1 0 0 / 40%); }
+.lb-row { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 10px; height: 36px; margin-top: 6px; padding: 0 10px 0 6px; border-radius: 8px; border: 1px solid oklch(1 0 0 / 7%); background: oklch(0.26 0.18 285); }
+.lb-row:first-child { margin-top: 0; }
+.lb-medal { display: flex; align-items: center; justify-content: center; width: 26px; flex-shrink: 0; }
+.lb-medal svg { width: 22px; height: 28px; display: block; }
+.lb-medal--gold svg { filter: drop-shadow(0 0 5px oklch(0.82 0.15 85 / 50%)); }
+.lb-name { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 14px; font-weight: 700; }
+.lb-fire { width: 13px; height: 13px; flex-shrink: 0; color: var(--vmc-color-orange-400); filter: drop-shadow(0 0 5px oklch(0.72 0.16 55 / 70%)); animation: lb-fire 1.4s ease-in-out infinite; }
+@keyframes lb-fire { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.75; transform: scale(1.12); } }
+.lb-bids { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; color: oklch(1 0 0 / 80%); }
+.lb-bids svg { width: 12px; height: 12px; }
+.lb-row--leader {
   background: oklch(0.40 0.20 285); border: 1.5px solid transparent;
   background-origin: padding-box, border-box; background-clip: padding-box, border-box;
-  background-image:
-    linear-gradient(135deg, oklch(0.40 0.20 285) 0%, oklch(0.35 0.20 285) 100%),
-    linear-gradient(135deg, oklch(0.78 0.16 60) 0%, oklch(1 0 0 / 40%) 30%, oklch(0.55 0.20 285) 70%, oklch(0.78 0.16 60) 100%);
+  background-image: linear-gradient(135deg, oklch(0.42 0.20 285) 0%, oklch(0.34 0.20 285) 100%), linear-gradient(135deg, var(--vmc-color-gold) 0%, oklch(1 0 0 / 50%) 35%, var(--vmc-color-orange-500) 70%, var(--vmc-color-gold) 100%);
+  box-shadow: 0 0 18px oklch(0.82 0.15 85 / 18%);
 }
-.cu-row--user .cu-cell:nth-child(2) strong,
-.cu-row--user .cu-cell:nth-child(3) strong { color: var(--vmc-color-orange-400); text-shadow: 0 0 8px oklch(0.72 0.16 55 / 40%); }
-.cu-cell { min-width: 0; padding: 0 8px; overflow: hidden; font-size: 12px; font-weight: 500; line-height: 18px; white-space: nowrap; text-overflow: ellipsis; }
-.cu-cell--center { text-align: center; }
-.cu-cell:first-child, .cu-cell:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.cu-cell strong { font-weight: 700; }
-.cu-row--user .cu-cell:nth-child(2) { display: inline-flex; align-items: center; gap: 6px; }
-.cu-trophy { width: 14px; height: 14px; flex-shrink: 0; color: var(--vmc-color-gold); filter: drop-shadow(0 0 4px oklch(0.82 0.15 85 / 65%)); }
+.lb-row--leader .lb-bids { color: var(--vmc-color-orange-400); text-shadow: 0 0 8px oklch(0.72 0.16 55 / 45%); }
+
+/* Bid card */
+.bid {
+  padding: 16px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background:
+    radial-gradient(ellipse 70% 110% at 50% 0%, oklch(0.30 0.20 285 / 65%) 0%, transparent 70%),
+    linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
+  color: var(--vmc-color-base-white);
+}
+.bid-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--vmc-color-orange-400); text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%);
+}
+.bid-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 90%); animation: hal-pulse 1.2s ease-in-out infinite; }
+.bid-amount-row { display: flex; align-items: center; gap: 10px; }
+.bid-icon { width: 42px; height: 44px; flex-shrink: 0; filter: drop-shadow(0 0 8px oklch(0.55 0.20 285 / 45%)); }
+.bid-amount { font-family: var(--font-mono); font-size: 42px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); }
+.bid-base { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: oklch(1 0 0 / 55%); }
+.bid-base strong { font-family: var(--font-mono); font-weight: 700; color: oklch(1 0 0 / 80%); }
 
 /* Chat card */
 .ab-chat {
@@ -262,93 +276,29 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .ab-bubble--active { animation: ab-zoom 1.6s ease-in-out infinite; }
 @keyframes ab-zoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
-/* ═══ BID COCKPIT CARD — reserve unlock ═══ */
-.bc {
-  flex-shrink: 0; padding: 16px 18px 18px;
-  background:
-    radial-gradient(ellipse 70% 110% at 50% 0%, oklch(0.30 0.20 285 / 65%) 0%, transparent 70%),
-    linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
-  color: var(--vmc-color-base-white);
-  display: flex; flex-direction: column; gap: 12px;
-}
-/* progress ramp */
-.prog { display: flex; flex-direction: column; gap: 7px; }
-.prog-head { display: flex; align-items: center; justify-content: flex-end; font-size: 13px; }
-.prog-head-right { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 70%); }
-.prog-head-right b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
-.prog-lock { width: 18px; height: 18px; flex-shrink: 0; color: oklch(1 0 0 / 70%); transition: color 0.4s ease; }
-.prog-lock-broken { display: none; }
-.bc.is-unlocked .prog-head-right { color: var(--vmc-color-orange-400); }
-.bc.is-unlocked .prog-lock { color: var(--vmc-color-orange-400); }
-.bc.is-unlocked .prog-lock-closed { display: none; }
-.bc.is-unlocked .prog-lock-broken { display: block; animation: lock-break 0.5s var(--ease); }
-@keyframes lock-break { 0% { transform: scale(0.6) rotate(-12deg); opacity: 0; } 60% { transform: scale(1.2) rotate(6deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
-.prog-track { position: relative; height: 28px; border-radius: 4px; background: oklch(1 0 0 / 9%); overflow: hidden; clip-path: polygon(0 64%, 100% 0, 100% 100%, 0 100%); }
-.prog-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 46%; background: linear-gradient(90deg, var(--vmc-color-orange-600), var(--vmc-color-orange-400)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); transition: width 0.7s var(--ease), background 0.5s ease; }
-.prog-fill::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 20px; background: linear-gradient(90deg, transparent, oklch(1 0 0 / 45%)); }
-.bc.is-unlocked .prog-fill { background: linear-gradient(90deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-base-white) 40%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%); box-shadow: 0 0 16px oklch(0.66 0.17 50 / 55%), 0 0 24px oklch(0.55 0.20 285 / 35%); }
-/* bid amount */
-.bc-amount-block { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.bc-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); }
-.bc-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 90%); animation: hal-pulse 1.2s ease-in-out infinite; }
-.bc-amount { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); transition: font-size 0.5s var(--ease), color 0.5s ease, text-shadow 0.5s ease; }
-.bc.is-unlocked .bc-amount {
-  font-size: 56px;
-  background: linear-gradient(135deg, var(--vmc-color-orange-400) 0%, var(--vmc-color-base-white) 35%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;
-  filter: drop-shadow(0 0 18px oklch(0.66 0.17 50 / 45%)) drop-shadow(0 0 36px oklch(0.55 0.20 285 / 30%));
-  animation: bc-pop 0.6s var(--ease);
-}
-@keyframes bc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
-/* bidear */
-@property --halo-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+/* Bidear button card */
 .bidear {
   display: flex; align-items: center; justify-content: center; gap: 14px;
-  width: 100%; height: 54px; border-radius: 9999px; border: 0; cursor: pointer; position: relative;
+  width: 100%; height: 56px;
+  border-radius: var(--card-radius); border: 0; cursor: pointer; position: relative; overflow: hidden;
   font-family: var(--font-ui); color: var(--vmc-color-base-white);
   background: linear-gradient(180deg, var(--vmc-color-orange-400) 0%, var(--vmc-color-orange-500) 55%, var(--vmc-color-orange-600) 100%);
   box-shadow: inset 0 2px 0 oklch(1 0 0 / 28%), 0 4px 14px oklch(0.66 0.17 50 / 38%);
   transition: transform 0.2s var(--ease), box-shadow 0.25s ease;
 }
-.bidear::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; background: linear-gradient(180deg, oklch(1 0 0 / 22%) 0%, transparent 52%); pointer-events: none; z-index: 1; }
-/* halo de luz que recorre el borde */
-.bidear::after {
-  content: ''; position: absolute; inset: -2px; border-radius: 9999px; padding: 2px;
-  background: conic-gradient(from var(--halo-angle),
-    transparent 0deg, transparent 220deg,
-    oklch(1 0 0 / 40%) 270deg, oklch(1 0 0 / 95%) 300deg, oklch(0.92 0.06 60 / 80%) 330deg,
-    transparent 360deg);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  filter: drop-shadow(0 0 5px oklch(1 0 0 / 55%));
-  pointer-events: none; z-index: 2;
-  animation: halo-spin 2.6s linear infinite;
-}
-@keyframes halo-spin { to { --halo-angle: 360deg; } }
-.bidear > * { position: relative; z-index: 3; }
+.bidear::before { content: ''; position: absolute; inset: 0; border-radius: var(--card-radius); background: linear-gradient(180deg, oklch(1 0 0 / 22%) 0%, transparent 52%); pointer-events: none; }
+.bidear > * { position: relative; z-index: 1; }
 .bidear-label { font-size: 17px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: 0 1px 3px oklch(0 0 0 / 22%); }
 .bidear-sep { width: 1px; height: 24px; background: oklch(1 0 0 / 40%); }
 .bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px oklch(0 0 0 / 22%); }
 .bidear:hover { transform: translateY(-2px); box-shadow: inset 0 2px 0 oklch(1 0 0 / 32%), 0 6px 20px oklch(0.66 0.17 50 / 48%); }
 .bidear:active { transform: scale(0.98) translateY(1px); box-shadow: inset 0 3px 8px oklch(0 0 0 / 25%); }
-
-/* ═══ COIN BURST — monedas hacia arriba al pujar ═══ */
-.coin-particle {
-  position: fixed; left: 0; top: 0;
-  z-index: 9999; pointer-events: none;
-  transform: translate(-50%, -50%);
-  will-change: transform, opacity;
-  filter: drop-shadow(0 2px 5px oklch(0.22 0.18 285 / 40%));
-}
-.coin-particle svg { width: 100%; height: 100%; display: block; }
-@media (prefers-reduced-motion: reduce) { .coin-particle { display: none !important; } }
 </style>
 </head>
 <body>
   <div class="catalog-row">
-    <div class="variant-slot" data-variant="reserve-unlock-cards">
-      <span class="variant-label">V4 · Reserve Unlock (Cards)<br><span class="variant-sublabel">1024 · candado + componentes como cards</span></span>
+    <div class="variant-slot" data-variant="card-dashboard">
+      <span class="variant-label">V5 · Card Dashboard<br><span class="variant-sublabel">1024 · componentes como cards</span></span>
       <div class="dash">
 
         <!-- HEADER CARD -->
@@ -422,39 +372,47 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
                 <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg" alt=""><span class="dh-thumb-ring"></span></div>
                 <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
               </div>
+              <div class="dh-pricebar">
+                <svg viewBox="0 0 36 38" fill="none"><defs><linearGradient id="pbD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="pbF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><linearGradient id="pbS" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient><clipPath id="pbC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#pbD)"/><g clip-path="url(#pbC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#pbF)"/></g><rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#pbS)" stroke-width="2" fill="none"/></svg>
+                Precio Base: <strong>US$ 10,999</strong>
+              </div>
             </article>
 
-            <div class="card cu">
-              <div class="cu-table">
-                <div class="cu-hdr-row">
-                  <div class="cu-cell cu-cell--center">Puesto</div>
-                  <div class="cu-cell">C.U.U.</div>
-                  <div class="cu-cell cu-cell--center">Bids</div>
-                </div>
+            <div class="card lb">
+              <div class="lb-head">
+                <span class="lb-title">Tabla de Postores</span>
+                <span class="lb-count">3 de 18</span>
               </div>
-              <div class="cu-body">
-                <div class="cu-row cu-row--user">
-                  <div class="cu-cell cu-cell--center">1°</div>
-                  <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
-                  <div class="cu-cell cu-cell--center"><strong>2</strong></div>
-                </div>
-                <div class="cu-row cu-row--rest">
-                  <div class="cu-cell cu-cell--center">2°</div>
-                  <div class="cu-cell"><strong>BEKVS1</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-                <div class="cu-row cu-row--alt">
-                  <div class="cu-cell cu-cell--center">3°</div>
-                  <div class="cu-cell"><strong>KAHTH4</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
+              <div class="lb-row lb-row--leader">
+                <div class="lb-medal lb-medal--gold"><svg viewBox="0 0 24 30" fill="none"><defs><linearGradient id="mGold" x1="6" y1="11" x2="18" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE9A3"/><stop offset="0.5" stop-color="#F4C24B"/><stop offset="1" stop-color="#C9941E"/></linearGradient></defs><path d="M8.5 1H5L9.5 13H13L8.5 1Z" fill="#E0A82E"/><path d="M15.5 1H19L14.5 13H11L15.5 1Z" fill="#C9941E"/><circle cx="12" cy="20" r="9" fill="url(#mGold)" stroke="#FFF3CE" stroke-width="0.8"/><circle cx="12" cy="20" r="6.4" fill="none" stroke="#00000022" stroke-width="0.8"/><text x="12" y="23.4" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9.5" font-weight="700" fill="#5A3D05">1</text></svg></div>
+                <span class="lb-name">JA8NEE <svg class="lb-fire" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 3 4 4.5 4 8a4 4 0 1 1-8 0c0-1.5.5-2.5 1-3.5C9 8 10 9 10 10c0-3 1-6 2-8z"/></svg></span>
+                <span class="lb-bids"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>2 bids</span>
+              </div>
+              <div class="lb-row">
+                <div class="lb-medal lb-medal--silver"><svg viewBox="0 0 24 30" fill="none"><defs><linearGradient id="mSilver" x1="6" y1="11" x2="18" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#F4F6FA"/><stop offset="0.5" stop-color="#C4CBD6"/><stop offset="1" stop-color="#959DAC"/></linearGradient></defs><path d="M8.5 1H5L9.5 13H13L8.5 1Z" fill="#AEB6C2"/><path d="M15.5 1H19L14.5 13H11L15.5 1Z" fill="#959DAC"/><circle cx="12" cy="20" r="9" fill="url(#mSilver)" stroke="#FFFFFF" stroke-width="0.8"/><circle cx="12" cy="20" r="6.4" fill="none" stroke="#00000022" stroke-width="0.8"/><text x="12" y="23.4" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9.5" font-weight="700" fill="#434B58">2</text></svg></div>
+                <span class="lb-name">BEKVS1</span>
+                <span class="lb-bids"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>1 bid</span>
+              </div>
+              <div class="lb-row">
+                <div class="lb-medal lb-medal--bronze"><svg viewBox="0 0 24 30" fill="none"><defs><linearGradient id="mBronze" x1="6" y1="11" x2="18" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#E8B98A"/><stop offset="0.5" stop-color="#C17F45"/><stop offset="1" stop-color="#8F5A2C"/></linearGradient></defs><path d="M8.5 1H5L9.5 13H13L8.5 1Z" fill="#A86C38"/><path d="M15.5 1H19L14.5 13H11L15.5 1Z" fill="#8F5A2C"/><circle cx="12" cy="20" r="9" fill="url(#mBronze)" stroke="#F0D0B0" stroke-width="0.8"/><circle cx="12" cy="20" r="6.4" fill="none" stroke="#00000026" stroke-width="0.8"/><text x="12" y="23.4" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9.5" font-weight="700" fill="#FFFFFF">3</text></svg></div>
+                <span class="lb-name">KAHTH4</span>
+                <span class="lb-bids"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>1 bid</span>
               </div>
             </div>
           </div>
 
           <!-- RIGHT -->
           <div class="dash-col dash-col--right">
-            <div class="card ab-chat" id="chat">
+            <div class="card bid">
+              <span class="bid-eyebrow">Propuesta · Bid Actual</span>
+              <div class="bid-amount-row">
+                <svg class="bid-icon" viewBox="0 0 36 38" fill="none"><defs><linearGradient id="bidD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="bidF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><linearGradient id="bidS" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient><clipPath id="bidC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#bidD)"/><g clip-path="url(#bidC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#bidF)"/></g><rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#bidS)" stroke-width="2" fill="none"/></svg>
+                <span class="bid-amount">US$&nbsp;5,079</span>
+              </div>
+            </div>
+
+            <div class="card ab-chat">
+              <div class="ab-msg ab-msg--center"><span class="ab-bubble ab-bubble--system">¡Ya puedes enviar tus bids!</span></div>
               <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--user-left"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<strong>US$ 5,079</strong></span></div>
               <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,079</strong></span></div>
               <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
@@ -463,29 +421,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
               <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
             </div>
 
-            <div class="card bc" id="bidCockpit">
-              <div class="prog">
-                <div class="prog-head">
-                  <span class="prog-head-right">
-                    <svg class="prog-lock prog-lock-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
-                    <svg class="prog-lock prog-lock-broken" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7-2.5"/><path d="M16.5 7.5l2-2M18.5 7.5l-2-2" stroke-linecap="round"/></svg>
-                    Precio Base&nbsp;<b id="progBase">US$ 10,999</b>
-                  </span>
-                </div>
-                <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-              </div>
-
-              <div class="bc-amount-block">
-                <span class="bc-eyebrow">Propuesta · Bid Actual</span>
-                <span class="bc-amount" id="bidAmount">US$&nbsp;5,079</span>
-              </div>
-
-              <button type="button" class="bidear" id="bidearBtn">
-                <span class="bidear-label">Bidear</span>
-                <span class="bidear-sep"></span>
-                <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
-              </button>
-            </div>
+            <button type="button" class="bidear" id="bidearBtn">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
           </div>
         </div>
 
@@ -518,98 +458,13 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     document.querySelectorAll('.dh').forEach(initGallery);
   })();
 
-  /* ── Reserve unlock mechanic ── */
-  (function () {
-    var BASE = 10999, bid = 5079, step = 1480;
-    var btn = document.getElementById('bidearBtn');
-    var cockpit = document.getElementById('bidCockpit');
-    var amountEl = document.getElementById('bidAmount');
-    var bidearPriceEl = document.getElementById('bidearPrice');
-    var fillEl = document.getElementById('progFill');
-    var casino = document.getElementById('dhCasino');
-    if (!btn) return;
-    function fmt(n) { return 'US$ ' + n.toLocaleString('en-US'); }
-    function render() {
-      var pct = Math.min(100, Math.round(bid / BASE * 100));
-      fillEl.style.width = pct + '%';
-      amountEl.innerHTML = fmt(bid).replace(' ', '&nbsp;');
-      bidearPriceEl.textContent = fmt(bid + step);
-      if (bid >= BASE) cockpit.classList.add('is-unlocked');
-    }
-    render();
-    btn.addEventListener('click', function () {
-      bid += step;
-      render();
-      if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 2000); }
-    });
-  })();
-
-  /* ═══ COIN BURST — monedas disparadas hacia arriba al pujar ═══ */
   (function () {
     var bidBtn = document.getElementById('bidearBtn');
-    if (!bidBtn) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var COIN_SVG =
-      '<svg viewBox="8 7 20 20" fill="none">' +
-      '<defs>' +
-      '<linearGradient id="cnF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient>' +
-      '<linearGradient id="cnS" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient>' +
-      '<linearGradient id="cnG" x1="18" y1="9" x2="18" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="white" stop-opacity="0.45"/><stop offset="0.5" stop-color="white" stop-opacity="0"/></linearGradient>' +
-      '<clipPath id="cnC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath>' +
-      '</defs>' +
-      '<g clip-path="url(#cnC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#cnF)"/>' +
-      '<path d="M18 12.4V21.6" stroke="white" stroke-opacity="0.92" stroke-width="1.2" stroke-linecap="round"/>' +
-      '<path d="M20.1 14.1H17C16.2 14.1 15.5 14.7 15.5 15.5C15.5 16.3 16.2 17 17 17H19C19.8 17 20.5 17.7 20.5 18.5C20.5 19.3 19.8 19.9 19 19.9H15.5" stroke="white" stroke-opacity="0.92" stroke-width="1.2" stroke-linecap="round"/>' +
-      '<rect x="10" y="9" width="16" height="16" rx="8" fill="url(#cnG)"/></g>' +
-      '<rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#cnS)" stroke-width="2" fill="none"/>' +
-      '</svg>';
-
-    var COUNT = 14, GRAVITY = 0.32;
-
-    function spawnCoin(originX, originY) {
-      var el = document.createElement('div');
-      el.className = 'coin-particle';
-      el.innerHTML = COIN_SVG;
-      var size = 18 + Math.random() * 12;
-      el.style.width = size + 'px';
-      el.style.height = size + 'px';
-      document.body.appendChild(el);
-
-      var angleDeg = -90 + (Math.random() * 70 - 35);
-      var angle = angleDeg * Math.PI / 180;
-      var speed = 7 + Math.random() * 4;
-      var vx = Math.cos(angle) * speed;
-      var vy = Math.sin(angle) * speed;
-      var x = 0, y = 0;
-      var rot = Math.random() * 360;
-      var rotSpeed = (Math.random() - 0.5) * 22;
-      var maxLife = 900;
-      var fadeStart = maxLife * 0.55;
-      var start = null;
-
-      function frame(ts) {
-        if (start === null) start = ts;
-        var elapsed = ts - start;
-        vy += GRAVITY;
-        x += vx; y += vy; rot += rotSpeed;
-        var opacity = 1;
-        if (elapsed > fadeStart) opacity = 1 - (elapsed - fadeStart) / (maxLife - fadeStart);
-        el.style.transform = 'translate(-50%,-50%) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + rot.toFixed(1) + 'deg)';
-        el.style.opacity = Math.max(0, opacity);
-        if (elapsed < maxLife) requestAnimationFrame(frame);
-        else el.remove();
-      }
-      el.style.left = originX + 'px';
-      el.style.top = originY + 'px';
-      requestAnimationFrame(frame);
-    }
-
+    var casino = document.getElementById('dhCasino');
+    if (!bidBtn || !casino) return;
     bidBtn.addEventListener('click', function () {
-      var rect = bidBtn.getBoundingClientRect();
-      var originX = rect.left + rect.width / 2;
-      var originY = rect.top + rect.height / 2;
-      for (var i = 0; i < COUNT; i++) spawnCoin(originX, originY);
+      casino.classList.add('is-active');
+      setTimeout(function () { casino.classList.remove('is-active'); }, 2000);
     });
   })();
   </script>

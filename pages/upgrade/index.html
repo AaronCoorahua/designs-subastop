@@ -207,7 +207,7 @@ html, body {
 
     <nav class="platform-tabs" role="tablist" aria-label="Plataforma">
       <button class="platform-tab is-active" role="tab" aria-selected="true" data-platform="desktop" type="button" id="tabDesktop">
-        Desktop <span class="tab-count">22</span>
+        Desktop <span class="tab-count">23</span>
       </button>
       <button class="platform-tab" role="tab" aria-selected="false" data-platform="mobile" type="button" id="tabMobile">
         Mobile <span class="tab-count">4</span>
@@ -217,14 +217,33 @@ html, body {
     <div class="platform-pane is-active" data-pane="desktop" role="tabpanel" aria-labelledby="tabDesktop">
 
       <!-- ════════════════════════════════════════════════════════
+           Consola V5 · 1024 · card dashboard
+           Fuente: desktop/consola_v5.html
+           ════════════════════════════════════════════════════════ -->
+      <section class="component-block" aria-label="Consola V5 · Upgrade">
+        <header class="component-header">
+          <h2 class="component-title">Consola V5 · Card Dashboard</h2>
+          <span class="component-size">1024 · componentes como cards</span>
+          <span class="component-note">1 variante · cada bloque es una card independiente con gaps · escala reducida</span>
+          <span class="component-source"><a href="desktop/consola_v5.html" target="_blank" rel="noopener">desktop/consola_v5.html ↗</a></span>
+        </header>
+        <iframe
+          class="component-frame"
+          data-component="consola-v5"
+          src="desktop/consola_v5.html"
+          loading="lazy"
+          title="Consola V5 · card dashboard"></iframe>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
            Consola V4 · 1024 · reserve unlock (candado precio base)
            Fuente: desktop/consola_v4.html
            ════════════════════════════════════════════════════════ -->
       <section class="component-block" aria-label="Consola V4 · Upgrade">
         <header class="component-header">
-          <h2 class="component-title">Consola V4 · Reserve Unlock</h2>
-          <span class="component-size">1024 · candado precio base</span>
-          <span class="component-note">1 variante · barra de progreso bid→base · candado que se rompe al alcanzar reserva</span>
+          <h2 class="component-title">Consola V4 · Reserve Unlock (Cards)</h2>
+          <span class="component-size">1024 · candado precio base · cards</span>
+          <span class="component-note">1 variante · componentes como cards · barra rampa bid→base · candado que se rompe al alcanzar reserva</span>
           <span class="component-source"><a href="desktop/consola_v4.html" target="_blank" rel="noopener">desktop/consola_v4.html ↗</a></span>
         </header>
         <iframe

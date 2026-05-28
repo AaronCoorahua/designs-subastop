@@ -38,11 +38,22 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* ═══ DASHBOARD SHELL ═══ */
 .dash {
-  width: 1024px;
+  width: 1024px; position: relative;
   padding: 16px;
   display: flex; flex-direction: column; gap: 12px;
   background: oklch(0.98 0.004 160);
 }
+.sim-reload {
+  position: absolute; top: 22px; right: 22px; z-index: 50;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; border: 0; cursor: pointer;
+  background: linear-gradient(135deg, var(--vmc-color-vault-700), var(--vmc-color-vault-800));
+  color: var(--vmc-color-base-white);
+  box-shadow: 0 3px 10px oklch(0.22 0.18 285 / 30%);
+  transition: transform 0.3s var(--ease), box-shadow 0.2s ease;
+}
+.sim-reload:hover { transform: rotate(-90deg); box-shadow: 0 5px 16px oklch(0.22 0.18 285 / 42%); }
+.sim-reload svg { width: 17px; height: 17px; }
 .card {
   border-radius: var(--card-radius);
   border: 1px solid oklch(0.22 0.18 285 / 8%);
@@ -241,7 +252,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .cu-cell--center { text-align: center; }
 .cu-cell:first-child, .cu-cell:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .cu-cell strong { font-weight: 700; }
-.cu-row--user .cu-cell:nth-child(2) { display: inline-flex; align-items: center; gap: 6px; }
+.cu-cell--name { display: flex; align-items: center; gap: 6px; }
 .cu-trophy { width: 14px; height: 14px; flex-shrink: 0; color: var(--vmc-color-gold); filter: drop-shadow(0 0 4px oklch(0.82 0.15 85 / 65%)); }
 
 /* Chat card */
@@ -292,10 +303,20 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .ab-msg { display: flex; }
 .ab-msg--left { justify-content: flex-start; animation: msg-in-left 0.4s var(--ease) both; }
 .ab-msg--right { justify-content: flex-end; animation: msg-in-right 0.4s var(--ease) both; }
-.ab-msg--center { justify-content: center; margin-bottom: 4px; }
+.ab-msg--center { justify-content: center; margin-bottom: 6px; animation: msg-in-top 0.45s var(--ease) both; }
 @keyframes msg-in-left { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
 @keyframes msg-in-right { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+@keyframes msg-in-top { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
 .ab-bubble strong.amt { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.ab-bubble--welcome {
+  color: var(--vmc-color-base-white);
+  background: oklch(1 0 0 / 10%);
+  border: 1px solid oklch(1 0 0 / 16%);
+  border-radius: 9999px;
+  font-size: 12px; font-weight: 600;
+  min-height: 32px; padding: 0 18px;
+  box-shadow: 0 4px 14px oklch(0.10 0.05 285 / 30%);
+}
 .ab-bubble { display: flex; align-items: center; max-width: 76%; min-height: 34px; padding: 0 14px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 34px; white-space: nowrap; }
 .ab-bubble--system { max-width: 100%; color: oklch(1 0 0 / 50%); background: none; border: none; font-size: 11px; font-weight: 500; min-height: 22px; line-height: 22px; padding: 0; }
 .ab-bubble--robot { color: oklch(1 0 0 / 75%); background: oklch(1 0 0 / 8%); border: 1px solid oklch(1 0 0 / 10%); border-radius: 12px 12px 12px 4px; }
@@ -357,6 +378,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   animation: bc-pop 0.6s var(--ease);
 }
 @keyframes bc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes bc-bump { 0% { transform: scale(1); } 35% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.bc-amount.is-bump, .bc.is-unlocked .bc-amount.is-bump { animation: bc-bump 0.28s var(--ease); }
 /* bidear */
 @property --halo-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 .bidear {
@@ -389,6 +412,14 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px oklch(0 0 0 / 22%); }
 .bidear:hover { transform: translateY(-2px); box-shadow: inset 0 2px 0 oklch(1 0 0 / 32%), 0 6px 20px oklch(0.66 0.17 50 / 48%); }
 .bidear:active { transform: scale(0.98) translateY(1px); box-shadow: inset 0 3px 8px oklch(0 0 0 / 25%); }
+/* Primary disabled (referencia.tsx) — esperando participantes */
+.bidear:disabled {
+  background: var(--vmc-color-background-disabled, oklch(0.88 0.01 220));
+  color: oklch(0.45 0.008 220);
+  text-shadow: none; box-shadow: none; cursor: not-allowed; transform: none;
+}
+.bidear:disabled::before, .bidear:disabled::after { display: none; }
+.bidear:disabled .bidear-sep { background: oklch(0.45 0.008 220 / 35%); }
 
 /* ═══ COIN BURST — monedas hacia arriba al pujar ═══ */
 .coin-particle {
@@ -412,6 +443,9 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     <div class="variant-slot" data-variant="reserve-unlock-cards">
       <span class="variant-label">V4 · Reserve Unlock (Cards)<br><span class="variant-sublabel">1024 · candado + componentes como cards</span></span>
       <div class="dash">
+        <button type="button" class="sim-reload" id="simReload" title="Reiniciar simulación" aria-label="Reiniciar simulación">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v4h-4"/></svg>
+        </button>
 
         <!-- HEADER CARD -->
         <div class="card hdr">
@@ -453,15 +487,15 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
           </ul>
           <div class="hal-stat">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
-            <span class="hal-stat-label">Conectados</span><span class="hal-stat-value">18</span>
+            <span class="hal-stat-label">Conectados</span><span class="hal-stat-value" id="halConectados">0</span>
           </div>
           <div class="hal-stat">
             <svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
-            <span class="hal-stat-label">Bids</span><span class="hal-stat-value is-hot">157</span>
+            <span class="hal-stat-label">Bids</span><span class="hal-stat-value is-hot" id="halBids">0</span>
           </div>
           <div class="hal-timer">
             <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="hal-timer-label">Inició hace:</span><span class="hal-timer-value">00:00:10</span>
+            <span class="hal-timer-label">Inició hace:</span><span class="hal-timer-value" id="halTimer">00:00:00</span>
           </div>
         </div>
 
@@ -510,23 +544,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
                   <div class="cu-cell cu-cell--center">Bids</div>
                 </div>
               </div>
-              <div class="cu-body">
-                <div class="cu-row cu-row--user">
-                  <div class="cu-cell cu-cell--center">1°</div>
-                  <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
-                  <div class="cu-cell cu-cell--center"><strong>2</strong></div>
-                </div>
-                <div class="cu-row cu-row--rest">
-                  <div class="cu-cell cu-cell--center">2°</div>
-                  <div class="cu-cell"><strong>BEKVS1</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-                <div class="cu-row cu-row--alt">
-                  <div class="cu-cell cu-cell--center">3°</div>
-                  <div class="cu-cell"><strong>KAHTH4</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-              </div>
+              <div class="cu-body" id="cuBody"></div>
             </div>
           </div>
 
@@ -578,7 +596,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
                 <span class="bc-amount" id="bidAmount">US$&nbsp;5,079</span>
               </div>
 
-              <button type="button" class="bidear" id="bidearBtn">
+              <button type="button" class="bidear" id="bidearBtn" disabled>
                 <span class="bidear-label">Bidear</span>
                 <span class="bidear-sep"></span>
                 <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
@@ -626,6 +644,12 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     document.querySelectorAll('.dh').forEach(initGallery);
   })();
 
+  /* ── Reload de la simulación ── */
+  (function () {
+    var r = document.getElementById('simReload');
+    if (r) r.addEventListener('click', function () { location.reload(); });
+  })();
+
   /* ── Simulación de sala: espera → bids en vivo → cierre → ganador ── */
   (function () {
     var BASE = 10999, bid = 2000, step = 1480;
@@ -643,11 +667,62 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     var loadFill = document.getElementById('roomLoadFill');
     var countdownEl = document.getElementById('roomCountdown');
     var winPriceEl = document.getElementById('winPrice');
+    var conectadosEl = document.getElementById('halConectados');
+    var bidsEl = document.getElementById('halBids');
+    var halTimerEl = document.getElementById('halTimer');
     if (!btn) return;
+
+    /* Conectados: crece de 0 a 18 durante la espera */
+    var conectados = 0;
+    var conTimer = setInterval(function () {
+      conectados = Math.min(18, conectados + 1 + Math.floor(Math.random() * 2));
+      conectadosEl.textContent = conectados;
+      if (conectados >= 18) clearInterval(conTimer);
+    }, 420);
+
+    /* Contador de bids totales */
+    var bidsCount = 0;
+    function bumpBids() { bidsCount++; bidsEl.textContent = bidsCount; }
+
+    /* Timer "Inició hace" — cuenta hacia arriba al estar en vivo */
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function startRoomTimer() {
+      var secs = 0;
+      setInterval(function () {
+        secs++;
+        halTimerEl.textContent = pad(Math.floor(secs / 3600)) + ':' + pad(Math.floor(secs / 60) % 60) + ':' + pad(secs % 60);
+      }, 1000);
+    }
 
     var BOTS = ['UU3YAH','P3TUXA','CVH1MA','AEQU4Y','AAMOH3','BEKVS1','KAHTH4','TZ4PLM'];
     var LOGO = '<img src="../../../logo-preview.png" alt="VMC" style="height:14px;width:auto;margin-right:6px;vertical-align:middle">';
+    var TROPHY = '<svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg>';
     var userBids = 0, phase = 'waiting', botTimer = null;
+
+    /* Tabla de postores: puesto por bid más alto, "Bids" = veces que pujó */
+    var cuBody = document.getElementById('cuBody');
+    var players = { 'BEKVS1': { high: 1850, count: 1 }, 'KAHTH4': { high: 1700, count: 1 } };
+    function recordBid(name, amount) {
+      if (!players[name]) players[name] = { high: 0, count: 0 };
+      players[name].high = amount;
+      players[name].count++;
+    }
+    function renderBoard() {
+      var arr = Object.keys(players).map(function (n) { return { name: n, high: players[n].high, count: players[n].count }; });
+      arr.sort(function (a, b) { return b.high - a.high; });
+      var html = '';
+      arr.slice(0, 3).forEach(function (p, i) {
+        var rowCls = p.name === 'JA8NEE' ? 'cu-row--user' : (i % 2 === 0 ? 'cu-row--rest' : 'cu-row--alt');
+        var trophy = i === 0 ? TROPHY : '';
+        html += '<div class="cu-row ' + rowCls + '">'
+          + '<div class="cu-cell cu-cell--center">' + (i + 1) + '°</div>'
+          + '<div class="cu-cell cu-cell--name"><strong>' + p.name + '</strong>' + trophy + '</div>'
+          + '<div class="cu-cell cu-cell--center"><strong>' + p.count + '</strong></div>'
+          + '</div>';
+      });
+      cuBody.innerHTML = html;
+    }
+    renderBoard();
 
     function fmt(n) { return 'US$ ' + n.toLocaleString('en-US'); }
     var progStarted = false;
@@ -661,23 +736,27 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
       bidearPriceEl.textContent = fmt(bid + step);
       if (bid >= BASE) cockpit.classList.add('is-unlocked');
       renderProg();
+      amountEl.classList.remove('is-bump');
+      void amountEl.offsetWidth;
+      amountEl.classList.add('is-bump');
     }
     renderCockpit();
 
     function pushMsg(html, side, cls) {
       var row = document.createElement('div');
-      row.className = 'ab-msg ' + (side === 'right' ? 'ab-msg--right' : 'ab-msg--left');
+      var sideClass = side === 'right' ? 'ab-msg--right' : (side === 'center' ? 'ab-msg--center' : 'ab-msg--left');
+      row.className = 'ab-msg ' + sideClass;
       row.innerHTML = '<span class="ab-bubble ' + cls + '">' + html + '</span>';
       msgs.appendChild(row);
       while (msgs.children.length > 7) msgs.removeChild(msgs.firstChild);
     }
 
-    /* 1. Sala de espera */
-    var t = 5;
+    /* 1. Sala de espera (8 segs) */
+    var t = 8;
     countdownEl.textContent = '00:00:0' + t;
     var cd = setInterval(function () {
       t--;
-      countdownEl.textContent = '00:00:0' + Math.max(0, t);
+      countdownEl.textContent = '00:00:' + pad(Math.max(0, t));
       if (t <= 0) { clearInterval(cd); startLive(); }
     }, 1000);
 
@@ -685,26 +764,50 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
       phase = 'live';
       waiting.style.display = 'none';
       live.style.display = 'flex';
-      pushMsg('¡Ya puedes enviar tus bids!', 'left', 'ab-bubble--robot');
+      pushMsg('¡Ya puedes enviar tus bids!', 'center', 'ab-bubble--welcome');
+      btn.disabled = false;
       progStarted = true;
       renderProg();
+      startRoomTimer();
       botTimer = setInterval(botBid, 550);
     }
 
+    var paused6k = false, slowedBase = false;
     function botBid() {
       if (phase !== 'live') return;
+      /* tope de seguridad: no dejar correr al infinito */
+      if (bid >= 20000) { clearInterval(botTimer); return; }
       if (seqIdx < bidSeq.length) { bid = bidSeq[seqIdx++]; }
       else { bid += 40 + Math.floor(Math.random() * 16) * 10; }
-      renderCockpit();
       var name = BOTS[Math.floor(Math.random() * BOTS.length)];
+      recordBid(name, bid);
+      bumpBids();
+      renderCockpit();
+      renderBoard();
       pushMsg('<strong>' + name + '</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--user-left');
+      /* al llegar a 6.5k: pausa breve y luego bids más rápidos */
+      if (!paused6k && bid >= 6500) {
+        paused6k = true;
+        clearInterval(botTimer);
+        setTimeout(function () { if (phase === 'live') botTimer = setInterval(botBid, 300); }, 3000);
+        return;
+      }
+      /* al pasar el precio base: bids más lentos */
+      if (!slowedBase && bid >= BASE) {
+        slowedBase = true;
+        clearInterval(botTimer);
+        botTimer = setInterval(botBid, 1000);
+      }
     }
 
     btn.addEventListener('click', function () {
       if (phase !== 'live') return;
       bid += step;
       userBids++;
+      recordBid('JA8NEE', bid);
+      bumpBids();
       renderCockpit();
+      renderBoard();
       pushMsg('<strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'right', 'ab-bubble--user-right');
       if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 2000); }
       if (userBids >= 2) startClosing();
@@ -712,6 +815,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
     function startClosing() {
       phase = 'closing';
+      btn.disabled = true;
       clearInterval(botTimer);
       var STEP_MS = 1400;
       var seq = [

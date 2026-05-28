@@ -189,6 +189,25 @@ html, body {
   background: transparent;
 }
 
+/* ─── Comparación contra versión actual (producción) ─── */
+.compare {
+  margin-top: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.compare-label {
+  font-family: var(--voyager-font-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--voyager-text-on-surface) 50%, transparent);
+}
+.compare-img {
+  max-width: 575px; width: 100%; height: auto;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklch, var(--voyager-text-on-surface) 12%, transparent);
+  box-shadow: 0 6px 20px oklch(0.22 0.18 285 / 12%);
+  display: block;
+}
+
 .page-footer {
   margin-top: 64px;
   font-family: var(--voyager-font-mono);
@@ -233,6 +252,10 @@ html, body {
           src="desktop/consola_v6.html"
           loading="lazy"
           title="Consola V6 · reserve unlock split"></iframe>
+        <div class="compare">
+          <span class="compare-label">Versión actual (producción) — comparación</span>
+          <img class="compare-img" src="desktop/consola-legacy.png" alt="Consola actual en producción" loading="lazy">
+        </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════
@@ -252,6 +275,10 @@ html, body {
           src="desktop/consola_v5.html"
           loading="lazy"
           title="Consola V5 · card dashboard"></iframe>
+        <div class="compare">
+          <span class="compare-label">Versión actual (producción) — comparación</span>
+          <img class="compare-img" src="desktop/consola-legacy.png" alt="Consola actual en producción" loading="lazy">
+        </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════
@@ -271,6 +298,10 @@ html, body {
           src="desktop/consola_v4.html"
           loading="lazy"
           title="Consola V4 · reserve unlock"></iframe>
+        <div class="compare">
+          <span class="compare-label">Versión actual (producción) — comparación</span>
+          <img class="compare-img" src="desktop/consola-legacy.png" alt="Consola actual en producción" loading="lazy">
+        </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════

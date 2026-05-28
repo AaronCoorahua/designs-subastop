@@ -282,7 +282,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .room-loadbar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--vmc-color-orange-500), var(--vmc-color-base-white)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 65%); transition: width 1s linear; }
 
 /* ── Estado ganador ── */
-.room-win { background: none; }
+.room-win { background: none; animation: rwin-in 0.6s var(--ease) both; }
+@keyframes rwin-in { from { opacity: 0; transform: translateY(18px) scale(0.95); } to { opacity: 1; transform: none; } }
 .rwin-icon { width: 52px; height: 52px; color: oklch(1 0 0 / 35%); margin-bottom: 8px; }
 .rwin-text { font-size: 19px; font-weight: 500; line-height: 1.35; color: oklch(1 0 0 / 85%); }
 .rwin-text strong { color: var(--vmc-color-orange-400); font-weight: 800; }
@@ -291,6 +292,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .rwin-price { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; margin-top: 4px;
   color: var(--vmc-color-base-white);
   text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%);
+  animation: rwin-price-pulse 1.5s ease-in-out infinite;
+}
+@keyframes rwin-price-pulse {
+  0%, 100% { transform: scale(1); text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); }
+  50% { transform: scale(1.07); text-shadow: 0 0 22px oklch(0.78 0.16 60 / 65%), 0 0 44px oklch(0.66 0.17 50 / 40%); }
 }
 .rwin-fee { font-size: 13px; color: oklch(1 0 0 / 60%); margin-top: 4px; }
 
@@ -351,7 +357,9 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 /* progress ramp */
 .prog { display: flex; flex-direction: column; gap: 7px; }
-.prog-head { display: flex; align-items: center; justify-content: flex-end; font-size: 13px; }
+.prog-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+.prog-head-left { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
+.prog-head-left b { font-family: var(--font-mono); font-weight: 700; color: oklch(1 0 0 / 85%); }
 .prog-head-right { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 70%); }
 .prog-head-right b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
 .prog-lock { width: 18px; height: 18px; flex-shrink: 0; color: oklch(1 0 0 / 70%); transition: color 0.4s ease; }
@@ -508,17 +516,17 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
                 <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
                 <div class="dh-pricebanner">
                   <div class="dh-pb-track">
-                    <span class="dh-pb-item"><svg viewBox="0 0 36 38" fill="none"><defs><linearGradient id="pbtD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="pbtF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><clipPath id="pbtC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#pbtD)"/><g clip-path="url(#pbtC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#pbtF)"/></g></svg> Precio Base: <strong>US$ 10,999</strong></span>
+                    <span class="dh-pb-item"><svg viewBox="0 0 36 38" fill="none"><defs><linearGradient id="pbtD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="pbtF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><clipPath id="pbtC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#pbtD)"/><g clip-path="url(#pbtC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#pbtF)"/></g></svg> Reserva: <strong>US$ 10,999</strong></span>
                     <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 10,999</strong></span>
+                    <span class="dh-pb-item">Reserva: <strong>US$ 10,999</strong></span>
                     <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 10,999</strong></span>
+                    <span class="dh-pb-item">Reserva: <strong>US$ 10,999</strong></span>
                     <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 10,999</strong></span>
+                    <span class="dh-pb-item">Reserva: <strong>US$ 10,999</strong></span>
                     <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 10,999</strong></span>
+                    <span class="dh-pb-item">Reserva: <strong>US$ 10,999</strong></span>
                     <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 10,999</strong></span>
+                    <span class="dh-pb-item">Reserva: <strong>US$ 10,999</strong></span>
                     <span class="dh-pb-dot"></span>
                   </div>
                 </div>
@@ -582,10 +590,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
             <div class="card bc" id="bidCockpit">
               <div class="prog">
                 <div class="prog-head">
+                  <span class="prog-head-left">Base&nbsp;<b>US$ 2,000</b></span>
                   <span class="prog-head-right">
                     <svg class="prog-lock prog-lock-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
                     <svg class="prog-lock prog-lock-broken" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7-2.5"/><path d="M16.5 7.5l2-2M18.5 7.5l-2-2" stroke-linecap="round"/></svg>
-                    Precio Base&nbsp;<b id="progBase">US$ 10,999</b>
+                    Reserva&nbsp;<b id="progBase">US$ 10,999</b>
                   </span>
                 </div>
                 <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
@@ -785,6 +794,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
       renderCockpit();
       renderBoard();
       pushMsg('<strong>' + name + '</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--user-left');
+      if (phase === 'live') btn.disabled = false; /* otro bideó: puedes volver a pujar */
       /* al llegar a 6.5k: pausa breve y luego bids más rápidos */
       if (!paused6k && bid >= 6500) {
         paused6k = true;
@@ -809,6 +819,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
       renderCockpit();
       renderBoard();
       pushMsg('<strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'right', 'ab-bubble--user-right');
+      btn.disabled = true; /* no puedes volver a pujar hasta que otro bidee */
       if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 2000); }
       if (userBids >= 2) startClosing();
     });

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Consola V7 · Reserve Unlock + Price Ticker — Voyager Upgrade</title>
+<title>Consola V7 · Chrome (Header + Sidebar) — Voyager Upgrade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -38,28 +38,52 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* ═══ DASHBOARD SHELL ═══ */
 .dash {
-  width: 1024px; position: relative;
+  width: 1024px;
   padding: 16px;
   display: flex; flex-direction: column; gap: 12px;
   background: oklch(0.98 0.004 160);
 }
-.sim-reload {
-  position: absolute; top: 22px; right: 22px; z-index: 50;
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; border: 0; cursor: pointer;
-  background: linear-gradient(135deg, var(--vmc-color-vault-700), var(--vmc-color-vault-800));
-  color: var(--vmc-color-base-white);
-  box-shadow: 0 3px 10px oklch(0.22 0.18 285 / 30%);
-  transition: transform 0.3s var(--ease), box-shadow 0.2s ease;
-}
-.sim-reload:hover { transform: rotate(-90deg); box-shadow: 0 5px 16px oklch(0.22 0.18 285 / 42%); }
-.sim-reload svg { width: 17px; height: 17px; }
 .card {
   border-radius: var(--card-radius);
   border: 1px solid oklch(0.22 0.18 285 / 8%);
   box-shadow: 0 6px 20px oklch(0.22 0.18 285 / 10%);
   overflow: hidden;
 }
+@keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ═══ WINNERS TICKER — ganadores recientes (social proof) ═══ */
+.winners {
+  width: 1024px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--vmc-color-vault-900) 0%, var(--vmc-color-vault-800) 100%);
+  border: 1px solid oklch(0.82 0.15 85 / 28%);
+  box-shadow: 0 4px 16px oklch(0.22 0.18 285 / 14%);
+}
+.winners-tag {
+  flex-shrink: 0; height: 100%;
+  display: inline-flex; align-items: center; gap: 6px; padding: 0 14px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--vmc-color-vault-900);
+  background: linear-gradient(135deg, var(--vmc-color-gold), oklch(0.90 0.13 88));
+  box-shadow: 0 0 18px oklch(0.82 0.15 85 / 45%);
+}
+.winners-tag svg { width: 14px; height: 14px; }
+.winners-vp { flex: 1; overflow: hidden; }
+.winners-track { display: flex; align-items: center; gap: 38px; white-space: nowrap; width: max-content; padding-left: 24px; animation: marquee-scroll 26s linear infinite; }
+.win-item { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: oklch(1 0 0 / 65%); }
+.win-img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
+.win-item b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
+.win-item em { font-style: normal; font-weight: 600; color: oklch(1 0 0 / 85%); }
+.win-item strong { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-gold); }
+.win-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--vmc-color-gold); opacity: 0.5; flex-shrink: 0; }
+
+/* ticker "Precio Base" sobre la imagen del carro */
+.dh-pricebanner { position: absolute; top: 0; left: 0; right: 0; z-index: 12; height: 28px; overflow: hidden; display: flex; align-items: center; background: oklch(1 0 0 / 92%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%); }
+.dh-pb-track { display: flex; align-items: center; gap: 26px; white-space: nowrap; width: max-content; padding-left: 14px; animation: marquee-scroll 16s linear infinite; }
+.dh-pb-item { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--vmc-color-vault-800); }
+.dh-pb-item strong { font-family: var(--font-mono); font-weight: 700; }
+.dh-pb-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--vmc-color-vault-500); opacity: 0.4; flex-shrink: 0; }
 
 /* ═══ HEADER CARD ═══ */
 .hdr {
@@ -161,8 +185,120 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 /* ═══ BODY ═══ */
 .dash-body { display: flex; gap: 12px; align-items: stretch; }
 .dash-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.dash-col--left { flex: 0 0 416px; }
+.dash-col--left { flex: 0 0 320px; }
 .dash-col--right { flex: 1; }
+
+/* banner placeholder + rail derecho */
+.ad-banner {
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 14px;
+  background: repeating-linear-gradient(45deg, oklch(0.88 0.005 250) 0 14px, oklch(0.83 0.006 250) 14px 28px);
+  border: 1.5px dashed oklch(0.58 0.01 250);
+  color: oklch(0.42 0.01 250);
+  font-size: 13px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
+}
+.v3-rail-right { flex: 0 0 240px; }
+.v3-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
+
+/* card del vehículo arriba del carro (col izquierda) */
+.v3-vehicle {
+  position: relative; overflow: hidden;
+  border-radius: 12px; padding: 10px 14px;
+  background: linear-gradient(150deg, oklch(0.30 0.20 285) 0%, oklch(0.21 0.16 285) 100%);
+  border: 1px solid oklch(1 0 0 / 12%);
+  box-shadow: 0 6px 18px oklch(0.22 0.18 285 / 28%), inset 0 1px 0 oklch(1 0 0 / 16%);
+  color: var(--vmc-color-base-white, oklch(1 0 0));
+  display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px;
+  flex-shrink: 0;
+}
+.v3-vehicle-live { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vmc-color-orange-300, oklch(0.84 0.13 60)); flex-shrink: 0; }
+.v3-vehicle-title { margin: 0; font-family: var(--font-ui); font-size: 15px; font-weight: 800; letter-spacing: -0.3px; min-width: 0; flex: 1 1 auto; }
+.v3-vehicle-title span { color: oklch(1 0 0 / 55%); font-weight: 600; }
+.v3-vehicle-placa { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: oklch(1 0 0 / 55%); flex-shrink: 0; }
+.v3-vehicle-placa b { color: oklch(1 0 0); letter-spacing: 1.2px; }
+
+/* stats debajo de la sala — Conectados + Bids arriba, Inicio hace full ancho debajo */
+.v3-stats { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "conectados bids" "inicio inicio"; gap: 8px; flex: 0 0 auto; }
+.v3-stats .v3-stat-card { padding: 8px 12px; min-height: 0; }
+.v3-stats .v3-stat-card:nth-child(1) { grid-area: conectados; }
+.v3-stats .v3-stat-card:nth-child(2) { grid-area: bids; }
+.v3-stats .v3-stat-card:nth-child(3) { grid-area: inicio; }
+.v3-stat-card {
+  position: relative; overflow: hidden;
+  border-radius: 12px; padding: 10px 12px;
+  background: linear-gradient(150deg, oklch(0.27 0.19 285) 0%, oklch(0.19 0.15 285) 100%);
+  border: 1px solid oklch(1 0 0 / 12%);
+  box-shadow: 0 6px 18px oklch(0.18 0.16 285 / 28%), inset 0 1px 0 oklch(1 0 0 / 14%);
+  color: oklch(1 0 0);
+  display: flex; flex-direction: row; align-items: center; gap: 10px;
+}
+.v3-stat-icon { width: 22px; height: 22px; flex-shrink: 0; color: oklch(1 0 0 / 75%); }
+.v3-stat-info { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
+.v3-stat-val { font-family: var(--font-mono); font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.v3-stat-val.is-hot { color: var(--vmc-color-orange-300, oklch(0.86 0.14 65)); }
+.v3-stat-lbl { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
+
+/* sala alta, ocupa lo que sobra después de las stats */
+.dash-col--right .room { flex: 1 1 auto; min-height: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   V7 · Chrome (sidebar V1 Cinematic Vault + header V2 D Primary Clone)
+   ───────────────────────────────────────────────────────────── */
+.v7-chrome { width: 1024px; padding: 0; gap: 0; overflow: hidden; background: var(--vmc-color-vault-900, oklch(0.16 0.13 285)); border-radius: 16px; box-shadow: 0 18px 40px oklch(0.16 0.13 285 / 28%); display: flex; flex-direction: row; align-items: stretch; min-height: 600px; }
+
+/* ── SIDEBAR · V1 Cinematic Vault (226 × full height) ── */
+.sbr { width: 226px; flex-shrink: 0; background: var(--vmc-color-vault-800); display: flex; flex-direction: column; box-shadow: 0 12px 32px oklch(0.15 0.27 278 / 22%), inset 0 1px 0 oklch(1 0 0 / 6%); }
+.sbr-brand { width: 100%; height: 80px; display: flex; align-items: center; justify-content: center; padding: 0 16px; position: relative; background: radial-gradient(ellipse 70% 60% at 50% 50%, oklch(0.30 0.20 285 / 35%) 0%, transparent 70%); }
+.sbr-brand::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, oklch(1 0 0 / 10%) 50%, transparent 100%); }
+.sbr-brand img { display: block; max-width: 100%; max-height: 48px; height: auto; width: auto; filter: drop-shadow(0 2px 6px oklch(0 0 0 / 30%)); }
+.sbr-nav { display: flex; flex-direction: column; padding: 18px 0 22px; gap: 2px; }
+.sbr-item { display: flex; align-items: center; gap: 14px; padding: 12px 18px; text-decoration: none; color: color-mix(in oklch, var(--vmc-color-base-white) 88%, transparent); font-family: var(--font-ui, var(--voyager-font-display)); font-size: 14px; font-weight: 500; letter-spacing: -0.1px; position: relative; cursor: pointer; transition: background 150ms ease, color 150ms ease; }
+.sbr-item:hover { background: oklch(1 0 0 / 6%); color: var(--vmc-color-base-white); }
+.sbr-item.is-active { background: oklch(1 0 0 / 8%); color: var(--vmc-color-base-white); }
+.sbr-item-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: color-mix(in oklch, var(--vmc-color-base-white) 80%, transparent); }
+.sbr-item-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.sbr-item:hover .sbr-item-icon, .sbr-item.is-active .sbr-item-icon { color: var(--vmc-color-base-white); }
+.sbr-item-label { flex: 1 1 auto; }
+.sbr-item-chevron { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: color-mix(in oklch, var(--vmc-color-base-white) 45%, transparent); transition: color 150ms ease, transform 150ms ease; }
+.sbr-item-chevron svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sbr-item:hover .sbr-item-chevron { color: color-mix(in oklch, var(--vmc-color-base-white) 75%, transparent); transform: translateX(2px); }
+.sbr-section { margin: 16px 18px 6px; font-family: var(--font-ui, var(--voyager-font-display)); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in oklch, var(--vmc-color-base-white) 38%, transparent); }
+
+/* ── Columna derecha (header + main) ── */
+.v7-col { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+
+/* ── HEADER · V2 D Primary Clone (798 × 64) ── */
+@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
+@property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.72 0.16 55); }
+@property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.55 0.22 285); }
+.hd { width: 100%; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: var(--vmc-color-vault-800); position: relative; isolation: isolate; overflow: hidden; user-select: none; flex-shrink: 0; }
+.hd::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 0% 50%, oklch(1 0 0 / 6%) 0%, transparent 60%), radial-gradient(ellipse 40% 80% at 100% 50%, oklch(0.66 0.17 50 / 8%) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+.hd > * { position: relative; z-index: 1; }
+.hd-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 4px; border-radius: 9999px; border: 2px solid transparent; cursor: pointer; position: relative; overflow: hidden; font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--vmc-color-base-white); text-shadow: 0 1px 2px oklch(0 0 0 / 22%); background-origin: padding-box, border-box; background-clip: padding-box, border-box; transition: --vbtn-angle 0.4s var(--ease, cubic-bezier(0.3, 0, 0, 1)), --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease, transform 0.2s var(--ease, cubic-bezier(0.3, 0, 0, 1)), box-shadow 0.25s ease; transform: translateZ(0); }
+.hd-btn::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%); pointer-events: none; z-index: 1; }
+.hd-btn > *:not(.hd-btn-icon) { position: relative; z-index: 2; }
+.hd-btn-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 2; }
+.hd-btn-icon svg { width: 18px; height: 18px; fill: currentColor; }
+.hd-btn-username { font-weight: 700; }
+.hd-btn-light { font-weight: 300; }
+.hd-btn--d { --vbtn-stop-a: var(--vmc-color-orange-600); --vbtn-stop-b: var(--vmc-color-vault-500); background-image: linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%), linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%); box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 2px 6px oklch(0.66 0.17 50 / 30%); }
+.hd-btn--d .hd-btn-icon { background: oklch(0 0 0 / 18%); color: var(--vmc-color-base-white); }
+.hd-btn--d:hover { --vbtn-angle: 220deg; --vbtn-stop-a: oklch(0.84 0.11 70); --vbtn-stop-b: oklch(0.70 0.16 290); transform: translateY(-1px) scale(1.02); box-shadow: inset 0 1px 0 oklch(1 0 0 / 30%), 0 4px 10px oklch(0.66 0.17 50 / 0.40), 0 8px 24px oklch(0.55 0.20 285 / 0.35); }
+.hd-btn--d:active { --vbtn-angle: 135deg; --vbtn-stop-a: var(--vmc-color-orange-700); --vbtn-stop-b: var(--vmc-color-vault-600); transform: scale(0.97) translateY(1px); box-shadow: inset 0 2px 5px oklch(0 0 0 / 22%), 0 1px 2px oklch(0 0 0 / 10%); }
+
+.v7-main { flex: 1 1 auto; min-width: 0; padding: 16px; background: var(--vmc-color-surface-section, oklch(0.96 0.004 160)); display: flex; flex-direction: column; gap: 12px; }
+
+/* dashboard interno: 2 columnas 443 + 311 */
+.v7-dash { display: flex; gap: 12px; align-items: stretch; }
+.v7-left { flex: 0 0 443px; display: flex; flex-direction: column; gap: 12px; }
+.v7-right { flex: 0 0 311px; display: flex; flex-direction: column; gap: 12px; }
+.v7-left .dh-image { height: 362px; }
+.v7-right .room { flex: 1 1 auto; min-height: 0; }
+.v7-bottom-banner { width: 100%; min-height: 100px; flex: 1 1 auto; }
+.v7-right .cu { flex-shrink: 0; }
+
+/* winners se ajusta al ancho del main */
+.v7-main .winners { width: 100%; }
 
 /* Gallery card */
 .dh { display: flex; flex-direction: column; background: oklch(1 0 0); user-select: none; isolation: isolate; }
@@ -183,21 +319,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 .dh-casino.is-active { opacity: 1; animation: casino-spin 0.5s linear infinite; }
 @keyframes casino-spin { 0% { --casino-angle: 0deg; } 100% { --casino-angle: 360deg; } }
-
-/* Price ticker — banner marquee de precio base sobre la imagen (arriba) */
-.dh-pricebanner {
-  position: absolute; top: 0; left: 0; right: 0; z-index: 12;
-  height: 30px; overflow: hidden; display: flex; align-items: center;
-  background: oklch(1 0 0 / 92%);
-  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
-  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%);
-}
-.dh-pb-track { display: flex; align-items: center; gap: 28px; white-space: nowrap; animation: marquee-scroll 14s linear infinite; width: max-content; }
-.dh-pb-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--vmc-color-vault-800); }
-.dh-pb-item strong { font-family: var(--font-mono); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.dh-pb-item svg { width: 15px; height: 16px; flex-shrink: 0; }
-.dh-pb-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--vmc-color-vault-500); opacity: 0.4; flex-shrink: 0; }
-@keyframes marquee-scroll { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 .dh-thumbs { display: flex; gap: 6px; padding: 8px; background: oklch(1 0 0); overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
 .dh-thumbs::-webkit-scrollbar { display: none; }
 .dh-thumb { position: relative; flex-shrink: 0; width: 76px; height: 57px; border-radius: 4px; overflow: hidden; cursor: pointer; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); }
@@ -252,77 +373,124 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .cu-cell--center { text-align: center; }
 .cu-cell:first-child, .cu-cell:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .cu-cell strong { font-weight: 700; }
-.cu-cell--name { display: flex; align-items: center; gap: 6px; }
+.cu-row--user .cu-cell:nth-child(2) { display: inline-flex; align-items: center; gap: 6px; }
 .cu-trophy { width: 14px; height: 14px; flex-shrink: 0; color: var(--vmc-color-gold); filter: drop-shadow(0 0 4px oklch(0.82 0.15 85 / 65%)); }
 
-/* Chat card */
+/* ═══ BID ROOM — sala vertical con halo perimetral ═══ */
+@property --room-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.room {
+  position: relative; flex: 1;
+  display: flex; flex-direction: column;
+  border-radius: 16px; overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, oklch(0.30 0.20 285 / 70%) 0%, transparent 65%),
+    linear-gradient(180deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
+}
+/* halo de luz que recorre el borde — solo al pujar, rápido */
+.room::before {
+  content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  border-radius: 16px; padding: 2px; opacity: 0;
+  transition: opacity 0.2s ease;
+  background: conic-gradient(from var(--room-angle),
+    transparent 0deg, transparent 210deg,
+    var(--vmc-color-orange-400) 250deg, oklch(1 0 0 / 95%) 290deg, var(--vmc-color-vault-400) 328deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 6px oklch(1 0 0 / 60%));
+}
+.room.is-bidding::before { opacity: 1; animation: room-halo 0.65s linear infinite; }
+@keyframes room-halo { to { --room-angle: 360deg; } }
+/* aro de luz iridescente que ilumina toda la caja al pujar */
+.room.is-bidding {
+  animation: room-glow 0.9s ease-in-out infinite alternate;
+}
+@keyframes room-glow {
+  0%   { box-shadow: 0 0 0 1.5px oklch(0.78 0.16 60 / 35%), 0 0 16px oklch(0.72 0.16 55 / 40%), 0 0 34px oklch(0.55 0.20 285 / 30%); }
+  100% { box-shadow: 0 0 0 1.5px oklch(1 0 0 / 55%), 0 0 28px oklch(0.72 0.16 55 / 60%), 0 0 56px oklch(0.55 0.20 285 / 45%), 0 0 80px oklch(0.66 0.17 50 / 25%); }
+}
+/* al pujar: el faro interno se enciende más fuerte (colores hover iridescent) */
+.room.is-bidding .room-cloud {
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 32%), inset 0 0 0 1px oklch(1 0 0 / 18%), 0 0 26px oklch(0.72 0.16 55 / 55%), 0 0 48px oklch(0.55 0.20 285 / 35%);
+}
+.room.is-bidding .room-cloud::before {
+  animation-duration: 1s;
+  filter: blur(10px) brightness(1.55) saturate(1.3);
+}
+.room.is-bidding .room-cloud::after {
+  background: radial-gradient(ellipse 78% 72% at 50% 50%, oklch(0.16 0.10 285 / 28%) 0%, transparent 82%);
+}
+
+/* nube de bid actual — con faro interno iridescente girando dentro */
+.room-cloud {
+  position: relative; z-index: 3; flex-shrink: 0;
+  margin: 18px auto 0; padding: 16px 40px;
+  border-radius: 24px; overflow: hidden;
+  border: 2px solid transparent;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  /* mismo estilo que el botón Bidear: fill orange→vault + borde iridescente */
+  background-image:
+    linear-gradient(135deg, var(--vmc-color-orange-600) 0%, var(--vmc-color-orange-600) 38%, var(--vmc-color-vault-500) 100%),
+    linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 4px 14px oklch(0.66 0.17 50 / 35%);
+  isolation: isolate;
+}
+/* FARO INTERNO: haz de luz iridescente que gira dentro de la nube */
+.room-cloud::before {
+  content: ''; position: absolute; z-index: 0;
+  top: 50%; left: 50%; width: 240%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  /* faro con la paleta iridescente del botón Bidear: white → orange-400 → vault-400 */
+  background: conic-gradient(from var(--room-angle),
+    transparent 0deg,
+    var(--vmc-color-orange-400) 35deg,
+    oklch(1 0 0 / 85%) 70deg,
+    var(--vmc-color-vault-400) 110deg,
+    transparent 160deg,
+    transparent 220deg,
+    var(--vmc-color-orange-400) 268deg,
+    oklch(1 0 0 / 75%) 300deg,
+    transparent 345deg);
+  filter: blur(12px);
+  animation: room-halo 3.5s linear infinite;
+}
+/* scrim radial cálido para legibilidad del texto sobre el faro */
+.room-cloud::after {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse 80% 74% at 50% 50%, oklch(0.30 0.16 40 / 32%) 0%, transparent 82%);
+}
+.room-cloud > * { position: relative; z-index: 2; }
+.room-cloud-label { font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 1px 3px oklch(0 0 0 / 45%), 0 0 10px oklch(0.72 0.16 55 / 55%); }
+.room-cloud-amount { font-family: var(--font-mono); font-size: 36px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; color: var(--vmc-color-base-white); text-shadow: 0 1px 4px oklch(0 0 0 / 55%), 0 0 18px oklch(0.78 0.16 60 / 45%); }
+/* zoom in/out de la nube al pujar */
+.room-cloud.is-bump { animation: cloud-bump 0.4s var(--ease); }
+@keyframes cloud-bump { 0% { transform: scale(1); } 40% { transform: scale(1.14); } 100% { transform: scale(1); } }
+
+/* reserva slim */
+.room-reserve { z-index: 3; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
+.room-reserve .prog-lock { width: 14px; height: 14px; color: oklch(1 0 0 / 60%); }
+.room-reserve b { font-family: var(--font-mono); color: oklch(1 0 0 / 85%); }
+
+/* sala de bideos */
+.room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+
+/* botón abajo */
+.room-bid-wrap { z-index: 3; flex-shrink: 0; padding: 12px 16px 16px; }
+
+/* Chat card (legacy) */
 .ab-chat {
-  flex: 1; overflow: hidden; padding: 0;
-  display: flex; flex-direction: column; position: relative;
+  flex: 1; overflow: hidden; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
   background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-700) 55%, var(--vmc-color-vault-600) 85%, color-mix(in oklch, var(--vmc-color-orange-500) 28%, var(--vmc-color-vault-600)) 100%);
 }
-
-/* ── Estado sala de espera ── */
-.room-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 20px; text-align: center; color: var(--vmc-color-base-white); }
-.rw-welcome { font-size: 14px; font-weight: 500; color: oklch(1 0 0 / 75%); }
-.rw-title { font-size: 26px; font-weight: 800; line-height: 1.1; letter-spacing: -0.01em; margin: 8px 0 2px; }
-.rw-dots { display: flex; gap: 6px; margin: 4px 0 10px; }
-.rw-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); animation: rw-bounce 1.2s ease-in-out infinite; }
-.rw-dots span:nth-child(2) { animation-delay: 0.18s; }
-.rw-dots span:nth-child(3) { animation-delay: 0.36s; }
-@keyframes rw-bounce { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-4px); } }
-.rw-sub { font-size: 13px; font-weight: 500; color: oklch(1 0 0 / 70%); }
-.rw-counter { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--vmc-color-orange-400); text-shadow: 0 0 14px oklch(0.72 0.16 55 / 50%); }
-.rw-counter svg { width: 22px; height: 22px; }
-
-/* ── Estado en vivo ── */
-.room-live { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.room-msgs { flex: 1; min-height: 0; overflow: hidden; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
-.room-loadbar { flex-shrink: 0; height: 10px; background: oklch(1 0 0 / 14%); overflow: hidden; }
-.room-loadbar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--vmc-color-orange-500), var(--vmc-color-base-white)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 65%); transition: width 1s linear; }
-
-/* ── Estado ganador ── */
-.room-win { background: none; animation: rwin-in 0.6s var(--ease) both; }
-@keyframes rwin-in { from { opacity: 0; transform: translateY(18px) scale(0.95); } to { opacity: 1; transform: none; } }
-.rwin-icon { width: 52px; height: 52px; color: oklch(1 0 0 / 35%); margin-bottom: 8px; }
-.rwin-text { font-size: 19px; font-weight: 500; line-height: 1.35; color: oklch(1 0 0 / 85%); }
-.rwin-text strong { color: var(--vmc-color-orange-400); font-weight: 800; }
-.rwin-text b { color: var(--vmc-color-base-white); font-weight: 800; }
-.rwin-sub { font-size: 14px; color: oklch(1 0 0 / 65%); margin-top: 8px; }
-.rwin-price { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; margin-top: 4px;
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%);
-  animation: rwin-price-pulse 1.5s ease-in-out infinite;
-}
-@keyframes rwin-price-pulse {
-  0%, 100% { transform: scale(1); text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); }
-  50% { transform: scale(1.07); text-shadow: 0 0 22px oklch(0.78 0.16 60 / 65%), 0 0 44px oklch(0.66 0.17 50 / 40%); }
-}
-.rwin-fee { font-size: 13px; color: oklch(1 0 0 / 60%); margin-top: 4px; }
-
-/* ── Cockpit en estado ganador: mensaje de correo ── */
-.bc-email { display: none; align-items: center; justify-content: center; gap: 12px; padding: 10px 6px; color: oklch(1 0 0 / 70%); text-align: left; }
-.bc-email svg { width: 34px; height: 34px; flex-shrink: 0; color: oklch(1 0 0 / 55%); }
-.bc-email p { font-size: 13px; font-weight: 500; line-height: 1.4; }
-.bc.is-won > .prog, .bc.is-won > .bc-amount-block, .bc.is-won > .bidear { display: none; }
-.bc.is-won .bc-email { display: flex; }
 .ab-msg { display: flex; }
-.ab-msg--left { justify-content: flex-start; animation: msg-in-left 0.4s var(--ease) both; }
-.ab-msg--right { justify-content: flex-end; animation: msg-in-right 0.4s var(--ease) both; }
-.ab-msg--center { justify-content: center; margin-bottom: 6px; animation: msg-in-top 0.45s var(--ease) both; }
-@keyframes msg-in-left { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
-@keyframes msg-in-right { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
-@keyframes msg-in-top { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+.ab-msg--left { justify-content: flex-start; }
+.ab-msg--right { justify-content: flex-end; }
+.ab-msg--center { justify-content: center; margin-bottom: 4px; }
 .ab-bubble strong.amt { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.ab-bubble--welcome {
-  color: var(--vmc-color-base-white);
-  background: oklch(1 0 0 / 10%);
-  border: 1px solid oklch(1 0 0 / 16%);
-  border-radius: 9999px;
-  font-size: 12px; font-weight: 600;
-  min-height: 32px; padding: 0 18px;
-  box-shadow: 0 4px 14px oklch(0.10 0.05 285 / 30%);
-}
 .ab-bubble { display: flex; align-items: center; max-width: 76%; min-height: 34px; padding: 0 14px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 34px; white-space: nowrap; }
 .ab-bubble--system { max-width: 100%; color: oklch(1 0 0 / 50%); background: none; border: none; font-size: 11px; font-weight: 500; min-height: 22px; line-height: 22px; padding: 0; }
 .ab-bubble--robot { color: oklch(1 0 0 / 75%); background: oklch(1 0 0 / 8%); border: 1px solid oklch(1 0 0 / 10%); border-radius: 12px 12px 12px 4px; }
@@ -357,9 +525,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 /* progress ramp */
 .prog { display: flex; flex-direction: column; gap: 7px; }
-.prog-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
-.prog-head-left { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
-.prog-head-left b { font-family: var(--font-mono); font-weight: 700; color: oklch(1 0 0 / 85%); }
+.prog-head { display: flex; align-items: center; justify-content: flex-end; font-size: 13px; }
 .prog-head-right { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 70%); }
 .prog-head-right b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
 .prog-lock { width: 18px; height: 18px; flex-shrink: 0; color: oklch(1 0 0 / 70%); transition: color 0.4s ease; }
@@ -370,7 +536,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .bc.is-unlocked .prog-lock-broken { display: block; animation: lock-break 0.5s var(--ease); }
 @keyframes lock-break { 0% { transform: scale(0.6) rotate(-12deg); opacity: 0; } 60% { transform: scale(1.2) rotate(6deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
 .prog-track { position: relative; height: 28px; border-radius: 4px; background: oklch(1 0 0 / 9%); overflow: hidden; clip-path: polygon(0 64%, 100% 0, 100% 100%, 0 100%); }
-.prog-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--vmc-color-orange-600), var(--vmc-color-orange-400)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); transition: width 0.7s var(--ease), background 0.5s ease; }
+.prog-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 46%; background: linear-gradient(90deg, var(--vmc-color-orange-600), var(--vmc-color-orange-400)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); transition: width 0.7s var(--ease), background 0.5s ease; }
 .prog-fill::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 20px; background: linear-gradient(90deg, transparent, oklch(1 0 0 / 45%)); }
 .bc.is-unlocked .prog-fill { background: linear-gradient(90deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-base-white) 40%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%); box-shadow: 0 0 16px oklch(0.66 0.17 50 / 55%), 0 0 24px oklch(0.55 0.20 285 / 35%); }
 /* bid amount */
@@ -386,9 +552,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   animation: bc-pop 0.6s var(--ease);
 }
 @keyframes bc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
-@keyframes bc-bump { 0% { transform: scale(1); } 35% { transform: scale(1.12); } 100% { transform: scale(1); } }
-.bc-amount.is-bump, .bc.is-unlocked .bc-amount.is-bump { animation: bc-bump 0.28s var(--ease); }
-/* bidear */
+/* bidear — live gradient con halo de luz girando (v1/v2 style) */
 @property --halo-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 .bidear {
   display: flex; align-items: center; justify-content: center; gap: 14px;
@@ -399,7 +563,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   transition: transform 0.2s var(--ease), box-shadow 0.25s ease;
 }
 .bidear::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; background: linear-gradient(180deg, oklch(1 0 0 / 22%) 0%, transparent 52%); pointer-events: none; z-index: 1; }
-/* halo de luz que recorre el borde */
 .bidear::after {
   content: ''; position: absolute; inset: -2px; border-radius: 9999px; padding: 2px;
   background: conic-gradient(from var(--halo-angle),
@@ -420,14 +583,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px oklch(0 0 0 / 22%); }
 .bidear:hover { transform: translateY(-2px); box-shadow: inset 0 2px 0 oklch(1 0 0 / 32%), 0 6px 20px oklch(0.66 0.17 50 / 48%); }
 .bidear:active { transform: scale(0.98) translateY(1px); box-shadow: inset 0 3px 8px oklch(0 0 0 / 25%); }
-/* Primary disabled (referencia.tsx) — esperando participantes */
-.bidear:disabled {
-  background: var(--vmc-color-background-disabled, oklch(0.88 0.01 220));
-  color: oklch(0.45 0.008 220);
-  text-shadow: none; box-shadow: none; cursor: not-allowed; transform: none;
-}
-.bidear:disabled::before, .bidear:disabled::after { display: none; }
-.bidear:disabled .bidear-sep { background: oklch(0.45 0.008 220 / 35%); }
 
 /* ═══ COIN BURST — monedas hacia arriba al pujar ═══ */
 .coin-particle {
@@ -449,174 +604,216 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 <body>
   <div class="catalog-row">
     <div class="variant-slot" data-variant="reserve-unlock-cards">
-      <span class="variant-label">V4 · Reserve Unlock (Cards)<br><span class="variant-sublabel">1024 · candado + componentes como cards</span></span>
-      <div class="dash">
-        <button type="button" class="sim-reload" id="simReload" title="Reiniciar simulación" aria-label="Reiniciar simulación">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v4h-4"/></svg>
-        </button>
+      <span class="variant-label">V7 · Chrome (Header + Sidebar)<br><span class="variant-sublabel">1024 · usa los componentes reales del catálogo: Sidebar V1 Cinematic Vault (226) + Header V2 D Primary Clone (798×64) · dashboard interno con carro a la izquierda y sala de bideos a la derecha</span></span>
+      <div class="dash v7-chrome">
 
-        <!-- HEADER CARD -->
-        <div class="card hdr">
-          <div class="hdr-left">
-            <button type="button" class="hdr-pill hdr-pill--cuu">
-              <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
-              <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
-            </button>
-            <button type="button" class="hdr-pill hdr-pill--bids">
-              <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
-              <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
-            </button>
+        <!-- SIDEBAR · V1 Cinematic Vault (componente real del catálogo) -->
+        <aside class="sbr" aria-label="Navegación principal">
+          <div class="sbr-brand">
+            <img src="../../../logo-preview.png" alt="VMC Subastas — Powered by Subastop.Co" />
           </div>
-          <div class="hdr-right">
-            <div class="hdr-section">
-              <span class="hdr-section-label">Fondos</span>
-              <span class="hdr-section-value">
-                <svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><defs><linearGradient id="cpiD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="cpiF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><linearGradient id="cpiS" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient><clipPath id="cpiC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#cpiD)"/><g clip-path="url(#cpiC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#cpiF)"/></g><rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#cpiS)" stroke-width="2" fill="none"/></svg>
-                $100
+          <nav class="sbr-nav" aria-label="Secciones">
+            <a href="#" class="sbr-item is-active">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg>
               </span>
-            </div>
-            <div class="hdr-section">
-              <span class="hdr-section-label">Oferta</span>
-              <span class="hdr-oferta-pill">47292</span>
-            </div>
-            <div class="hdr-section">
-              <span class="hdr-section-label">Conectividad</span>
-              <div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div>
+              <span class="sbr-item-label">Hoy</span>
+              <span class="sbr-item-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M16.5 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H7"/></svg>
+              </span>
+              <span class="sbr-item-label">Tipo de oferta</span>
+              <span class="sbr-item-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3.5l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1L3.2 9.9l6.1-.9L12 3.5z"/></svg>
+              </span>
+              <span class="sbr-item-label">Categorías</span>
+              <span class="sbr-item-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+              </span>
+              <span class="sbr-item-label">Empresas</span>
+              <span class="sbr-item-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </a>
+            <p class="sbr-section">Soporte</p>
+            <a href="#" class="sbr-item">
+              <span class="sbr-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <span class="sbr-item-label">Centro de ayuda</span>
+              <span class="sbr-item-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </a>
+          </nav>
+        </aside>
+
+        <!-- Columna derecha: HEADER (V2 D Primary Clone) + main -->
+        <div class="v7-col">
+          <!-- HEADER · V2 D Primary Clone (componente real del catálogo) -->
+          <article class="hd">
+            <span aria-hidden="true"></span>
+            <button type="button" class="hd-btn hd-btn--d" aria-label="Mi cuenta">
+              <span class="hd-btn-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+              <span class="hd-btn-light">Bienvenido,</span>
+              <span class="hd-btn-username">JA8NEE</span>
+            </button>
+          </article>
+
+          <main class="v7-main">
+
+            <!-- WINNERS TICKER — ganadores recientes -->
+            <div class="winners">
+          <span class="winners-tag">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg>
+            Ganadores
+          </span>
+          <div class="winners-vp">
+            <div class="winners-track">
+              <span class="win-item"><b>JX8MQ2</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Toyota Etios</em> por <strong>US$ 24,300</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>AEQU4Y</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Audi Q3</em> por <strong>US$ 38,900</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>P3TUXA</b> compró un <img class="win-img" src="../../../images/bronco2.png" alt=""><em>Honda HR-V</em> por <strong>US$ 27,150</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>CVH1MA</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Suzuki Jimny</em> por <strong>US$ 19,800</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>KAHTH4</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Mazda CX-5</em> por <strong>US$ 41,200</strong></span>
+              <span class="win-dot"></span>
+              <!-- duplicado para loop continuo -->
+              <span class="win-item"><b>JX8MQ2</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Toyota Etios</em> por <strong>US$ 24,300</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>AEQU4Y</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Audi Q3</em> por <strong>US$ 38,900</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>P3TUXA</b> compró un <img class="win-img" src="../../../images/bronco2.png" alt=""><em>Honda HR-V</em> por <strong>US$ 27,150</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>CVH1MA</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Suzuki Jimny</em> por <strong>US$ 19,800</strong></span>
+              <span class="win-dot"></span>
+              <span class="win-item"><b>KAHTH4</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Mazda CX-5</em> por <strong>US$ 41,200</strong></span>
+              <span class="win-dot"></span>
             </div>
           </div>
         </div>
 
-        <!-- LIVE CARD -->
-        <div class="card hal">
-          <div class="hal-live"><span class="hal-dot"></span></div>
-          <ul class="hal-data">
-            <li>Toyota</li><li>Etios</li><li>2021</li>
-            <li class="hal-placa">placa: <span class="hal-placa-badge">P3U448</span></li>
-          </ul>
-          <div class="hal-stat">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
-            <span class="hal-stat-label">Conectados</span><span class="hal-stat-value" id="halConectados">0</span>
-          </div>
-          <div class="hal-stat">
-            <svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
-            <span class="hal-stat-label">Bids</span><span class="hal-stat-value is-hot" id="halBids">0</span>
-          </div>
-          <div class="hal-timer">
-            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="hal-timer-label">Inició hace:</span><span class="hal-timer-value" id="halTimer">00:00:00</span>
-          </div>
-        </div>
+            <!-- BODY -->
+            <div class="dash-body v7-dash">
+              <!-- LEFT: vehículo + carro + stats + banner -->
+              <div class="dash-col v7-left">
+                <div class="v3-vehicle">
+                  <span class="v3-vehicle-live"><span class="hal-dot"></span> EN VIVO</span>
+                  <h3 class="v3-vehicle-title">Toyota Etios <span>2021</span></h3>
+                  <span class="v3-vehicle-placa">PLACA <b>P3U448</b></span>
+                </div>
 
-        <!-- BODY -->
-        <div class="dash-body">
-          <!-- LEFT -->
-          <div class="dash-col dash-col--left">
-            <article class="card dh">
-              <div class="dh-image">
-                <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
-                <div class="dh-pricebanner">
-                  <div class="dh-pb-track">
-                    <span class="dh-pb-item"><svg viewBox="0 0 36 38" fill="none"><defs><linearGradient id="pbtD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="pbtF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><clipPath id="pbtC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#pbtD)"/><g clip-path="url(#pbtC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#pbtF)"/></g></svg> Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
+                <article class="card dh">
+                  <div class="dh-image">
+                    <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
+                    <div class="dh-pricebanner">
+                      <div class="dh-pb-track">
+                        <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                        <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                        <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                        <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                        <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                        <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                      </div>
+                    </div>
+                    <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+                    <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+                    <span class="dh-counter">1 / 10</span>
+                    <div class="dh-casino" id="dhCasino"></div>
+                  </div>
+                </article>
+
+                <!-- info subasta: Conectados / Bids / Inicio hace -->
+                <div class="v3-stats">
+                  <div class="v3-stat-card">
+                    <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
+                    <div class="v3-stat-info">
+                      <span class="v3-stat-val">18</span>
+                      <span class="v3-stat-lbl">Conectados</span>
+                    </div>
+                  </div>
+                  <div class="v3-stat-card">
+                    <svg class="v3-stat-icon" viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
+                    <div class="v3-stat-info">
+                      <span class="v3-stat-val is-hot">157</span>
+                      <span class="v3-stat-lbl">Bids</span>
+                    </div>
+                  </div>
+                  <div class="v3-stat-card">
+                    <svg class="v3-stat-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div class="v3-stat-info">
+                      <span class="v3-stat-val">00:00:10</span>
+                      <span class="v3-stat-lbl">Inició hace</span>
+                    </div>
                   </div>
                 </div>
-                <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-                <span class="dh-counter">1 / 10</span>
-                <div class="dh-casino" id="dhCasino"></div>
-              </div>
-              <div class="dh-thumbs">
-                <div class="dh-thumb is-active"><img class="dh-thumb-photo" src="../../../images/bronco.jpg" alt=""><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco2.png" alt=""><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco.jpg" alt=""><span class="dh-thumb-ring"></span></div>
-                <div class="dh-thumb"><img class="dh-thumb-photo" src="../../../images/bronco1.png" alt=""><span class="dh-thumb-ring"></span></div>
-              </div>
-            </article>
 
-            <div class="card cu">
-              <div class="cu-table">
-                <div class="cu-hdr-row">
-                  <div class="cu-cell cu-cell--center">Puesto</div>
-                  <div class="cu-cell">C.U.U.</div>
-                  <div class="cu-cell cu-cell--center">Bids</div>
+                <!-- banner -->
+                <div class="ad-banner v7-bottom-banner">Banner</div>
+              </div>
+
+              <!-- RIGHT: sala bideos + tabla puestos -->
+              <div class="dash-col v7-right">
+                <div class="room" id="bidRoom">
+                  <div class="room-cloud" id="bidCloud">
+                    <span class="room-cloud-label">Propuesta · Bid Actual</span>
+                    <span class="room-cloud-amount" id="bidAmount">US$&nbsp;5,079</span>
+                  </div>
+
+                  <div class="room-chat" id="chat">
+                    <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--user-left"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,079</strong></span></div>
+                    <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,079</strong></span></div>
+                    <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
+                    <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--user-right"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,179</strong></span></div>
+                    <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,179</strong></span></div>
+                    <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
+                  </div>
+
+                  <div class="room-bid-wrap">
+                    <button type="button" class="bidear" id="bidearBtn">
+                      <span class="bidear-label">Bidear</span>
+                      <span class="bidear-sep"></span>
+                      <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="card cu">
+                  <div class="cu-table">
+                    <div class="cu-hdr-row">
+                      <div class="cu-cell cu-cell--center">Puesto</div>
+                      <div class="cu-cell">C.U.U.</div>
+                      <div class="cu-cell cu-cell--center">Bids</div>
+                    </div>
+                  </div>
+                  <div class="cu-body">
+                    <div class="cu-row cu-row--user">
+                      <div class="cu-cell cu-cell--center">1°</div>
+                      <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
+                      <div class="cu-cell cu-cell--center"><strong>2</strong></div>
+                    </div>
+                    <div class="cu-row cu-row--rest">
+                      <div class="cu-cell cu-cell--center">2°</div>
+                      <div class="cu-cell"><strong>BEKVS1</strong></div>
+                      <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+                    </div>
+                    <div class="cu-row cu-row--alt">
+                      <div class="cu-cell cu-cell--center">3°</div>
+                      <div class="cu-cell"><strong>KAHTH4</strong></div>
+                      <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="cu-body" id="cuBody"></div>
-            </div>
-          </div>
-
-          <!-- RIGHT -->
-          <div class="dash-col dash-col--right">
-            <div class="card ab-chat" id="chat">
-              <!-- Estado 1: sala de espera -->
-              <div class="room-state room-waiting" id="roomWaiting">
-                <p class="rw-welcome">¡Bienvenido al proceso en vivo!</p>
-                <p class="rw-title">Recibiendo<br>participantes</p>
-                <div class="rw-dots"><span></span><span></span><span></span></div>
-                <p class="rw-sub">Inicia en:</p>
-                <p class="rw-counter">
-                  <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span id="roomCountdown">00:00:03</span>
-                </p>
-              </div>
-
-              <!-- Estado 2: en vivo (mensajes + loading bar de cierre) -->
-              <div class="room-live" id="roomLive" style="display:none">
-                <div class="room-msgs" id="roomMsgs"></div>
-                <div class="room-loadbar" id="roomLoadbar"><div class="room-loadbar-fill" id="roomLoadFill"></div></div>
-              </div>
-
-              <!-- Estado 3: ganador -->
-              <div class="room-state room-win" id="roomWin" style="display:none">
-                <svg class="rwin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="3"/><line x1="9" y1="19" x2="15" y2="19" stroke-linecap="round"/><text x="12" y="13" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="9" font-weight="800" fill="currentColor">$</text></svg>
-                <p class="rwin-text">¡Felicitaciones <strong id="winName">JA8NEE</strong> has<br><b>ganado la oferta</b></p>
-                <p class="rwin-sub">con una propuesta de</p>
-                <p class="rwin-price" id="winPrice">US$ 5,079</p>
-                <p class="rwin-fee">Comisión: US$ 0</p>
-              </div>
             </div>
 
-            <div class="card bc" id="bidCockpit">
-              <div class="prog">
-                <div class="prog-head">
-                  <span class="prog-head-left">Base&nbsp;<b>US$ 2,000</b></span>
-                  <span class="prog-head-right">
-                    <svg class="prog-lock prog-lock-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
-                    <svg class="prog-lock prog-lock-broken" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7-2.5"/><path d="M16.5 7.5l2-2M18.5 7.5l-2-2" stroke-linecap="round"/></svg>
-                    Reserva&nbsp;<b id="progBase">US$ 10,999</b>
-                  </span>
-                </div>
-                <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-              </div>
-
-              <div class="bc-amount-block">
-                <span class="bc-eyebrow">Propuesta · Bid Actual</span>
-                <span class="bc-amount" id="bidAmount">US$&nbsp;5,079</span>
-              </div>
-
-              <button type="button" class="bidear" id="bidearBtn" disabled>
-                <span class="bidear-label">Bidear</span>
-                <span class="bidear-sep"></span>
-                <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
-              </button>
-
-              <div class="bc-email">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <p>Revisa tu historial de participación para iniciar el proceso de compra.</p>
-              </div>
-            </div>
-          </div>
+          </main>
         </div>
 
       </div>
@@ -653,211 +850,34 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     document.querySelectorAll('.dh').forEach(initGallery);
   })();
 
-  /* ── Reload de la simulación ── */
+  /* ── Bid + efectos de sala (halo + glow + nube zoom) ── */
   (function () {
-    var r = document.getElementById('simReload');
-    if (r) r.addEventListener('click', function () { location.reload(); });
-  })();
-
-  /* ── Simulación de sala: espera → bids en vivo → cierre → ganador ── */
-  (function () {
-    var BASE = 10999, bid = 2000, step = 1480;
-    var bidSeq = [2200, 3000, 4000, 6000], seqIdx = 0;
+    var bid = 5079, step = 1480;
     var btn = document.getElementById('bidearBtn');
-    var cockpit = document.getElementById('bidCockpit');
     var amountEl = document.getElementById('bidAmount');
     var bidearPriceEl = document.getElementById('bidearPrice');
-    var fillEl = document.getElementById('progFill');
+    var room = document.getElementById('bidRoom');
+    var cloud = document.getElementById('bidCloud');
     var casino = document.getElementById('dhCasino');
-    var waiting = document.getElementById('roomWaiting');
-    var live = document.getElementById('roomLive');
-    var winView = document.getElementById('roomWin');
-    var msgs = document.getElementById('roomMsgs');
-    var loadFill = document.getElementById('roomLoadFill');
-    var countdownEl = document.getElementById('roomCountdown');
-    var winPriceEl = document.getElementById('winPrice');
-    var conectadosEl = document.getElementById('halConectados');
-    var bidsEl = document.getElementById('halBids');
-    var halTimerEl = document.getElementById('halTimer');
+    var haloTimer = null;
     if (!btn) return;
-
-    /* Conectados: crece de 0 a 18 durante la espera */
-    var conectados = 0;
-    var conTimer = setInterval(function () {
-      conectados = Math.min(18, conectados + 1 + Math.floor(Math.random() * 2));
-      conectadosEl.textContent = conectados;
-      if (conectados >= 18) clearInterval(conTimer);
-    }, 420);
-
-    /* Contador de bids totales */
-    var bidsCount = 0;
-    function bumpBids() { bidsCount++; bidsEl.textContent = bidsCount; }
-
-    /* Timer "Inició hace" — cuenta hacia arriba al estar en vivo */
-    function pad(n) { return (n < 10 ? '0' : '') + n; }
-    function startRoomTimer() {
-      var secs = 0;
-      setInterval(function () {
-        secs++;
-        halTimerEl.textContent = pad(Math.floor(secs / 3600)) + ':' + pad(Math.floor(secs / 60) % 60) + ':' + pad(secs % 60);
-      }, 1000);
-    }
-
-    var BOTS = ['UU3YAH','P3TUXA','CVH1MA','AEQU4Y','AAMOH3','BEKVS1','KAHTH4','TZ4PLM'];
-    var LOGO = '<img src="../../../logo-preview.png" alt="VMC" style="height:14px;width:auto;margin-right:6px;vertical-align:middle">';
-    var TROPHY = '<svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg>';
-    var userBids = 0, phase = 'waiting', botTimer = null;
-
-    /* Tabla de postores: puesto por bid más alto, "Bids" = veces que pujó */
-    var cuBody = document.getElementById('cuBody');
-    var players = { 'BEKVS1': { high: 1850, count: 1 }, 'KAHTH4': { high: 1700, count: 1 } };
-    function recordBid(name, amount) {
-      if (!players[name]) players[name] = { high: 0, count: 0 };
-      players[name].high = amount;
-      players[name].count++;
-    }
-    function renderBoard() {
-      var arr = Object.keys(players).map(function (n) { return { name: n, high: players[n].high, count: players[n].count }; });
-      arr.sort(function (a, b) { return b.high - a.high; });
-      var html = '';
-      arr.slice(0, 3).forEach(function (p, i) {
-        var rowCls = p.name === 'JA8NEE' ? 'cu-row--user' : (i % 2 === 0 ? 'cu-row--rest' : 'cu-row--alt');
-        var trophy = i === 0 ? TROPHY : '';
-        html += '<div class="cu-row ' + rowCls + '">'
-          + '<div class="cu-cell cu-cell--center">' + (i + 1) + '°</div>'
-          + '<div class="cu-cell cu-cell--name"><strong>' + p.name + '</strong>' + trophy + '</div>'
-          + '<div class="cu-cell cu-cell--center"><strong>' + p.count + '</strong></div>'
-          + '</div>';
-      });
-      cuBody.innerHTML = html;
-    }
-    renderBoard();
-
     function fmt(n) { return 'US$ ' + n.toLocaleString('en-US'); }
-    var progStarted = false;
-    function renderProg() {
-      if (!progStarted) return;
-      var pct = Math.min(100, Math.round(bid / BASE * 100));
-      fillEl.style.width = pct + '%';
-    }
-    function renderCockpit() {
+    function render() {
       amountEl.innerHTML = fmt(bid).replace(' ', '&nbsp;');
-      bidearPriceEl.textContent = fmt(bid + step);
-      if (bid >= BASE) cockpit.classList.add('is-unlocked');
-      renderProg();
-      amountEl.classList.remove('is-bump');
-      void amountEl.offsetWidth;
-      amountEl.classList.add('is-bump');
+      if (bidearPriceEl) bidearPriceEl.textContent = fmt(bid + step);
     }
-    renderCockpit();
-
-    function pushMsg(html, side, cls) {
-      var row = document.createElement('div');
-      var sideClass = side === 'right' ? 'ab-msg--right' : (side === 'center' ? 'ab-msg--center' : 'ab-msg--left');
-      row.className = 'ab-msg ' + sideClass;
-      row.innerHTML = '<span class="ab-bubble ' + cls + '">' + html + '</span>';
-      msgs.appendChild(row);
-      while (msgs.children.length > 7) msgs.removeChild(msgs.firstChild);
-    }
-
-    /* 1. Sala de espera (8 segs) */
-    var t = 8;
-    countdownEl.textContent = '00:00:0' + t;
-    var cd = setInterval(function () {
-      t--;
-      countdownEl.textContent = '00:00:' + pad(Math.max(0, t));
-      if (t <= 0) { clearInterval(cd); startLive(); }
-    }, 1000);
-
-    function startLive() {
-      phase = 'live';
-      waiting.style.display = 'none';
-      live.style.display = 'flex';
-      pushMsg('¡Ya puedes enviar tus bids!', 'center', 'ab-bubble--welcome');
-      btn.disabled = false;
-      progStarted = true;
-      renderProg();
-      startRoomTimer();
-      botTimer = setInterval(botBid, 550);
-    }
-
-    var paused6k = false, slowedBase = false;
-    function botBid() {
-      if (phase !== 'live') return;
-      /* tope de seguridad: no dejar correr al infinito */
-      if (bid >= 20000) { clearInterval(botTimer); return; }
-      if (seqIdx < bidSeq.length) { bid = bidSeq[seqIdx++]; }
-      else { bid += 40 + Math.floor(Math.random() * 16) * 10; }
-      var name = BOTS[Math.floor(Math.random() * BOTS.length)];
-      recordBid(name, bid);
-      bumpBids();
-      renderCockpit();
-      renderBoard();
-      pushMsg('<strong>' + name + '</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--user-left');
-      if (phase === 'live') btn.disabled = false; /* otro bideó: puedes volver a pujar */
-      /* al llegar a 6.5k: pausa breve y luego bids más rápidos */
-      if (!paused6k && bid >= 6500) {
-        paused6k = true;
-        clearInterval(botTimer);
-        setTimeout(function () { if (phase === 'live') botTimer = setInterval(botBid, 300); }, 3000);
-        return;
-      }
-      /* al pasar el precio base: bids más lentos */
-      if (!slowedBase && bid >= BASE) {
-        slowedBase = true;
-        clearInterval(botTimer);
-        botTimer = setInterval(botBid, 1000);
-      }
-    }
-
+    render();
     btn.addEventListener('click', function () {
-      if (phase !== 'live') return;
       bid += step;
-      userBids++;
-      recordBid('JA8NEE', bid);
-      bumpBids();
-      renderCockpit();
-      renderBoard();
-      pushMsg('<strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'right', 'ab-bubble--user-right');
-      btn.disabled = true; /* no puedes volver a pujar hasta que otro bidee */
-      if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 2000); }
-      if (userBids >= 2) startClosing();
+      render();
+      /* nube zoom in/out */
+      cloud.classList.remove('is-bump'); void cloud.offsetWidth; cloud.classList.add('is-bump');
+      /* halo + aro de luz iridescente recorre la sala (rápido, solo al pujar) */
+      room.classList.add('is-bidding');
+      clearTimeout(haloTimer);
+      haloTimer = setTimeout(function () { room.classList.remove('is-bidding'); }, 1800);
+      if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 1800); }
     });
-
-    function startClosing() {
-      phase = 'closing';
-      btn.disabled = true;
-      clearInterval(botTimer);
-      var STEP_MS = 1400;
-      var seq = [
-        function () { pushMsg('Cierra en&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--robot'); },
-        function () { pushMsg(LOGO + 'A la <strong>una</strong>', 'left', 'ab-bubble--count'); },
-        function () { pushMsg('Cierra en&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--robot'); },
-        function () { pushMsg(LOGO + 'A las <strong>dos</strong>', 'left', 'ab-bubble--count'); },
-        function () { pushMsg('Cierra en&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--robot'); },
-        function () { pushMsg(LOGO + 'A las <strong>tres</strong>', 'left', 'ab-bubble--count'); },
-        function () { showWin(); }
-      ];
-      /* loading bar avanza continuo durante todo el cierre */
-      var totalMs = STEP_MS * (seq.length - 1);
-      loadFill.style.transition = 'width ' + (totalMs / 1000) + 's linear';
-      requestAnimationFrame(function () { loadFill.style.width = '100%'; });
-      var i = 0;
-      function run() {
-        if (i >= seq.length) return;
-        seq[i](); i++;
-        setTimeout(run, STEP_MS);
-      }
-      run();
-    }
-
-    function showWin() {
-      phase = 'done';
-      live.style.display = 'none';
-      winView.style.display = 'flex';
-      winPriceEl.textContent = fmt(bid);
-      cockpit.classList.add('is-won');
-    }
   })();
 
   /* ═══ COIN BURST — monedas disparadas hacia arriba al pujar ═══ */

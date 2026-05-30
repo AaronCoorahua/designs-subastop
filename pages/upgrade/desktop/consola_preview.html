@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Consola Preview · Todas las versiones — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 70% 50% at top left, rgba(34, 0, 92, 0.05), transparent 60%),
+    radial-gradient(ellipse 55% 40% at bottom right, rgba(237, 137, 54, 0.06), transparent 55%),
+    #f8faf9;
+  color: #1a2122;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 56px 24px 72px;
+}
+
+header { margin-bottom: 28px; }
+
+.header-eyebrow {
+  margin: 0 0 10px;
+  color: oklch(0.64 0.15 50);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, oklch(0.22 0.18 285), oklch(0.31 0.18 248));
+  background-clip: text;
+  color: transparent;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.header-sub {
+  margin: 0;
+  color: rgba(79, 71, 99, 0.7);
+  font-size: 15px;
+}
+
+/* Tabs — mismo lenguaje que catalog/index.html */
+.version-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 0 24px;
+  border: 1px solid rgba(34, 0, 92, 0.1);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 5%);
+}
+
+.version-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: rgba(34, 0, 92, 0.55);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.version-tab:hover:not(.is-active) {
+  background: rgba(34, 0, 92, 0.04);
+  color: oklch(0.22 0.18 285);
+}
+
+.version-tab.is-active {
+  background: oklch(0.22 0.18 285);
+  color: #fff;
+}
+
+.version-tab .tab-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(34, 0, 92, 0.08);
+  color: oklch(0.22 0.18 285);
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.version-tab.is-active .tab-key {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Panel area */
+.panel {
+  display: none;
+}
+.panel.is-active { display: block; }
+
+.panel-meta {
+  margin-bottom: 14px;
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: rgba(79, 71, 99, 0.7);
+  letter-spacing: 0.04em;
+}
+.panel-meta strong {
+  color: oklch(0.22 0.18 285);
+  font-weight: 700;
+}
+
+.panel iframe {
+  display: block;
+  width: 1440px;
+  max-width: 100%;
+  height: 900px;
+  border: 0;
+  border-radius: 12px;
+  background: #f8faf9;
+  box-shadow: 0 10px 30px oklch(0.22 0.18 285 / 12%);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <a href="../../index.html" style="display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;color:rgba(79,71,99,0.6);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">← Inicio</a>
+    <p class="header-eyebrow">VMC Subastas · Voyager Upgrade · Desktop</p>
+    <h1>Consola — Preview</h1>
+    <p class="header-sub">Todas las versiones de la consola a tamaño real (1440 × 900). Sin escalar.</p>
+  </header>
+
+  <nav class="version-tabs" role="tablist" aria-label="Versiones de consola">
+    <button type="button" class="version-tab is-active" role="tab" aria-selected="true" data-target="panel-v1">
+      <span class="tab-key">V1</span>Sala con Halo
+    </button>
+    <button type="button" class="version-tab" role="tab" aria-selected="false" data-target="panel-v2">
+      <span class="tab-key">V2</span>Ganadores en Vivo
+    </button>
+    <button type="button" class="version-tab" role="tab" aria-selected="false" data-target="panel-v3">
+      <span class="tab-key">V3</span>4 Columnas
+    </button>
+    <button type="button" class="version-tab" role="tab" aria-selected="false" data-target="panel-v4">
+      <span class="tab-key">V4</span>Banner + Puestos
+    </button>
+    <button type="button" class="version-tab" role="tab" aria-selected="false" data-target="panel-v5">
+      <span class="tab-key">V5</span>Chrome
+    </button>
+    <button type="button" class="version-tab" role="tab" aria-selected="false" data-target="panel-vx">
+      <span class="tab-key">VX</span>Sala en Vivo
+    </button>
+  </nav>
+
+  <section class="panel is-active" id="panel-v1" role="tabpanel">
+    <div class="panel-meta"><strong>V1</strong> · consola_v1.html · Sala con Halo (Nube Ruleta)</div>
+    <iframe src="consola_v1.html" title="Consola V1" loading="lazy"></iframe>
+  </section>
+
+  <section class="panel" id="panel-v2" role="tabpanel">
+    <div class="panel-meta"><strong>V2</strong> · consola_v2.html · Sala + Ganadores en Vivo</div>
+    <iframe src="consola_v2.html" title="Consola V2" loading="lazy"></iframe>
+  </section>
+
+  <section class="panel" id="panel-v3" role="tabpanel">
+    <div class="panel-meta"><strong>V3</strong> · consola_v3.html · 4 Columnas (banners delgados)</div>
+    <iframe src="consola_v3.html" title="Consola V3" loading="lazy"></iframe>
+  </section>
+
+  <section class="panel" id="panel-v4" role="tabpanel">
+    <div class="panel-meta"><strong>V4</strong> · consola_v4.html · Header + Banner Izq + Puestos</div>
+    <iframe src="consola_v4.html" title="Consola V4" loading="lazy"></iframe>
+  </section>
+
+  <section class="panel" id="panel-v5" role="tabpanel">
+    <div class="panel-meta"><strong>V5</strong> · consola_v5.html · Chrome (Header + Sidebar)</div>
+    <iframe src="consola_v5.html" title="Consola V5" loading="lazy"></iframe>
+  </section>
+
+  <section class="panel" id="panel-vx" role="tabpanel">
+    <div class="panel-meta"><strong>VX</strong> · consola_vx.html · Sala en Vivo Simulación</div>
+    <iframe src="consola_vx.html" title="Consola VX" loading="lazy"></iframe>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  function handleTabClick(event) {
+    var button = event.currentTarget;
+    var targetId = button.getAttribute('data-target');
+    if (!targetId) return;
+
+    var tabs = document.querySelectorAll('.version-tab');
+    var panels = document.querySelectorAll('.panel');
+
+    tabs.forEach(function (tab) {
+      tab.classList.remove('is-active');
+      tab.setAttribute('aria-selected', 'false');
+    });
+    panels.forEach(function (panel) {
+      panel.classList.remove('is-active');
+    });
+
+    button.classList.add('is-active');
+    button.setAttribute('aria-selected', 'true');
+    var panel = document.getElementById(targetId);
+    if (panel) panel.classList.add('is-active');
+  }
+
+  var allTabs = document.querySelectorAll('.version-tab');
+  allTabs.forEach(function (tab) {
+    tab.addEventListener('click', handleTabClick);
+  });
+})();
+</script>
+
+</body>
+</html>

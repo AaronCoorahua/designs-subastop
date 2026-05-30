@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Consola V3 · Sala + Ganadores en Vivo — Voyager Upgrade</title>
+<title>Consola V3 · 4 Columnas (Banners Laterales) — Voyager Upgrade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -49,41 +49,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   box-shadow: 0 6px 20px oklch(0.22 0.18 285 / 10%);
   overflow: hidden;
 }
-@keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-/* ═══ WINNERS TICKER — ganadores recientes (social proof) ═══ */
-.winners {
-  width: 1024px; height: 40px; flex-shrink: 0;
-  display: flex; align-items: center; overflow: hidden;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--vmc-color-vault-900) 0%, var(--vmc-color-vault-800) 100%);
-  border: 1px solid oklch(0.82 0.15 85 / 28%);
-  box-shadow: 0 4px 16px oklch(0.22 0.18 285 / 14%);
-}
-.winners-tag {
-  flex-shrink: 0; height: 100%;
-  display: inline-flex; align-items: center; gap: 6px; padding: 0 14px;
-  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--vmc-color-vault-900);
-  background: linear-gradient(135deg, var(--vmc-color-gold), oklch(0.90 0.13 88));
-  box-shadow: 0 0 18px oklch(0.82 0.15 85 / 45%);
-}
-.winners-tag svg { width: 14px; height: 14px; }
-.winners-vp { flex: 1; overflow: hidden; }
-.winners-track { display: flex; align-items: center; gap: 38px; white-space: nowrap; width: max-content; padding-left: 24px; animation: marquee-scroll 26s linear infinite; }
-.win-item { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: oklch(1 0 0 / 65%); }
-.win-img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
-.win-item b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
-.win-item em { font-style: normal; font-weight: 600; color: oklch(1 0 0 / 85%); }
-.win-item strong { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-gold); }
-.win-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--vmc-color-gold); opacity: 0.5; flex-shrink: 0; }
-
-/* ticker "Precio Base" sobre la imagen del carro */
-.dh-pricebanner { position: absolute; top: 0; left: 0; right: 0; z-index: 12; height: 28px; overflow: hidden; display: flex; align-items: center; background: oklch(1 0 0 / 92%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%); }
-.dh-pb-track { display: flex; align-items: center; gap: 26px; white-space: nowrap; width: max-content; padding-left: 14px; animation: marquee-scroll 16s linear infinite; }
-.dh-pb-item { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--vmc-color-vault-800); }
-.dh-pb-item strong { font-family: var(--font-mono); font-weight: 700; }
-.dh-pb-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--vmc-color-vault-500); opacity: 0.4; flex-shrink: 0; }
 
 /* ═══ HEADER CARD ═══ */
 .hdr {
@@ -197,49 +162,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   color: oklch(0.42 0.01 250);
   font-size: 13px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
 }
-.v3-rail-right { flex: 0 0 240px; }
+.v2-rail-right { flex: 0 0 168px; }
+.v2-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
+.v3-rail-right { flex: 0 0 168px; }
 .v3-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
-
-/* card del vehículo arriba del carro (col izquierda) */
-.v3-vehicle {
-  position: relative; overflow: hidden;
-  border-radius: 12px; padding: 10px 14px;
-  background: linear-gradient(150deg, oklch(0.30 0.20 285) 0%, oklch(0.21 0.16 285) 100%);
-  border: 1px solid oklch(1 0 0 / 12%);
-  box-shadow: 0 6px 18px oklch(0.22 0.18 285 / 28%), inset 0 1px 0 oklch(1 0 0 / 16%);
-  color: var(--vmc-color-base-white, oklch(1 0 0));
-  display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px;
-  flex-shrink: 0;
-}
-.v3-vehicle-live { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vmc-color-orange-300, oklch(0.84 0.13 60)); flex-shrink: 0; }
-.v3-vehicle-title { margin: 0; font-family: var(--font-ui); font-size: 15px; font-weight: 800; letter-spacing: -0.3px; min-width: 0; flex: 1 1 auto; }
-.v3-vehicle-title span { color: oklch(1 0 0 / 55%); font-weight: 600; }
-.v3-vehicle-placa { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: oklch(1 0 0 / 55%); flex-shrink: 0; }
-.v3-vehicle-placa b { color: oklch(1 0 0); letter-spacing: 1.2px; }
-
-/* stats debajo de la sala — Conectados + Bids arriba, Inicio hace full ancho debajo */
-.v3-stats { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "conectados bids" "inicio inicio"; gap: 8px; flex: 0 0 auto; }
-.v3-stats .v3-stat-card { padding: 8px 12px; min-height: 0; }
-.v3-stats .v3-stat-card:nth-child(1) { grid-area: conectados; }
-.v3-stats .v3-stat-card:nth-child(2) { grid-area: bids; }
-.v3-stats .v3-stat-card:nth-child(3) { grid-area: inicio; }
-.v3-stat-card {
-  position: relative; overflow: hidden;
-  border-radius: 12px; padding: 10px 12px;
-  background: linear-gradient(150deg, oklch(0.27 0.19 285) 0%, oklch(0.19 0.15 285) 100%);
-  border: 1px solid oklch(1 0 0 / 12%);
-  box-shadow: 0 6px 18px oklch(0.18 0.16 285 / 28%), inset 0 1px 0 oklch(1 0 0 / 14%);
-  color: oklch(1 0 0);
-  display: flex; flex-direction: row; align-items: center; gap: 10px;
-}
-.v3-stat-icon { width: 22px; height: 22px; flex-shrink: 0; color: oklch(1 0 0 / 75%); }
-.v3-stat-info { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
-.v3-stat-val { font-family: var(--font-mono); font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.v3-stat-val.is-hot { color: var(--vmc-color-orange-300, oklch(0.86 0.14 65)); }
-.v3-stat-lbl { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
-
-/* sala alta, ocupa lo que sobra después de las stats */
-.dash-col--right .room { flex: 1 1 auto; min-height: 0; }
+.v2-bid-outside { padding: 0; flex-shrink: 0; }
 
 /* Gallery card */
 .dh { display: flex; flex-direction: column; background: oklch(1 0 0); user-select: none; isolation: isolate; }
@@ -493,43 +420,57 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   animation: bc-pop 0.6s var(--ease);
 }
 @keyframes bc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
-/* bidear — pvbtn primary iridescent (referencia.tsx) */
+/* bidear — iridescent (pvbtn) + halo blanco girando + pulse zoom */
 @property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
 @property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.72 0.16 55); }
 @property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.55 0.22 285); }
+@property --halo-angle  { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 .bidear {
   --vbtn-stop-a: var(--vmc-color-orange-600);
   --vbtn-stop-b: var(--vmc-color-vault-500);
   display: flex; align-items: center; justify-content: center; gap: 14px;
   width: 100%; height: 54px;
   border-radius: 9999px; border: 2.5px solid transparent;
-  cursor: pointer; position: relative; overflow: hidden;
+  cursor: pointer; position: relative;
   font-family: var(--font-ui); color: var(--vmc-color-base-white);
-  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
   background-image:
     linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
     linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  box-shadow: inset 0 1px 0 rgb(100% 100% 100% / 0.28), 0 2px 6px rgb(92.94% 53.73% 21.18% / 0.30);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 2px 6px oklch(0.66 0.17 50 / 30%);
   transition:
     --vbtn-angle 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease,
-    transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s ease;
-  transform: translateZ(0);
+    box-shadow 0.25s ease;
+  animation: bidear-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
 }
 .bidear::before {
   content: ''; position: absolute; inset: 0; border-radius: 9999px;
-  background: linear-gradient(180deg, rgb(100% 100% 100% / 0.17) 0%, transparent 55%);
+  background: linear-gradient(180deg, oklch(1 0 0 / 17%) 0%, transparent 55%);
   pointer-events: none; z-index: 1;
 }
 .bidear::after {
-  content: ''; position: absolute; inset: -4px; border-radius: 9999px;
-  background: linear-gradient(135deg, var(--vmc-color-orange-600), var(--vmc-color-vault-500));
-  filter: blur(14px); opacity: 0; z-index: -1;
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  content: ''; position: absolute; inset: -2px; border-radius: 9999px; padding: 2px;
+  background: conic-gradient(from var(--halo-angle),
+    transparent 0deg, transparent 220deg,
+    oklch(1 0 0 / 40%) 270deg, oklch(1 0 0 / 95%) 300deg, oklch(0.92 0.06 60 / 80%) 330deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 5px oklch(1 0 0 / 55%));
+  pointer-events: none; z-index: 2;
+  animation: halo-spin 2.6s linear infinite;
 }
-.bidear > * { position: relative; z-index: 2; }
+@keyframes halo-spin { to { --halo-angle: 360deg; } }
+@keyframes bidear-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+}
+.bidear > * { position: relative; z-index: 3; }
 .bidear-label { font-size: 17px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
 .bidear-sep { width: 1px; height: 24px; background: oklch(1 0 0 / 40%); }
 .bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -537,18 +478,25 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   --vbtn-angle: 220deg;
   --vbtn-stop-a: var(--vmc-color-orange-400);
   --vbtn-stop-b: var(--vmc-color-vault-400);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: inset 0 1px 0 rgb(100% 100% 100% / 0.22), 0 8px 24px rgb(51.76% 37.65% 89.8% / 0.35), 0 4px 10px rgb(92.94% 53.73% 21.18% / 0.40);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%), 0 8px 24px oklch(0.55 0.20 285 / 35%), 0 4px 10px oklch(0.66 0.17 50 / 40%);
 }
-.bidear:hover::after { opacity: 0.45; filter: blur(18px); }
 .bidear:active {
   --vbtn-angle: 135deg;
   --vbtn-stop-a: var(--vmc-color-orange-700);
   --vbtn-stop-b: var(--vmc-color-vault-600);
-  transform: scale(0.97) translateY(1px);
-  box-shadow: inset 0 2px 5px rgb(0% 0% 0% / 0.22), 0 1px 3px rgb(0% 0% 0% / 0.12);
 }
-.bidear:active::after { opacity: 0; }
+.bidear:disabled {
+  animation: none;
+  background-image: none;
+  background: var(--vmc-color-background-disabled, oklch(0.88 0.01 220));
+  color: oklch(0.45 0.008 220);
+  text-shadow: none; box-shadow: none; cursor: not-allowed;
+}
+.bidear:disabled::before, .bidear:disabled::after { display: none; }
+.bidear:disabled .bidear-sep { background: oklch(0.45 0.008 220 / 35%); }
+@media (prefers-reduced-motion: reduce) {
+  .bidear, .bidear::after { animation: none; }
+}
 
 /* ═══ COIN BURST — monedas hacia arriba al pujar ═══ */
 .coin-particle {
@@ -570,41 +518,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 <body>
   <div class="catalog-row">
     <div class="variant-slot" data-variant="reserve-unlock-cards">
-      <span class="variant-label">V3 · Sala + Ganadores en Vivo<br><span class="variant-sublabel">1024 · ticker de ganadores recientes (social proof) + sala con faro</span></span>
+      <span class="variant-label">V3 · 4 Columnas (Banners Laterales)<br><span class="variant-sublabel">1024 · banner delgado izq · carro centro · sala derecha · banner delgado der</span></span>
       <div class="dash">
-
-        <!-- WINNERS TICKER — ganadores recientes -->
-        <div class="winners">
-          <span class="winners-tag">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg>
-            Ganadores
-          </span>
-          <div class="winners-vp">
-            <div class="winners-track">
-              <span class="win-item"><b>JX8MQ2</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Toyota Etios</em> por <strong>US$ 24,300</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>AEQU4Y</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Audi Q3</em> por <strong>US$ 38,900</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>P3TUXA</b> compró un <img class="win-img" src="../../../images/bronco2.png" alt=""><em>Honda HR-V</em> por <strong>US$ 27,150</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>CVH1MA</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Suzuki Jimny</em> por <strong>US$ 19,800</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>KAHTH4</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Mazda CX-5</em> por <strong>US$ 41,200</strong></span>
-              <span class="win-dot"></span>
-              <!-- duplicado para loop continuo -->
-              <span class="win-item"><b>JX8MQ2</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Toyota Etios</em> por <strong>US$ 24,300</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>AEQU4Y</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Audi Q3</em> por <strong>US$ 38,900</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>P3TUXA</b> compró un <img class="win-img" src="../../../images/bronco2.png" alt=""><em>Honda HR-V</em> por <strong>US$ 27,150</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>CVH1MA</b> compró un <img class="win-img" src="../../../images/bronco.jpg" alt=""><em>Suzuki Jimny</em> por <strong>US$ 19,800</strong></span>
-              <span class="win-dot"></span>
-              <span class="win-item"><b>KAHTH4</b> compró un <img class="win-img" src="../../../images/bronco1.png" alt=""><em>Mazda CX-5</em> por <strong>US$ 41,200</strong></span>
-              <span class="win-dot"></span>
-            </div>
-          </div>
-        </div>
 
         <!-- HEADER CARD -->
         <div class="card hdr">
@@ -637,29 +552,39 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
           </div>
         </div>
 
+        <!-- LIVE CARD -->
+        <div class="card hal">
+          <div class="hal-live"><span class="hal-dot"></span></div>
+          <ul class="hal-data">
+            <li>Toyota</li><li>Etios</li><li>2021</li>
+            <li class="hal-placa">placa: <span class="hal-placa-badge">P3U448</span></li>
+          </ul>
+          <div class="hal-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
+            <span class="hal-stat-label">Conectados</span><span class="hal-stat-value">18</span>
+          </div>
+          <div class="hal-stat">
+            <svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
+            <span class="hal-stat-label">Bids</span><span class="hal-stat-value is-hot">157</span>
+          </div>
+          <div class="hal-timer">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="hal-timer-label">Inició hace:</span><span class="hal-timer-value">00:00:10</span>
+          </div>
+        </div>
+
         <!-- BODY -->
         <div class="dash-body">
+          <!-- RAIL IZQUIERDO: banner -->
+          <aside class="dash-col v2-rail-right">
+            <div class="ad-banner v2-rail-banner">Banner</div>
+          </aside>
+
           <!-- LEFT -->
           <div class="dash-col dash-col--left">
-            <!-- info del vehículo arriba del carro -->
-            <div class="v3-vehicle">
-              <span class="v3-vehicle-live"><span class="hal-dot"></span> EN VIVO</span>
-              <h3 class="v3-vehicle-title">Toyota Etios <span>2021</span></h3>
-              <span class="v3-vehicle-placa">PLACA <b>P3U448</b></span>
-            </div>
             <article class="card dh">
               <div class="dh-image">
                 <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
-                <div class="dh-pricebanner">
-                  <div class="dh-pb-track">
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                  </div>
-                </div>
                 <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
                 <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
                 <span class="dh-counter">1 / 10</span>
@@ -715,47 +640,23 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
                 <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
               </div>
 
-              <!-- botón abajo -->
-              <div class="room-bid-wrap">
-                <button type="button" class="bidear" id="bidearBtn">
-                  <span class="bidear-label">Bidear</span>
-                  <span class="bidear-sep"></span>
-                  <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
-                </button>
-              </div>
-
             </div>
 
-            <!-- bloque de stats debajo de la sala -->
-            <div class="v3-stats">
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val">18</span>
-                  <span class="v3-stat-lbl">Conectados</span>
-                </div>
-              </div>
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val is-hot">157</span>
-                  <span class="v3-stat-lbl">Bids</span>
-                </div>
-              </div>
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val">00:00:10</span>
-                  <span class="v3-stat-lbl">Inició hace</span>
-                </div>
-              </div>
+            <!-- botón Bidear fuera del card de la sala -->
+            <div class="room-bid-wrap v2-bid-outside">
+              <button type="button" class="bidear" id="bidearBtn">
+                <span class="bidear-label">Bidear</span>
+                <span class="bidear-sep"></span>
+                <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
+              </button>
             </div>
           </div>
 
-          <!-- RAIL DERECHO: banner a la derecha de la sala -->
+          <!-- RAIL DERECHO: banner delgado -->
           <aside class="dash-col v3-rail-right">
             <div class="ad-banner v3-rail-banner">Banner</div>
           </aside>
+
         </div>
 
       </div>

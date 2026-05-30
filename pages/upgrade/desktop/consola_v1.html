@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Consola V1 · Sala en Vivo (Simulación) — Voyager Upgrade</title>
+<title>Consola V1 · Sala con Halo (Nube Ruleta) — Voyager Upgrade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -38,22 +38,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* ═══ DASHBOARD SHELL ═══ */
 .dash {
-  width: 1024px; position: relative;
+  width: 1024px;
   padding: 16px;
   display: flex; flex-direction: column; gap: 12px;
   background: oklch(0.98 0.004 160);
 }
-.sim-reload {
-  position: absolute; top: 22px; right: 22px; z-index: 50;
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; border: 0; cursor: pointer;
-  background: linear-gradient(135deg, var(--vmc-color-vault-700), var(--vmc-color-vault-800));
-  color: var(--vmc-color-base-white);
-  box-shadow: 0 3px 10px oklch(0.22 0.18 285 / 30%);
-  transition: transform 0.3s var(--ease), box-shadow 0.2s ease;
-}
-.sim-reload:hover { transform: rotate(-90deg); box-shadow: 0 5px 16px oklch(0.22 0.18 285 / 42%); }
-.sim-reload svg { width: 17px; height: 17px; }
 .card {
   border-radius: var(--card-radius);
   border: 1px solid oklch(0.22 0.18 285 / 8%);
@@ -173,8 +162,9 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   color: oklch(0.42 0.01 250);
   font-size: 13px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
 }
-.v1-rail-right { flex: 0 0 168px; }
-.v1-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
+.v2-rail-right { flex: 0 0 240px; }
+.v2-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
+.v2-bid-outside { padding: 0; flex-shrink: 0; display: flex; justify-content: center; }
 
 /* Gallery card */
 .dh { display: flex; flex-direction: column; background: oklch(1 0 0); user-select: none; isolation: isolate; }
@@ -195,21 +185,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 .dh-casino.is-active { opacity: 1; animation: casino-spin 0.5s linear infinite; }
 @keyframes casino-spin { 0% { --casino-angle: 0deg; } 100% { --casino-angle: 360deg; } }
-
-/* Price ticker — banner marquee de precio base sobre la imagen (arriba) */
-.dh-pricebanner {
-  position: absolute; top: 0; left: 0; right: 0; z-index: 12;
-  height: 30px; overflow: hidden; display: flex; align-items: center;
-  background: oklch(1 0 0 / 92%);
-  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
-  box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%);
-}
-.dh-pb-track { display: flex; align-items: center; gap: 28px; white-space: nowrap; animation: marquee-scroll 14s linear infinite; width: max-content; }
-.dh-pb-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--vmc-color-vault-800); }
-.dh-pb-item strong { font-family: var(--font-mono); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.dh-pb-item svg { width: 15px; height: 16px; flex-shrink: 0; }
-.dh-pb-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--vmc-color-vault-500); opacity: 0.4; flex-shrink: 0; }
-@keyframes marquee-scroll { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 .dh-thumbs { display: flex; gap: 6px; padding: 8px; background: oklch(1 0 0); overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
 .dh-thumbs::-webkit-scrollbar { display: none; }
 .dh-thumb { position: relative; flex-shrink: 0; width: 76px; height: 57px; border-radius: 4px; overflow: hidden; cursor: pointer; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); }
@@ -264,77 +239,124 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .cu-cell--center { text-align: center; }
 .cu-cell:first-child, .cu-cell:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .cu-cell strong { font-weight: 700; }
-.cu-cell--name { display: flex; align-items: center; gap: 6px; }
+.cu-row--user .cu-cell:nth-child(2) { display: inline-flex; align-items: center; gap: 6px; }
 .cu-trophy { width: 14px; height: 14px; flex-shrink: 0; color: var(--vmc-color-gold); filter: drop-shadow(0 0 4px oklch(0.82 0.15 85 / 65%)); }
 
-/* Chat card */
+/* ═══ BID ROOM — sala vertical con halo perimetral ═══ */
+@property --room-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.room {
+  position: relative; flex: 1;
+  display: flex; flex-direction: column;
+  border-radius: 16px; overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, oklch(0.30 0.20 285 / 70%) 0%, transparent 65%),
+    linear-gradient(180deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
+}
+/* halo de luz que recorre el borde — solo al pujar, rápido */
+.room::before {
+  content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  border-radius: 16px; padding: 2px; opacity: 0;
+  transition: opacity 0.2s ease;
+  background: conic-gradient(from var(--room-angle),
+    transparent 0deg, transparent 210deg,
+    var(--vmc-color-orange-400) 250deg, oklch(1 0 0 / 95%) 290deg, var(--vmc-color-vault-400) 328deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 6px oklch(1 0 0 / 60%));
+}
+.room.is-bidding::before { opacity: 1; animation: room-halo 0.65s linear infinite; }
+@keyframes room-halo { to { --room-angle: 360deg; } }
+/* aro de luz iridescente que ilumina toda la caja al pujar */
+.room.is-bidding {
+  animation: room-glow 0.9s ease-in-out infinite alternate;
+}
+@keyframes room-glow {
+  0%   { box-shadow: 0 0 0 1.5px oklch(0.78 0.16 60 / 35%), 0 0 16px oklch(0.72 0.16 55 / 40%), 0 0 34px oklch(0.55 0.20 285 / 30%); }
+  100% { box-shadow: 0 0 0 1.5px oklch(1 0 0 / 55%), 0 0 28px oklch(0.72 0.16 55 / 60%), 0 0 56px oklch(0.55 0.20 285 / 45%), 0 0 80px oklch(0.66 0.17 50 / 25%); }
+}
+/* al pujar: el faro interno se enciende más fuerte (colores hover iridescent) */
+.room.is-bidding .room-cloud {
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 32%), inset 0 0 0 1px oklch(1 0 0 / 18%), 0 0 26px oklch(0.72 0.16 55 / 55%), 0 0 48px oklch(0.55 0.20 285 / 35%);
+}
+.room.is-bidding .room-cloud::before {
+  animation-duration: 1s;
+  filter: blur(10px) brightness(1.55) saturate(1.3);
+}
+.room.is-bidding .room-cloud::after {
+  background: radial-gradient(ellipse 78% 72% at 50% 50%, oklch(0.16 0.10 285 / 28%) 0%, transparent 82%);
+}
+
+/* nube de bid actual — con faro interno iridescente girando dentro */
+.room-cloud {
+  position: relative; z-index: 3; flex-shrink: 0;
+  margin: 18px auto 0; padding: 16px 40px;
+  border-radius: 24px; overflow: hidden;
+  border: 2px solid transparent;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  /* mismo estilo que el botón Bidear: fill orange→vault + borde iridescente */
+  background-image:
+    linear-gradient(135deg, var(--vmc-color-orange-600) 0%, var(--vmc-color-orange-600) 38%, var(--vmc-color-vault-500) 100%),
+    linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 4px 14px oklch(0.66 0.17 50 / 35%);
+  isolation: isolate;
+}
+/* FARO INTERNO: haz de luz iridescente que gira dentro de la nube */
+.room-cloud::before {
+  content: ''; position: absolute; z-index: 0;
+  top: 50%; left: 50%; width: 240%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  /* faro con la paleta iridescente del botón Bidear: white → orange-400 → vault-400 */
+  background: conic-gradient(from var(--room-angle),
+    transparent 0deg,
+    var(--vmc-color-orange-400) 35deg,
+    oklch(1 0 0 / 85%) 70deg,
+    var(--vmc-color-vault-400) 110deg,
+    transparent 160deg,
+    transparent 220deg,
+    var(--vmc-color-orange-400) 268deg,
+    oklch(1 0 0 / 75%) 300deg,
+    transparent 345deg);
+  filter: blur(12px);
+  animation: room-halo 3.5s linear infinite;
+}
+/* scrim radial cálido para legibilidad del texto sobre el faro */
+.room-cloud::after {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse 80% 74% at 50% 50%, oklch(0.30 0.16 40 / 32%) 0%, transparent 82%);
+}
+.room-cloud > * { position: relative; z-index: 2; }
+.room-cloud-label { font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 1px 3px oklch(0 0 0 / 45%), 0 0 10px oklch(0.72 0.16 55 / 55%); }
+.room-cloud-amount { font-family: var(--font-mono); font-size: 36px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; color: var(--vmc-color-base-white); text-shadow: 0 1px 4px oklch(0 0 0 / 55%), 0 0 18px oklch(0.78 0.16 60 / 45%); }
+/* zoom in/out de la nube al pujar */
+.room-cloud.is-bump { animation: cloud-bump 0.4s var(--ease); }
+@keyframes cloud-bump { 0% { transform: scale(1); } 40% { transform: scale(1.14); } 100% { transform: scale(1); } }
+
+/* reserva slim */
+.room-reserve { z-index: 3; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
+.room-reserve .prog-lock { width: 14px; height: 14px; color: oklch(1 0 0 / 60%); }
+.room-reserve b { font-family: var(--font-mono); color: oklch(1 0 0 / 85%); }
+
+/* sala de bideos */
+.room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+
+/* botón abajo */
+.room-bid-wrap { z-index: 3; flex-shrink: 0; padding: 12px 16px 16px; }
+
+/* Chat card (legacy) */
 .ab-chat {
-  flex: 1; overflow: hidden; padding: 0;
-  display: flex; flex-direction: column; position: relative;
+  flex: 1; overflow: hidden; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
   background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-700) 55%, var(--vmc-color-vault-600) 85%, color-mix(in oklch, var(--vmc-color-orange-500) 28%, var(--vmc-color-vault-600)) 100%);
 }
-
-/* ── Estado sala de espera ── */
-.room-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 20px; text-align: center; color: var(--vmc-color-base-white); }
-.rw-welcome { font-size: 14px; font-weight: 500; color: oklch(1 0 0 / 75%); }
-.rw-title { font-size: 26px; font-weight: 800; line-height: 1.1; letter-spacing: -0.01em; margin: 8px 0 2px; }
-.rw-dots { display: flex; gap: 6px; margin: 4px 0 10px; }
-.rw-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); animation: rw-bounce 1.2s ease-in-out infinite; }
-.rw-dots span:nth-child(2) { animation-delay: 0.18s; }
-.rw-dots span:nth-child(3) { animation-delay: 0.36s; }
-@keyframes rw-bounce { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-4px); } }
-.rw-sub { font-size: 13px; font-weight: 500; color: oklch(1 0 0 / 70%); }
-.rw-counter { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--vmc-color-orange-400); text-shadow: 0 0 14px oklch(0.72 0.16 55 / 50%); }
-.rw-counter svg { width: 22px; height: 22px; }
-
-/* ── Estado en vivo ── */
-.room-live { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.room-msgs { flex: 1; min-height: 0; overflow: hidden; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
-.room-loadbar { flex-shrink: 0; height: 10px; background: oklch(1 0 0 / 14%); overflow: hidden; }
-.room-loadbar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--vmc-color-orange-500), var(--vmc-color-base-white)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 65%); transition: width 1s linear; }
-
-/* ── Estado ganador ── */
-.room-win { background: none; animation: rwin-in 0.6s var(--ease) both; }
-@keyframes rwin-in { from { opacity: 0; transform: translateY(18px) scale(0.95); } to { opacity: 1; transform: none; } }
-.rwin-icon { width: 52px; height: 52px; color: oklch(1 0 0 / 35%); margin-bottom: 8px; }
-.rwin-text { font-size: 19px; font-weight: 500; line-height: 1.35; color: oklch(1 0 0 / 85%); }
-.rwin-text strong { color: var(--vmc-color-orange-400); font-weight: 800; }
-.rwin-text b { color: var(--vmc-color-base-white); font-weight: 800; }
-.rwin-sub { font-size: 14px; color: oklch(1 0 0 / 65%); margin-top: 8px; }
-.rwin-price { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; margin-top: 4px;
-  color: var(--vmc-color-base-white);
-  text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%);
-  animation: rwin-price-pulse 1.5s ease-in-out infinite;
-}
-@keyframes rwin-price-pulse {
-  0%, 100% { transform: scale(1); text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); }
-  50% { transform: scale(1.07); text-shadow: 0 0 22px oklch(0.78 0.16 60 / 65%), 0 0 44px oklch(0.66 0.17 50 / 40%); }
-}
-.rwin-fee { font-size: 13px; color: oklch(1 0 0 / 60%); margin-top: 4px; }
-
-/* ── Cockpit en estado ganador: mensaje de correo ── */
-.bc-email { display: none; align-items: center; justify-content: center; gap: 12px; padding: 10px 6px; color: oklch(1 0 0 / 70%); text-align: left; }
-.bc-email svg { width: 34px; height: 34px; flex-shrink: 0; color: oklch(1 0 0 / 55%); }
-.bc-email p { font-size: 13px; font-weight: 500; line-height: 1.4; }
-.bc.is-won > .prog, .bc.is-won > .bc-amount-block, .bc.is-won > .bidear { display: none; }
-.bc.is-won .bc-email { display: flex; }
 .ab-msg { display: flex; }
-.ab-msg--left { justify-content: flex-start; animation: msg-in-left 0.4s var(--ease) both; }
-.ab-msg--right { justify-content: flex-end; animation: msg-in-right 0.4s var(--ease) both; }
-.ab-msg--center { justify-content: center; margin-bottom: 6px; animation: msg-in-top 0.45s var(--ease) both; }
-@keyframes msg-in-left { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
-@keyframes msg-in-right { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
-@keyframes msg-in-top { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+.ab-msg--left { justify-content: flex-start; }
+.ab-msg--right { justify-content: flex-end; }
+.ab-msg--center { justify-content: center; margin-bottom: 4px; }
 .ab-bubble strong.amt { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.ab-bubble--welcome {
-  color: var(--vmc-color-base-white);
-  background: oklch(1 0 0 / 10%);
-  border: 1px solid oklch(1 0 0 / 16%);
-  border-radius: 9999px;
-  font-size: 12px; font-weight: 600;
-  min-height: 32px; padding: 0 18px;
-  box-shadow: 0 4px 14px oklch(0.10 0.05 285 / 30%);
-}
 .ab-bubble { display: flex; align-items: center; max-width: 76%; min-height: 34px; padding: 0 14px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 34px; white-space: nowrap; }
 .ab-bubble--system { max-width: 100%; color: oklch(1 0 0 / 50%); background: none; border: none; font-size: 11px; font-weight: 500; min-height: 22px; line-height: 22px; padding: 0; }
 .ab-bubble--robot { color: oklch(1 0 0 / 75%); background: oklch(1 0 0 / 8%); border: 1px solid oklch(1 0 0 / 10%); border-radius: 12px 12px 12px 4px; }
@@ -369,9 +391,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 /* progress ramp */
 .prog { display: flex; flex-direction: column; gap: 7px; }
-.prog-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
-.prog-head-left { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
-.prog-head-left b { font-family: var(--font-mono); font-weight: 700; color: oklch(1 0 0 / 85%); }
+.prog-head { display: flex; align-items: center; justify-content: flex-end; font-size: 13px; }
 .prog-head-right { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 70%); }
 .prog-head-right b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
 .prog-lock { width: 18px; height: 18px; flex-shrink: 0; color: oklch(1 0 0 / 70%); transition: color 0.4s ease; }
@@ -382,37 +402,55 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .bc.is-unlocked .prog-lock-broken { display: block; animation: lock-break 0.5s var(--ease); }
 @keyframes lock-break { 0% { transform: scale(0.6) rotate(-12deg); opacity: 0; } 60% { transform: scale(1.2) rotate(6deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
 .prog-track { position: relative; height: 28px; border-radius: 4px; background: oklch(1 0 0 / 9%); overflow: hidden; clip-path: polygon(0 64%, 100% 0, 100% 100%, 0 100%); }
-.prog-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--vmc-color-orange-600), var(--vmc-color-orange-400)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); transition: width 0.7s var(--ease), background 0.5s ease; }
+.prog-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 46%; background: linear-gradient(90deg, var(--vmc-color-orange-600), var(--vmc-color-orange-400)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); transition: width 0.7s var(--ease), background 0.5s ease; }
 .prog-fill::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 20px; background: linear-gradient(90deg, transparent, oklch(1 0 0 / 45%)); }
 .bc.is-unlocked .prog-fill { background: linear-gradient(90deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-base-white) 40%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%); box-shadow: 0 0 16px oklch(0.66 0.17 50 / 55%), 0 0 24px oklch(0.55 0.20 285 / 35%); }
 /* bid amount */
 .bc-amount-block { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .bc-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); }
 .bc-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 90%); animation: hal-pulse 1.2s ease-in-out infinite; }
-.bc-amount-block { min-height: 56px; justify-content: center; }
-.bc-amount { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); transform-origin: center; transition: transform 0.5s var(--ease), color 0.5s ease, text-shadow 0.5s ease; }
+.bc-amount { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); transition: font-size 0.5s var(--ease), color 0.5s ease, text-shadow 0.5s ease; }
 .bc.is-unlocked .bc-amount {
-  transform: scale(1.27);
+  font-size: 56px;
   background: linear-gradient(135deg, var(--vmc-color-orange-400) 0%, var(--vmc-color-base-white) 35%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;
   filter: drop-shadow(0 0 18px oklch(0.66 0.17 50 / 45%)) drop-shadow(0 0 36px oklch(0.55 0.20 285 / 30%));
   animation: bc-pop 0.6s var(--ease);
 }
 @keyframes bc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
-@keyframes bc-bump { 0% { transform: scale(1); } 35% { transform: scale(1.12); } 100% { transform: scale(1); } }
-.bc-amount.is-bump, .bc.is-unlocked .bc-amount.is-bump { animation: bc-bump 0.28s var(--ease); }
-/* bidear */
-@property --halo-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+/* bidear — iridescent (pvbtn) + halo blanco girando + pulse zoom */
+@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
+@property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.72 0.16 55); }
+@property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: oklch(0.55 0.22 285); }
+@property --halo-angle  { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 .bidear {
-  display: flex; align-items: center; justify-content: center; gap: 14px;
-  width: 240px; max-width: 100%; align-self: center; height: 54px; border-radius: 9999px; border: 0; cursor: pointer; position: relative;
+  --vbtn-stop-a: var(--vmc-color-orange-600);
+  --vbtn-stop-b: var(--vmc-color-vault-500);
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  width: 320px; max-width: 100%; padding: 0 32px; height: 54px;
+  border-radius: 9999px; border: 2.5px solid transparent;
+  cursor: pointer; position: relative;
   font-family: var(--font-ui); color: var(--vmc-color-base-white);
-  background: linear-gradient(180deg, var(--vmc-color-orange-400) 0%, var(--vmc-color-orange-500) 55%, var(--vmc-color-orange-600) 100%);
-  box-shadow: inset 0 2px 0 oklch(1 0 0 / 28%), 0 4px 14px oklch(0.66 0.17 50 / 38%);
-  transition: transform 0.2s var(--ease), box-shadow 0.25s ease;
+  text-shadow: 0 1px 3px oklch(0 0 0 / 25%);
+  background-image:
+    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
+    linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 2px 6px oklch(0.66 0.17 50 / 30%);
+  transition:
+    --vbtn-angle 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease,
+    box-shadow 0.25s ease;
+  animation: bidear-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
 }
-.bidear::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; background: linear-gradient(180deg, oklch(1 0 0 / 22%) 0%, transparent 52%); pointer-events: none; z-index: 1; }
-/* halo de luz que recorre el borde */
+.bidear::before {
+  content: ''; position: absolute; inset: 0; border-radius: 9999px;
+  background: linear-gradient(180deg, oklch(1 0 0 / 17%) 0%, transparent 55%);
+  pointer-events: none; z-index: 1;
+}
+/* halo blanco que recorre el borde */
 .bidear::after {
   content: ''; position: absolute; inset: -2px; border-radius: 9999px; padding: 2px;
   background: conic-gradient(from var(--halo-angle),
@@ -420,27 +458,44 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     oklch(1 0 0 / 40%) 270deg, oklch(1 0 0 / 95%) 300deg, oklch(0.92 0.06 60 / 80%) 330deg,
     transparent 360deg);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   filter: drop-shadow(0 0 5px oklch(1 0 0 / 55%));
   pointer-events: none; z-index: 2;
   animation: halo-spin 2.6s linear infinite;
 }
 @keyframes halo-spin { to { --halo-angle: 360deg; } }
+@keyframes bidear-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+}
 .bidear > * { position: relative; z-index: 3; }
-.bidear-label { font-size: 17px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: 0 1px 3px oklch(0 0 0 / 22%); }
+.bidear-label { font-size: 17px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
 .bidear-sep { width: 1px; height: 24px; background: oklch(1 0 0 / 40%); }
-.bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px oklch(0 0 0 / 22%); }
-.bidear:hover { transform: translateY(-2px); box-shadow: inset 0 2px 0 oklch(1 0 0 / 32%), 0 6px 20px oklch(0.66 0.17 50 / 48%); }
-.bidear:active { transform: scale(0.98) translateY(1px); box-shadow: inset 0 3px 8px oklch(0 0 0 / 25%); }
-/* Primary disabled (referencia.tsx) — esperando participantes */
+.bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bidear:hover {
+  --vbtn-angle: 220deg;
+  --vbtn-stop-a: var(--vmc-color-orange-400);
+  --vbtn-stop-b: var(--vmc-color-vault-400);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%), 0 8px 24px oklch(0.55 0.20 285 / 35%), 0 4px 10px oklch(0.66 0.17 50 / 40%);
+}
+.bidear:active {
+  --vbtn-angle: 135deg;
+  --vbtn-stop-a: var(--vmc-color-orange-700);
+  --vbtn-stop-b: var(--vmc-color-vault-600);
+}
 .bidear:disabled {
+  animation: none;
+  background-image: none;
   background: var(--vmc-color-background-disabled, oklch(0.88 0.01 220));
   color: oklch(0.45 0.008 220);
   text-shadow: none; box-shadow: none; cursor: not-allowed; transform: none;
 }
 .bidear:disabled::before, .bidear:disabled::after { display: none; }
 .bidear:disabled .bidear-sep { background: oklch(0.45 0.008 220 / 35%); }
+@media (prefers-reduced-motion: reduce) {
+  .bidear, .bidear::after { animation: none; }
+}
 
 /* ═══ COIN BURST — monedas hacia arriba al pujar ═══ */
 .coin-particle {
@@ -462,11 +517,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 <body>
   <div class="catalog-row">
     <div class="variant-slot" data-variant="reserve-unlock-cards">
-      <span class="variant-label">V1 · Sala en Vivo (Simulación)<br><span class="variant-sublabel">1024 · espera → bids en vivo → cierre → ganador</span></span>
+      <span class="variant-label">V1 · Sala con Halo<br><span class="variant-sublabel">1024 · nube ruleta arriba · botón abajo · halo perimetral · banner izquierdo</span></span>
       <div class="dash">
-        <button type="button" class="sim-reload" id="simReload" title="Reiniciar simulación" aria-label="Reiniciar simulación">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v4h-4"/></svg>
-        </button>
 
         <!-- HEADER CARD -->
         <div class="card hdr">
@@ -508,41 +560,30 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
           </ul>
           <div class="hal-stat">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
-            <span class="hal-stat-label">Conectados</span><span class="hal-stat-value" id="halConectados">0</span>
+            <span class="hal-stat-label">Conectados</span><span class="hal-stat-value">18</span>
           </div>
           <div class="hal-stat">
             <svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
-            <span class="hal-stat-label">Bids</span><span class="hal-stat-value is-hot" id="halBids">0</span>
+            <span class="hal-stat-label">Bids</span><span class="hal-stat-value is-hot">157</span>
           </div>
           <div class="hal-timer">
             <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="oklch(1 0 0 / 55%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="hal-timer-label">Inició hace:</span><span class="hal-timer-value" id="halTimer">00:00:00</span>
+            <span class="hal-timer-label">Inició hace:</span><span class="hal-timer-value">00:00:10</span>
           </div>
         </div>
 
         <!-- BODY -->
         <div class="dash-body">
+          <!-- RAIL IZQUIERDO: banner -->
+          <aside class="dash-col v2-rail-right">
+            <div class="ad-banner v2-rail-banner">Banner</div>
+          </aside>
+
           <!-- LEFT -->
           <div class="dash-col dash-col--left">
             <article class="card dh">
               <div class="dh-image">
                 <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
-                <div class="dh-pricebanner">
-                  <div class="dh-pb-track">
-                    <span class="dh-pb-item"><svg viewBox="0 0 36 38" fill="none"><defs><linearGradient id="pbtD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="pbtF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><clipPath id="pbtC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#pbtD)"/><g clip-path="url(#pbtC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#pbtF)"/></g></svg> Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span>
-                    <span class="dh-pb-dot"></span>
-                  </div>
-                </div>
                 <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
                 <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
                 <span class="dh-counter">1 / 10</span>
@@ -558,64 +599,58 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
                   <div class="cu-cell cu-cell--center">Bids</div>
                 </div>
               </div>
-              <div class="cu-body" id="cuBody"></div>
+              <div class="cu-body">
+                <div class="cu-row cu-row--user">
+                  <div class="cu-cell cu-cell--center">1°</div>
+                  <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
+                  <div class="cu-cell cu-cell--center"><strong>2</strong></div>
+                </div>
+                <div class="cu-row cu-row--rest">
+                  <div class="cu-cell cu-cell--center">2°</div>
+                  <div class="cu-cell"><strong>BEKVS1</strong></div>
+                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+                </div>
+                <div class="cu-row cu-row--alt">
+                  <div class="cu-cell cu-cell--center">3°</div>
+                  <div class="cu-cell"><strong>KAHTH4</strong></div>
+                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- RIGHT -->
+          <!-- RIGHT: sala con halo perimetral, nube de bid arriba, botón abajo -->
           <div class="dash-col dash-col--right">
-            <div class="card ab-chat" id="chat">
-              <!-- Estado 1: sala de espera -->
-              <div class="room-state room-waiting" id="roomWaiting">
-                <p class="rw-welcome">¡Bienvenido al proceso en vivo!</p>
-                <p class="rw-title">Recibiendo<br>participantes</p>
-                <div class="rw-dots"><span></span><span></span><span></span></div>
-                <p class="rw-sub">Inicia en:</p>
-                <p class="rw-counter">
-                  <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span id="roomCountdown">00:00:03</span>
-                </p>
+            <div class="room" id="bidRoom">
+
+              <!-- nube de bid actual (ruleta) -->
+              <div class="room-cloud" id="bidCloud">
+                <span class="room-cloud-label">Propuesta · Bid Actual</span>
+                <span class="room-cloud-amount" id="bidAmount">US$&nbsp;5,079</span>
               </div>
 
-              <!-- Estado 2: en vivo (mensajes + loading bar de cierre) -->
-              <div class="room-live" id="roomLive" style="display:none">
-                <div class="room-msgs" id="roomMsgs"></div>
-                <div class="room-loadbar" id="roomLoadbar"><div class="room-loadbar-fill" id="roomLoadFill"></div></div>
+              <!-- sala de bideos -->
+              <div class="room-chat" id="chat">
+                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--user-left"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,079</strong></span></div>
+                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,079</strong></span></div>
+                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
+                <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--user-right"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,179</strong></span></div>
+                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,179</strong></span></div>
+                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
               </div>
 
-              <!-- Estado 3: ganador -->
-              <div class="room-state room-win" id="roomWin" style="display:none">
-                <svg class="rwin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="3"/><line x1="9" y1="19" x2="15" y2="19" stroke-linecap="round"/><text x="12" y="13" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="9" font-weight="800" fill="currentColor">$</text></svg>
-                <p class="rwin-text">¡Felicitaciones <strong id="winName">JA8NEE</strong> has<br><b>ganado la oferta</b></p>
-                <p class="rwin-sub">con una propuesta de</p>
-                <p class="rwin-price" id="winPrice">US$ 5,079</p>
-                <p class="rwin-fee">Comisión: US$ 0</p>
-              </div>
             </div>
 
-            <div class="card bc" id="bidCockpit">
-              <div class="bc-amount-block">
-                <span class="bc-eyebrow">Propuesta · Bid Actual</span>
-                <span class="bc-amount" id="bidAmount">US$&nbsp;5,079</span>
-              </div>
-
-              <button type="button" class="bidear" id="bidearBtn" disabled>
+            <!-- botón Bidear fuera del card de la sala -->
+            <div class="room-bid-wrap v2-bid-outside">
+              <button type="button" class="bidear" id="bidearBtn">
                 <span class="bidear-label">Bidear</span>
                 <span class="bidear-sep"></span>
                 <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
               </button>
-
-              <div class="bc-email">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <p>Revisa tu historial de participación para iniciar el proceso de compra.</p>
-              </div>
             </div>
           </div>
 
-          <!-- RAIL DERECHO: banner a la derecha de la consola de bid -->
-          <aside class="dash-col v1-rail-right">
-            <div class="ad-banner v1-rail-banner">Banner</div>
-          </aside>
         </div>
 
       </div>
@@ -652,202 +687,34 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     document.querySelectorAll('.dh').forEach(initGallery);
   })();
 
-  /* ── Reload de la simulación ── */
+  /* ── Bid + efectos de sala (halo + glow + nube zoom) ── */
   (function () {
-    var r = document.getElementById('simReload');
-    if (r) r.addEventListener('click', function () { location.reload(); });
-  })();
-
-  /* ── Simulación de sala: espera → bids en vivo → cierre → ganador ── */
-  (function () {
-    var BASE = 10999, bid = 2000, step = 1480;
-    var bidSeq = [2200, 3000, 4000, 6000], seqIdx = 0;
+    var bid = 5079, step = 1480;
     var btn = document.getElementById('bidearBtn');
-    var cockpit = document.getElementById('bidCockpit');
     var amountEl = document.getElementById('bidAmount');
     var bidearPriceEl = document.getElementById('bidearPrice');
+    var room = document.getElementById('bidRoom');
+    var cloud = document.getElementById('bidCloud');
     var casino = document.getElementById('dhCasino');
-    var waiting = document.getElementById('roomWaiting');
-    var live = document.getElementById('roomLive');
-    var winView = document.getElementById('roomWin');
-    var msgs = document.getElementById('roomMsgs');
-    var loadFill = document.getElementById('roomLoadFill');
-    var countdownEl = document.getElementById('roomCountdown');
-    var winPriceEl = document.getElementById('winPrice');
-    var conectadosEl = document.getElementById('halConectados');
-    var bidsEl = document.getElementById('halBids');
-    var halTimerEl = document.getElementById('halTimer');
+    var haloTimer = null;
     if (!btn) return;
-
-    /* Conectados: crece de 0 a 18 durante la espera */
-    var conectados = 0;
-    var conTimer = setInterval(function () {
-      conectados = Math.min(18, conectados + 1 + Math.floor(Math.random() * 2));
-      conectadosEl.textContent = conectados;
-      if (conectados >= 18) clearInterval(conTimer);
-    }, 420);
-
-    /* Contador de bids totales */
-    var bidsCount = 0;
-    function bumpBids() { bidsCount++; bidsEl.textContent = bidsCount; }
-
-    /* Timer "Inició hace" — cuenta hacia arriba al estar en vivo */
-    function pad(n) { return (n < 10 ? '0' : '') + n; }
-    function startRoomTimer() {
-      var secs = 0;
-      setInterval(function () {
-        secs++;
-        halTimerEl.textContent = pad(Math.floor(secs / 3600)) + ':' + pad(Math.floor(secs / 60) % 60) + ':' + pad(secs % 60);
-      }, 1000);
-    }
-
-    var BOTS = ['UU3YAH','P3TUXA','CVH1MA','AEQU4Y','AAMOH3','BEKVS1','KAHTH4','TZ4PLM'];
-    var LOGO = '<img src="../../../logo-preview.png" alt="VMC" style="height:14px;width:auto;margin-right:6px;vertical-align:middle">';
-    var TROPHY = '<svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg>';
-    var userBids = 0, phase = 'waiting', botTimer = null;
-
-    /* Tabla de postores: puesto por bid más alto, "Bids" = veces que pujó */
-    var cuBody = document.getElementById('cuBody');
-    var players = { 'BEKVS1': { high: 1850, count: 1 }, 'KAHTH4': { high: 1700, count: 1 } };
-    function recordBid(name, amount) {
-      if (!players[name]) players[name] = { high: 0, count: 0 };
-      players[name].high = amount;
-      players[name].count++;
-    }
-    function renderBoard() {
-      var arr = Object.keys(players).map(function (n) { return { name: n, high: players[n].high, count: players[n].count }; });
-      arr.sort(function (a, b) { return b.high - a.high; });
-      var html = '';
-      arr.slice(0, 3).forEach(function (p, i) {
-        var rowCls = p.name === 'JA8NEE' ? 'cu-row--user' : (i % 2 === 0 ? 'cu-row--rest' : 'cu-row--alt');
-        var trophy = i === 0 ? TROPHY : '';
-        html += '<div class="cu-row ' + rowCls + '">'
-          + '<div class="cu-cell cu-cell--center">' + (i + 1) + '°</div>'
-          + '<div class="cu-cell cu-cell--name"><strong>' + p.name + '</strong>' + trophy + '</div>'
-          + '<div class="cu-cell cu-cell--center"><strong>' + p.count + '</strong></div>'
-          + '</div>';
-      });
-      cuBody.innerHTML = html;
-    }
-    renderBoard();
-
     function fmt(n) { return 'US$ ' + n.toLocaleString('en-US'); }
-    function renderCockpit() {
+    function render() {
       amountEl.innerHTML = fmt(bid).replace(' ', '&nbsp;');
-      bidearPriceEl.textContent = fmt(bid + step);
-      /* BASE (reserva) sigue siendo umbral interno para el efecto de bid actual */
-      if (bid >= BASE) cockpit.classList.add('is-unlocked');
-      amountEl.classList.remove('is-bump');
-      void amountEl.offsetWidth;
-      amountEl.classList.add('is-bump');
+      if (bidearPriceEl) bidearPriceEl.textContent = fmt(bid + step);
     }
-    renderCockpit();
-
-    function pushMsg(html, side, cls) {
-      var row = document.createElement('div');
-      var sideClass = side === 'right' ? 'ab-msg--right' : (side === 'center' ? 'ab-msg--center' : 'ab-msg--left');
-      row.className = 'ab-msg ' + sideClass;
-      row.innerHTML = '<span class="ab-bubble ' + cls + '">' + html + '</span>';
-      msgs.appendChild(row);
-      while (msgs.children.length > 7) msgs.removeChild(msgs.firstChild);
-    }
-
-    /* 1. Sala de espera (8 segs) */
-    var t = 8;
-    countdownEl.textContent = '00:00:0' + t;
-    var cd = setInterval(function () {
-      t--;
-      countdownEl.textContent = '00:00:' + pad(Math.max(0, t));
-      if (t <= 0) { clearInterval(cd); startLive(); }
-    }, 1000);
-
-    function startLive() {
-      phase = 'live';
-      waiting.style.display = 'none';
-      live.style.display = 'flex';
-      pushMsg('¡Ya puedes enviar tus bids!', 'center', 'ab-bubble--welcome');
-      btn.disabled = false;
-      startRoomTimer();
-      botTimer = setInterval(botBid, 550);
-    }
-
-    var paused6k = false, slowedBase = false;
-    function botBid() {
-      if (phase !== 'live') return;
-      /* tope de seguridad: no dejar correr al infinito */
-      if (bid >= 20000) { clearInterval(botTimer); return; }
-      if (seqIdx < bidSeq.length) { bid = bidSeq[seqIdx++]; }
-      else { bid += 40 + Math.floor(Math.random() * 16) * 10; }
-      var name = BOTS[Math.floor(Math.random() * BOTS.length)];
-      recordBid(name, bid);
-      bumpBids();
-      renderCockpit();
-      renderBoard();
-      pushMsg('<strong>' + name + '</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--user-left');
-      if (phase === 'live') btn.disabled = false; /* otro bideó: puedes volver a pujar */
-      /* al llegar a 6.5k: pausa breve y luego bids más rápidos */
-      if (!paused6k && bid >= 6500) {
-        paused6k = true;
-        clearInterval(botTimer);
-        setTimeout(function () { if (phase === 'live') botTimer = setInterval(botBid, 300); }, 3000);
-        return;
-      }
-      /* al pasar el precio base: bids más lentos */
-      if (!slowedBase && bid >= BASE) {
-        slowedBase = true;
-        clearInterval(botTimer);
-        botTimer = setInterval(botBid, 1000);
-      }
-    }
-
+    render();
     btn.addEventListener('click', function () {
-      if (phase !== 'live') return;
       bid += step;
-      userBids++;
-      recordBid('JA8NEE', bid);
-      bumpBids();
-      renderCockpit();
-      renderBoard();
-      pushMsg('<strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'right', 'ab-bubble--user-right');
-      btn.disabled = true; /* no puedes volver a pujar hasta que otro bidee */
-      if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 2000); }
-      if (userBids >= 2) startClosing();
+      render();
+      /* nube zoom in/out */
+      cloud.classList.remove('is-bump'); void cloud.offsetWidth; cloud.classList.add('is-bump');
+      /* halo + aro de luz iridescente recorre la sala (rápido, solo al pujar) */
+      room.classList.add('is-bidding');
+      clearTimeout(haloTimer);
+      haloTimer = setTimeout(function () { room.classList.remove('is-bidding'); }, 1800);
+      if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 1800); }
     });
-
-    function startClosing() {
-      phase = 'closing';
-      btn.disabled = true;
-      clearInterval(botTimer);
-      var STEP_MS = 1400;
-      var seq = [
-        function () { pushMsg('Cierra en&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--robot'); },
-        function () { pushMsg(LOGO + 'A la <strong>una</strong>', 'left', 'ab-bubble--count'); },
-        function () { pushMsg('Cierra en&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--robot'); },
-        function () { pushMsg(LOGO + 'A las <strong>dos</strong>', 'left', 'ab-bubble--count'); },
-        function () { pushMsg('Cierra en&ensp;<strong class="amt">' + fmt(bid) + '</strong>', 'left', 'ab-bubble--robot'); },
-        function () { pushMsg(LOGO + 'A las <strong>tres</strong>', 'left', 'ab-bubble--count'); },
-        function () { showWin(); }
-      ];
-      /* loading bar avanza continuo durante todo el cierre */
-      var totalMs = STEP_MS * (seq.length - 1);
-      loadFill.style.transition = 'width ' + (totalMs / 1000) + 's linear';
-      requestAnimationFrame(function () { loadFill.style.width = '100%'; });
-      var i = 0;
-      function run() {
-        if (i >= seq.length) return;
-        seq[i](); i++;
-        setTimeout(run, STEP_MS);
-      }
-      run();
-    }
-
-    function showWin() {
-      phase = 'done';
-      live.style.display = 'none';
-      winView.style.display = 'flex';
-      winPriceEl.textContent = fmt(bid);
-      cockpit.classList.add('is-won');
-    }
   })();
 
   /* ═══ COIN BURST — monedas disparadas hacia arriba al pujar ═══ */

@@ -343,6 +343,105 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 /* sala de bideos */
 .room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
 
+/* ═══ BID CURRENT CARD — fuera de la sala, full width, vault cinematic ═══ */
+.bid-current-card {
+  position: relative; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  width: 100%; padding: 16px 24px;
+  border-radius: 16px; border: 2px solid transparent;
+  background-image:
+    linear-gradient(180deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%),
+    linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-vault-400) 25%, oklch(0.78 0.14 285) 55%, var(--vmc-color-base-white) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 16%), 0 6px 22px oklch(0.10 0.05 285 / 45%);
+  isolation: isolate; overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+/* FARO INTERNO: haz vault+blanco que gira dentro del card */
+.bid-current-card::before {
+  content: ''; position: absolute; z-index: 0;
+  top: 50%; left: 50%; width: 220%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(from var(--room-angle),
+    transparent 0deg,
+    oklch(1 0 0 / 90%) 28deg,
+    oklch(0.78 0.14 285 / 85%) 60deg,
+    var(--vmc-color-vault-400) 100deg,
+    transparent 158deg,
+    transparent 218deg,
+    oklch(1 0 0 / 80%) 262deg,
+    var(--vmc-color-vault-400) 302deg,
+    oklch(0.55 0.20 285 / 70%) 330deg,
+    transparent 350deg);
+  filter: blur(14px);
+  animation: room-halo 3.6s linear infinite;
+}
+/* scrim radial para legibilidad del texto sobre el faro */
+.bid-current-card::after {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 85% 78% at 50% 50%, oklch(0.15 0.20 285 / 38%) 0%, transparent 80%);
+}
+.bid-current-card > * { position: relative; z-index: 2; }
+/* AL PUJAR: faro acelerado, más brillo, glow externo */
+.bid-current-card.is-bidding {
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 28%),
+    0 0 0 1.5px oklch(1 0 0 / 35%),
+    0 0 24px oklch(0.78 0.14 285 / 55%),
+    0 0 48px oklch(0.55 0.20 285 / 40%),
+    0 6px 22px oklch(0.10 0.05 285 / 50%);
+}
+.bid-current-card.is-bidding::before {
+  animation-duration: 0.9s;
+  filter: blur(10px) brightness(1.6) saturate(1.35);
+}
+.bid-current-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--vmc-color-orange-400);
+  text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%);
+}
+.bid-current-label::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--vmc-color-orange-400);
+  box-shadow: 0 0 8px oklch(0.72 0.16 55 / 90%);
+  animation: hal-pulse 1.2s ease-in-out infinite;
+}
+.bid-current-amount {
+  font-family: var(--font-mono); font-size: 40px; font-weight: 700; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--vmc-color-base-white);
+  text-shadow:
+    0 0 8px oklch(0.78 0.16 285 / 70%),
+    0 0 18px oklch(0.55 0.20 285 / 60%),
+    0 0 36px oklch(0.45 0.20 285 / 50%),
+    0 0 60px oklch(0.30 0.20 285 / 40%);
+  animation: bc-vault-shimmer 3.2s ease-in-out infinite;
+  transform-origin: center;
+  transition: transform 0.5s var(--ease);
+}
+.bid-current-amount.is-bump { animation: cloud-bump 0.4s var(--ease); }
+@keyframes bc-vault-shimmer {
+  0%, 100% {
+    text-shadow:
+      0 0 8px oklch(0.78 0.16 285 / 70%),
+      0 0 18px oklch(0.55 0.20 285 / 60%),
+      0 0 36px oklch(0.45 0.20 285 / 50%),
+      0 0 60px oklch(0.30 0.20 285 / 40%);
+  }
+  50% {
+    text-shadow:
+      0 0 12px oklch(0.85 0.14 285 / 85%),
+      0 0 24px oklch(0.60 0.22 285 / 75%),
+      0 0 48px oklch(0.45 0.20 285 / 60%),
+      0 0 72px oklch(0.30 0.20 285 / 50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bid-current-amount { animation: none; }
+}
+
 /* botón abajo */
 .room-bid-wrap { z-index: 3; flex-shrink: 0; padding: 12px 16px 16px; }
 
@@ -619,15 +718,16 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
             </div>
           </div>
 
-          <!-- RIGHT: sala con halo perimetral, nube de bid arriba, botón abajo -->
+          <!-- RIGHT: bid card arriba, sala con halo abajo, botón fuera -->
           <div class="dash-col dash-col--right">
-            <div class="room" id="bidRoom">
 
-              <!-- nube de bid actual (ruleta) -->
-              <div class="room-cloud" id="bidCloud">
-                <span class="room-cloud-label">Propuesta · Bid Actual</span>
-                <span class="room-cloud-amount" id="bidAmount">US$&nbsp;5,079</span>
-              </div>
+            <!-- bid actual: card fuera de la sala, full width, vault cinematic -->
+            <article class="bid-current-card" id="bidCard">
+              <span class="bid-current-label">Propuesta · Bid Actual</span>
+              <span class="bid-current-amount" id="bidAmount">US$&nbsp;5,079</span>
+            </article>
+
+            <div class="room" id="bidRoom">
 
               <!-- sala de bideos -->
               <div class="room-chat" id="chat">
@@ -694,7 +794,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     var amountEl = document.getElementById('bidAmount');
     var bidearPriceEl = document.getElementById('bidearPrice');
     var room = document.getElementById('bidRoom');
-    var cloud = document.getElementById('bidCloud');
+    var cloud = document.getElementById('bidCard');
     var casino = document.getElementById('dhCasino');
     var haloTimer = null;
     if (!btn) return;
@@ -707,12 +807,18 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     btn.addEventListener('click', function () {
       bid += step;
       render();
-      /* nube zoom in/out */
-      cloud.classList.remove('is-bump'); void cloud.offsetWidth; cloud.classList.add('is-bump');
-      /* halo + aro de luz iridescente recorre la sala (rápido, solo al pujar) */
+      /* bid amount zoom in/out */
+      amountEl.classList.remove('is-bump'); void amountEl.offsetWidth; amountEl.classList.add('is-bump');
+      /* halo + aro de luz iridescente recorre la sala y el bid card (rápido, solo al pujar) */
       room.classList.add('is-bidding');
+      cloud.classList.add('is-bidding');
+      btn.disabled = true;
       clearTimeout(haloTimer);
-      haloTimer = setTimeout(function () { room.classList.remove('is-bidding'); }, 1800);
+      haloTimer = setTimeout(function () {
+        room.classList.remove('is-bidding');
+        cloud.classList.remove('is-bidding');
+        btn.disabled = false;
+      }, 1800);
       if (casino) { casino.classList.add('is-active'); setTimeout(function () { casino.classList.remove('is-active'); }, 1800); }
     });
   })();

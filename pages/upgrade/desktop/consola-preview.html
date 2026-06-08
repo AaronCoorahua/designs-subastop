@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Consola Preview · Sala en Vivo — Voyager Upgrade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --vmc-color-vault-400: oklch(0.55 0.20 285);
+  --vmc-color-vault-500: oklch(0.45 0.20 285);
+  --vmc-color-vault-600: oklch(0.38 0.20 285);
+  --vmc-color-vault-700: oklch(0.30 0.20 285);
+  --vmc-color-vault-800: oklch(0.22 0.18 285);
+  --vmc-color-base-white: oklch(1 0 0);
+  --voyager-surface-page:    oklch(0.98 0.004 160);
+  --voyager-surface-section: oklch(0.96 0.004 160);
+  --voyager-surface-card:    oklch(1 0 0);
+  --voyager-font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --voyager-font-mono:    "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+  --voyager-ease-default: cubic-bezier(0.3, 0, 0, 1);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--voyager-surface-page);
+  font-family: var(--voyager-font-display);
+  color: var(--vmc-color-vault-800);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.cons-demo {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.cons-demo-header {
+  text-align: center;
+  display: flex; flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.cons-demo-h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-500) 100%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cons-demo-sub {
+  margin: 0;
+  font-family: var(--voyager-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+}
+
+/* ─── Controls bar (tabs + mobile toggle) ───────────────────────── */
+.cons-demo-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+  margin: 0 0 32px;
+}
+
+.cons-demo-tabs {
+  display: flex; gap: 8px;
+  padding: 6px;
+  background: var(--voyager-surface-card);
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  border-radius: 9999px;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+}
+.cons-demo-tab {
+  appearance: none; -webkit-appearance: none;
+  border: 0; background: transparent; cursor: pointer;
+  font-family: var(--voyager-font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent);
+  padding: 12px 24px;
+  border-radius: 9999px;
+  transition: background 250ms var(--voyager-ease-default),
+              color 250ms var(--voyager-ease-default),
+              box-shadow 250ms var(--voyager-ease-default);
+}
+.cons-demo-tab:hover {
+  color: var(--vmc-color-vault-800);
+  background: color-mix(in oklch, var(--vmc-color-vault-500) 6%, transparent);
+}
+.cons-demo-tab.is-active {
+  background: linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%);
+  color: var(--vmc-color-base-white);
+  text-shadow: 0 1px 3px rgb(0% 0% 0% / 0.25);
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 4px 12px color-mix(in oklch, var(--vmc-color-vault-500) 35%, transparent);
+}
+
+.cons-demo-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 14px 8px 8px;
+  background: var(--voyager-surface-card);
+  border: 1px solid color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  border-radius: 9999px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--voyager-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 60%, transparent);
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 6%, transparent);
+  transition: color 200ms var(--voyager-ease-default);
+}
+.cons-demo-toggle:hover { color: var(--vmc-color-vault-800); }
+.cons-demo-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.cons-demo-toggle-track {
+  position: relative;
+  width: 38px; height: 22px;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--vmc-color-vault-800) 14%, transparent);
+  transition: background 250ms var(--voyager-ease-default);
+}
+.cons-demo-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--vmc-color-base-white);
+  box-shadow: 0 2px 6px rgb(0% 0% 0% / 0.18);
+  transition: transform 250ms var(--voyager-ease-default);
+}
+.cons-demo-toggle input:checked ~ .cons-demo-toggle-track {
+  background: linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%);
+}
+.cons-demo-toggle input:checked ~ .cons-demo-toggle-track::after {
+  transform: translateX(16px);
+}
+.cons-demo-toggle-label {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.cons-demo-toggle-label svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── Pane ──────────────────────────────────────────────────────── */
+.cons-demo-pane[hidden] { display: none !important; }
+.cons-demo-pane {
+  display: flex; flex-direction: column; gap: 40px;
+}
+
+.cons-demo-block {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.cons-demo-pane-title {
+  margin: 0;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 65%, transparent);
+  padding: 0 4px;
+}
+
+.cons-demo-frame-wrap {
+  background: var(--voyager-surface-section);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--vmc-color-vault-800) 8%, transparent);
+  text-align: center;
+}
+.cons-demo-frame {
+  display: block;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cons-demo-frame::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.cons-demo[data-platform="mobile"] .cons-demo-frame {
+  width: 100%;
+  max-width: 462px;
+}
+
+/* placeholder mientras no exista la versión mobile */
+.cons-demo-soon {
+  display: none;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px;
+  min-height: 320px;
+  border-radius: 12px;
+  border: 1.5px dashed color-mix(in oklch, var(--vmc-color-vault-800) 24%, transparent);
+  background: repeating-linear-gradient(45deg, oklch(0.96 0.004 160) 0 14px, oklch(0.93 0.005 160) 14px 28px);
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 60%, transparent);
+}
+.cons-demo-soon-title { font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+.cons-demo-soon-sub { font-family: var(--voyager-font-mono); font-size: 12px; letter-spacing: 0.04em; }
+.cons-demo[data-platform="mobile"] .cons-demo-frame { display: none; }
+.cons-demo[data-platform="mobile"] .cons-demo-soon { display: flex; }
+</style>
+</head>
+<body>
+
+<main class="cons-demo" id="cons-demo" data-platform="desktop" aria-label="Consola demo — Voyager Upgrade">
+
+  <header class="cons-demo-header">
+    <h1 class="cons-demo-h1">Consola · Voyager</h1>
+    <p class="cons-demo-sub">sala de subasta en vivo · toggle mobile para cambiar el viewport</p>
+  </header>
+
+  <nav class="cons-demo-controls" aria-label="Controles">
+    <div class="cons-demo-tabs" role="tablist" aria-label="Variantes de consola">
+      <button class="cons-demo-tab is-active" type="button" role="tab" data-tab="sala-v1" aria-selected="true">Sala V1</button>
+      <button class="cons-demo-tab" type="button" role="tab" data-tab="sala-v2" aria-selected="false">Sala V2</button>
+      <button class="cons-demo-tab" type="button" role="tab" data-tab="sala-v3" aria-selected="false">Sala V3</button>
+      <button class="cons-demo-tab" type="button" role="tab" data-tab="demo" aria-selected="false">Demo Tour</button>
+    </div>
+
+    <label class="cons-demo-toggle" for="cons-demo-mobile-toggle">
+      <input type="checkbox" id="cons-demo-mobile-toggle" />
+      <span class="cons-demo-toggle-track" aria-hidden="true"></span>
+      <span class="cons-demo-toggle-label">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+        Mobile
+      </span>
+    </label>
+  </nav>
+
+  <!-- SALA V1 ───────────────────────────────────────────────────── -->
+  <section class="cons-demo-pane" data-pane="sala-v1" role="tabpanel" aria-label="Sala V1"
+           data-all-desktop="consola_v1.html"
+           data-all-mobile="../mobile/consola_v1.html">
+    <div class="cons-demo-block">
+      <h2 class="cons-demo-pane-title">Sala V1 · Bid Actual Integrado</h2>
+      <div class="cons-demo-frame-wrap">
+        <iframe class="cons-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Sala V1 · Bid Actual Integrado"></iframe>
+        <div class="cons-demo-soon" aria-hidden="true">
+          <span class="cons-demo-soon-title">Mobile · próximamente</span>
+          <span class="cons-demo-soon-sub">la versión mobile de la consola aún no está diseñada</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALA V2 ───────────────────────────────────────────────────── -->
+  <section class="cons-demo-pane" data-pane="sala-v2" role="tabpanel" aria-label="Sala V2" hidden
+           data-all-desktop="consola_v2.html"
+           data-all-mobile="../mobile/consola_v2.html">
+    <div class="cons-demo-block">
+      <h2 class="cons-demo-pane-title">Sala V2 · Stats Separados</h2>
+      <div class="cons-demo-frame-wrap">
+        <iframe class="cons-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Sala V2 · Stats Separados"></iframe>
+        <div class="cons-demo-soon" aria-hidden="true">
+          <span class="cons-demo-soon-title">Mobile · próximamente</span>
+          <span class="cons-demo-soon-sub">la versión mobile de la consola aún no está diseñada</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALA V3 ───────────────────────────────────────────────────── -->
+  <section class="cons-demo-pane" data-pane="sala-v3" role="tabpanel" aria-label="Sala V3" hidden
+           data-all-desktop="consola_v3.html"
+           data-all-mobile="../mobile/consola_v3.html">
+    <div class="cons-demo-block">
+      <h2 class="cons-demo-pane-title">Sala V3 · Vault Cinematic + Iridescent Chat</h2>
+      <div class="cons-demo-frame-wrap">
+        <iframe class="cons-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Sala V3 · Vault Cinematic + Iridescent Chat"></iframe>
+        <div class="cons-demo-soon" aria-hidden="true">
+          <span class="cons-demo-soon-title">Mobile · próximamente</span>
+          <span class="cons-demo-soon-sub">la versión mobile de la consola aún no está diseñada</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO TOUR ───────────────────────────────────────────────────── -->
+  <section class="cons-demo-pane" data-pane="demo" role="tabpanel" aria-label="Demo Tour" hidden
+           data-all-desktop="consola_vdemo.html"
+           data-all-mobile="consola_vdemo.html">
+    <div class="cons-demo-block">
+      <h2 class="cons-demo-pane-title">Demo · Tour Interactivo con Shepherd.js</h2>
+      <div class="cons-demo-frame-wrap">
+        <iframe class="cons-demo-frame" data-role="all" loading="lazy" scrolling="no" title="Demo · Tour Interactivo"></iframe>
+        <div class="cons-demo-soon" aria-hidden="true">
+          <span class="cons-demo-soon-title">Mobile · próximamente</span>
+          <span class="cons-demo-soon-sub">la versión mobile del tour aún no está disponible</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function initConsDemo() {
+    var root    = document.getElementById('cons-demo');
+    var tabs    = document.querySelectorAll('.cons-demo-tab');
+    var panes   = document.querySelectorAll('.cons-demo-pane');
+    var toggle  = document.getElementById('cons-demo-mobile-toggle');
+
+    function platform() { return toggle.checked ? 'mobile' : 'desktop'; }
+
+    function injectCenterStyle(frame) {
+      try {
+        var doc = frame.contentDocument;
+        if (!doc || !doc.head) return;
+        if (doc.getElementById('cons-demo-center-fix')) return;
+        var style = doc.createElement('style');
+        style.id = 'cons-demo-center-fix';
+        style.textContent =
+          '.catalog-row { justify-content: center !important; }' +
+          'html, body { scrollbar-width: none !important; -ms-overflow-style: none !important; overflow: hidden !important; }' +
+          'html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }';
+        doc.head.appendChild(style);
+      } catch (e) {}
+    }
+    function bindCenterFix(frame) {
+      if (frame.getAttribute('data-center-bound') === '1') return;
+      frame.setAttribute('data-center-bound', '1');
+      frame.addEventListener('load', function () { injectCenterStyle(frame); });
+    }
+
+    function applyPlatformToPane(pane) {
+      var plat = platform();
+      // mobile aún no existe: no cargamos iframe, mostramos placeholder vía CSS
+      if (plat === 'mobile') return;
+      var allFrame = pane.querySelector('iframe[data-role="all"]');
+      var allSrc   = pane.getAttribute('data-all-' + plat);
+      if (allFrame && allSrc && allFrame.getAttribute('data-current-src') !== allSrc) {
+        allFrame.setAttribute('data-current-src', allSrc);
+        allFrame.src = allSrc;
+        allFrame.style.height = '';
+        bindCenterFix(allFrame);
+      }
+    }
+
+    function activateTab(name) {
+      tabs.forEach(function (t) {
+        var is = t.getAttribute('data-tab') === name;
+        t.classList.toggle('is-active', is);
+        t.setAttribute('aria-selected', is ? 'true' : 'false');
+      });
+      panes.forEach(function (p) {
+        var is = p.getAttribute('data-pane') === name;
+        p.hidden = !is;
+        if (is) applyPlatformToPane(p);
+      });
+    }
+
+    function syncPlatform() {
+      root.setAttribute('data-platform', platform());
+      panes.forEach(function (p) {
+        if (!p.hidden) applyPlatformToPane(p);
+      });
+    }
+
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { activateTab(t.getAttribute('data-tab')); });
+    });
+    toggle.addEventListener('change', syncPlatform);
+
+    var initial = document.querySelector('.cons-demo-tab.is-active');
+    activateTab(initial ? initial.getAttribute('data-tab') : 'sala-v1');
+  })();
+
+  (function autoResizeFrames() {
+    window.addEventListener('message', function (event) {
+      var data = event.data;
+      if (!data || data.type !== 'subastop:variant-height') return;
+      document.querySelectorAll('iframe.cons-demo-frame').forEach(function (frame) {
+        if (frame.contentWindow === event.source && typeof data.height === 'number') {
+          frame.style.height = (data.height + 16) + 'px';
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

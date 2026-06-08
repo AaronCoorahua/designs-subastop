@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Consola V2 · Sala + Ganadores en Vivo — Voyager Upgrade</title>
+<title>Consola V2 · Sala + Ganadores + Stats Separados — Voyager Upgrade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -35,13 +35,30 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .variant-sublabel { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent); }
 
 @property --casino-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@property --vsec-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 160deg;
+}
+@property --vsec-stop-a {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: oklch(0.38 0.20 285);
+}
+@property --vsec-stop-b {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: oklch(0.28 0.18 285);
+}
 
 /* ═══ DASHBOARD SHELL ═══ */
 .dash {
-  width: 1024px;
+  width: 100%;
+  max-width: 1024px;
   padding: 16px;
   display: flex; flex-direction: column; gap: 12px;
   background: oklch(0.98 0.004 160);
+  margin: 0 auto;
 }
 .card {
   border-radius: var(--card-radius);
@@ -53,7 +70,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* ═══ WINNERS TICKER — ganadores recientes (social proof) ═══ */
 .winners {
-  width: 1024px; height: 40px; flex-shrink: 0;
+  width: 100%; height: 40px; flex-shrink: 0;
   display: flex; align-items: center; overflow: hidden;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--vmc-color-vault-900) 0%, var(--vmc-color-vault-800) 100%);
@@ -183,10 +200,10 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .hal-timer-value { font-family: var(--font-mono); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* ═══ BODY ═══ */
-.dash-body { display: flex; gap: 12px; align-items: stretch; }
+.dash-body { display: flex; gap: 19px; align-items: stretch; }
 .dash-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.dash-col--left { flex: 0 0 340px; }
-.dash-col--right { flex: 0 0 348px; }
+.dash-col--left { flex: 0 0 443px; }
+.dash-col--right { flex: 0 0 311px; }
 
 /* banner placeholder + rail derecho */
 .ad-banner {
@@ -197,16 +214,28 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   color: oklch(0.42 0.01 250);
   font-size: 13px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
 }
-.v3-rail-right { flex: 0 0 280px; }
+.v3-rail-right { flex: 0 0 200px; }
 .v3-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
+.v3-mid-banner { flex: 1 1 auto; width: 100%; min-height: 100px; }
 
 /* card del vehículo arriba del carro (col izquierda) */
 .v3-vehicle {
+  --vsec-stop-a: var(--vmc-color-vault-500);
+  --vsec-stop-b: var(--vmc-color-vault-700);
   position: relative; overflow: hidden;
   border-radius: 12px; padding: 10px 14px;
-  background: linear-gradient(150deg, oklch(0.30 0.20 285) 0%, oklch(0.21 0.16 285) 100%);
-  border: 1px solid oklch(1 0 0 / 12%);
-  box-shadow: 0 6px 18px oklch(0.22 0.18 285 / 28%), inset 0 1px 0 oklch(1 0 0 / 16%);
+  border: 2.5px solid transparent;
+  background-image:
+    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
+    linear-gradient(135deg,
+      oklch(0.60 0.20 285) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      oklch(0.60 0.20 285) 100%
+    );
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 rgb(100% 100% 100% / 0.22), 0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30), 0 0 16px rgb(0% 0% 0% / 0.14);
   color: var(--vmc-color-base-white, oklch(1 0 0));
   display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px;
   flex-shrink: 0;
@@ -219,20 +248,52 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* stats debajo de la sala — Conectados + Bids arriba, Inicio hace full ancho debajo */
 .v3-stats { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "conectados bids" "inicio inicio"; gap: 8px; flex: 0 0 auto; }
-.v3-stats .v3-stat-card { padding: 8px 12px; min-height: 0; }
+.v3-stats .v3-stat-card {
+  --vsec-stop-a: var(--vmc-color-vault-500);
+  --vsec-stop-b: var(--vmc-color-vault-700);
+  padding: 8px 12px;
+  min-height: 0;
+  border: 2.5px solid transparent;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
+    linear-gradient(135deg,
+      oklch(0.60 0.20 285) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      oklch(0.60 0.20 285) 100%
+    );
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(100% 100% 100% / 0.22),
+    0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30),
+    0 0 16px rgb(0% 0% 0% / 0.14);
+}
 .v3-stats .v3-stat-card:nth-child(1) { grid-area: conectados; }
 .v3-stats .v3-stat-card:nth-child(2) { grid-area: bids; }
 .v3-stats .v3-stat-card:nth-child(3) { grid-area: inicio; }
 .v3-stat-card {
   position: relative; overflow: hidden;
   border-radius: 12px; padding: 10px 12px;
-  background: linear-gradient(150deg, oklch(0.27 0.19 285) 0%, oklch(0.19 0.15 285) 100%);
-  border: 1px solid oklch(1 0 0 / 12%);
-  box-shadow: 0 6px 18px oklch(0.18 0.16 285 / 28%), inset 0 1px 0 oklch(1 0 0 / 14%);
+  border: 2.5px solid transparent;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-image:
+    linear-gradient(135deg, var(--vmc-color-vault-500) 0%, var(--vmc-color-vault-700) 100%),
+    linear-gradient(135deg, var(--vmc-color-vault-300) 0%, var(--vmc-color-base-white) 35%, var(--vmc-color-vault-400) 65%, var(--vmc-color-vault-300) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%), 0 2px 8px oklch(0.38 0.20 285 / 30%), 0 0 16px rgb(0% 0% 0% / 0.14);
   color: oklch(1 0 0);
   display: flex; flex-direction: row; align-items: center; gap: 10px;
 }
 .v3-stat-icon { width: 22px; height: 22px; flex-shrink: 0; color: oklch(1 0 0 / 75%); }
+/* Logo de remate (bidding) como máscara — hereda el color del icono */
+.v3-stat-icon--bid {
+  background-color: currentColor;
+  -webkit-mask: url("bidding-icon.svg") center / contain no-repeat;
+  mask: url("bidding-icon.svg") center / contain no-repeat;
+}
 .v3-stat-info { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
 .v3-stat-val { font-family: var(--font-mono); font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .v3-stat-val.is-hot { color: var(--vmc-color-orange-300, oklch(0.86 0.14 65)); }
@@ -243,7 +304,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* Gallery card */
 .dh { display: flex; flex-direction: column; background: oklch(1 0 0); user-select: none; isolation: isolate; }
-.dh-image { position: relative; height: 300px; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); overflow: hidden; }
+.dh-image { position: relative; height: 380px; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); overflow: hidden; }
 .dh-image-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .dh-action { position: absolute; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 0; background: oklch(0.20 0.02 280 / 55%); color: var(--vmc-color-base-white); cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 150ms var(--ease); }
 .dh-action svg { width: 17px; height: 17px; }
@@ -274,10 +335,23 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* Users card — tabla estilo v2 (Consola Users) */
 .cu {
+  --vsec-stop-a: var(--vmc-color-vault-500);
+  --vsec-stop-b: var(--vmc-color-vault-700);
   width: 100%; padding: 14px 18px;
-  background:
+  border: 2.5px solid transparent;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-image:
+    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
+    linear-gradient(135deg,
+      oklch(0.60 0.20 285) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      oklch(0.60 0.20 285) 100%
+    ),
     radial-gradient(ellipse 85% 52% at 50% -18%, oklch(0.55 0.20 285 / 34%) 0%, transparent 70%),
     linear-gradient(180deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-800) 100%);
+  box-shadow: inset 0 1px 0 rgb(100% 100% 100% / 0.22), 0 0 16px rgb(0% 0% 0% / 0.14);
   color: var(--vmc-color-base-white);
 }
 .cu-table { width: 100%; }
@@ -320,10 +394,22 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 /* ═══ BID ROOM — sala vertical con halo perimetral ═══ */
 @property --room-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 .room {
+  --vsec-stop-a: var(--vmc-color-vault-500);
+  --vsec-stop-b: var(--vmc-color-vault-700);
   position: relative; flex: 1;
   display: flex; flex-direction: column;
   border-radius: 16px; overflow: hidden; isolation: isolate;
-  background:
+  border: 2.5px solid transparent;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-image:
+    linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
+    linear-gradient(135deg,
+      oklch(0.60 0.20 285) 0%,
+      var(--vmc-color-base-white) 35%,
+      var(--vmc-color-vault-400) 65%,
+      oklch(0.60 0.20 285) 100%
+    ),
     radial-gradient(ellipse 80% 40% at 50% 0%, oklch(0.30 0.20 285 / 70%) 0%, transparent 65%),
     linear-gradient(180deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
 }
@@ -416,7 +502,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .room-reserve b { font-family: var(--font-mono); color: oklch(1 0 0 / 85%); }
 
 /* sala de bideos */
-.room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+.room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 14px; }
 
 /* ═══ BID CURRENT CARD — fuera de la sala, full width, vault cinematic ═══ */
 .bid-current-card {
@@ -490,7 +576,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .ab-bubble strong.amt { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .ab-bubble { display: flex; align-items: center; max-width: 76%; min-height: 34px; padding: 0 14px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 34px; white-space: nowrap; }
 .ab-bubble--system { max-width: 100%; color: oklch(1 0 0 / 50%); background: none; border: none; font-size: 11px; font-weight: 500; min-height: 22px; line-height: 22px; padding: 0; }
-.ab-bubble--robot { color: oklch(1 0 0 / 75%); background: oklch(1 0 0 / 8%); border: 1px solid oklch(1 0 0 / 10%); border-radius: 12px 12px 12px 4px; }
+.ab-bubble--robot { color: oklch(1 0 0 / 75%); background: oklch(1 0 0 / 8%); border: 1px solid oklch(1 0 0 / 10%); border-radius: 8px; position: relative; }
 .ab-bubble--robot strong { color: var(--vmc-color-base-white); }
 .ab-bubble--user-left, .ab-bubble--user-right {
   color: var(--vmc-color-base-white); border: 1.5px solid transparent;
@@ -498,16 +584,31 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   background-origin: padding-box, border-box; background-clip: padding-box, border-box;
   box-shadow: inset 0 1px 0 oklch(1 0 0 / 20%), 0 4px 12px oklch(0.66 0.17 50 / 30%);
 }
-.ab-bubble--user-left { border-radius: 12px 12px 12px 4px; }
-.ab-bubble--user-right { border-radius: 12px 12px 4px 12px; }
+/* Burbujas de chat: rectángulo (squared) con patita triangular tipo SMS */
+.ab-bubble--user-left  { border-radius: 8px; position: relative; }
+.ab-bubble--user-right { border-radius: 8px; position: relative; }
 .ab-bubble--user-left strong, .ab-bubble--user-right strong { color: var(--vmc-color-base-white); }
 .ab-bubble--count {
-  gap: 7px; color: var(--vmc-color-base-white); border: 1.5px solid transparent; border-radius: 12px 12px 12px 4px;
+  gap: 7px; color: var(--vmc-color-base-white); border: 1.5px solid transparent; border-radius: 8px; position: relative;
   background-image: linear-gradient(135deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-900) 100%), linear-gradient(135deg, #8776FF, oklch(1 0 0 / 40%) 38%, #532BC7 68%, #8776FF);
   background-origin: padding-box, border-box; background-clip: padding-box, border-box;
 }
 .ab-bubble--count strong { color: var(--vmc-color-base-white); }
 .ab-bubble--count img { height: 14px; width: auto; flex-shrink: 0; }
+
+/* Patita (tail) — triángulo que sobresale bajo la esquina del emisor */
+.ab-bubble--robot::after,
+.ab-bubble--count::after,
+.ab-bubble--user-left::after,
+.ab-bubble--user-right::after { content: ''; position: absolute; bottom: -9px; width: 14px; height: 10px; }
+.ab-bubble--robot::after,
+.ab-bubble--count::after,
+.ab-bubble--user-left::after { left: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.ab-bubble--user-right::after { right: 0; clip-path: polygon(100% 0, 0 0, 100% 100%); }
+.ab-bubble--robot::after { background: oklch(0.30 0.02 280 / 30%); }
+.ab-bubble--count::after { background: var(--vmc-color-vault-700); }
+.ab-bubble--user-left::after { background: var(--vmc-color-orange-600); }
+.ab-bubble--user-right::after { background: var(--vmc-color-vault-500); }
 .ab-bubble--active { animation: ab-zoom 1.6s ease-in-out infinite; }
 @keyframes ab-zoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
@@ -631,7 +732,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 @media (prefers-reduced-motion: reduce) { .coin-particle { display: none !important; } }
 
 /* ═══ COMPARACIÓN — versión actual de producción ═══ */
-.compare { width: 1024px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.compare { width: 100%; max-width: 1024px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .compare-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent); }
 .compare-img { max-width: 575px; width: 100%; height: auto; border-radius: 12px; border: 1px solid oklch(0.22 0.18 285 / 14%); box-shadow: 0 6px 20px oklch(0.22 0.18 285 / 14%); display: block; }
 </style>
@@ -639,7 +740,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 <body>
   <div class="catalog-row">
     <div class="variant-slot" data-variant="reserve-unlock-cards">
-      <span class="variant-label">V2 · Sala + Ganadores en Vivo<br><span class="variant-sublabel">1024 · ticker de ganadores recientes + banner izquierdo + sala con faro + stats arriba/abajo + vehículo card</span></span>
+      <span class="variant-label">V2 · Sala + Stats Separados<br><span class="variant-sublabel">1024 · ticker de ganadores recientes + banner izquierdo + sala con faro + stats separados + vehículo card</span></span>
       <div class="dash">
 
         <!-- WINNERS TICKER — ganadores recientes -->
@@ -741,37 +842,33 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
               </div>
             </article>
 
-            <div class="card cu">
-              <div class="cu-table">
-                <div class="cu-hdr-row">
-                  <div class="cu-cell cu-cell--center">Puesto</div>
-                  <div class="cu-cell">C.U.U.</div>
-                  <div class="cu-cell cu-cell--center">Bids</div>
+            <!-- bloque de stats debajo del carro -->
+            <div class="v3-stats">
+              <div class="v3-stat-card">
+                <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="6" r="4"/><path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634"/></svg>
+                <div class="v3-stat-info">
+                  <span class="v3-stat-val">18</span>
+                  <span class="v3-stat-lbl">Conectados</span>
                 </div>
               </div>
-              <div class="cu-body">
-                <div class="cu-row cu-row--user">
-                  <div class="cu-cell cu-cell--center">1°</div>
-                  <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
-                  <div class="cu-cell cu-cell--center"><strong>2</strong></div>
+              <div class="v3-stat-card">
+                <span class="v3-stat-icon v3-stat-icon--bid" aria-hidden="true"></span>
+                <div class="v3-stat-info">
+                  <span class="v3-stat-val is-hot">157</span>
+                  <span class="v3-stat-lbl">Bids</span>
                 </div>
-                <div class="cu-row cu-row--rest">
-                  <div class="cu-cell cu-cell--center">2°</div>
-                  <div class="cu-cell"><strong>BEKVS1</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-                <div class="cu-row cu-row--alt">
-                  <div class="cu-cell cu-cell--center">3°</div>
-                  <div class="cu-cell"><strong>KAHTH4</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-                <div class="cu-row cu-row--rest">
-                  <div class="cu-cell cu-cell--center">4°</div>
-                  <div class="cu-cell"><strong>P3TUXA</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+              </div>
+              <div class="v3-stat-card">
+                <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"/></svg>
+                <div class="v3-stat-info">
+                  <span class="v3-stat-val">00:00:10</span>
+                  <span class="v3-stat-lbl">Inició hace</span>
                 </div>
               </div>
             </div>
+
+            <!-- banner inferior columna media -->
+            <div class="ad-banner v3-mid-banner">Banner</div>
           </div>
 
           <!-- RIGHT: bid card arriba, sala con halo abajo, botón fuera -->
@@ -806,27 +903,35 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
               </button>
             </div>
 
-            <!-- bloque de stats debajo de la sala -->
-            <div class="v3-stats">
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val">18</span>
-                  <span class="v3-stat-lbl">Conectados</span>
+            <!-- tabla de puestos / ranking debajo del botón -->
+            <div class="card cu">
+              <div class="cu-table">
+                <div class="cu-hdr-row">
+                  <div class="cu-cell cu-cell--center">Puesto</div>
+                  <div class="cu-cell">C.U.U.</div>
+                  <div class="cu-cell cu-cell--center">Bids</div>
                 </div>
               </div>
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 14 14" fill="currentColor"><path d="M8.2 5.2V2.9L12.3 7 8.2 11.1V8.7C5.3 8.7 3.2 9.6 1.8 11.7 2.3 8.7 4.1 5.8 8.2 5.2Z"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val is-hot">157</span>
-                  <span class="v3-stat-lbl">Bids</span>
+              <div class="cu-body">
+                <div class="cu-row cu-row--user">
+                  <div class="cu-cell cu-cell--center">1°</div>
+                  <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
+                  <div class="cu-cell cu-cell--center"><strong>2</strong></div>
                 </div>
-              </div>
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val">00:00:10</span>
-                  <span class="v3-stat-lbl">Inició hace</span>
+                <div class="cu-row cu-row--rest">
+                  <div class="cu-cell cu-cell--center">2°</div>
+                  <div class="cu-cell"><strong>BEKVS1</strong></div>
+                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+                </div>
+                <div class="cu-row cu-row--alt">
+                  <div class="cu-cell cu-cell--center">3°</div>
+                  <div class="cu-cell"><strong>KAHTH4</strong></div>
+                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+                </div>
+                <div class="cu-row cu-row--rest">
+                  <div class="cu-cell cu-cell--center">4°</div>
+                  <div class="cu-cell"><strong>P3TUXA</strong></div>
+                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
                 </div>
               </div>
             </div>
@@ -834,11 +939,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
         </div>
 
-      </div>
-
-      <div class="compare">
-        <span class="compare-label">Versión actual (producción) — comparación</span>
-        <img class="compare-img" src="consola-legacy.png" alt="Consola actual en producción">
       </div>
     </div>
   </div>
@@ -974,5 +1074,23 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   })();
   </script>
   <script src="_iframe-resize.js"></script>
+  <script>
+  (function autoReportHeight() {
+    function report() {
+      var row = document.querySelector('.catalog-row');
+      if (row) {
+        var height = row.offsetHeight;
+        window.parent.postMessage({ type: 'subastop:variant-height', height: height }, '*');
+      }
+    }
+    window.addEventListener('load', report);
+    var resizeTimer = null;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(report, 150);
+    });
+    report();
+  })();
+  </script>
 </body>
 </html>

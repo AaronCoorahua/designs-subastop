@@ -290,6 +290,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .v3-stat-icon { width: 22px; height: 22px; flex-shrink: 0; color: oklch(1 0 0 / 75%); }
 /* Logo de remate (bidding) como máscara — hereda el color del icono */
 .v3-stat-icon--bid {
+  display: inline-block;
+  width: 22px; height: 22px;
   background-color: currentColor;
   -webkit-mask: url("bidding-icon.svg") center / contain no-repeat;
   mask: url("bidding-icon.svg") center / contain no-repeat;

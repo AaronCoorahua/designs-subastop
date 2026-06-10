@@ -190,7 +190,7 @@ html, body {
   max-width: 462px;
 }
 
-/* placeholder mientras no exista la versión mobile */
+/* placeholder cuando el pane no tiene versión para la plataforma activa */
 .cons-demo-soon {
   display: none;
   align-items: center; justify-content: center;
@@ -203,8 +203,8 @@ html, body {
 }
 .cons-demo-soon-title { font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
 .cons-demo-soon-sub { font-family: var(--voyager-font-mono); font-size: 12px; letter-spacing: 0.04em; }
-.cons-demo[data-platform="mobile"] .cons-demo-frame { display: none; }
-.cons-demo[data-platform="mobile"] .cons-demo-soon { display: flex; }
+.cons-demo-pane.is-soon .cons-demo-frame { display: none; }
+.cons-demo-pane.is-soon .cons-demo-soon { display: flex; }
 </style>
 </head>
 <body>
@@ -285,7 +285,7 @@ html, body {
   <!-- DEMO TOUR ───────────────────────────────────────────────────── -->
   <section class="cons-demo-pane" data-pane="demo" role="tabpanel" aria-label="Demo Tour" hidden
            data-all-desktop="consola_vdemo.html"
-           data-all-mobile="consola_vdemo.html">
+           data-all-mobile="../mobile/consola_vdemo.html">
     <div class="cons-demo-block">
       <h2 class="cons-demo-pane-title">Demo · Tour Interactivo con Shepherd.js</h2>
       <div class="cons-demo-frame-wrap">
@@ -331,11 +331,12 @@ html, body {
 
     function applyPlatformToPane(pane) {
       var plat = platform();
-      // mobile aún no existe: no cargamos iframe, mostramos placeholder vía CSS
-      if (plat === 'mobile') return;
       var allFrame = pane.querySelector('iframe[data-role="all"]');
       var allSrc   = pane.getAttribute('data-all-' + plat);
-      if (allFrame && allSrc && allFrame.getAttribute('data-current-src') !== allSrc) {
+      // sin versión para esta plataforma → placeholder "próximamente"
+      pane.classList.toggle('is-soon', !allSrc);
+      if (!allSrc) return;
+      if (allFrame && allFrame.getAttribute('data-current-src') !== allSrc) {
         allFrame.setAttribute('data-current-src', allSrc);
         allFrame.src = allSrc;
         allFrame.style.height = '';

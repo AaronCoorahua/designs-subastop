@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Consola Demo · Tour Interactivo — Voyager Upgrade</title>
+<title>Consola Demo Mobile · Tour Interactivo — Voyager Upgrade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/css/shepherd.css" />
 <style>
 :root {
+  --vmc-color-vault-200: oklch(0.87 0.09 285);
+  --vmc-color-vault-300: oklch(0.80 0.12 285);
   --vmc-color-vault-400: oklch(0.55 0.20 285);
   --vmc-color-vault-500: oklch(0.45 0.20 285);
   --vmc-color-vault-600: oklch(0.38 0.20 285);
@@ -29,8 +31,8 @@
   --card-shadow: 0 6px 20px oklch(0.10 0.05 285 / 40%);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: transparent; font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
-.catalog-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px; padding: 24px 16px; }
+html, body { background: transparent; font-family: var(--font-ui); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.catalog-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; padding: 24px 0; }
 .variant-slot { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .variant-label { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent); text-align: center; }
 .variant-sublabel { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: color-mix(in oklch, var(--vmc-color-vault-800) 38%, transparent); }
@@ -52,12 +54,11 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   initial-value: oklch(0.28 0.18 285);
 }
 
-/* ═══ DASHBOARD SHELL ═══ */
+/* ═══ DASHBOARD SHELL — mobile 420 · una sola columna ═══ */
 .dash {
-  width: 100%;
-  max-width: 1024px;
-  padding: 16px;
-  display: flex; flex-direction: column; gap: 12px;
+  width: 420px;
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 10px;
   background: oklch(0.98 0.004 160);
   margin: 0 auto;
 }
@@ -71,7 +72,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 
 /* ═══ WINNERS TICKER — ganadores recientes (social proof) ═══ */
 .winners {
-  width: 100%; height: 40px; flex-shrink: 0;
+  width: 100%; height: 38px; flex-shrink: 0;
   display: flex; align-items: center; overflow: hidden;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--vmc-color-vault-900) 0%, var(--vmc-color-vault-800) 100%);
@@ -80,51 +81,51 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 .winners-tag {
   flex-shrink: 0; height: 100%;
-  display: inline-flex; align-items: center; gap: 6px; padding: 0 14px;
-  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px; padding: 0 10px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--vmc-color-vault-900);
   background: linear-gradient(135deg, var(--vmc-color-gold), oklch(0.90 0.13 88));
   box-shadow: 0 0 18px oklch(0.82 0.15 85 / 45%);
 }
 .winners-tag svg { width: 14px; height: 14px; }
 .winners-vp { flex: 1; overflow: hidden; }
-.winners-track { display: flex; align-items: center; gap: 38px; white-space: nowrap; width: max-content; padding-left: 24px; animation: marquee-scroll 26s linear infinite; }
-.win-item { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: oklch(1 0 0 / 65%); }
-.win-img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
+.winners-track { display: flex; align-items: center; gap: 30px; white-space: nowrap; width: max-content; padding-left: 18px; animation: marquee-scroll 26s linear infinite; }
+.win-item { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 500; color: oklch(1 0 0 / 65%); }
+.win-img { width: 24px; height: 17px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
 .win-item b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
 .win-item em { font-style: normal; font-weight: 600; color: oklch(1 0 0 / 85%); }
 .win-item strong { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-gold); }
 .win-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--vmc-color-gold); opacity: 0.5; flex-shrink: 0; }
 
 /* ticker "Precio Base" sobre la imagen del carro */
-.dh-pricebanner { position: absolute; top: 0; left: 0; right: 0; z-index: 12; height: 28px; overflow: hidden; display: flex; align-items: center; background: oklch(1 0 0 / 92%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%); }
-.dh-pb-track { display: flex; align-items: center; gap: 26px; white-space: nowrap; width: max-content; padding-left: 14px; animation: marquee-scroll 16s linear infinite; }
-.dh-pb-item { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--vmc-color-vault-800); }
+.dh-pricebanner { position: absolute; top: 0; left: 0; right: 0; z-index: 12; height: 26px; overflow: hidden; display: flex; align-items: center; background: oklch(1 0 0 / 92%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); box-shadow: 0 2px 8px oklch(0.22 0.18 285 / 18%); }
+.dh-pb-track { display: flex; align-items: center; gap: 22px; white-space: nowrap; width: max-content; padding-left: 12px; animation: marquee-scroll 16s linear infinite; }
+.dh-pb-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--vmc-color-vault-800); }
 .dh-pb-item strong { font-family: var(--font-mono); font-weight: 700; }
 .dh-pb-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--vmc-color-vault-500); opacity: 0.4; flex-shrink: 0; }
 
-/* ═══ HEADER CARD ═══ */
+/* ═══ HEADER CARD — dos filas en mobile ═══ */
 .hdr {
-  height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px;
+  display: flex; flex-direction: column; gap: 8px; padding: 10px 12px;
   background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-700) 100%);
   color: var(--vmc-color-base-white);
 }
-.hdr-left { display: flex; align-items: center; gap: 12px; }
+.hdr-left { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .hdr-pill {
-  display: inline-flex; align-items: center; gap: 7px;
-  height: 36px; padding: 0 14px 0 4px;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 12px 0 4px;
   border-radius: 9999px; border: 2px solid transparent;
   cursor: pointer; position: relative; overflow: hidden;
-  font-family: var(--font-ui); font-size: 13px; font-weight: 500;
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
   color: var(--vmc-color-base-white); text-shadow: 0 1px 2px oklch(0 0 0 / 22%);
   background-origin: padding-box, border-box; background-clip: padding-box, border-box;
   transition: transform 0.2s var(--ease), box-shadow 0.25s ease;
 }
 .hdr-pill::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%); pointer-events: none; z-index: 1; }
 .hdr-pill > * { position: relative; z-index: 2; }
-.hdr-pill-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.hdr-pill-icon svg { width: 16px; height: 16px; fill: currentColor; }
-.hdr-pill-light { font-weight: 300; }
+.hdr-pill-icon { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hdr-pill-icon svg { width: 15px; height: 15px; fill: currentColor; }
+.hdr-pill-light { font-weight: 300; white-space: nowrap; }
 .hdr-pill-bold { font-weight: 700; }
 .hdr-pill--cuu {
   background-image:
@@ -143,11 +144,13 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .hdr-pill--bids .hdr-pill-icon { background: oklch(0.66 0.17 50 / 22%); color: var(--vmc-color-base-white); }
 .hdr-pill--bids .hdr-pill-bold { color: var(--vmc-color-orange-400); text-shadow: 0 0 8px oklch(0.66 0.17 50 / 55%); }
 .hdr-pill--bids:hover { transform: translateY(-1px); }
-.hdr-right { display: flex; align-items: center; gap: 0; height: 58px; }
-.hdr-section { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; height: 58px; padding: 0 14px; border-left: 1px solid oklch(1 0 0 / 12%); }
-.hdr-section:last-child { align-items: flex-end; width: 112px; }
-.hdr-section-label { font-size: 12px; font-weight: 600; color: oklch(1 0 0 / 55%); margin-bottom: 3px; }
-.hdr-section-value { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--vmc-color-base-white); font-variant-numeric: tabular-nums; }
+.hdr-right { display: flex; align-items: stretch; justify-content: space-between; border-top: 1px solid oklch(1 0 0 / 12%); padding-top: 8px; }
+.hdr-section { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; flex: 1; padding: 0 10px; }
+.hdr-section:first-child { padding-left: 0; }
+.hdr-section + .hdr-section { border-left: 1px solid oklch(1 0 0 / 12%); }
+.hdr-section:last-child { align-items: flex-end; padding-right: 0; }
+.hdr-section-label { font-size: 11px; font-weight: 600; color: oklch(1 0 0 / 55%); margin-bottom: 3px; }
+.hdr-section-value { display: flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--vmc-color-base-white); font-variant-numeric: tabular-nums; }
 .hdr-oferta-pill {
   display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 10px;
   border-radius: 9999px; border: 1px solid transparent;
@@ -167,64 +170,26 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .hdr-signal-bar:nth-child(4) { height: 13px; }
 .hdr-signal-bar:nth-child(5) { height: 16px; }
 .hdr-price-icon { flex-shrink: 0; width: 18px; height: 19px; }
-
-/* ═══ LIVE CARD ═══ */
-.hal {
-  height: 52px; display: flex; align-items: center; padding: 0 16px;
-  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-700) 100%);
-  color: var(--vmc-color-base-white);
-}
-.hal-live { display: flex; align-items: center; justify-content: center; width: 22px; height: 52px; margin-right: 8px; flex-shrink: 0; }
-.hal-dot { width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, oklch(0.82 0.14 60), oklch(0.66 0.17 50)); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 50%); animation: hal-pulse 1.5s ease-in-out infinite; }
 @keyframes hal-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-.hal-data { display: flex; align-items: center; flex: 1; min-width: 0; list-style: none; }
-.hal-data li { display: inline-flex; align-items: center; height: 22px; padding-right: 10px; font-size: 16px; font-weight: 700; line-height: 22px; white-space: nowrap; }
-.hal-data li + li { padding-left: 10px; border-left: 1px solid oklch(1 0 0 / 12%); }
-.hal-data .hal-placa { gap: 7px; padding-right: 0; font-size: 14px; font-weight: 500; }
-.hal-placa-badge {
-  display: inline-flex; align-items: center; justify-content: center; height: 24px; min-width: 60px; padding: 0 9px;
-  border-radius: 9999px; border: 1px solid transparent;
-  font-family: var(--font-mono); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
-  background-image:
-    linear-gradient(135deg, oklch(0.55 0.20 285), oklch(0.22 0.18 285)),
-    linear-gradient(135deg, #8776FF, oklch(1 0 0 / 40%) 38%, #532BC7 68%, #8776FF);
-  background-origin: padding-box, border-box; background-clip: padding-box, border-box;
-}
-.hal-stat { display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 0 14px; border-left: 1px solid oklch(1 0 0 / 12%); }
-.hal-stat svg { width: 14px; height: 14px; flex-shrink: 0; color: oklch(1 0 0 / 60%); }
-.hal-stat-label { font-size: 11px; font-weight: 600; color: oklch(1 0 0 / 55%); white-space: nowrap; }
-.hal-stat-value { font-family: var(--font-mono); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.hal-stat-value.is-hot { color: var(--vmc-color-orange-400); }
-.hal-timer { display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding-left: 14px; border-left: 1px solid oklch(1 0 0 / 12%); }
-.hal-timer svg { width: 13px; height: 13px; }
-.hal-timer-label { font-size: 11px; font-weight: 600; font-style: italic; color: oklch(1 0 0 / 55%); white-space: nowrap; }
-.hal-timer-value { font-family: var(--font-mono); font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hal-dot { width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, oklch(0.82 0.14 60), oklch(0.66 0.17 50)); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 50%); animation: hal-pulse 1.5s ease-in-out infinite; }
 
-/* ═══ BODY ═══ */
-.dash-body { display: flex; gap: 19px; align-items: stretch; }
-.dash-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.dash-col--left { flex: 0 0 443px; }
-.dash-col--right { flex: 0 0 311px; }
-
-/* banner placeholder + rail derecho */
+/* banner placeholder — strip horizontal en mobile */
 .ad-banner {
   display: flex; align-items: center; justify-content: center;
   border-radius: 14px;
   background: repeating-linear-gradient(45deg, oklch(0.88 0.005 250) 0 14px, oklch(0.83 0.006 250) 14px 28px);
   border: 1.5px dashed oklch(0.58 0.01 250);
   color: oklch(0.42 0.01 250);
-  font-size: 13px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
 }
-.v3-rail-right { flex: 0 0 200px; }
-.v3-rail-banner { flex: 1 1 auto; width: 100%; min-height: 100%; }
-.v3-mid-banner { flex: 1 1 auto; width: 100%; min-height: 100px; }
+.v3-mid-banner { width: 100%; min-height: 80px; flex-shrink: 0; }
 
-/* card del vehículo arriba del carro (col izquierda) */
+/* card del vehículo arriba del carro — borde iridescente vsec */
 .v3-vehicle {
   --vsec-stop-a: var(--vmc-color-vault-500);
   --vsec-stop-b: var(--vmc-color-vault-700);
   position: relative; overflow: hidden;
-  border-radius: 12px; padding: 10px 14px;
+  border-radius: 12px; padding: 10px 12px;
   border: 2.5px solid transparent;
   background-image:
     linear-gradient(var(--vsec-angle), var(--vsec-stop-a) 0%, var(--vsec-stop-b) 100%),
@@ -238,16 +203,16 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   background-clip: padding-box, border-box;
   box-shadow: inset 0 1px 0 rgb(100% 100% 100% / 0.22), 0 2px 8px rgb(51.76% 37.65% 89.8% / 0.30), 0 0 16px rgb(0% 0% 0% / 0.14);
   color: var(--vmc-color-base-white, oklch(1 0 0));
-  display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px;
+  display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
   flex-shrink: 0;
 }
-.v3-vehicle-live { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vmc-color-orange-300, oklch(0.84 0.13 60)); flex-shrink: 0; }
-.v3-vehicle-title { margin: 0; font-family: var(--font-ui); font-size: 15px; font-weight: 800; letter-spacing: -0.3px; min-width: 0; flex: 1 1 auto; }
+.v3-vehicle-live { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vmc-color-orange-300, oklch(0.84 0.13 60)); flex-shrink: 0; }
+.v3-vehicle-title { margin: 0; font-family: var(--font-ui); font-size: 14px; font-weight: 800; letter-spacing: -0.3px; min-width: 0; flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .v3-vehicle-title span { color: oklch(1 0 0 / 55%); font-weight: 600; }
-.v3-vehicle-placa { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: oklch(1 0 0 / 55%); flex-shrink: 0; }
+.v3-vehicle-placa { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: oklch(1 0 0 / 55%); flex-shrink: 0; }
 .v3-vehicle-placa b { color: oklch(1 0 0); letter-spacing: 1.2px; }
 
-/* stats debajo de la sala — Conectados + Bids arriba, Inicio hace full ancho debajo */
+/* stats — Conectados + Bids arriba, Inicio full ancho debajo */
 .v3-stats { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "conectados bids" "inicio inicio"; gap: 8px; flex: 0 0 auto; }
 .v3-stats .v3-stat-card {
   --vsec-stop-a: var(--vmc-color-vault-500);
@@ -288,33 +253,30 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   color: oklch(1 0 0);
   display: flex; flex-direction: row; align-items: center; gap: 10px;
 }
-.v3-stat-icon { width: 22px; height: 22px; flex-shrink: 0; color: oklch(1 0 0 / 75%); }
+.v3-stat-icon { width: 20px; height: 20px; flex-shrink: 0; color: oklch(1 0 0 / 75%); }
 /* Logo de remate (bidding) como máscara — hereda el color del icono */
 .v3-stat-icon--bid {
   display: inline-block;
-  width: 22px; height: 22px;
+  width: 20px; height: 20px;
   background-color: currentColor;
-  -webkit-mask: url("bidding-icon.svg") center / contain no-repeat;
-  mask: url("bidding-icon.svg") center / contain no-repeat;
+  -webkit-mask: url("../desktop/bidding-icon.svg") center / contain no-repeat;
+  mask: url("../desktop/bidding-icon.svg") center / contain no-repeat;
 }
 .v3-stat-info { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
-.v3-stat-val { font-family: var(--font-mono); font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.v3-stat-val { font-family: var(--font-mono); font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .v3-stat-val.is-hot { color: var(--vmc-color-orange-300, oklch(0.86 0.14 65)); }
 .v3-stat-lbl { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
 
-/* sala alta, ocupa lo que sobra después de las stats */
-.dash-col--right .room { flex: 1 1 auto; min-height: 0; }
-
 /* Gallery card */
 .dh { display: flex; flex-direction: column; background: oklch(1 0 0); user-select: none; isolation: isolate; }
-.dh-image { position: relative; height: 380px; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); overflow: hidden; }
+.dh-image { position: relative; height: 232px; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); overflow: hidden; }
 .dh-image-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.dh-action { position: absolute; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 0; background: oklch(0.20 0.02 280 / 55%); color: var(--vmc-color-base-white); cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 150ms var(--ease); }
-.dh-action svg { width: 17px; height: 17px; }
-.dh-action--prev { top: 50%; left: 12px; transform: translateY(-50%); }
-.dh-action--next { top: 50%; right: 12px; transform: translateY(-50%); }
+.dh-action { position: absolute; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 0; background: oklch(0.20 0.02 280 / 55%); color: var(--vmc-color-base-white); cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 150ms var(--ease); }
+.dh-action svg { width: 16px; height: 16px; }
+.dh-action--prev { top: 50%; left: 10px; transform: translateY(-50%); }
+.dh-action--next { top: 50%; right: 10px; transform: translateY(-50%); }
 .dh-action:hover { background: oklch(0.20 0.02 280 / 75%); }
-.dh-counter { position: absolute; bottom: 12px; right: 12px; padding: 4px 9px; border-radius: 999px; background: oklch(0.20 0.02 280 / 55%); color: var(--vmc-color-base-white); font-family: var(--font-mono); font-size: 11px; font-variant-numeric: tabular-nums; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.dh-counter { position: absolute; bottom: 10px; right: 10px; padding: 4px 9px; border-radius: 999px; background: oklch(0.20 0.02 280 / 55%); color: var(--vmc-color-base-white); font-family: var(--font-mono); font-size: 11px; font-variant-numeric: tabular-nums; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .dh-casino {
   position: absolute; inset: 0; z-index: 15; pointer-events: none; opacity: 0; padding: 4px; transition: opacity 0.15s ease;
   border-radius: var(--card-radius) var(--card-radius) 0 0;
@@ -324,23 +286,12 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 .dh-casino.is-active { opacity: 1; animation: casino-spin 0.5s linear infinite; }
 @keyframes casino-spin { 0% { --casino-angle: 0deg; } 100% { --casino-angle: 360deg; } }
-.dh-thumbs { display: flex; gap: 6px; padding: 8px; background: oklch(1 0 0); overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
-.dh-thumbs::-webkit-scrollbar { display: none; }
-.dh-thumb { position: relative; flex-shrink: 0; width: 76px; height: 57px; border-radius: 4px; overflow: hidden; cursor: pointer; background: linear-gradient(180deg, oklch(0.90 0.005 220) 0%, oklch(0.82 0.008 220) 100%); }
-.dh-thumb-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.dh-thumb-ring { position: absolute; inset: 0; border-radius: 4px; pointer-events: none; z-index: 2; transition: box-shadow 200ms var(--ease); }
-.dh-thumb.is-active .dh-thumb-ring {
-  border: 3px solid transparent; background-origin: border-box; background-clip: border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  background-image: linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
-}
 
 /* Users card — tabla estilo v2 (Consola Users) */
 .cu {
   --vsec-stop-a: var(--vmc-color-vault-500);
   --vsec-stop-b: var(--vmc-color-vault-700);
-  width: 100%; padding: 14px 18px;
+  width: 100%; padding: 12px 14px;
   border: 2.5px solid transparent;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
@@ -360,7 +311,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .cu-table { width: 100%; }
 /* Header = label subordinado: plano, sin borde brillante, no compite con el líder */
 .cu-hdr-row {
-  display: grid; grid-template-columns: 78px 1fr 58px; align-items: center;
+  display: grid; grid-template-columns: 70px 1fr 56px; align-items: center;
   height: 26px;
   background: transparent;
   border-bottom: 1px solid oklch(1 0 0 / 12%);
@@ -371,7 +322,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 }
 .cu-body { width: 100%; margin-top: 10px; overflow: hidden; }
 .cu-row {
-  display: grid; grid-template-columns: 78px 1fr 58px; align-items: center;
+  display: grid; grid-template-columns: 70px 1fr 56px; align-items: center;
   height: 28px; margin-top: 2px; border-radius: 4px;
   border: 1px solid oklch(1 0 0 / 7%); color: var(--vmc-color-base-white);
 }
@@ -399,7 +350,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .room {
   --vsec-stop-a: var(--vmc-color-vault-500);
   --vsec-stop-b: var(--vmc-color-vault-700);
-  position: relative; flex: 1;
+  position: relative;
   display: flex; flex-direction: column;
   border-radius: 16px; overflow: hidden; isolation: isolate;
   border: 2.5px solid transparent;
@@ -440,78 +391,15 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   0%   { box-shadow: 0 0 0 1.5px oklch(0.78 0.16 60 / 35%), 0 0 16px oklch(0.72 0.16 55 / 40%), 0 0 34px oklch(0.55 0.20 285 / 30%); }
   100% { box-shadow: 0 0 0 1.5px oklch(1 0 0 / 55%), 0 0 28px oklch(0.72 0.16 55 / 60%), 0 0 56px oklch(0.55 0.20 285 / 45%), 0 0 80px oklch(0.66 0.17 50 / 25%); }
 }
-/* al pujar: el faro interno se enciende más fuerte (colores hover iridescent) */
-.room.is-bidding .room-cloud {
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 32%), inset 0 0 0 1px oklch(1 0 0 / 18%), 0 0 26px oklch(0.72 0.16 55 / 55%), 0 0 48px oklch(0.55 0.20 285 / 35%);
-}
-.room.is-bidding .room-cloud::before {
-  animation-duration: 1s;
-  filter: blur(10px) brightness(1.55) saturate(1.3);
-}
-.room.is-bidding .room-cloud::after {
-  background: radial-gradient(ellipse 78% 72% at 50% 50%, oklch(0.16 0.10 285 / 28%) 0%, transparent 82%);
-}
-
-/* nube de bid actual — con faro interno iridescente girando dentro */
-.room-cloud {
-  position: relative; z-index: 3; flex-shrink: 0;
-  margin: 18px auto 0; padding: 16px 40px;
-  border-radius: 24px; overflow: hidden;
-  border: 2px solid transparent;
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  /* mismo estilo que el botón Bidear: fill orange→vault + borde iridescente */
-  background-image:
-    linear-gradient(135deg, var(--vmc-color-orange-600) 0%, var(--vmc-color-orange-600) 38%, var(--vmc-color-vault-500) 100%),
-    linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 4px 14px oklch(0.66 0.17 50 / 35%);
-  isolation: isolate;
-}
-/* FARO INTERNO: haz de luz iridescente que gira dentro de la nube */
-.room-cloud::before {
-  content: ''; position: absolute; z-index: 0;
-  top: 50%; left: 50%; width: 240%; aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  /* faro con la paleta iridescente del botón Bidear: white → orange-400 → vault-400 */
-  background: conic-gradient(from var(--room-angle),
-    transparent 0deg,
-    var(--vmc-color-orange-400) 35deg,
-    oklch(1 0 0 / 85%) 70deg,
-    var(--vmc-color-vault-400) 110deg,
-    transparent 160deg,
-    transparent 220deg,
-    var(--vmc-color-orange-400) 268deg,
-    oklch(1 0 0 / 75%) 300deg,
-    transparent 345deg);
-  filter: blur(12px);
-  animation: room-halo 3.5s linear infinite;
-}
-/* scrim radial cálido para legibilidad del texto sobre el faro */
-.room-cloud::after {
-  content: ''; position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(ellipse 80% 74% at 50% 50%, oklch(0.30 0.16 40 / 32%) 0%, transparent 82%);
-}
-.room-cloud > * { position: relative; z-index: 2; }
-.room-cloud-label { font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 1px 3px oklch(0 0 0 / 45%), 0 0 10px oklch(0.72 0.16 55 / 55%); }
-.room-cloud-amount { font-family: var(--font-mono); font-size: 36px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; color: var(--vmc-color-base-white); text-shadow: 0 1px 4px oklch(0 0 0 / 55%), 0 0 18px oklch(0.78 0.16 60 / 45%); }
-/* zoom in/out de la nube al pujar */
-.room-cloud.is-bump { animation: cloud-bump 0.4s var(--ease); }
-@keyframes cloud-bump { 0% { transform: scale(1); } 40% { transform: scale(1.14); } 100% { transform: scale(1); } }
-
-/* reserva slim */
-.room-reserve { z-index: 3; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: oklch(1 0 0 / 55%); }
-.room-reserve .prog-lock { width: 14px; height: 14px; color: oklch(1 0 0 / 60%); }
-.room-reserve b { font-family: var(--font-mono); color: oklch(1 0 0 / 85%); }
 
 /* sala de bideos */
-.room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 14px; }
+.room-chat { z-index: 3; flex: 1; overflow: hidden; padding: 12px 14px; display: flex; flex-direction: column; gap: 14px; }
 
 /* ═══ BID CURRENT CARD — fuera de la sala, full width, vault cinematic ═══ */
 .bid-current-card {
   position: relative; flex-shrink: 0;
   display: flex; flex-direction: column; align-items: center; gap: 4px;
-  width: 100%; padding: 16px 24px;
+  width: 100%; padding: 14px 20px;
   border-radius: 16px; border: 2px solid transparent;
   background-image:
     linear-gradient(180deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%),
@@ -545,10 +433,10 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
     0 6px 22px oklch(0.10 0.05 285 / 50%);
 }
 .bid-current-card.is-bidding::before { animation-duration: 0.9s; filter: blur(10px) brightness(1.6) saturate(1.35); }
-.bid-current-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); }
+.bid-current-label { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); }
 .bid-current-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 90%); animation: hal-pulse 1.2s ease-in-out infinite; }
 .bid-current-amount {
-  font-family: var(--font-mono); font-size: 40px; font-weight: 700; line-height: 1;
+  font-family: var(--font-mono); font-size: 32px; font-weight: 700; line-height: 1;
   font-variant-numeric: tabular-nums; color: var(--vmc-color-base-white);
   text-shadow: 0 0 8px oklch(0.78 0.16 285 / 70%), 0 0 18px oklch(0.55 0.20 285 / 60%),
     0 0 36px oklch(0.45 0.20 285 / 50%), 0 0 60px oklch(0.30 0.20 285 / 40%);
@@ -556,6 +444,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   transform-origin: center; transition: transform 0.5s var(--ease);
 }
 .bid-current-amount.is-bump { animation: cloud-bump 0.4s var(--ease); }
+@keyframes cloud-bump { 0% { transform: scale(1); } 40% { transform: scale(1.14); } 100% { transform: scale(1); } }
 @keyframes bc-vault-shimmer {
   0%, 100% { text-shadow: 0 0 8px oklch(0.78 0.16 285 / 70%), 0 0 18px oklch(0.55 0.20 285 / 60%), 0 0 36px oklch(0.45 0.20 285 / 50%), 0 0 60px oklch(0.30 0.20 285 / 40%); }
   50%     { text-shadow: 0 0 12px oklch(0.85 0.14 285 / 85%), 0 0 24px oklch(0.60 0.22 285 / 75%), 0 0 48px oklch(0.45 0.20 285 / 60%), 0 0 72px oklch(0.30 0.20 285 / 50%); }
@@ -563,21 +452,16 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 @media (prefers-reduced-motion: reduce) { .bid-current-amount { animation: none; } }
 
 /* botón abajo */
-.room-bid-wrap { z-index: 3; flex-shrink: 0; padding: 12px 16px 16px; }
+.room-bid-wrap { z-index: 3; flex-shrink: 0; padding: 10px 14px 14px; }
 .v2-bid-outside { padding: 0; flex-shrink: 0; }
 
-/* Chat card (legacy) */
-.ab-chat {
-  flex: 1; overflow: hidden; padding: 12px 14px;
-  display: flex; flex-direction: column; gap: 6px;
-  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-700) 55%, var(--vmc-color-vault-600) 85%, color-mix(in oklch, var(--vmc-color-orange-500) 28%, var(--vmc-color-vault-600)) 100%);
-}
+/* burbujas de chat — rectángulo (squared) con patita triangular tipo SMS */
 .ab-msg { display: flex; }
 .ab-msg--left { justify-content: flex-start; }
 .ab-msg--right { justify-content: flex-end; }
 .ab-msg--center { justify-content: center; margin-bottom: 4px; }
 .ab-bubble strong.amt { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.ab-bubble { display: flex; align-items: center; max-width: 76%; min-height: 34px; padding: 0 14px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 34px; white-space: nowrap; }
+.ab-bubble { display: flex; align-items: center; max-width: 85%; min-height: 32px; padding: 0 12px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 32px; white-space: nowrap; }
 .ab-bubble--system { max-width: 100%; color: oklch(1 0 0 / 50%); background: none; border: none; font-size: 11px; font-weight: 500; min-height: 22px; line-height: 22px; padding: 0; }
 .ab-bubble--robot { color: oklch(1 0 0 / 75%); background: oklch(1 0 0 / 8%); border: 1px solid oklch(1 0 0 / 10%); border-radius: 8px; position: relative; }
 .ab-bubble--robot strong { color: var(--vmc-color-base-white); }
@@ -587,7 +471,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   background-origin: padding-box, border-box; background-clip: padding-box, border-box;
   box-shadow: inset 0 1px 0 oklch(1 0 0 / 20%), 0 4px 12px oklch(0.66 0.17 50 / 30%);
 }
-/* Burbujas de chat: rectángulo (squared) con patita triangular tipo SMS */
 .ab-bubble--user-left  { border-radius: 8px; position: relative; }
 .ab-bubble--user-right { border-radius: 8px; position: relative; }
 .ab-bubble--user-left strong, .ab-bubble--user-right strong { color: var(--vmc-color-base-white); }
@@ -615,44 +498,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .ab-bubble--active { animation: ab-zoom 1.6s ease-in-out infinite; }
 @keyframes ab-zoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
-/* ═══ BID COCKPIT CARD — reserve unlock ═══ */
-.bc {
-  flex-shrink: 0; padding: 16px 18px 18px;
-  background:
-    radial-gradient(ellipse 70% 110% at 50% 0%, oklch(0.30 0.20 285 / 65%) 0%, transparent 70%),
-    linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
-  color: var(--vmc-color-base-white);
-  display: flex; flex-direction: column; gap: 12px;
-}
-/* progress ramp */
-.prog { display: flex; flex-direction: column; gap: 7px; }
-.prog-head { display: flex; align-items: center; justify-content: flex-end; font-size: 13px; }
-.prog-head-right { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: oklch(1 0 0 / 70%); }
-.prog-head-right b { font-family: var(--font-mono); font-weight: 700; color: var(--vmc-color-base-white); }
-.prog-lock { width: 18px; height: 18px; flex-shrink: 0; color: oklch(1 0 0 / 70%); transition: color 0.4s ease; }
-.prog-lock-broken { display: none; }
-.bc.is-unlocked .prog-head-right { color: var(--vmc-color-orange-400); }
-.bc.is-unlocked .prog-lock { color: var(--vmc-color-orange-400); }
-.bc.is-unlocked .prog-lock-closed { display: none; }
-.bc.is-unlocked .prog-lock-broken { display: block; animation: lock-break 0.5s var(--ease); }
-@keyframes lock-break { 0% { transform: scale(0.6) rotate(-12deg); opacity: 0; } 60% { transform: scale(1.2) rotate(6deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
-.prog-track { position: relative; height: 28px; border-radius: 4px; background: oklch(1 0 0 / 9%); overflow: hidden; clip-path: polygon(0 64%, 100% 0, 100% 100%, 0 100%); }
-.prog-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 46%; background: linear-gradient(90deg, var(--vmc-color-orange-600), var(--vmc-color-orange-400)); box-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); transition: width 0.7s var(--ease), background 0.5s ease; }
-.prog-fill::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 20px; background: linear-gradient(90deg, transparent, oklch(1 0 0 / 45%)); }
-.bc.is-unlocked .prog-fill { background: linear-gradient(90deg, var(--vmc-color-orange-500) 0%, var(--vmc-color-base-white) 40%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%); box-shadow: 0 0 16px oklch(0.66 0.17 50 / 55%), 0 0 24px oklch(0.55 0.20 285 / 35%); }
-/* bid amount */
-.bc-amount-block { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.bc-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vmc-color-orange-400); text-shadow: 0 0 12px oklch(0.72 0.16 55 / 50%); }
-.bc-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--vmc-color-orange-400); box-shadow: 0 0 8px oklch(0.72 0.16 55 / 90%); animation: hal-pulse 1.2s ease-in-out infinite; }
-.bc-amount { font-family: var(--font-mono); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 16px oklch(0.78 0.16 60 / 45%), 0 0 32px oklch(0.66 0.17 50 / 25%); transition: font-size 0.5s var(--ease), color 0.5s ease, text-shadow 0.5s ease; }
-.bc.is-unlocked .bc-amount {
-  font-size: 56px;
-  background: linear-gradient(135deg, var(--vmc-color-orange-400) 0%, var(--vmc-color-base-white) 35%, var(--vmc-color-vault-400) 70%, var(--vmc-color-orange-400) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;
-  filter: drop-shadow(0 0 18px oklch(0.66 0.17 50 / 45%)) drop-shadow(0 0 36px oklch(0.55 0.20 285 / 30%));
-  animation: bc-pop 0.6s var(--ease);
-}
-@keyframes bc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
 /* bidear — iridescent (pvbtn) + halo blanco girando + pulse zoom (referencia.tsx) */
 @property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
 @property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: oklch(0.72 0.16 55); }
@@ -661,8 +506,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .bidear {
   --vbtn-stop-a: var(--vmc-color-orange-600);
   --vbtn-stop-b: var(--vmc-color-vault-500);
-  display: flex; align-items: center; justify-content: center; gap: 14px;
-  width: 100%; height: 54px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; height: 52px;
   border-radius: 9999px; border: 2.5px solid transparent;
   cursor: pointer; position: relative;
   font-family: var(--font-ui); color: var(--vmc-color-base-white);
@@ -705,9 +550,9 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   50% { transform: scale(1.025); }
 }
 .bidear > * { position: relative; z-index: 3; }
-.bidear-label { font-size: 17px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
-.bidear-sep { width: 1px; height: 24px; background: oklch(1 0 0 / 40%); }
-.bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bidear-label { font-size: 16px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+.bidear-sep { width: 1px; height: 22px; background: oklch(1 0 0 / 40%); }
+.bidear-price { font-family: var(--font-mono); font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .bidear:hover {
   --vbtn-angle: 220deg;
   --vbtn-stop-a: var(--vmc-color-orange-400);
@@ -734,11 +579,6 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .coin-particle svg { width: 100%; height: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) { .coin-particle { display: none !important; } }
 
-/* ═══ COMPARACIÓN — versión actual de producción ═══ */
-.compare { width: 100%; max-width: 1024px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.compare-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent); }
-.compare-img { max-width: 575px; width: 100%; height: auto; border-radius: 12px; border: 1px solid oklch(0.22 0.18 285 / 14%); box-shadow: 0 6px 20px oklch(0.22 0.18 285 / 14%); display: block; }
-
 /* ═══ TOUR (Shepherd.js) — tema Voyager ═══ */
 .demo-tour-fab {
   position: fixed; top: 14px; right: 14px; z-index: 99999;
@@ -754,7 +594,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 .demo-tour-fab:active { transform: scale(0.97); }
 
 .shepherd-element {
-  border-radius: 14px; max-width: 340px;
+  border-radius: 14px; max-width: 320px;
   background:
     radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.40 0.20 285 / 55%) 0%, transparent 70%),
     linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-900) 100%);
@@ -789,8 +629,8 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
 </head>
 <body>
   <div class="catalog-row">
-    <div class="variant-slot" data-variant="reserve-unlock-cards">
-      <span class="variant-label">Demo · Tour Interactivo (Shepherd.js)<br><span class="variant-sublabel">recorrido guiado por la sala en vivo · clic en «Iniciar Tour» arriba a la derecha</span></span>
+    <div class="variant-slot" data-variant="reserve-unlock-cards-mobile">
+      <span class="variant-label">Demo · Tour Interactivo (Shepherd.js)<br><span class="variant-sublabel">420 · mobile · recorrido guiado por la sala en vivo apilada · clic en «Iniciar Tour» arriba a la derecha</span></span>
       <div class="dash">
 
         <!-- WINNERS TICKER — ganadores recientes -->
@@ -826,7 +666,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
           </div>
         </div>
 
-        <!-- HEADER CARD -->
+        <!-- HEADER CARD — dos filas -->
         <div class="card hdr">
           <div class="hdr-left">
             <button type="button" class="hdr-pill hdr-pill--cuu">
@@ -857,137 +697,121 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
           </div>
         </div>
 
-        <!-- BODY -->
-        <div class="dash-body">
-          <!-- RAIL IZQUIERDO: banner -->
-          <aside class="dash-col v3-rail-right">
-            <div class="ad-banner v3-rail-banner">Banner</div>
-          </aside>
-
-          <!-- LEFT -->
-          <div class="dash-col dash-col--left">
-            <!-- info del vehículo arriba del carro -->
-            <div class="v3-vehicle">
-              <span class="v3-vehicle-live"><span class="hal-dot"></span> EN VIVO</span>
-              <h3 class="v3-vehicle-title">Toyota Etios <span>2021</span></h3>
-              <span class="v3-vehicle-placa">PLACA <b>P3U448</b></span>
-            </div>
-            <article class="card dh">
-              <div class="dh-image">
-                <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
-                <div class="dh-pricebanner">
-                  <div class="dh-pb-track">
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                    <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
-                  </div>
-                </div>
-                <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
-                <span class="dh-counter">1 / 10</span>
-                <div class="dh-casino" id="dhCasino"></div>
-              </div>
-            </article>
-
-            <!-- bloque de stats debajo del carro -->
-            <div class="v3-stats">
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="6" r="4"/><path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val">18</span>
-                  <span class="v3-stat-lbl">Conectados</span>
-                </div>
-              </div>
-              <div class="v3-stat-card">
-                <span class="v3-stat-icon v3-stat-icon--bid" aria-hidden="true"></span>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val is-hot">157</span>
-                  <span class="v3-stat-lbl">Bids</span>
-                </div>
-              </div>
-              <div class="v3-stat-card">
-                <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"/></svg>
-                <div class="v3-stat-info">
-                  <span class="v3-stat-val">00:00:10</span>
-                  <span class="v3-stat-lbl">Inició hace</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- banner inferior columna media -->
-            <div class="ad-banner v3-mid-banner">Banner</div>
-          </div>
-
-          <!-- RIGHT: bid card arriba, sala con halo abajo, botón fuera -->
-          <div class="dash-col dash-col--right">
-
-            <!-- bid actual: card fuera de la sala, full width, vault cinematic -->
-            <article class="bid-current-card" id="bidCard">
-              <span class="bid-current-label">Propuesta · Bid Actual</span>
-              <span class="bid-current-amount" id="bidAmount">US$&nbsp;5,079</span>
-            </article>
-
-            <div class="room" id="bidRoom">
-
-              <!-- sala de bideos -->
-              <div class="room-chat" id="chat">
-                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--user-left"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,079</strong></span></div>
-                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,079</strong></span></div>
-                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
-                <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--user-right"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,179</strong></span></div>
-                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,179</strong></span></div>
-                <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
-              </div>
-
-            </div>
-
-            <!-- botón Bidear fuera del card de la sala -->
-            <div class="room-bid-wrap v2-bid-outside">
-              <button type="button" class="bidear" id="bidearBtn">
-                <span class="bidear-label">Bidear</span>
-                <span class="bidear-sep"></span>
-                <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
-              </button>
-            </div>
-
-            <!-- tabla de puestos / ranking debajo del botón -->
-            <div class="card cu">
-              <div class="cu-table">
-                <div class="cu-hdr-row">
-                  <div class="cu-cell cu-cell--center">Puesto</div>
-                  <div class="cu-cell">C.U.U.</div>
-                  <div class="cu-cell cu-cell--center">Bids</div>
-                </div>
-              </div>
-              <div class="cu-body">
-                <div class="cu-row cu-row--user">
-                  <div class="cu-cell cu-cell--center">1°</div>
-                  <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
-                  <div class="cu-cell cu-cell--center"><strong>2</strong></div>
-                </div>
-                <div class="cu-row cu-row--rest">
-                  <div class="cu-cell cu-cell--center">2°</div>
-                  <div class="cu-cell"><strong>BEKVS1</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-                <div class="cu-row cu-row--alt">
-                  <div class="cu-cell cu-cell--center">3°</div>
-                  <div class="cu-cell"><strong>KAHTH4</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-                <div class="cu-row cu-row--rest">
-                  <div class="cu-cell cu-cell--center">4°</div>
-                  <div class="cu-cell"><strong>P3TUXA</strong></div>
-                  <div class="cu-cell cu-cell--center"><strong>1</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <!-- VEHICLE CARD -->
+        <div class="v3-vehicle">
+          <span class="v3-vehicle-live"><span class="hal-dot"></span> EN VIVO</span>
+          <h3 class="v3-vehicle-title">Toyota Etios <span>2021</span></h3>
+          <span class="v3-vehicle-placa">PLACA <b>P3U448</b></span>
         </div>
+
+        <!-- GALERÍA -->
+        <article class="card dh">
+          <div class="dh-image">
+            <img class="dh-image-photo" src="../../../images/bronco.jpg" alt="Toyota Etios 2021">
+            <div class="dh-pricebanner">
+              <div class="dh-pb-track">
+                <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+                <span class="dh-pb-item">Precio Base: <strong>US$ 2,000</strong></span><span class="dh-pb-dot"></span>
+              </div>
+            </div>
+            <button type="button" class="dh-action dh-action--prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button type="button" class="dh-action dh-action--next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+            <span class="dh-counter">1 / 10</span>
+            <div class="dh-casino" id="dhCasino"></div>
+          </div>
+        </article>
+
+        <!-- STATS -->
+        <div class="v3-stats">
+          <div class="v3-stat-card">
+            <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="6" r="4"/><path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634"/></svg>
+            <div class="v3-stat-info">
+              <span class="v3-stat-val">18</span>
+              <span class="v3-stat-lbl">Conectados</span>
+            </div>
+          </div>
+          <div class="v3-stat-card">
+            <span class="v3-stat-icon v3-stat-icon--bid" aria-hidden="true"></span>
+            <div class="v3-stat-info">
+              <span class="v3-stat-val is-hot">157</span>
+              <span class="v3-stat-lbl">Bids</span>
+            </div>
+          </div>
+          <div class="v3-stat-card">
+            <svg class="v3-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"/></svg>
+            <div class="v3-stat-info">
+              <span class="v3-stat-val">00:00:10</span>
+              <span class="v3-stat-lbl">Inició hace</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SALA: bid actual (card vault cinematic) + chat + Bidear -->
+        <article class="bid-current-card" id="bidCard">
+          <span class="bid-current-label">Propuesta · Bid Actual</span>
+          <span class="bid-current-amount" id="bidAmount">US$&nbsp;5,079</span>
+        </article>
+
+        <div class="room" id="bidRoom">
+          <!-- sala de bideos -->
+          <div class="room-chat" id="chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--user-left"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,079</strong></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,079</strong></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--user-right"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<strong class="amt">US$ 5,179</strong></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--robot">Cierra en&ensp;<strong>US$ 5,179</strong></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><img src="../../../logo-preview.png" alt="VMC">A la <strong>una</strong></span></div>
+          </div>
+        </div>
+
+        <!-- botón Bidear fuera del card de la sala -->
+        <div class="room-bid-wrap v2-bid-outside">
+          <button type="button" class="bidear" id="bidearBtn">
+            <span class="bidear-label">Bidear</span>
+            <span class="bidear-sep"></span>
+            <span class="bidear-price" id="bidearPrice">US$ 5,159</span>
+          </button>
+        </div>
+
+        <!-- RANKING -->
+        <div class="card cu">
+          <div class="cu-table">
+            <div class="cu-hdr-row">
+              <div class="cu-cell cu-cell--center">Puesto</div>
+              <div class="cu-cell">C.U.U.</div>
+              <div class="cu-cell cu-cell--center">Bids</div>
+            </div>
+          </div>
+          <div class="cu-body">
+            <div class="cu-row cu-row--user">
+              <div class="cu-cell cu-cell--center">1°</div>
+              <div class="cu-cell"><strong>JA8NEE</strong><svg class="cu-trophy" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6v2H2v3a4 4 0 0 0 4 4 6 6 0 0 0 5 3.9V18H8v2h8v-2h-3v-3.1A6 6 0 0 0 18 11a4 4 0 0 0 4-4V4h-4V2zM6 9a2 2 0 0 1-2-2V6h2v3zm14-2a2 2 0 0 1-2 2V6h2v1z"/></svg></div>
+              <div class="cu-cell cu-cell--center"><strong>2</strong></div>
+            </div>
+            <div class="cu-row cu-row--rest">
+              <div class="cu-cell cu-cell--center">2°</div>
+              <div class="cu-cell"><strong>BEKVS1</strong></div>
+              <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+            </div>
+            <div class="cu-row cu-row--alt">
+              <div class="cu-cell cu-cell--center">3°</div>
+              <div class="cu-cell"><strong>KAHTH4</strong></div>
+              <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+            </div>
+            <div class="cu-row cu-row--rest">
+              <div class="cu-cell cu-cell--center">4°</div>
+              <div class="cu-cell"><strong>P3TUXA</strong></div>
+              <div class="cu-cell cu-cell--center"><strong>1</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BANNER — strip horizontal -->
+        <div class="ad-banner v3-mid-banner">Banner</div>
 
       </div>
     </div>
@@ -1128,12 +952,14 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   <script src="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/js/shepherd.min.js"></script>
   <script>
   (function initTour() {
+    /* mismos pasos y textos que desktop — attachTo recalibrado a top/bottom
+       para que los tooltips no desborden los 420px de la columna apilada */
     var STEPS = [
-      { el: '.ad-banner',     on: 'bottom', t: 'Banner de Información',   d: 'Espacio publicitario y de contexto de la subasta dentro de la sala en vivo.' },
+      { el: '.ad-banner',     on: 'top',    t: 'Banner de Información',   d: 'Espacio publicitario y de contexto de la subasta dentro de la sala en vivo.' },
       { el: '.v3-vehicle',    on: 'bottom', t: 'Card del Vehículo',       d: 'Marca, modelo, año y placa del lote. El estado EN VIVO se muestra con estilo gradient.' },
-      { el: '.dh',            on: 'right',  t: 'Galería de Imágenes',      d: 'Navegación de fotos del vehículo con favorito y controles.' },
+      { el: '.dh',            on: 'bottom', t: 'Galería de Imágenes',      d: 'Navegación de fotos del vehículo con favorito y controles.' },
       { el: '.v3-stats',      on: 'top',    t: 'Estadísticas en Vivo',     d: 'Conectados, número de pujas (Bids) e Inició hace — con estilo secondary gradient.' },
-      { el: '.room',          on: 'left',   t: 'Sala de Pujas (Chat)',     d: 'Historial en tiempo real con burbujas de chat: izquierda vault cinematic, derecha iridescente.' },
+      { el: '.room',          on: 'top',    t: 'Sala de Pujas (Chat)',     d: 'Historial en tiempo real con burbujas de chat: izquierda vault cinematic, derecha iridescente.' },
       { el: '.cu',            on: 'top',    t: 'Puestos en Vivo',          d: 'Ranking actual: posición, usuario y número de pujas.' }
     ];
 
@@ -1195,7 +1021,7 @@ html, body { background: transparent; font-family: var(--font-ui); -webkit-font-
   })();
   </script>
 
-  <script src="_iframe-resize.js"></script>
+  <script src="../desktop/_iframe-resize.js"></script>
   <script>
   (function autoReportHeight() {
     function report() {

@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Upgrade Consola Preview · Bid Actual + Chat moderno — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  /* ── Paleta Voyager ── */
+  --vault-300: oklch(0.62 0.19 285);
+  --vault-400: oklch(0.55 0.20 285);
+  --vault-500: oklch(0.45 0.20 285);
+  --vault-600: oklch(0.38 0.20 285);
+  --vault-700: oklch(0.30 0.20 285);
+  --vault-800: oklch(0.22 0.18 285);
+  --vault-900: oklch(0.15 0.22 280);
+  --orange-400: oklch(0.78 0.16 60);
+  --orange-500: oklch(0.72 0.16 55);
+  --orange-600: oklch(0.66 0.17 50);
+  --negotiable: oklch(0.80 0.13 200);   /* celeste */
+  --negotiable-soft: oklch(0.90 0.07 205);
+  --blue-300: oklch(0.78 0.11 240);
+  --blue-400: oklch(0.66 0.16 248);
+  --blue-500: oklch(0.58 0.17 252);
+  --blue-600: oklch(0.48 0.17 258);
+  --gold:      oklch(0.82 0.15 85);
+  --gold-soft: oklch(0.92 0.10 88);
+  --gold-deep: oklch(0.66 0.13 78);
+  --steel:     oklch(0.72 0.02 240);
+  --base-white: #FFFFFF;
+
+  /* ── Room (base del SVG, levemente profundizada) ── */
+  --room-a: #5F3ED8;
+  --room-b: #340091;
+  --room-c: #140046;
+  --svg-orange: #ED8936;
+  --svg-purple: #8460E5;
+  --svg-purple-soft: #9B7BF0;
+
+  --font-ui:   "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(0.3, 0, 0, 1);
+
+  /* borde iridiscente — EXCLUSIVO del botón primary */
+  --border-primary: linear-gradient(135deg, #FFFFFF 0%, #F4AC59 22.1%, #8460E5 74.5%, #FFFFFF 100%);
+
+  /* wordmark VMC embebido */
+  --vmc-logo: url("data:image/png;base64,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");
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  min-height: 100%;
+  background: oklch(0.97 0.005 240);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ STAGE ═══ */
+.stage {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 56px 16px 80px;
+}
+.stage-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vault-800) 55%, transparent); text-align: center;
+}
+.stage-h2 {
+  margin-top: 40px;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vault-800) 65%, transparent);
+}
+
+@keyframes hal-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+/* ═══ ROOM ═══ */
+@property --room-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.room {
+  position: relative;
+  width: 311px; max-width: 100%;
+  display: flex; flex-direction: column;
+  padding: 16px;
+  border-radius: 18px; overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, oklch(0.42 0.20 285) 0%, transparent 60%),
+    linear-gradient(168deg, var(--room-a) 0%, var(--room-b) 52%, var(--room-c) 100%);
+  box-shadow: 0 24px 60px oklch(0.15 0.16 285 / 0.30);
+}
+.room::before {
+  content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  border-radius: 18px; padding: 2px; opacity: 0;
+  transition: opacity 0.2s ease;
+  background: conic-gradient(from var(--room-angle),
+    transparent 0deg, transparent 210deg,
+    var(--orange-400) 250deg, rgba(255,255,255,0.95) 290deg, var(--vault-400) 328deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+}
+.room.is-bidding::before { opacity: 1; animation: room-halo 0.65s linear infinite; }
+@keyframes room-halo { to { --room-angle: 360deg; } }
+.room.is-bidding { animation: room-glow 0.9s ease-in-out infinite alternate; }
+@keyframes room-glow {
+  0%   { box-shadow: 0 24px 60px oklch(0.15 0.16 285 / 0.30), 0 0 0 1.5px oklch(0.78 0.16 60 / 0.35), 0 0 26px oklch(0.72 0.16 55 / 0.40); }
+  100% { box-shadow: 0 24px 60px oklch(0.15 0.16 285 / 0.30), 0 0 0 1.5px oklch(1 0 0 / 0.55), 0 0 40px oklch(0.72 0.16 55 / 0.55), 0 0 70px oklch(0.55 0.20 285 / 0.40); }
+}
+
+/* ═══ BID ACTUAL — moderno, simple, NO primary ═══ */
+.bid-current-card {
+  position: relative; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  width: 100%; min-height: 90px; padding: 18px 24px;
+  border-radius: 16px; border: 1px solid oklch(1 0 0 / 0.14);
+  overflow: hidden; transition: box-shadow 0.3s ease;
+}
+.bid-current-card > * { position: relative; z-index: 2; }
+.bid-current-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
+}
+.bid-current-amount {
+  font-family: var(--font-mono); font-size: 38px; font-weight: 700; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transform-origin: center; transition: transform 0.5s var(--ease);
+}
+.bid-current-amount.is-bump { animation: cloud-bump 0.4s var(--ease); }
+@keyframes cloud-bump { 0% { transform: scale(1); } 40% { transform: scale(1.14); } 100% { transform: scale(1); } }
+
+@property --cbeam-angle    { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@property --roulette-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+/* ════ FAMILIA COBALT — azul puro, tratamientos más allá del gradiente ════ */
+
+/* ── 1 · COBALT SOLID — gradiente profundo→vivo + sheen diagonal ── */
+.ba-cobalt {
+  background:
+    radial-gradient(ellipse 110% 80% at 50% -10%, oklch(0.72 0.14 248 / 0.55) 0%, transparent 60%),
+    linear-gradient(155deg, oklch(0.60 0.17 250) 0%, oklch(0.46 0.18 256) 55%, oklch(0.32 0.16 262) 100%);
+  border: 1px solid oklch(0.82 0.10 240 / 0.45);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.30), 0 10px 28px oklch(0.30 0.16 258 / 0.45);
+}
+.ba-cobalt::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(120deg, transparent 34%, oklch(1 0 0 / 0.22) 50%, transparent 66%);
+}
+.ba-cobalt .bid-current-label { color: oklch(0.84 0.10 242); }
+.ba-cobalt .bid-current-amount { color: #fff; text-shadow: 0 2px 8px oklch(0 0 0 / 0.38), 0 0 20px oklch(0.66 0.16 248 / 0.55); }
+
+/* ── 2 · COBALT NEON — fondo navy + outline neón brillante (glow) ── */
+.ba-cobalt-neon {
+  background: linear-gradient(160deg, oklch(0.19 0.10 263) 0%, oklch(0.12 0.10 266) 100%);
+  border: 1.5px solid oklch(0.72 0.18 250);
+  box-shadow:
+    inset 0 0 18px oklch(0.55 0.18 252 / 0.28),
+    0 0 0 1px oklch(0.72 0.18 250 / 0.25),
+    0 0 24px oklch(0.62 0.18 250 / 0.50);
+}
+.ba-cobalt-neon .bid-current-label { color: oklch(0.82 0.14 245); text-shadow: 0 0 10px oklch(0.65 0.18 250 / 0.65); }
+.ba-cobalt-neon .bid-current-amount { color: #fff; text-shadow: 0 0 8px oklch(0.70 0.18 250 / 0.75), 0 0 22px oklch(0.60 0.18 252 / 0.65); }
+
+/* ── 3 · COBALT GLASS — vidrio azul translúcido + anillo cobalto brillante ── */
+.ba-cobalt-glass {
+  background: linear-gradient(160deg, oklch(0.62 0.16 250 / 0.32) 0%, oklch(0.40 0.16 258 / 0.20) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3);
+  border: 1.5px solid oklch(0.80 0.12 242 / 0.55);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.35), 0 10px 28px oklch(0.30 0.16 258 / 0.35);
+}
+.ba-cobalt-glass .bid-current-label { color: oklch(0.90 0.08 240); }
+.ba-cobalt-glass .bid-current-amount { color: #fff; text-shadow: 0 2px 8px oklch(0 0 0 / 0.35), 0 0 16px oklch(0.70 0.14 245 / 0.50); }
+
+/* ── 4 · COBALT BEAM — fill azul oscuro + haz de luz cobalto girando en el borde ── */
+.ba-cobalt-beam {
+  background: linear-gradient(160deg, oklch(0.30 0.15 260) 0%, oklch(0.15 0.13 264) 100%);
+  border: 1px solid oklch(0.55 0.14 252 / 0.35);
+  box-shadow: 0 10px 28px oklch(0.20 0.14 260 / 0.42);
+}
+.ba-cobalt-beam::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; border-radius: 16px; padding: 1.5px;
+  background: conic-gradient(from var(--cbeam-angle),
+    transparent 0deg, transparent 240deg,
+    oklch(0.70 0.18 250) 295deg, #ffffff 325deg, oklch(0.55 0.18 256) 348deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 5px oklch(0.65 0.18 250 / 0.60));
+  animation: cbeam-spin 4s linear infinite;
+}
+@keyframes cbeam-spin { to { --cbeam-angle: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .ba-cobalt-beam::before { animation: none; } }
+.ba-cobalt-beam .bid-current-label { color: oklch(0.84 0.11 243); }
+.ba-cobalt-beam .bid-current-amount { color: #fff; text-shadow: 0 2px 8px oklch(0 0 0 / 0.40), 0 0 18px oklch(0.62 0.16 250 / 0.55); }
+
+/* ── 5 · COBALT HOLO — fill azul oscuro + borde iridiscente blanco→cobalto→blanco ── */
+.ba-cobalt-holo {
+  border: 2px solid transparent;
+  background-image:
+    linear-gradient(160deg, oklch(0.30 0.15 260) 0%, oklch(0.16 0.13 264) 100%),
+    linear-gradient(135deg, #ffffff 0%, oklch(0.70 0.16 248) 35%, oklch(0.50 0.18 256) 65%, #ffffff 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.18), 0 10px 28px oklch(0.22 0.15 260 / 0.40);
+}
+.ba-cobalt-holo .bid-current-label { color: oklch(0.82 0.12 244); }
+.ba-cobalt-holo .bid-current-amount { color: #fff; text-shadow: 0 2px 8px oklch(0 0 0 / 0.40), 0 0 18px oklch(0.60 0.18 250 / 0.55); }
+
+/* ── 6 · CASINO ROULETTE — vault + anillo giratorio tipo ruleta (oro/blanco/live/vault), amount oro
+       · usa la paleta del brand: el mismo lenguaje casino que el spinner de la sala ── */
+.ba-casino {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% -8%, oklch(0.40 0.20 285 / 0.65) 0%, transparent 62%),
+    linear-gradient(160deg, var(--vault-700) 0%, var(--vault-900) 100%);
+  border: 1px solid oklch(0.82 0.15 85 / 0.28);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.14), 0 0 18px oklch(0.82 0.15 85 / 0.22), 0 10px 28px oklch(0.15 0.10 285 / 0.45);
+}
+.ba-casino::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; border-radius: 16px; padding: 2px;
+  background: conic-gradient(from var(--roulette-angle),
+    var(--gold) 0deg, #ffffff 40deg, var(--orange-500) 80deg, var(--vault-400) 130deg,
+    var(--gold) 180deg, #ffffff 220deg, var(--orange-500) 270deg, var(--vault-400) 320deg, var(--gold) 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 4px oklch(0.82 0.15 85 / 0.45));
+  animation: roulette-spin 6s linear infinite;
+}
+@keyframes roulette-spin { to { --roulette-angle: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .ba-casino::before { animation: none; } }
+.ba-casino .bid-current-label { color: var(--gold); text-shadow: 0 0 10px oklch(0.82 0.15 85 / 0.50); }
+.ba-casino .bid-current-amount {
+  background: linear-gradient(135deg, var(--gold) 0%, oklch(0.97 0.05 90) 45%, var(--gold) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 12px oklch(0.82 0.15 85 / 0.45));
+}
+
+.bid-current-card.is-bidding {
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.30), 0 0 0 1.5px oklch(1 0 0 / 0.35),
+    0 0 26px oklch(0.66 0.16 248 / 0.55), 0 10px 28px oklch(0.12 0.10 285 / 0.45);
+}
+
+/* ═══ CHAT — moderno, jerarquía blanco / azul / frost / navy ═══ */
+.room-chat {
+  z-index: 3; flex-shrink: 0;
+  margin-top: 26px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.ab-msg { display: flex; }
+.ab-msg--left  { justify-content: flex-start; }
+.ab-msg--right { justify-content: flex-end; }
+.ab-bubble {
+  display: flex; align-items: center;
+  max-width: 86%; min-height: 38px; padding: 0 15px;
+  border-radius: 16px; font-size: 13px; font-weight: 500; line-height: 1.25; white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+.ab-bubble strong { font-weight: 700; }
+.ab-bubble .amt { font-family: var(--font-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* sistema / robot — frost translúcido, prioridad baja */
+.ab-bubble--sys {
+  gap: 7px;
+  color: oklch(1 0 0 / 0.72);
+  background: oklch(1 0 0 / 0.07);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  border-radius: 16px 16px 16px 5px;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.ab-bubble--sys strong { color: #fff; }
+.ab-bubble--sys .amt { color: #fff; }
+
+/* bid de OTROS — blanco frost, texto vault, monto en azul ── "lo que alguien bidea" */
+.ab-bubble--other {
+  color: var(--vault-700);
+  background: linear-gradient(160deg, #ffffff 0%, oklch(0.96 0.012 240) 100%);
+  border-radius: 16px 16px 16px 5px;
+  box-shadow: 0 6px 16px oklch(0.20 0.14 270 / 0.28), inset 0 1px 0 #fff;
+}
+.ab-bubble--other strong { color: var(--vault-900); }
+.ab-bubble--other .amt { color: var(--blue-500); }
+
+/* MI bid — azul single-hue, texto blanco ── "lo que yo bideo" */
+.ab-bubble--mine {
+  color: oklch(1 0 0 / 0.85);
+  background: linear-gradient(150deg, var(--blue-400) 0%, var(--blue-600) 100%);
+  border-radius: 16px 16px 5px 16px;
+  box-shadow: 0 6px 16px oklch(0.48 0.17 258 / 0.45), inset 0 1px 0 oklch(1 0 0 / 0.28);
+}
+.ab-bubble--mine strong { color: #fff; }
+.ab-bubble--mine .amt { color: #fff; }
+
+/* "A la una" — navy profundo + logo, el beat del martillero */
+.ab-bubble--count {
+  gap: 7px; color: #fff;
+  background: linear-gradient(150deg, oklch(0.24 0.13 278) 0%, oklch(0.13 0.14 280) 100%);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  border-radius: 16px 16px 16px 5px;
+}
+.ab-bubble--count strong { color: #fff; }
+.vmc-logo {
+  display: inline-block; flex-shrink: 0;
+  width: 88px; height: 13px;
+  background: var(--vmc-logo) left center / contain no-repeat;
+}
+.ab-bubble--active { animation: ab-zoom 1.6s ease-in-out infinite; }
+@keyframes ab-zoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+/* ═══ BOTÓN BIDEAR — único PRIMARY ═══ */
+.room-bid-wrap { z-index: 3; flex-shrink: 0; margin-top: 22px; }
+@property --vbtn-angle  { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
+@property --vbtn-stop-a { syntax: '<color>'; inherits: false; initial-value: #ED8936; }
+@property --vbtn-stop-b { syntax: '<color>'; inherits: false; initial-value: #8460E5; }
+@property --halo-angle  { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.bidear {
+  --vbtn-stop-a: var(--svg-orange);
+  --vbtn-stop-b: var(--svg-purple);
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  width: 100%; height: 54px;
+  border-radius: 9999px; border: 2px solid transparent;
+  cursor: pointer; position: relative;
+  font-family: var(--font-ui); color: var(--base-white);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  background-image:
+    linear-gradient(var(--vbtn-angle), var(--vbtn-stop-a) 0%, var(--vbtn-stop-a) 40%, var(--vbtn-stop-b) 100%),
+    var(--border-primary);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 8px 22px oklch(0.66 0.17 50 / 0.35);
+  transition:
+    --vbtn-angle 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    --vbtn-stop-a 0.35s ease, --vbtn-stop-b 0.35s ease,
+    box-shadow 0.25s ease;
+  animation: bidear-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+.bidear::before {
+  content: ''; position: absolute; inset: 0; border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 52%);
+  pointer-events: none; z-index: 1;
+}
+.bidear::after {
+  content: ''; position: absolute; inset: -2px; border-radius: 9999px; padding: 2px;
+  background: conic-gradient(from var(--halo-angle),
+    transparent 0deg, transparent 220deg,
+    rgba(255,255,255,0.40) 270deg, rgba(255,255,255,0.95) 300deg, rgba(244,172,89,0.80) 330deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.55));
+  pointer-events: none; z-index: 2;
+  animation: halo-spin 2.6s linear infinite;
+}
+@keyframes halo-spin { to { --halo-angle: 360deg; } }
+@keyframes bidear-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025); } }
+.bidear > * { position: relative; z-index: 3; }
+.bidear-label { font-size: 18px; font-weight: 800; letter-spacing: 0.01em; }
+.bidear-sep   { width: 1px; height: 24px; background: rgba(255,255,255,0.4); }
+.bidear-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bidear:hover {
+  --vbtn-angle: 220deg;
+  --vbtn-stop-a: var(--svg-purple);
+  --vbtn-stop-b: var(--svg-purple-soft);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 10px 28px oklch(0.55 0.20 285 / 0.40), 0 4px 10px oklch(0.66 0.17 50 / 0.40);
+}
+.bidear:active {
+  --vbtn-angle: 135deg;
+  --vbtn-stop-a: #D9772A;
+  --vbtn-stop-b: #6B4FD0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bidear, .bidear::after { animation: none; }
+}
+
+/* ═══ GRID de consolas — un acabado de Bid Actual por consola ═══ */
+.cz-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 44px; }
+.cz-slot { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.cz-name {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.10em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vault-800) 62%, transparent); text-align: center;
+}
+.cz-desc {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.02em;
+  color: color-mix(in oklch, var(--vault-800) 42%, transparent); text-align: center; max-width: 300px;
+}
+
+/* ═══ COIN BURST ═══ */
+.coin-particle {
+  position: fixed; left: 0; top: 0;
+  z-index: 9999; pointer-events: none;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+  filter: drop-shadow(0 2px 5px rgba(34,18,70,0.40));
+}
+.coin-particle svg { width: 100%; height: 100%; display: block; }
+@media (prefers-reduced-motion: reduce) { .coin-particle { display: none !important; } }
+</style>
+</head>
+<body>
+
+  <main class="stage">
+    <span class="stage-label">Consola de Juego · V1 — Bid Actual · familia Cobalt (5 tratamientos) + 1 Casino</span>
+
+    <div class="cz-grid">
+
+      <!-- ═══ 1 · COBALT SOLID ═══ -->
+      <section class="cz-slot">
+        <span class="cz-name">1 · Cobalt Solid</span>
+        <span class="cz-desc">gradiente azul profundo→vivo + sheen diagonal</span>
+        <div class="room">
+          <article class="bid-current-card ba-cobalt">
+            <span class="bid-current-label">Propuesta · Bid Actual</span>
+            <span class="bid-current-amount">US$&nbsp;5,079</span>
+          </article>
+          <div class="room-chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--other"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--mine"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+          </div>
+          <div class="room-bid-wrap">
+            <button type="button" class="bidear">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 2 · COBALT NEON ═══ -->
+      <section class="cz-slot">
+        <span class="cz-name">2 · Cobalt Neon</span>
+        <span class="cz-desc">fondo navy + outline neón brillante (glow azul)</span>
+        <div class="room">
+          <article class="bid-current-card ba-cobalt-neon">
+            <span class="bid-current-label">Propuesta · Bid Actual</span>
+            <span class="bid-current-amount">US$&nbsp;5,079</span>
+          </article>
+          <div class="room-chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--other"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--mine"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+          </div>
+          <div class="room-bid-wrap">
+            <button type="button" class="bidear">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 3 · COBALT GLASS ═══ -->
+      <section class="cz-slot">
+        <span class="cz-name">3 · Cobalt Glass</span>
+        <span class="cz-desc">vidrio azul translúcido + blur + anillo cobalto brillante</span>
+        <div class="room">
+          <article class="bid-current-card ba-cobalt-glass">
+            <span class="bid-current-label">Propuesta · Bid Actual</span>
+            <span class="bid-current-amount">US$&nbsp;5,079</span>
+          </article>
+          <div class="room-chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--other"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--mine"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+          </div>
+          <div class="room-bid-wrap">
+            <button type="button" class="bidear">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 4 · COBALT BEAM ═══ -->
+      <section class="cz-slot">
+        <span class="cz-name">4 · Cobalt Beam</span>
+        <span class="cz-desc">fill azul oscuro + haz de luz cobalto girando en el borde</span>
+        <div class="room">
+          <article class="bid-current-card ba-cobalt-beam">
+            <span class="bid-current-label">Propuesta · Bid Actual</span>
+            <span class="bid-current-amount">US$&nbsp;5,079</span>
+          </article>
+          <div class="room-chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--other"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--mine"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+          </div>
+          <div class="room-bid-wrap">
+            <button type="button" class="bidear">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 5 · COBALT HOLO ═══ -->
+      <section class="cz-slot">
+        <span class="cz-name">5 · Cobalt Holo</span>
+        <span class="cz-desc">fill azul oscuro + borde iridiscente blanco→cobalto→blanco</span>
+        <div class="room">
+          <article class="bid-current-card ba-cobalt-holo">
+            <span class="bid-current-label">Propuesta · Bid Actual</span>
+            <span class="bid-current-amount">US$&nbsp;5,079</span>
+          </article>
+          <div class="room-chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--other"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--mine"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+          </div>
+          <div class="room-bid-wrap">
+            <button type="button" class="bidear">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 6 · CASINO ROULETTE ═══ -->
+      <section class="cz-slot">
+        <span class="cz-name">6 · Casino Roulette</span>
+        <span class="cz-desc">vault + anillo giratorio tipo ruleta (oro/blanco/live/vault) · amount oro · paleta brand</span>
+        <div class="room">
+          <article class="bid-current-card ba-casino">
+            <span class="bid-current-label">Propuesta · Bid Actual</span>
+            <span class="bid-current-amount">US$&nbsp;5,079</span>
+          </article>
+          <div class="room-chat">
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--other"><strong>KAHTH4</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,079</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+            <div class="ab-msg ab-msg--right"><span class="ab-bubble ab-bubble--mine"><strong>JA8NEE</strong>&ensp;ha propuesto&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--sys">Cierra en&ensp;<span class="amt">US$ 5,179</span></span></div>
+            <div class="ab-msg ab-msg--left"><span class="ab-bubble ab-bubble--count ab-bubble--active"><span class="vmc-logo"></span>A la <strong>una</strong></span></div>
+          </div>
+          <div class="room-bid-wrap">
+            <button type="button" class="bidear">
+              <span class="bidear-label">Bidear</span>
+              <span class="bidear-sep"></span>
+              <span class="bidear-price">US$ 5,159</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+  /* ── Bid + efectos (cada consola es independiente) ── */
+  (function () {
+    function fmt(n) { return 'US$ ' + n.toLocaleString('en-US'); }
+
+    function initRoom(room) {
+      var btn = room.querySelector('.bidear');
+      if (!btn) return;
+      var amountEl = room.querySelector('.bid-current-amount');
+      var priceEl = room.querySelector('.bidear-price');
+      var card = room.querySelector('.bid-current-card');
+      var bid = 5079, step = 1480, haloTimer = null;
+
+      function render() {
+        amountEl.innerHTML = fmt(bid).replace(' ', '&nbsp;');
+        if (priceEl) priceEl.textContent = fmt(bid + step);
+      }
+      render();
+
+      btn.addEventListener('click', function () {
+        bid += step;
+        render();
+        amountEl.classList.remove('is-bump'); void amountEl.offsetWidth; amountEl.classList.add('is-bump');
+        room.classList.add('is-bidding');
+        card.classList.add('is-bidding');
+        btn.disabled = true;
+        clearTimeout(haloTimer);
+        haloTimer = setTimeout(function () {
+          room.classList.remove('is-bidding');
+          card.classList.remove('is-bidding');
+          btn.disabled = false;
+        }, 1800);
+      });
+    }
+
+    document.querySelectorAll('.room').forEach(initRoom);
+  })();
+
+  /* ═══ COIN BURST (todas las consolas) ═══ */
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var COIN_SVG =
+      '<svg viewBox="8 7 20 20" fill="none">' +
+      '<defs>' +
+      '<linearGradient id="cnF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient>' +
+      '<linearGradient id="cnS" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient>' +
+      '<linearGradient id="cnG" x1="18" y1="9" x2="18" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="white" stop-opacity="0.45"/><stop offset="0.5" stop-color="white" stop-opacity="0"/></linearGradient>' +
+      '<clipPath id="cnC"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath>' +
+      '</defs>' +
+      '<g clip-path="url(#cnC)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#cnF)"/>' +
+      '<path d="M18 12.4V21.6" stroke="white" stroke-opacity="0.92" stroke-width="1.2" stroke-linecap="round"/>' +
+      '<path d="M20.1 14.1H17C16.2 14.1 15.5 14.7 15.5 15.5C15.5 16.3 16.2 17 17 17H19C19.8 17 20.5 17.7 20.5 18.5C20.5 19.3 19.8 19.9 19 19.9H15.5" stroke="white" stroke-opacity="0.92" stroke-width="1.2" stroke-linecap="round"/>' +
+      '<rect x="10" y="9" width="16" height="16" rx="8" fill="url(#cnG)"/></g>' +
+      '<rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#cnS)" stroke-width="2" fill="none"/>' +
+      '</svg>';
+
+    var COUNT = 14, GRAVITY = 0.32;
+
+    function spawnCoin(originX, originY) {
+      var el = document.createElement('div');
+      el.className = 'coin-particle';
+      el.innerHTML = COIN_SVG;
+      var size = 18 + Math.random() * 12;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      document.body.appendChild(el);
+
+      var angleDeg = -90 + (Math.random() * 70 - 35);
+      var angle = angleDeg * Math.PI / 180;
+      var speed = 7 + Math.random() * 4;
+      var vx = Math.cos(angle) * speed;
+      var vy = Math.sin(angle) * speed;
+      var x = 0, y = 0;
+      var rot = Math.random() * 360;
+      var rotSpeed = (Math.random() - 0.5) * 22;
+      var maxLife = 900;
+      var fadeStart = maxLife * 0.55;
+      var start = null;
+
+      function frame(ts) {
+        if (start === null) start = ts;
+        var elapsed = ts - start;
+        vy += GRAVITY;
+        x += vx; y += vy; rot += rotSpeed;
+        var opacity = 1;
+        if (elapsed > fadeStart) opacity = 1 - (elapsed - fadeStart) / (maxLife - fadeStart);
+        el.style.transform = 'translate(-50%,-50%) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + rot.toFixed(1) + 'deg)';
+        el.style.opacity = Math.max(0, opacity);
+        if (elapsed < maxLife) requestAnimationFrame(frame);
+        else el.remove();
+      }
+      el.style.left = originX + 'px';
+      el.style.top = originY + 'px';
+      requestAnimationFrame(frame);
+    }
+
+    document.querySelectorAll('.bidear').forEach(function (bidBtn) {
+      bidBtn.addEventListener('click', function () {
+        var rect = bidBtn.getBoundingClientRect();
+        var originX = rect.left + rect.width / 2;
+        var originY = rect.top + rect.height / 2;
+        for (var i = 0; i < COUNT; i++) spawnCoin(originX, originY);
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>

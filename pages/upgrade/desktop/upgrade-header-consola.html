@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Upgrade Header Consola — Variantes Mi C.U.U. — Voyager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --vmc-color-vault-400: oklch(0.55 0.20 285);
+  --vmc-color-vault-500: oklch(0.45 0.20 285);
+  --vmc-color-vault-600: oklch(0.38 0.20 285);
+  --vmc-color-vault-700: oklch(0.30 0.20 285);
+  --vmc-color-vault-800: oklch(0.22 0.18 285);
+  --vmc-color-vault-900: oklch(0.15 0.27 278);
+  --vmc-color-orange-300: oklch(0.84 0.14 65);
+  --vmc-color-orange-400: oklch(0.78 0.16 60);
+  --vmc-color-orange-500: oklch(0.72 0.16 55);
+  --vmc-color-orange-600: oklch(0.66 0.17 50);
+  --vmc-color-orange-900: oklch(0.40 0.12 50);
+  --vmc-color-gold: oklch(0.82 0.15 85);
+  --vmc-color-base-white: oklch(1 0 0);
+  --font-ui: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(0.3, 0, 0, 1);
+  --card-radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: oklch(0.98 0.004 160); font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
+
+/* ── Stage ── */
+.stage {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 56px 16px 90px;
+}
+.stage-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 55%, transparent); text-align: center;
+}
+.hrow { width: 100%; max-width: 1024px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.hrow-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.10em; text-transform: uppercase;
+  color: color-mix(in oklch, var(--vmc-color-vault-800) 60%, transparent); align-self: flex-start; padding-left: 4px;
+}
+.hrow .card { width: 100%; }
+
+.card {
+  border-radius: var(--card-radius);
+  border: 1px solid oklch(0.22 0.18 285 / 8%);
+  box-shadow: 0 6px 20px oklch(0.22 0.18 285 / 10%);
+  overflow: hidden;
+}
+
+/* ═══ HEADER CARD ═══ */
+.hdr {
+  height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px;
+  background: linear-gradient(135deg, var(--vmc-color-vault-800) 0%, var(--vmc-color-vault-700) 100%);
+  color: var(--vmc-color-base-white);
+}
+.hdr-left { display: flex; align-items: center; gap: 12px; }
+.hdr-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  height: 36px; padding: 0 14px 0 4px;
+  border-radius: 9999px; border: 2px solid transparent;
+  cursor: pointer; position: relative; overflow: hidden;
+  font-family: var(--font-ui); font-size: 13px; font-weight: 500;
+  color: var(--vmc-color-base-white); text-shadow: 0 1px 2px oklch(0 0 0 / 22%);
+  background-origin: padding-box, border-box; background-clip: padding-box, border-box;
+  transition: transform 0.2s var(--ease), box-shadow 0.25s ease;
+}
+.hdr-pill::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; background: linear-gradient(180deg, oklch(1 0 0 / 15%) 0%, transparent 55%); pointer-events: none; z-index: 1; }
+.hdr-pill > * { position: relative; z-index: 2; }
+.hdr-pill-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hdr-pill-icon svg { width: 16px; height: 16px; fill: currentColor; }
+.hdr-pill-light { font-weight: 300; }
+.hdr-pill-bold { font-weight: 700; }
+
+/* v1 · Primary (referencia) */
+.hdr-pill--cuu {
+  background-image:
+    linear-gradient(135deg, var(--vmc-color-orange-600) 0%, var(--vmc-color-orange-600) 40%, var(--vmc-color-vault-500) 100%),
+    linear-gradient(135deg, var(--vmc-color-base-white) 0%, var(--vmc-color-orange-400) 25%, var(--vmc-color-vault-400) 75%, var(--vmc-color-base-white) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 28%), 0 2px 6px oklch(0.66 0.17 50 / 30%);
+}
+.hdr-pill--cuu .hdr-pill-icon { background: oklch(0 0 0 / 18%); color: var(--vmc-color-base-white); }
+
+/* C · Pill WARM DARK (referencia.tsx pvbtn-auth-c) — vault + undertone naranja + ring cálido */
+.hdr-pill--warm {
+  background-image:
+    linear-gradient(135deg, color-mix(in oklch, var(--vmc-color-vault-800) 80%, var(--vmc-color-orange-900)) 0%, var(--vmc-color-vault-900) 100%),
+    linear-gradient(135deg, var(--vmc-color-orange-400) 0%, var(--vmc-color-orange-600) 35%, var(--vmc-color-vault-500) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 12%), inset 0 0 26px oklch(0.66 0.17 50 / 10%);
+}
+.hdr-pill--warm .hdr-pill-icon { background: oklch(0.66 0.17 50 / 22%); color: var(--vmc-color-base-white); }
+.hdr-pill--warm .hdr-pill-bold { color: var(--vmc-color-orange-400); text-shadow: 0 0 8px oklch(0.66 0.17 50 / 50%); }
+
+/* D · Pill COBALT — fill azul profundo + borde iridiscente blanco→cobalto→blanco */
+.hdr-pill--cobalt {
+  background-image:
+    linear-gradient(135deg, oklch(0.55 0.17 250) 0%, oklch(0.38 0.17 258) 100%),
+    linear-gradient(135deg, var(--vmc-color-base-white) 0%, oklch(0.70 0.16 248) 35%, oklch(0.50 0.18 256) 65%, var(--vmc-color-base-white) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%), 0 0 16px oklch(0.55 0.17 252 / 35%);
+}
+.hdr-pill--cobalt .hdr-pill-icon { background: oklch(0.55 0.17 252 / 30%); color: var(--vmc-color-base-white); }
+.hdr-pill--cobalt .hdr-pill-bold { color: var(--vmc-color-base-white); text-shadow: 0 0 8px oklch(0.60 0.18 250 / 50%); }
+
+/* E · Pill VAULT INSET — vault recesado/pressed (sin gloss, inner shadow) · prima vault sin ser ghost */
+.hdr-pill--inset {
+  background: linear-gradient(180deg, var(--vmc-color-vault-900) 0%, var(--vmc-color-vault-800) 100%);
+  border: 1px solid oklch(1 0 0 / 0.05);
+  box-shadow: inset 0 2px 6px oklch(0 0 0 / 0.42), inset 0 -1px 0 oklch(1 0 0 / 0.06);
+}
+.hdr-pill--inset::before { display: none; }
+.hdr-pill--inset .hdr-pill-icon { background: oklch(1 0 0 / 0.08); color: oklch(1 0 0 / 0.85); }
+.hdr-pill--inset .hdr-pill-light { color: oklch(1 0 0 / 0.60); }
+.hdr-pill--inset .hdr-pill-bold { color: var(--vmc-color-base-white); }
+.hdr-pill--inset:active { box-shadow: inset 0 3px 8px oklch(0 0 0 / 0.50); }
+
+/* F · Pill LIVE INSET — mismo recesado/pressed que E pero en naranja live */
+.hdr-pill--inset-live {
+  background: linear-gradient(180deg, oklch(0.52 0.16 50) 0%, oklch(0.44 0.15 50) 100%);
+  border: 1px solid oklch(1 0 0 / 0.06);
+  box-shadow: inset 0 2px 6px oklch(0.20 0.08 40 / 0.55), inset 0 -1px 0 oklch(1 0 0 / 0.08);
+}
+.hdr-pill--inset-live::before { display: none; }
+.hdr-pill--inset-live .hdr-pill-icon { background: oklch(0 0 0 / 0.18); color: oklch(1 0 0 / 0.90); }
+.hdr-pill--inset-live .hdr-pill-light { color: oklch(1 0 0 / 0.70); }
+.hdr-pill--inset-live .hdr-pill-bold { color: var(--vmc-color-base-white); }
+.hdr-pill--inset-live:active { box-shadow: inset 0 3px 8px oklch(0.20 0.08 40 / 0.60); }
+
+/* G · Pill BLANCA + borde VYStrokes3 (Figma) — texto vault */
+.hdr-pill--vy {
+  color: var(--vmc-color-vault-800); text-shadow: none;
+  background-image:
+    linear-gradient(135deg, #FFFFFF 0%, #F4F2FF 100%),
+    linear-gradient(135deg, #CFBAFF 0%, #FFFFFF 33%, #AE8EFF 66%, #CFBAFF 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 80%), 0 2px 8px oklch(0.45 0.18 285 / 22%);
+}
+.hdr-pill--vy::before { display: none; }
+.hdr-pill--vy .hdr-pill-icon { background: oklch(0.55 0.20 285 / 12%); color: var(--vmc-color-vault-700); }
+.hdr-pill--vy .hdr-pill-light { color: oklch(0.30 0.10 285 / 60%); }
+.hdr-pill--vy .hdr-pill-bold { color: var(--vmc-color-vault-800); }
+
+/* H · Pill VY ORANGE vertical — mismo Figma, fill a 180° (más quemado abajo) + stroke a 120° */
+.hdr-pill--vy2 {
+  background-image:
+    linear-gradient(180deg, #FF9639 0%, #EF852E 45%, #BE3D00 100%),
+    linear-gradient(120deg, #CFBAFF 0%, #FFFFFF 30%, #AE8EFF 70%, #CFBAFF 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 22%), 0 2px 8px oklch(0.50 0.17 42 / 32%);
+}
+.hdr-pill--vy2 .hdr-pill-icon { background: oklch(0 0 0 / 18%); color: var(--vmc-color-base-white); }
+.hdr-pill--vy2 .hdr-pill-bold { color: var(--vmc-color-base-white); }
+
+/* A · TEXTO subrayado (sin pill) */
+.cuu-text { display: inline-flex; align-items: center; gap: 8px; height: 36px; color: var(--vmc-color-base-white); font-size: 14px; }
+.cuu-text-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: 0.7; }
+.cuu-text-icon svg { width: 18px; height: 18px; fill: currentColor; }
+.cuu-text-light { font-weight: 300; color: oklch(1 0 0 / 0.70); }
+.cuu-text-bold { font-family: var(--font-mono); font-weight: 700; position: relative; letter-spacing: 0.02em; }
+.cuu-text-bold::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--vmc-color-orange-500), var(--vmc-color-orange-400));
+}
+
+/* B · STACKED — "Mi C.U.U." arriba / valor abajo (sin pill) */
+.cuu-stack { display: flex; align-items: center; gap: 10px; height: 36px; }
+.cuu-stack-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: oklch(1 0 0 / 0.10); color: var(--vmc-color-base-white); }
+.cuu-stack-icon svg { width: 17px; height: 17px; fill: currentColor; }
+.cuu-stack-text { display: flex; flex-direction: column; justify-content: center; line-height: 1.05; }
+.cuu-stack-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(1 0 0 / 0.55); margin-bottom: 2px; }
+.cuu-stack-value { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--vmc-color-base-white); letter-spacing: 0.02em; }
+
+/* ── derecha del header (común) ── */
+.hdr-pill--bids {
+  background-image:
+    linear-gradient(135deg, var(--vmc-color-vault-700) 0%, var(--vmc-color-vault-900) 100%),
+    linear-gradient(135deg, var(--vmc-color-orange-600) 0%, var(--vmc-color-orange-400) 45%, var(--vmc-color-vault-400) 100%);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 15%), 0 0 16px oklch(0.66 0.17 50 / 25%);
+}
+.hdr-pill--bids .hdr-pill-icon { background: oklch(0.66 0.17 50 / 22%); color: var(--vmc-color-base-white); }
+.hdr-pill--bids .hdr-pill-bold { color: var(--vmc-color-orange-400); text-shadow: 0 0 8px oklch(0.66 0.17 50 / 55%); }
+.hdr-right { display: flex; align-items: center; gap: 0; height: 58px; }
+.hdr-section { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; height: 58px; padding: 0 14px; border-left: 1px solid oklch(1 0 0 / 12%); }
+.hdr-section:last-child { align-items: flex-end; width: 112px; }
+.hdr-section-label { font-size: 12px; font-weight: 600; color: oklch(1 0 0 / 55%); margin-bottom: 3px; }
+.hdr-section-value { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--vmc-color-base-white); font-variant-numeric: tabular-nums; }
+.hdr-oferta-pill {
+  display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 10px;
+  border-radius: 9999px; border: 1px solid transparent;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  color: var(--vmc-color-base-white); letter-spacing: 0.02em; font-variant-numeric: tabular-nums;
+  background-image:
+    linear-gradient(135deg, oklch(0.55 0.20 285), oklch(0.22 0.18 285)),
+    linear-gradient(135deg, #8776FF, oklch(1 0 0 / 40%) 38%, #532BC7 68%, #8776FF);
+  background-origin: padding-box, border-box; background-clip: padding-box, border-box;
+}
+.hdr-signal { display: flex; align-items: flex-end; gap: 2px; height: 16px; }
+.hdr-signal-bar { width: 4px; border-radius: 1px; background: oklch(1 0 0 / 20%); }
+.hdr-signal-bar.on { background: var(--vmc-color-orange-500); }
+.hdr-signal-bar:nth-child(1) { height: 4px; }
+.hdr-signal-bar:nth-child(2) { height: 7px; }
+.hdr-signal-bar:nth-child(3) { height: 10px; }
+.hdr-signal-bar:nth-child(4) { height: 13px; }
+.hdr-signal-bar:nth-child(5) { height: 16px; }
+.hdr-price-icon { flex-shrink: 0; width: 18px; height: 19px; }
+</style>
+</head>
+<body>
+
+  <main class="stage">
+    <span class="stage-label">Header Consola · Variantes de "Mi C.U.U."</span>
+
+    <!-- ═══ REFERENCIA · v1 Primary pill ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">Referencia · v1 (pill primary)</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--cuu">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><defs><linearGradient id="cpiD1" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient><linearGradient id="cpiF1" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient><linearGradient id="cpiS1" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient><clipPath id="cpiC1"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath></defs><path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#cpiD1)"/><g clip-path="url(#cpiC1)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#cpiF1)"/></g><rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#cpiS1)" stroke-width="2" fill="none"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ A · TEXTO subrayado (sin pill) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">A · Texto subrayado (sin pill)</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <span class="cuu-text">
+            <span class="cuu-text-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="cuu-text-light">Mi C.U.U.</span><span class="cuu-text-bold">JA8NEE</span>
+          </span>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ B · STACKED label/valor (sin pill) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">B · "Mi C.U.U." arriba / valor abajo (sin pill)</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <span class="cuu-stack">
+            <span class="cuu-stack-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="cuu-stack-text">
+              <span class="cuu-stack-label">Mi C.U.U.</span>
+              <span class="cuu-stack-value">JA8NEE</span>
+            </span>
+          </span>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ C · Pill WARM DARK (auth-c) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">C · Pill recolor — Warm Dark (referencia pvbtn-auth-c)</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--warm">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ D · Pill COBALT ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">D · Pill recolor — Cobalt (azul profundo + borde iridiscente)</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--cobalt">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ E · Pill VAULT INSET (recesado/pressed) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">E · Pill Vault Inset — recesado/pressed (prima vault, no es ghost/secondary)</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--inset">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ F · Pill LIVE INSET (recesado/pressed naranja) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">F · Pill Live Inset — igual que E pero en naranja live</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--inset-live">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ G · Pill VY ORANGE (Figma VYGradientOrange1 + VYStrokes3) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">G · Pill blanca + borde VYStrokes3 (Figma) · texto vault</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--vy">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ H · Pill VY ORANGE vertical (Figma · 180°) ═══ -->
+    <div class="hrow">
+      <span class="hrow-label">H · VY Orange vertical — fill 180° (más quemado abajo) + VYStrokes3 a 120°</span>
+      <div class="card hdr">
+        <div class="hdr-left">
+          <button type="button" class="hdr-pill hdr-pill--vy2">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.3 6.2C16.3 3.9 14.4 2 12 2 9.6 2 7.8 3.9 7.8 6.2 7.8 8.6 9.6 10.5 12 10.5 14.4 10.5 16.3 8.6 16.3 6.2ZM3.5 17.5C5.3 20.2 8.5 22 12 22 15.5 22 18.7 20.2 20.5 17.5 20.5 14.7 14.8 13.1 12 13.1 9.2 13.1 3.5 14.7 3.5 17.5Z"/></svg></span>
+            <span class="hdr-pill-light">Mi C.U.U.</span><span class="hdr-pill-bold">JA8NEE</span>
+          </button>
+          <button type="button" class="hdr-pill hdr-pill--bids">
+            <span class="hdr-pill-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="1" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="9" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><text x="12" y="14" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="10" font-weight="800" fill="currentColor">$</text></svg></span>
+            <span class="hdr-pill-light">Mis Bids:</span><span class="hdr-pill-bold">1</span>
+          </button>
+        </div>
+        <div class="hdr-right">
+          <div class="hdr-section"><span class="hdr-section-label">Fondos</span><span class="hdr-section-value"><svg class="hdr-price-icon" viewBox="0 0 36 38" fill="none"><use href="#fondicon"/></svg>$100</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Oferta</span><span class="hdr-oferta-pill">47292</span></div>
+          <div class="hdr-section"><span class="hdr-section-label">Conectividad</span><div class="hdr-signal"><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar on"></span><span class="hdr-signal-bar"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- símbolo reutilizable del ícono de fondos -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="fondicon" viewBox="0 0 36 38">
+      <defs>
+        <linearGradient id="cpiD" x1="6" y1="21.5" x2="29.1" y2="34.1" gradientUnits="userSpaceOnUse"><stop stop-color="#00A7A8"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#300089"/></linearGradient>
+        <linearGradient id="cpiF" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#00ABAD"/><stop offset="0.4" stop-color="#86A4E4"/><stop offset="0.75" stop-color="#4C1EBC"/><stop offset="1" stop-color="#31008A"/></linearGradient>
+        <linearGradient id="cpiS" x1="10" y1="5.6" x2="26" y2="28.4" gradientUnits="userSpaceOnUse"><stop stop-color="#44D6D6"/><stop offset="0.2" stop-color="#E4EEFF" stop-opacity="0.5"/><stop offset="0.5" stop-color="#567CD3"/><stop offset="1" stop-color="#3D0D9E"/></linearGradient>
+        <clipPath id="cpiCsym"><rect x="8" y="7" width="20" height="20" rx="10" fill="white"/></clipPath>
+      </defs>
+      <path d="M18 21.5L30 27L18 32.5L6 27L18 21.5Z" fill="url(#cpiD)"/>
+      <g clip-path="url(#cpiCsym)"><rect x="8" y="7" width="20" height="20" rx="10" fill="url(#cpiF)"/></g>
+      <rect x="9" y="8" width="18" height="18" rx="9" stroke="url(#cpiS)" stroke-width="2" fill="none"/>
+    </symbol>
+  </svg>
+
+</body>
+</html>
